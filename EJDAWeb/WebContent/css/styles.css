@@ -1,0 +1,12 @@
+@charset "utf-8";
+/* CSS Document */
+
+.text {font-family: Arial, MS sans-serif, Helvetica,Verdana;font-size: 9pt;color: #000099;}
+.textTop { color: #000099; font-family: Arial, MS sans-serif, Helvetica,Verdana; font-size: 8pt; font-weight: bold; }
+.textDisplay {font-family: Arial, MS sans-serif, Helvetica,Verdana;font-size: 10pt;color: #3333FF;}
+.textDesc {font-family: Arial, MS sans-serif, Helvetica,Verdana;font-size: 10pt;color: #3333FF;}
+.textError { font-family: Arial, MS sans-serif, Helvetica,Verdana;font-size: 10pt;color: #990000; font-weight: bold; }
+
+.textbox {  border: #000033;border-style: solid; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; font-family: Verdana; font-size: 9pt;text-align: left}
+
+.selectstyle { font-family:Arial, Tahoma, Verdana; font-size:9pt; color:#333333; border-style:solid; border-width:1px; border-color:#6D90B0;}
