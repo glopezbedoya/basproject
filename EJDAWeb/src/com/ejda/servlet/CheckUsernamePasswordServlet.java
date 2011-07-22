@@ -46,7 +46,7 @@ public class CheckUsernamePasswordServlet extends HttpServlet {
 		if (result.equals("N")){
 //			request.getSession().setAttribute(EJDAConstant.SESSION_NAME.PAGE, "user_screen.jsp");
 			request.getSession().setAttribute(EJDAConstant.SESSION_NAME.PAGE, "role_menu.jsp");
-			response.sendRedirect("index2.jsp");
+			response.sendRedirect(EJDAConstant.PAGE.INDEX_PAGE);
 		}else{
 			log.debug("else >> " + result);
 			request.setAttribute("messages",result);
