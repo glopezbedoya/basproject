@@ -6,4 +6,7 @@ public class EJDAConstant {
 		public final String PAGE = "PAGE";
 	}
 	
+	public interface PAGE {
+		public final String INDEX_PAGE = "index2.jsp";
+	}
 }
