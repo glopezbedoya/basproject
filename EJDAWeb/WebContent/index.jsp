@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%@page import="org.apache.log4j.Logger"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     	               "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -10,8 +10,10 @@
     	<title>eJDA Logon</title>
         <link href="css/styles.css" rel="stylesheet" type="text/css" />
     	<%
+    		Logger logger = Logger.getLogger("JspLog");
 	    	String getResult = "";
     		getResult = (String)request.getAttribute("messages");
+    		logger.debug("Index >> " + getResult);
     		System.out.println("Index >> " + getResult);
     		
     		String errMessage ="กรุณาใส่ User และ Password";

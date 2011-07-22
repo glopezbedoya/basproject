@@ -6,14 +6,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
+import com.ejda.constant.EJDAConstant;
 import com.tcd.ejda.dao.UserDAO;
 import com.tcd.ejda.dao.UserDAOImpl;
+
 
 /**
  * Servlet implementation class CheckUsernamePasswordServlet
  */
 public class CheckUsernamePasswordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private Logger log = Logger.getLogger(CheckUsernamePasswordServlet.class);
    
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -29,19 +34,21 @@ public class CheckUsernamePasswordServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("[ Start : CheckUsernamePasswordServlet ]");
+		log.debug("[ Start : CheckUsernamePasswordServlet ]");
 		String username = request.getParameter("user");
 		String pwd = request.getParameter("pwd");
-		System.out.println(" get Parameter : " + username + ":" + pwd);
+		log.debug(" get Parameter : " + username + ":" + pwd);
 		
 		UserDAO usr = new UserDAOImpl();
 		String result = usr.checkUsernamePassword("", username, pwd);
-		System.out.println("result >>> " + result);
-		
+		log.debug("result >>> " + result);
+		result = "N";
 		if (result.equals("N")){
-			response.sendRedirect("user_screen.jsp");
+//			request.getSession().setAttribute(EJDAConstant.SESSION_NAME.PAGE, "user_screen.jsp");
+			request.getSession().setAttribute(EJDAConstant.SESSION_NAME.PAGE, "role_menu.jsp");
+			response.sendRedirect("index2.jsp");
 		}else{
-			System.out.println("else >> " + result);
+			log.debug("else >> " + result);
 			request.setAttribute("messages",result);
 			response.sendRedirect("index.jsp");
 		}
