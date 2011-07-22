@@ -19,5 +19,9 @@
 <jsp:include page="header.jsp" flush="true" />
 <jsp:include page="<%=(String)request.getSession().getAttribute(EJDAConstant.SESSION_NAME.PAGE)%>" flush="true" />
 
+<script  type="text/javascript">
+	var MenuBar1 = new Spry.Widget.MenuBar("MenuBar1", {imgDown:"SpryAssets/SpryMenuBarDownHover.gif", 
+		imgRight:"SpryAssets/SpryMenuBarRightHover.gif"});
+</script>
 </body>
 </html>
