@@ -2,7 +2,9 @@
 <%@page import="org.apache.log4j.Logger"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@page import="com.ejda.constant.EJDAConstant"%><html>
+<%@page import="com.ejda.constant.EJDAConstant"%>
+<script language="javascript" src="js/jquery-1.6.2.min.js" />
+<html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>eJDA Role Menu</title>
@@ -10,6 +12,8 @@
 	<script src="SpryAssets/SpryMenuBar.js" type="text/javascript"></script>
 	<link href="SpryAssets/SpryMenuBarHorizontal.css" rel="stylesheet" type="text/css" />
 </head>
+
+
 <body>
 <% 
 	Logger log = Logger.getLogger("JspLog");
