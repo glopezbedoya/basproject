@@ -1,10 +1,13 @@
 package com.tcd.ejda.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
+
+import org.apache.log4j.Logger;
 
 import com.tcd.ejda.connection.JDBCConnection;
 import com.tcd.ejda.model.MenuModel;
@@ -14,7 +17,9 @@ public class TransactionLogDAOImpl implements TransactionLogDAO {
 	
 	JDBCConnection db = new JDBCConnection();
 	
-	public void insertTranLog(TransactionLogModel tranlog){
+	private Logger log = Logger.getLogger(TransactionLogDAOImpl.class); 
+	
+	public void insertTranLog(TransactionLogModel tranlog) throws SQLException{
 		// TODO Auto-generated method stub
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -26,20 +31,19 @@ public class TransactionLogDAOImpl implements TransactionLogDAO {
 //		sqlupd.append("INSERT INTO EJDA_MENU()")
 		StringBuffer sql = new StringBuffer();
 		sql.append("insert into JDA_TRANSACTION_LOG (TRANS_ID, TRANS_ACTION, DESCRIPTION, IP_ADDRESS, TRANS_DATE, TRANS_BY) values (?, ?, ?, ?, ?, ?)");
-		System.out.println("sql >> " + sql.toString());
+		log.debug("sql >> " + sql.toString());
 		try {
-		ps = conn.prepareStatement(sql.toString());
-		int parameterIndex = 1;
-		ps.setString(parameterIndex++, tranlog.getTranId());
-		ps.setString(parameterIndex++, tranlog.getTranAction());
-		ps.setString(parameterIndex++, tranlog.getDescription());
-		ps.setString(parameterIndex++, tranlog.getIpAddress());
-		ps.setDate(parameterIndex++, tranlog.getTranDate());
-		ps.setString(parameterIndex++, tranlog.getTranBy());
-		rs = ps.executeQuery();
+			ps = conn.prepareStatement(sql.toString());
+			int parameterIndex = 1;
+			ps.setString(parameterIndex++, tranlog.getTranId());
+			ps.setString(parameterIndex++, tranlog.getTranAction());
+			ps.setString(parameterIndex++, tranlog.getDescription());
+			ps.setString(parameterIndex++, tranlog.getIpAddress());
+			ps.setDate(parameterIndex++, tranlog.getTranDate());
+			ps.setString(parameterIndex++, tranlog.getTranBy());
+			rs = ps.executeQuery();
 		
-//		
-		System.out.println("Connection session: ");
+			log.debug("Connection session: ");
 		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -70,5 +74,69 @@ public class TransactionLogDAOImpl implements TransactionLogDAO {
 				
 			}
 		}
+	}
+	
+	public Vector searchTransactionLog(TransactionLogModel tranLogCri) throws SQLException{
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Vector resultVt = new Vector();
+		try{
+			conn = db.getConnection();
+			StringBuffer sqlupd = new StringBuffer();
+//			sqlupd.append("INSERT INTO EJDA_MENU()")
+			StringBuffer sql = new StringBuffer();
+			sql.append("select l.TRANS_ID, l.TRANS_ACTION, l.DESCRIPTION, l.IP_ADDRESS, l.TRANS_DATE, l.TRANS_BY, u.FIRST_NAME, u.LAST_NAME, u.DEPARTMENT from jda_transaction_log l " +
+						" join jda_user u on u.iv_user = l.trans_by ");
+			log.debug("sql >> " + sql.toString());
+			
+			ps = conn.prepareStatement(sql.toString());
+//			int parameterIndex = 1;
+			rs = ps.executeQuery();
+			while(rs.next()){
+				TransactionLogModel tranLogM = new TransactionLogModel();
+				tranLogM.setTranId(rs.getString("TRANS_ID"));
+				tranLogM.setTranAction(rs.getString("TRANS_ACTION"));
+				tranLogM.setDescription(rs.getString("DESCRIPTION"));
+				tranLogM.setIpAddress(rs.getString("IP_ADDRESS"));
+				tranLogM.setTranDate(rs.getDate("TRANS_DATE"));
+				tranLogM.setTranBy(rs.getString("TRANS_BY"));
+				tranLogM.setFirstName(rs.getString("FIRST_NAME"));
+				tranLogM.setLastName(rs.getString("LAST_NAME"));
+				tranLogM.setDepartment(rs.getString("DEPARTMENT"));
+				resultVt.add(tranLogM);
+			}
+			
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				if (conn != null)
+					conn.commit();
+			} catch (Exception e) {
+			}
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		return resultVt;
+		
 	}
 }
