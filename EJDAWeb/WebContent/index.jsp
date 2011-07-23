@@ -54,7 +54,10 @@
       </td></tr>
       <tr><td align="center">
                 <table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
-                <form name="form1" method="post" action="/EJDAWeb/CheckUsernamePasswordServlet">
+                <form name="form1" method="post" action="/EJDAWeb/EJDAControler">
+                	<input type="hidden" name="ejdaAction" value="CheckUsernamePasswordAction"> 
+					<input type="hidden" name="ejdaMethod" value="checkUser"> 
+					<input type="hidden" name="screenName" value="transactionLog.jsp">
                 <tr>
                     <td height="10" align="center"><table width="400" cellspacing="1" cellpadding="1">
                       <tr>

@@ -29,4 +29,14 @@
     <servlet-name>CheckUsernamePasswordServlet</servlet-name>
     <url-pattern>/CheckUsernamePasswordServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EJDAControler</display-name>
+    <servlet-name>EJDAControler</servlet-name>
+    <servlet-class>com.ejda.servlet.EJDAControler</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EJDAControler</servlet-name>
+    <url-pattern>/EJDAControler</url-pattern>
+  </servlet-mapping>
 </web-app>
