@@ -8,10 +8,25 @@ public class RoleModel {
 	private String role_name;
 	private String create_by;
 	private String update_by;
+	private String show_edit;
+	private String show_del;
 	
 	private Date create_date;
 	private Date update_date;
 	
+	
+	public String getShow_edit() {
+		return show_edit;
+	}
+	public void setShow_edit(String showEdit) {
+		show_edit = showEdit;
+	}
+	public String getShow_del() {
+		return show_del;
+	}
+	public void setShow_del(String showDel) {
+		show_del = showDel;
+	}
 	public String getRole_id() {
 		return role_id;
 	}
