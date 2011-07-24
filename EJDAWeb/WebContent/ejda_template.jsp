@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@page import="com.ejda.constant.EJDAConstant"%>
-<script language="javascript" src="js/jquery-1.6.2.min.js" />
+
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -11,6 +11,9 @@
 	<link href="css/styles.css" rel="stylesheet" type="text/css" />
 	<script src="SpryAssets/SpryMenuBar.js" type="text/javascript"></script>
 	<link href="SpryAssets/SpryMenuBarHorizontal.css" rel="stylesheet" type="text/css" />
+	<script language="javascript" src="js/jquery-1.6.2.min.js" type="text/javascript" ></script>
+	<script language="javascript" src="js/application.js" type="text/javascript" ></script>
+	
 </head>
 
 
@@ -18,10 +21,17 @@
 <% 
 	Logger log = Logger.getLogger("JspLog");
 	log.debug("Page = "+(String)request.getSession().getAttribute(EJDAConstant.SESSION_NAME.PAGE));
+	String screenName = (String)request.getSession().getAttribute(EJDAConstant.SESSION_NAME.PAGE);
+	log.debug("req = "+request.getSession().getAttribute("screenName"));
+	if(request.getParameter("screenName") != null){
+		screenName = (String)request.getParameter("screenName");
+	}
+	log.debug("screenName = "+screenName);
+		
 
 %>
 <jsp:include page="header.jsp" flush="true" />
-<jsp:include page="<%=(String)request.getSession().getAttribute(EJDAConstant.SESSION_NAME.PAGE)%>" flush="true" />
+<jsp:include page="<%=screenName%>" flush="true" />
 
 <script  type="text/javascript">
 	var MenuBar1 = new Spry.Widget.MenuBar("MenuBar1", {imgDown:"SpryAssets/SpryMenuBarDownHover.gif", 
