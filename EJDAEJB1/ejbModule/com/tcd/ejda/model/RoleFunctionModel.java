@@ -14,8 +14,25 @@ public class RoleFunctionModel {
 	private String func_update;
 	private String func_inqs;
 	
+	private String menu_status;
+	private String menu_name;
+	
 	private Date create_date;
 	private Date update_date;
+	
+	
+	public String getMenu_status() {
+		return menu_status;
+	}
+	public void setMenu_status(String menuStatus) {
+		menu_status = menuStatus;
+	}
+	public String getMenu_name() {
+		return menu_name;
+	}
+	public void setMenu_name(String menuName) {
+		menu_name = menuName;
+	}
 	public String getRole_func_id() {
 		return role_func_id;
 	}
