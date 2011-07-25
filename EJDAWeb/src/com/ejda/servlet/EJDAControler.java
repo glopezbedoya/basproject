@@ -31,6 +31,7 @@ public class EJDAControler extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		doPost(request,response);
 	}
 
 	/**
@@ -47,12 +48,13 @@ public class EJDAControler extends HttpServlet {
 			ejdaAction = (String)request.getParameter("ejdaAction");
 			ejdaMethod = (String)request.getParameter("ejdaMethod");
 			screenName = (String)request.getParameter("screenName");
-			log.debug("ejdaAction###jsp : "+screenName);
+			log.debug("screenName###jsp : "+screenName);
 			log.debug("ejdaAction###java : "+ejdaAction);
-			log.debug("ejdaAction###method : "+ejdaMethod);
+			log.debug("screenName###method : "+ejdaMethod);
 			if(screenName != null && ejdaAction != null && ejdaMethod != null){
-				o = Class.forName("com.ejda.action." + ejdaAction).newInstance();
-				if(((AbstractAction) o).methodAction(ejdaMethod,request)){
+				o = Class.forName("com.ejda.action." + ejdaAction + "Action").newInstance();
+				((AbstractAction) o).setRequest(request);
+				if(((AbstractAction) o).methodAction(ejdaMethod)){
 					//log.debug("### clear Session Unnecessary ###");
 //						((AbstractAction) o).clearSessionNotUsed();
 					log.debug("Success");
@@ -60,7 +62,11 @@ public class EJDAControler extends HttpServlet {
 					response.sendRedirect(EJDAConstant.PAGE.INDEX_PAGE);
 				}
 			}else{
-				log.debug("Error in ejdaAction");
+				o = Class.forName("com.ejda.action." + ejdaAction + "Action").newInstance();
+				((AbstractAction) o).setRequest(request);
+				((AbstractAction) o).init();
+				request.getSession().setAttribute(EJDAConstant.SESSION_NAME.PAGE, screenName);
+				response.sendRedirect(EJDAConstant.PAGE.INDEX_PAGE);
 			}				
 			
 		} catch (Exception e) {

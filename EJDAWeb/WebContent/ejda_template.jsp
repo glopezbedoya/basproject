@@ -12,7 +12,7 @@
 	<script src="SpryAssets/SpryMenuBar.js" type="text/javascript"></script>
 	<link href="SpryAssets/SpryMenuBarHorizontal.css" rel="stylesheet" type="text/css" />
 	<script language="javascript" src="js/jquery-1.6.2.min.js" type="text/javascript" ></script>
-	<script language="javascript" src="js/application.js" type="text/javascript" ></script>
+	<script language="javascript" src="js/ejdaScript.js" type="text/javascript" ></script>
 	
 </head>
 
@@ -22,11 +22,11 @@
 	Logger log = Logger.getLogger("JspLog");
 	log.debug("Page = "+(String)request.getSession().getAttribute(EJDAConstant.SESSION_NAME.PAGE));
 	String screenName = (String)request.getSession().getAttribute(EJDAConstant.SESSION_NAME.PAGE);
-	log.debug("req = "+request.getSession().getAttribute("screenName"));
-	if(request.getParameter("screenName") != null){
+	//log.debug("req = "+request.getSession().getAttribute("screenName"));
+	/*if(request.getParameter("screenName") != null){
 		screenName = (String)request.getParameter("screenName");
 	}
-	log.debug("screenName = "+screenName);
+	log.debug("screenName = "+screenName);*/
 		
 
 %>
