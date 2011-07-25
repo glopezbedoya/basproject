@@ -24,11 +24,10 @@ public class CheckUsernamePasswordAction extends AbstractAction {
 	}
 
 	@Override
-	public boolean methodAction(String ejdaAction, HttpServletRequest request) {
+	public boolean methodAction(String ejdaMethod) {
 		// TODO Auto-generated method stub
-		
-		if(ejdaAction.equalsIgnoreCase("checkUser")){
-			return checkUser(request);
+		if(ejdaMethod.equalsIgnoreCase("checkUser")){
+			return checkUser();
 		}
 		
 		
@@ -41,13 +40,13 @@ public class CheckUsernamePasswordAction extends AbstractAction {
 		return false;
 	}
 	
-	public boolean checkUser(HttpServletRequest request){
+	public boolean checkUser(){
 		
 		boolean result = false;
 		// TODO Auto-generated method stub
 		log.debug("[ Start : CheckUsernamePasswordServlet ]");
-		String username = request.getParameter("user");
-		String pwd = request.getParameter("pwd");
+		String username = getRequest().getParameter("user");
+		String pwd = getRequest().getParameter("pwd");
 		log.debug(" get Parameter : " + username + ":" + pwd);
 		
 		UserDAO usr = new UserDAOImpl();

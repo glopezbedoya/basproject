@@ -70,7 +70,8 @@ public class MenuServlet extends HttpServlet {
 									
 								}
 				
-								div += "<li><a href=\"#\">" + model.getMenu_name() + "</a></li>";
+								div += "<li><a href=\"./EJDAControler?screenName=transactionLog.jsp&ejdaAction=TransactionLog\">" + model.getMenu_name() + "</a></li>";
+								
 								count=1;
 								
 							}
