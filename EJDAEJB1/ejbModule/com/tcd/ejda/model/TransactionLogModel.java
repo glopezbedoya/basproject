@@ -1,6 +1,6 @@
 package com.tcd.ejda.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class TransactionLogModel {
 	
@@ -13,6 +13,10 @@ public class TransactionLogModel {
 	private String firstName;
 	private String lastName;
 	private String department;
+	private Date tranDateFrom;
+	private Date tranDateTo;
+	private String menuId;
+	private String userName;
 	
 	public String getTranId() {
 		return tranId;
@@ -67,6 +71,30 @@ public class TransactionLogModel {
 	}
 	public void setDepartment(String department) {
 		this.department = department;
+	}
+	public Date getTranDateFrom() {
+		return tranDateFrom;
+	}
+	public void setTranDateFrom(Date tranDateFrom) {
+		this.tranDateFrom = tranDateFrom;
+	}
+	public Date getTranDateTo() {
+		return tranDateTo;
+	}
+	public void setTranDateTo(Date tranDateTo) {
+		this.tranDateTo = tranDateTo;
+	}
+	public String getMenuId() {
+		return menuId;
+	}
+	public void setMenuId(String menuId) {
+		this.menuId = menuId;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	

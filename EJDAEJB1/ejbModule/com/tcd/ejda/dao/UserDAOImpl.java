@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import com.tcd.ejda.connection.JDBCConnection;
-import com.tcd.ejda.model.UserModel;
+import com.tcd.ejda.model.UsrModel;
 
 public class UserDAOImpl implements UserDAO {
 	
@@ -102,7 +102,7 @@ public class UserDAOImpl implements UserDAO {
 		if (rs.next()) {
 			
 			if(rs.getString("USER_STATUS").equals("N")){ //Not activate (can use)
-				UserModel um = new UserModel();
+				UsrModel um = new UsrModel();
 				um.setIV_USER(rs.getString("IV_USER"));
 				um.setUSERNAME(rs.getString("USER_NAME"));
 				um.setFIRSTNAME(rs.getString("FIRST_NAME"));
