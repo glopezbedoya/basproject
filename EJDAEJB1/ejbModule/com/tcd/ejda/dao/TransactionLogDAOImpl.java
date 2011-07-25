@@ -39,7 +39,7 @@ public class TransactionLogDAOImpl implements TransactionLogDAO {
 			ps.setString(parameterIndex++, tranlog.getTranAction());
 			ps.setString(parameterIndex++, tranlog.getDescription());
 			ps.setString(parameterIndex++, tranlog.getIpAddress());
-			ps.setDate(parameterIndex++, tranlog.getTranDate());
+			ps.setDate(parameterIndex++, new Date(tranlog.getTranDate().getTime()));
 			ps.setString(parameterIndex++, tranlog.getTranBy());
 			rs = ps.executeQuery();
 		
