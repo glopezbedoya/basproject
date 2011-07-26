@@ -6,9 +6,9 @@
 <%@page import="com.tcd.ejda.model.TransactionLogModel"%>
 <%@page import="com.ejda.sessionBean.TransactionLogBean"%>
 <%@page import="com.ejda.util.DisplayUtil"%><script  type="text/javascript">
-function searchButton(form){
+function buttonAction(form,action){
 	$('input[name=ejdaAction]').val('TransactionLog');
-	$('input[name=ejdaMethod]').val('doSearch');
+	$('input[name=ejdaMethod]').val(action);
 	$('input[name=screenName]').val('transactionLog.jsp');
 	form.submit();
 }
@@ -25,19 +25,6 @@ function changeSelectPage(form){
 	$('input[name=ejdaMethod]').val('doSearch');
 	$('input[name=screenName]').val('transactionLog.jsp');
 	$('input[name=page]').val($('select[name=selectPaging]').val());
-	form.submit();
-}
-function deleteButton(form){
-	var checkTranIdStr = '';
-	$('input[name=checkBox]').each(function (){
-		if($(this).attr('checked')){
-			checkTranIdStr += $(this).val() + ','; 
-		}
-	});
-	$('input[name=ejdaAction]').val('TransactionLog');
-	$('input[name=ejdaMethod]').val('doDelete');
-	$('input[name=screenName]').val('transactionLog.jsp');
-	$('input[name=checkTranId]').val(checkTranIdStr);
 	form.submit();
 }
 function checkBoxAll(){
@@ -63,7 +50,6 @@ function checkBoxAll(){
 	<input type="hidden" name="screenName" value="">
 	<input type="hidden" name="page" value="<%=tranLogBean.getValueListM().getAtPage() %>" />
 	<input type="hidden" name="volumePerPage" value="<%=tranLogBean.getValueListM().getItemsPerPage() %>" />
-	<input type="hidden" name="checkTranId" value="">
 	<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
 		<tr >
           <th colspan="4" align="left" bgcolor="#3399FF" scope="row"><div align="left"><span class="style1">&gt;&gt; &#3592;&#3633;&#3604;&#3585;&#3634;&#3619;&#3612;&#3641;&#3657;&#3651;&#3594;&#3657;&#3619;&#3632;&#3610;&#3610; &gt;&gt; &#3592;&#3633;&#3604;&#3585;&#3634;&#3619;&#3612;&#3641;&#3657;&#3651;&#3594;&#3657;&#3591;&#3634;&#3609;&#3619;&#3632;&#3610;&#3610;</span> </div></th>
@@ -118,7 +104,7 @@ function checkBoxAll(){
         </tr>
         <tr>
        		<th colspan="4" align="left" class="style1" scope="row">
-       			<%=DisplayUtil.displayButton("Search","onclick=\"searchButton(this.form)\"",false) %>
+       			<%=DisplayUtil.displayButton("Search","onclick=\"buttonAction(this.form,'doSearch')\"",false) %>
        		</th>
          </tr>
 		<!--Panging-->
@@ -213,7 +199,7 @@ function checkBoxAll(){
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td><div align="right">
-          	<%=DisplayUtil.displayButton("Delete","onclick=\"deleteButton(this.form)\"",false) %>
+          	<%=DisplayUtil.displayButton("Delete","onclick=\"buttonAction(this.form,'doDelete')\"",false) %>
           </div></td>
         </tr>
         <tr>
