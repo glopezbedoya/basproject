@@ -10,12 +10,19 @@ public class MenuModel {
 	private String create_by;
 	private String update_by;
 	private String menu_owner;
+	private String menu_linked;
 	
 	private Date create_date;
 	private Date update_date;
 	
 	private int menu_sort;
 	
+	public String getMenu_linked() {
+		return menu_linked;
+	}
+	public void setMenu_linked(String menuLinked) {
+		menu_linked = menuLinked;
+	}
 	public String getMenu_status() {
 		return menu_status;
 	}
