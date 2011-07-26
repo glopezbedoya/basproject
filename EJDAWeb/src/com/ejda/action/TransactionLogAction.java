@@ -165,8 +165,7 @@ public class TransactionLogAction extends AbstractAction {
 		log.debug("********** doDelete **********");
 		boolean result = false;
 		TransactionLogModel tranLogCri = new TransactionLogModel();
-		String checkTranId = (String)getRequest().getParameter("checkTranId");
-		String[] deleteTranId = checkTranId.split(",");
+		String[] deleteTranId = (String[])getRequest().getParameterValues("checkBox");
 		try{
 			TransactionLogDAO dao = new TransactionLogDAOImpl();
 			result = dao.deleteTransactionLog(deleteTranId);
