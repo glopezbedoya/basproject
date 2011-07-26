@@ -27,11 +27,31 @@ function changeSelectPage(form){
 	$('input[name=page]').val($('select[name=selectPaging]').val());
 	form.submit();
 }
+function deleteButton(form){
+	var checkTranIdStr = '';
+	$('input[name=checkBox]').each(function (){
+		if($(this).attr('checked')){
+			checkTranIdStr += $(this).val() + ','; 
+		}
+	});
+	$('input[name=ejdaAction]').val('TransactionLog');
+	$('input[name=ejdaMethod]').val('doDelete');
+	$('input[name=screenName]').val('transactionLog.jsp');
+	$('input[name=checkTranId]').val(checkTranIdStr);
+	form.submit();
+}
+function checkBoxAll(){
+	var check = $('input[name=checkAllBox]').attr('checked');
+	$('input[name=checkBox]').each(function (){
+		$(this).attr('checked',(check == 'checked')?true:false);
+	});
+}
 
 </script>
 <%
 	Logger log = Logger.getLogger("JspLog");
 	TransactionLogBean tranLogBean = (TransactionLogBean)request.getSession().getAttribute("TransactionLogBean");
+	TransactionLogModel tranLogModelSP = tranLogBean.getTranLogModelSP();
 	Vector tranLogVt = tranLogBean.getTranLogVt();
 	TransactionLogModel tranLogM = new TransactionLogModel();
 	String bgColor1 = "bordercolor=\"#F4F4F4\"";
@@ -43,6 +63,7 @@ function changeSelectPage(form){
 	<input type="hidden" name="screenName" value="">
 	<input type="hidden" name="page" value="<%=tranLogBean.getValueListM().getAtPage() %>" />
 	<input type="hidden" name="volumePerPage" value="<%=tranLogBean.getValueListM().getItemsPerPage() %>" />
+	<input type="hidden" name="checkTranId" value="">
 	<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
 		<tr >
           <th colspan="4" align="left" bgcolor="#3399FF" scope="row"><div align="left"><span class="style1">&gt;&gt; &#3592;&#3633;&#3604;&#3585;&#3634;&#3619;&#3612;&#3641;&#3657;&#3651;&#3594;&#3657;&#3619;&#3632;&#3610;&#3610; &gt;&gt; &#3592;&#3633;&#3604;&#3585;&#3634;&#3619;&#3612;&#3641;&#3657;&#3651;&#3594;&#3657;&#3591;&#3634;&#3609;&#3619;&#3632;&#3610;&#3610;</span> </div></th>
@@ -63,8 +84,8 @@ function changeSelectPage(form){
        			<span> Date From :</span>&nbsp;
        		</th>
        		<td>
-       			<%=DisplayUtil.displayInputTextBox("txtTranDateFrom","") %> - 
-       			<%=DisplayUtil.displayInputTextBox("txtTranDateTo","") %>
+       			<%=DisplayUtil.displayInputTextBox("txtTranDateFrom",tranLogModelSP.getTranDateFrom(),"") %> - 
+       			<%=DisplayUtil.displayInputTextBox("txtTranDateTo",tranLogModelSP.getTranDateTo(),"") %>
        		</td>
         </tr>
         <tr>
@@ -72,13 +93,13 @@ function changeSelectPage(form){
        			<span> User Name :</span>&nbsp;
        		</th>
        		<td>
-       			<%=DisplayUtil.displayInputTextBox("txtUserName","") %>
+       			<%=DisplayUtil.displayInputTextBox("txtUserName",tranLogModelSP.getUserName(),"") %>
        		</td>	          		
        		<th align="right" class="style1" scope="row">
        			<span> Department :</span>&nbsp;
        		</th>
        		<td>
-       			<%=DisplayUtil.displayInputTextBox("txtDepartment","") %>
+       			<%=DisplayUtil.displayInputTextBox("txtDepartment",tranLogModelSP.getDepartment(),"") %>
        		</td>	          		
         </tr>
         <tr>
@@ -86,18 +107,18 @@ function changeSelectPage(form){
        			<span> First Name :</span>&nbsp;
        		</th>
        		<td>
-       			<%=DisplayUtil.displayInputTextBox("txtFirstName","") %>
+       			<%=DisplayUtil.displayInputTextBox("txtFirstName",tranLogModelSP.getFirstName(),"") %>
        		</td>	          		
        		<th align="right" class="style1" scope="row">
        			<span> Last Name :</span>&nbsp;
        		</th>
        		<td>
-       			<%=DisplayUtil.displayInputTextBox("txtLastName","") %>
+       			<%=DisplayUtil.displayInputTextBox("txtLastName",tranLogModelSP.getLastName(),"") %>
        		</td>
         </tr>
         <tr>
        		<th colspan="4" align="left" class="style1" scope="row">
-          		<input type="button" name="search" value="ค้นหา" onclick="searchButton(this.form)" />
+       			<%=DisplayUtil.displayButton("Search","onclick=\"searchButton(this.form)\"",false) %>
        		</th>
          </tr>
 		<!--Panging-->
@@ -192,21 +213,21 @@ function changeSelectPage(form){
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td><div align="right">
-            <input name="Adduser" type="submit" id="Adduser" value="ลบที่เลือก" />
+          	<%=DisplayUtil.displayButton("Delete","onclick=\"deleteButton(this.form)\"",false) %>
           </div></td>
         </tr>
         <tr>
           <th scope="row">&nbsp;</th>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td align="right">จำนวนที่พบ 1,273 รายการ</td>
+          <td align="right">จำนวนที่พบ<%=tranLogBean.getValueListM().getCount() %> รายการ</td>
         </tr>
         <tr>
           <th colspan="4" scope="row"><table width="951" border="0" align="center" cellpadding="0" cellspacing="1">
             <tr>
               <th width="20" bgcolor="#0099CC" class="style13" scope="row">
                 <label>
-                  <input type="checkbox" name="checkAllBox" id="checkAllBox" />
+                  <input type="checkbox" name="checkAllBox" id="checkAllBox" onclick="checkBoxAll()"/>
                 </label>
               </th>
               <th width="67" bgcolor="#0099CC" class="style13" scope="row">User Name</th>
@@ -224,7 +245,7 @@ function changeSelectPage(form){
             			bgColor = (i%2 == 0)?bgColor1:bgColor2;
             %>
 			            <tr>
-			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" /></th>
+			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=tranLogM.getTranId() %>"/></th>
 			              <th <%=bgColor %> class="style17" scope="row"><%=tranLogM.getUserName() %></th>
 			              <td <%=bgColor %> class="style17"><%=tranLogM.getFirstName() + " " + tranLogM.getLastName() %></td>
 			              <td <%=bgColor %> class="style17"><%=tranLogM.getDepartment() %></td>
