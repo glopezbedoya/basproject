@@ -30,6 +30,7 @@ public class TransactionLogAction extends AbstractAction {
 		log.debug("*********** init ***********");
 		tranLogBean = getTranLogBean();
 		tranLogBean.setTranLogVt(new Vector<TransactionLogModel>());
+		tranLogBean.setTranLogModelSP(new TransactionLogModel());
 		ValueListModel valueListM = new ValueListModel();
 		valueListM.setReturnModel("TransactionLogModel");
 		tranLogBean.setValueListM(valueListM);
@@ -41,6 +42,8 @@ public class TransactionLogAction extends AbstractAction {
 		// TODO Auto-generated method stub
 		if(ejdaMethod.equalsIgnoreCase("doSearch")){
 			return doSearch();
+		}else if(ejdaMethod.equalsIgnoreCase("doDelete")){
+			return doDelete();
 		}
 		
 		return false;
@@ -54,7 +57,7 @@ public class TransactionLogAction extends AbstractAction {
 	
 	public boolean doSearch(){
 		log.debug("*********** doSearch ***********");
-		log.debug("ejdaMethod = "+getRequest().getParameter("ejdaMethod"));
+//		log.debug("ejdaMethod = "+getRequest().getParameter("ejdaMethod"));
 		boolean result = false;
 		setCriteriaPameter();
 		tranLogBean = getTranLogBean();
@@ -63,10 +66,6 @@ public class TransactionLogAction extends AbstractAction {
 		log.debug("getRequest().getParameter(Page)"+getRequest().getParameter("Page"));
 		try{
 			Vector tranLogVt = new Vector();
-			
-			
-//			TransactionLogDAO tranLog = new TransactionLogDAOImpl();
-//			tranLogVt = tranLog.searchTransactionLog(tranLogCri);
 			valueListM = tranLogBean.getValueListM();
 			valueListM.setSQL(this.setSQL(tranLogBean.tranLogModelSP));
 			valueListM.setParameters(getValueListParameters());
@@ -75,7 +74,7 @@ public class TransactionLogAction extends AbstractAction {
 			tranLogBean.setValueListM(valueListA.doSearch(valueListM));
 			tranLogBean.setTranLogVt(tranLogBean.getValueListM().getResult());
 			log.debug("tranLogVt.size = " + tranLogBean.getTranLogVt().size());
-			
+			log.debug("tranLogBean.getValueListM().getCount() = "+tranLogBean.getValueListM().getCount());
 			getRequest().getSession().removeAttribute("VALUE_LIST");
 			setTranLogBean(tranLogBean);
 			result = true;
@@ -101,13 +100,39 @@ public class TransactionLogAction extends AbstractAction {
 	
 	private void setCriteriaPameter(){
 		TransactionLogModel tranLogCri = new TransactionLogModel();
-		tranLogCri.setTranDateFrom(parseParameterToDate(getRequest().getParameter("txtTranDateFrom")));
-		tranLogCri.setTranDateTo(parseParameterToDate(getRequest().getParameter("txtTranDateTo")));
+		tranLogCri.setTranDateFrom(getRequest().getParameter("txtTranDateFrom"));
+		tranLogCri.setTranDateTo(getRequest().getParameter("txtTranDateTo"));
 		tranLogCri.setUserName(getRequest().getParameter("txtUserName"));
 		tranLogCri.setFirstName(getRequest().getParameter("txtFirstName"));
 		tranLogCri.setLastName(getRequest().getParameter("txtLastName"));
 		
 		getTranLogBean().setTranLogModelSP(tranLogCri);
+	}
+	
+	private String setSQL(TransactionLogModel tranLogCri){
+		StringBuffer sql = new StringBuffer();
+		try{
+			sql.append(EJDAConstant.SQL.TRAN_LOG_SQL);
+			
+			if(!"".equals(tranLogCri.getUserName()) || !"".equals(tranLogCri.getFirstName()) || !"".equals(tranLogCri.getLastName())
+				|| (!"".equals(tranLogCri.getTranDateFrom()) && !"".equals(tranLogCri.getTranDateTo()))){
+				sql.append(" WHERE ");
+				if(!"".equals(tranLogCri.getUserName()))
+					sql.append(" U.USER_NAME = ? AND ");
+				if(!"".equals(tranLogCri.getFirstName()))
+					sql.append(" U.FIRST_NAME = ? AND ");
+				if(!"".equals(tranLogCri.getLastName()))
+					sql.append(" U.LAST_NAME = ? AND ");
+				if(!"".equals(tranLogCri.getTranDateFrom()) && !"".equals(tranLogCri.getTranDateTo())){
+					sql.append(" L.TRANS_DATE BETWEEN TO_DATE(?,'dd/mm/yyyy HH24:MI') AND TO_DATE(?,'dd/mm/yyyy HH24:MI') AND ");
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		sql = removeWasteSQL(sql);
+		return sql.toString();
 	}
 	
 	protected Vector getValueListParameters() {
@@ -124,48 +149,36 @@ public class TransactionLogAction extends AbstractAction {
 				parameters.add("%"+tranLogCri.getFirstName()+"%");
 			}
 			if(!"".equals(tranLogCri.getLastName().trim())) {
-				log.debug("First Name = "+tranLogCri.getLastName());
+				log.debug("Last Name = "+tranLogCri.getLastName());
 				parameters.add("%"+tranLogCri.getLastName()+"%");
+			}
+			if(!"".equals(tranLogCri.getTranDateFrom()) && !"".equals(tranLogCri.getTranDateTo())){
+				parameters.add(tranLogCri.getTranDateFrom() + "00:00");
+				parameters.add(tranLogCri.getTranDateTo() + "23:59");
 			}
 		}
 		log.info("parameters.size() = "+parameters.size());
 		return parameters;
 	}
 	
-	private String setSQL(TransactionLogModel tranLogCri){
-		StringBuffer sql = new StringBuffer();
+	public boolean doDelete(){
+		log.debug("********** doDelete **********");
+		boolean result = false;
+		TransactionLogModel tranLogCri = new TransactionLogModel();
+		String checkTranId = (String)getRequest().getParameter("checkTranId");
+		String[] deleteTranId = checkTranId.split(",");
 		try{
-			sql.append(EJDAConstant.SQL.TRAN_LOG_SQL);
+			TransactionLogDAO dao = new TransactionLogDAOImpl();
+			result = dao.deleteTransactionLog(deleteTranId);
+			result = doSearch();
 			
-			if(!"".equals(tranLogCri.getUserName()) || !"".equals(tranLogCri.getFirstName()) || !"".equals(tranLogCri.getLastName())
-				|| (null != tranLogCri.getTranDateFrom() && null != tranLogCri.getTranDateTo())){
-				sql.append(" WHERE ");
-				if(!"".equals(tranLogCri.getUserName()))
-					sql.append(" U.USER_NAME = ? AND ");
-				if(!"".equals(tranLogCri.getFirstName()))
-					sql.append(" U.FIRST_NAME = ? AND ");
-				if(!"".equals(tranLogCri.getLastName()))
-					sql.append(" U.LAST_NAME = ? AND ");
-			}
-//			if(!"".equals(marketingCode.trim()) || !"".equals(marketingName.trim()) || !"".equals(applicationCode.trim())){
-//				sql.append(" WHERE ");
-//				if(!"".equals(marketingCode.trim())){
-//					sql.append(" UPPER(CMR_CODE) = ? AND ");
-//				}
-//				if(!"".equals(marketingName.trim())){
-//					sql.append(" UPPER(CMR_NAME_TH) LIKE ? AND");
-//				}
-//				if(!"".equals(applicationCode.trim())){
-//					sql.append(" MATCH_APP_CODE = ? AND ");
-//				}
-//			}
-		}catch(Exception e){
+			log.debug("result = "+result);
+		}catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
 		}
 		
-		sql = removeWasteSQL(sql);
-		return sql.toString();
+		return result;
 	}
-	
 	
 }

@@ -85,17 +85,14 @@ public class ValueListAction extends AbstractAction {
 				valueListM = new ValueListModel();
 			}
 			checkItemPerPage(valueListM);
-			log.debug("test1");
 //			String orderBy = getRequest().getParameter("orderBy");
 //			if(null != orderBy){
 //				valueListM.setOrderBy(orderBy);
 //			}
-//			log.debug("test2");
 //			String orderScheme = getRequest().getParameter("orderScheme");
 //			if(null != orderScheme){
 //				valueListM.setOrderScheme(orderScheme);
 //			}
-			log.debug("test3");
 			ValueListDAO valueListDAO = new ValueListDAOImpl();
 			valueListM = valueListDAO.getResult(valueListM);
 			
