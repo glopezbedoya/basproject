@@ -42,9 +42,12 @@ public class DisplayUtil {
 		return buttonStr.toString();
 	}
 	
-	public static String displayInputTextBox(String name,String script){
+	public static String displayInputTextBox(String name,String value,String script){
 		StringBuffer textBoxStr = new StringBuffer();
-		textBoxStr.append("<input name=\""+name+"\" type=\"text\" "+script+" />");
+		if(null == value || "null".equalsIgnoreCase(value)){
+			value = "";
+		}
+		textBoxStr.append("<input name=\""+name+"\" value=\""+value+"\" type=\"text\" "+script+" />");
 		return textBoxStr.toString();
 	}
 }
