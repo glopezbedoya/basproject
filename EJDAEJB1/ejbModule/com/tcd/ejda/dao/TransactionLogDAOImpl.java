@@ -35,7 +35,7 @@ public class TransactionLogDAOImpl implements TransactionLogDAO {
 		try {
 			ps = conn.prepareStatement(sql.toString());
 			int parameterIndex = 1;
-			ps.setString(parameterIndex++, tranlog.getTranId());
+			ps.setInt(parameterIndex++, tranlog.getTranId());
 			ps.setString(parameterIndex++, tranlog.getTranAction());
 			ps.setString(parameterIndex++, tranlog.getDescription());
 			ps.setString(parameterIndex++, tranlog.getIpAddress());
@@ -95,7 +95,7 @@ public class TransactionLogDAOImpl implements TransactionLogDAO {
 			rs = ps.executeQuery();
 			while(rs.next()){
 				TransactionLogModel tranLogM = new TransactionLogModel();
-				tranLogM.setTranId(rs.getString("TRANS_ID"));
+				tranLogM.setTranId(rs.getInt("TRANS_ID"));
 				tranLogM.setTranAction(rs.getString("TRANS_ACTION"));
 				tranLogM.setDescription(rs.getString("DESCRIPTION"));
 				tranLogM.setIpAddress(rs.getString("IP_ADDRESS"));
@@ -138,5 +138,56 @@ public class TransactionLogDAOImpl implements TransactionLogDAO {
 		}
 		return resultVt;
 		
+	}
+	
+	public boolean deleteTransactionLog(String[] tranId) throws SQLException{
+		boolean result = false;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try{
+			StringBuffer sql = new StringBuffer();
+			conn = db.getConnection();
+			sql.append("DELETE FROM JDA_TRANSACTION_LOG WHERE TRANS_ID in (");
+			for(int i=0;i<tranId.length;i++){
+				if(i != tranId.length-1){
+					sql.append("?,");
+				}else{
+					sql.append("?");
+				}
+			}
+			sql.append(")");
+			log.debug("deleteTransactionLog sql >> "+sql.toString());
+			ps = conn.prepareStatement(sql.toString());
+			int parameterIndex = 1;
+			for(int i=0;i<tranId.length;i++){
+				log.debug("tranId = "+tranId);
+				ps.setString(parameterIndex++, tranId[i]);
+			}
+			int deleteRow = ps.executeUpdate();
+			log.debug("deleteRow = "+deleteRow);
+			result = true;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				if (conn != null)
+					conn.commit();
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		return result;
 	}
 }
