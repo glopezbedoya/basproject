@@ -1,19 +1,23 @@
 package com.tcd.ejda.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
 import com.tcd.ejda.connection.JDBCConnection;
+import com.tcd.ejda.model.RoleModel;
+import com.tcd.ejda.model.UserRoleModel;
 import com.tcd.ejda.model.UsrModel;
+import org.apache.log4j.Logger;
 
 public class UserDAOImpl implements UserDAO {
 	
 
 	JDBCConnection db = new JDBCConnection();
-	
+	private Logger log = Logger.getLogger(UserDAOImpl.class);
 	@Override
 	public String checkUsernamePassword(String ivUser, String username, String pwd) {
 		// TODO Auto-generated method stub
@@ -30,7 +34,7 @@ public class UserDAOImpl implements UserDAO {
 		
 		sqlusr.append("SELECT  IV_USER, USER_NAME, USER_COUNT FROM JDA_USER WHERE UPPER(USER_NAME) = ? ");
 		try {
-			System.out.println("sqlusr >> " + sqlusr.toString());
+			log.debug("sqlusr >> " + sqlusr.toString());
 			ps = conn.prepareStatement(sqlusr.toString());
 			ps.setString(1,username.toUpperCase());
 			
@@ -44,7 +48,7 @@ public class UserDAOImpl implements UserDAO {
 				
 			}
 			
-			System.out.println("[checkUsernamePassword : result ] "+result);
+			log.debug("[checkUsernamePassword : result ] "+result);
 		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -90,13 +94,13 @@ public class UserDAOImpl implements UserDAO {
 		sql.append("USER_IP, USER_COUNT, EFFECTIVE_DATE, EXPIRY_DATE, CREATE_DATE, CREATE_BY, UPDATE_DATE FROM JDA_USER ");
 		sql.append("WHERE UPPER(USER_NAME) = ? AND PASSWORD = ? ");
 		
-		System.out.println("sql >> " + sql.toString());
+		log.debug("sql >> " + sql.toString());
 		try {
 		ps = conn.prepareStatement(sql.toString());
-		System.out.println("---- 1 " + user_name.toUpperCase() + ":" + pwd);
+		log.debug("---- 1 " + user_name.toUpperCase() + ":" + pwd);
 		ps.setString(1, user_name.toUpperCase());
 		ps.setString(2, pwd);
-		System.out.println("---- 2 " + user_name.toUpperCase() + ":" + pwd);
+		log.debug("---- 2 " + user_name.toUpperCase() + ":" + pwd);
 		rs = ps.executeQuery();
 		
 		if (rs.next()) {
@@ -107,7 +111,7 @@ public class UserDAOImpl implements UserDAO {
 				um.setUSERNAME(rs.getString("USER_NAME"));
 				um.setFIRSTNAME(rs.getString("FIRST_NAME"));
 				vc.add(um);
-				System.out.println("IV_USER >>> " + rs.getString("IV_USER") + ":"
+				log.debug("IV_USER >>> " + rs.getString("IV_USER") + ":"
 						+ rs.getString("IV_USER") + ":" + rs.getString("IV_USER"));
 				
 				if (updateStatusActivate(rs.getString("IV_USER"),rs.getString("USER_NAME"), conn)){
@@ -198,7 +202,7 @@ public class UserDAOImpl implements UserDAO {
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("UPDATE JDA_USER SET USER_COUNT = USER_COUNT + 1 WHERE UPPER(USER_NAME) = ? ");
-		System.out.println("sql updateCountUser >>> " + sql);
+		log.debug("sql updateCountUser >>> " + sql);
 		try {
 			ps = conn.prepareStatement(sql.toString());
 			ps.setString(1, user_name.toUpperCase());
@@ -207,14 +211,14 @@ public class UserDAOImpl implements UserDAO {
 			if (rsInt > 0) {
 				blSuccess = true;
 			}
-			System.out.println(" rsInt = " +rsInt );
+			log.debug(" rsInt = " +rsInt );
 		} catch (SQLException e) {
 			// TODO Auto-generated catch blockd
 			e.printStackTrace();
 		} finally {
 			try {
 				if (conn != null)
-					System.out.println("commit");
+					log.debug("commit");
 					conn.commit();
 			} catch (Exception e) {
 			}
@@ -243,7 +247,7 @@ public class UserDAOImpl implements UserDAO {
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("UPDATE JDA_USER SET USER_STATUS = 'L', USER_COUNT = 0 WHERE IV_USER = ? AND UPPER(USER_NAME) = ? ");
-		System.out.println("lockedUser >> " + sql);
+		log.debug("lockedUser >> " + sql);
 		try {
 			ps = conn.prepareStatement(sql.toString());
 			ps.setString(1, iv_user);
@@ -281,4 +285,391 @@ public class UserDAOImpl implements UserDAO {
 		
 		return blSuccess;
 	}
+	@Override
+	public boolean addNewUser(UsrModel usrmodel, Vector role) throws SQLException {
+		// TODO Auto-generated method stub
+		boolean blSuccess = false;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		conn = db.getConnection();
+		String jda_id = "";
+		//conn.setAutoCommit(false);
+		log.debug("Strat : add New User Result >> " + usrmodel.getIV_USER());
+		log.debug("Strat : add New User Result >> " + usrmodel.getUSERNAME());
+		log.debug("Strat : add New User Result >> " + usrmodel.getPWD());
+		log.debug("Strat : add New User Result >> " + usrmodel.getFIRSTNAME());
+		log.debug("Strat : add New User Result >> " + usrmodel.getLASTNAME());
+		log.debug("Strat : add New User Result >> " + usrmodel.getDEPARTMENT());
+		log.debug("Strat : add New User Result >> " + usrmodel.getUSER_IP());
+		log.debug("Strat : add New User Result >> " + usrmodel.getEFFECTIVE_DATE());
+		log.debug("Strat : add New User Result >> " + usrmodel.getEXPIRY_DATE());
+		log.debug("Strat : add New User Result >> " + usrmodel.getCreate_by());
+		log.debug("Strat : add New User Result >> " + usrmodel.getUpdate_by());
+	
+		log.debug("role.size : " + role.size());
+		try {
+			StringBuffer sqlSeq = new StringBuffer();
+			sqlSeq.append("select USER_SEQ.nextval as SEQ from dual ");
+			
+			log.debug("sql insert>>>>>>>>>>>>  " + sqlSeq.toString());
+			ps = conn.prepareStatement(sqlSeq.toString());
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				
+				jda_id = "J" + rs.getString("SEQ");
+
+			}
+			rs.close();
+			
+			StringBuffer sql = new StringBuffer();
+			
+			sql.append("INSERT INTO JDA_USER (JDA_ID, IV_USER, USER_NAME, PASSWORD, FIRST_NAME, LAST_NAME, DEPARTMENT, ");
+			sql.append("USER_STATUS, USER_IP, USER_COUNT, EFFECTIVE_DATE, EXPIRY_DATE, CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY)");
+			sql.append("VALUES(?, ?, ?, ?, ?, ?, ?, 'N', ?, 0, ?, ?, SYSDATE, ?, SYSDATE, ?) ");
+					
+			log.debug("sql addNewUser 1>>> " + sql);
+			ps = conn.prepareStatement(sql.toString());
+			
+			int seq=1;
+			ps.setString(seq++, jda_id);
+			ps.setString(seq++, usrmodel.getIV_USER());
+			ps.setString(seq++, usrmodel.getUSERNAME());
+			ps.setString(seq++, usrmodel.getPWD());
+			ps.setString(seq++, usrmodel.getFIRSTNAME());
+			ps.setString(seq++, usrmodel.getLASTNAME());
+			ps.setString(seq++, usrmodel.getDEPARTMENT());
+			ps.setString(seq++, usrmodel.getUSER_IP());
+			ps.setDate(seq++, new Date(usrmodel.getEFFECTIVE_DATE().getTime()));
+			ps.setDate(seq++, new Date(usrmodel.getEXPIRY_DATE().getTime()));
+			ps.setString(seq++, usrmodel.getCreate_by());
+			ps.setString(seq++, usrmodel.getUpdate_by());
+			
+			int rsInt = ps.executeUpdate();
+			if (rsInt > 0) {
+				blSuccess = true;
+			}
+			
+			StringBuffer sql1 = new StringBuffer();
+			sql1.append("INSERT INTO JDA_USER_ROLE (JDA_ID, IV_USER, ROLE_ID, CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY )");
+			sql1.append("VALUES(?, ?, ?, SYSDATE, ?, SYSDATE, ?)");
+			log.debug("sql1 add New user >>> " + sql1.toString());
+			ps = conn.prepareStatement(sql1.toString());
+			
+			for (int i=0;i<role.size();i++){
+				int seq1=1;
+				
+				UserRoleModel um = (UserRoleModel)role.get(i);
+				log.debug("role result >> "+um.getIv_user());
+				log.debug("role result >> "+um.getRole_id());
+				log.debug("role result >> "+um.getCreate_by());
+				log.debug("role result >> "+um.getUpdate_by());
+				ps.setString(seq1++, jda_id);
+				ps.setString(seq1++, um.getIv_user());
+				ps.setString(seq1++, um.getRole_id());
+				ps.setString(seq1++, um.getCreate_by());
+				ps.setString(seq1++, um.getUpdate_by());
+				
+				int rsInt1 = ps.executeUpdate();
+				if (rsInt1 > 0) {
+					blSuccess = true;
+				}
+			}
+			log.debug(" rsInt = " +rsInt );
+		} catch (SQLException e) {
+			// TODO Auto-generated catch blockd
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					
+					conn.commit();
+			} catch (Exception e) {
+			}
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+
+		}
+		
+		
+		return blSuccess;
+	}
+	@Override
+	public boolean updateUser(UsrModel usrmodel, Vector role)
+			throws SQLException {
+		boolean blSuccess = false;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		conn = db.getConnection();
+		//conn.setAutoCommit(false);
+		log.debug("Strat : add New User Result >> " + usrmodel.getIV_USER());
+		log.debug("Strat : add New User Result >> " + usrmodel.getUSERNAME());
+		log.debug("Strat : add New User Result >> " + usrmodel.getPWD());
+		log.debug("Strat : add New User Result >> " + usrmodel.getFIRSTNAME());
+		log.debug("Strat : add New User Result >> " + usrmodel.getLASTNAME());
+		log.debug("Strat : add New User Result >> " + usrmodel.getDEPARTMENT());
+		log.debug("Strat : add New User Result >> " + usrmodel.getUSER_IP());
+		log.debug("Strat : add New User Result >> " + usrmodel.getEFFECTIVE_DATE());
+		log.debug("Strat : add New User Result >> " + usrmodel.getEXPIRY_DATE());
+		log.debug("Strat : add New User Result >> " + usrmodel.getCreate_by());
+		log.debug("Strat : add New User Result >> " + usrmodel.getUpdate_by());
+	
+		log.debug("role.size : " + role.size());
+		try {
+			StringBuffer sql = new StringBuffer();
+			
+			sql.append("UPDATE JDA_USER SET IV_USER = ?, USER_NAME = ?, PASSWORD = ?, FIRST_NAME = ?, LAST_NAME = ?, ");
+			sql.append("DEPARTMENT = ?, USER_STATUS = 'N', USER_IP = ?, USER_COUNT = 0, EFFECTIVE_DATE = ?, EXPIRY_DATE = ?, ");
+			sql.append("UPDATE_DATE = SYSDATE, UPDATE_BY = ? WHERE JDA_ID = ? ");
+					
+			log.debug("sql addNewUser 1>>> " + sql);
+			ps = conn.prepareStatement(sql.toString());
+			
+			int seq=1;
+			
+			ps.setString(seq++, usrmodel.getIV_USER());
+			ps.setString(seq++, usrmodel.getUSERNAME());
+			ps.setString(seq++, usrmodel.getPWD());
+			ps.setString(seq++, usrmodel.getFIRSTNAME());
+			ps.setString(seq++, usrmodel.getLASTNAME());
+			ps.setString(seq++, usrmodel.getDEPARTMENT());
+			ps.setString(seq++, usrmodel.getUSER_IP());
+			ps.setDate(seq++, new Date(usrmodel.getEFFECTIVE_DATE().getTime()));
+			ps.setDate(seq++, new Date(usrmodel.getEXPIRY_DATE().getTime()));
+			ps.setString(seq++, usrmodel.getUpdate_by());
+			ps.setString(seq++, usrmodel.getJda_id());
+			
+			int rsInt = ps.executeUpdate();
+			if (rsInt > 0) {
+				blSuccess = true;
+			}
+			StringBuffer sqldel = new StringBuffer();
+			sqldel.append("DELETE FROM JDA_USER_ROLE WHERE JDA_ID = ? ");
+			log.debug("sql JDA_USER_ROLE >> " + sqldel.toString());
+			ps = conn.prepareStatement(sqldel.toString());
+			
+			ps.setString(1, usrmodel.getJda_id());
+			
+			int rsInt2 = ps.executeUpdate();
+			if (rsInt2 > 0) {
+				blSuccess = true;
+			}
+			log.debug("rsInt2 >> " + rsInt2);
+			
+			StringBuffer sql1 = new StringBuffer();
+			sql1.append("INSERT INTO JDA_USER_ROLE (JDA_ID, IV_USER, ROLE_ID, CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY )");
+			sql1.append("VALUES(?, ?, ?, SYSDATE, ?, SYSDATE, ?)");
+			log.debug("sql1 add New user >>> " + sql1.toString());
+			ps = conn.prepareStatement(sql1.toString());
+			
+			for (int i=0;i<role.size();i++){
+				int seq1=1;
+				
+				UserRoleModel um = (UserRoleModel)role.get(i);
+				log.debug("role result >> "+um.getIv_user());
+				log.debug("role result >> "+um.getRole_id());
+				log.debug("role result >> "+um.getCreate_by());
+				log.debug("role result >> "+um.getUpdate_by());
+				ps.setString(seq1++, um.getJda_id());
+				ps.setString(seq1++, um.getIv_user());
+				ps.setString(seq1++, um.getRole_id());
+				ps.setString(seq1++, um.getCreate_by());
+				ps.setString(seq1++, um.getUpdate_by());
+				
+				int rsInt1 = ps.executeUpdate();
+				if (rsInt1 > 0) {
+					blSuccess = true;
+				}
+			}
+			log.debug(" rsInt = " +rsInt );
+		} catch (SQLException e) {
+			// TODO Auto-generated catch blockd
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					
+					conn.commit();
+			} catch (Exception e) {
+			}
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+
+		}
+		
+		
+		return blSuccess;
+	}
+	@Override
+	public Vector selectUserforUpdate(String ivUser, String userName, String first_name,String lastName, String locked) throws SQLException {
+		// TODO Auto-generated method stub
+		Vector vc = new Vector();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+				
+		conn = db.getConnection();
+		StringBuffer sqlusr = new StringBuffer();
+		
+		
+		boolean isSuccess=false;
+		
+		sqlusr.append("SELECT JDA_ID, IV_USER,PASSWORD, USER_NAME, FIRST_NAME, LAST_NAME, DEPARTMENT, USER_STATUS,EFFECTIVE_DATE,EXPIRY_DATE, ");
+		sqlusr.append("'<img src=\"images/edit.JPG\" name=\"edit\" id=\"edit\" onclick=\"EditUser('|| (rownum-1)||')\">' AS EDITS, ");
+		sqlusr.append("'<img src=\"images/delete.JPG\" name=\"delete\" id=\"delete\" value=\"delete\" onclick=\"DeleteUser('''|| JDA_ID ||''')\">' AS DELETES ");
+		sqlusr.append("FROM JDA_USER ");
+		try {
+			log.debug("sqlusr >> " + sqlusr.toString());
+			ps = conn.prepareStatement(sqlusr.toString());
+//			ps.setString(1,RoleName.toUpperCase());
+			
+			rs = ps.executeQuery();
+			
+			while (rs.next()){
+				UsrModel um = new UsrModel();
+				um.setJda_id(rs.getString("JDA_ID"));
+				um.setIV_USER(rs.getString("IV_USER"));
+				um.setUSERNAME(rs.getString("USER_NAME"));
+				um.setPWD(rs.getString("PASSWORD"));
+				um.setFIRSTNAME(rs.getString("FIRST_NAME"));
+				um.setLASTNAME(rs.getString("LAST_NAME"));
+				um.setDEPARTMENT(rs.getString("DEPARTMENT"));
+				um.setUSER_STATUS(rs.getString("USER_STATUS"));
+				um.setEFFECTIVE_DATE(rs.getDate("EFFECTIVE_DATE"));
+				um.setEXPIRY_DATE(rs.getDate("EXPIRY_DATE"));
+				um.setShow_edit(rs.getString("EDITS"));
+				um.setShow_delete(rs.getString("DELETES"));
+				vc.add(um);
+			}
+			
+			log.debug("[selectUserforUpdate : result ] "+vc);
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		
+		return vc;
+	}
+	@Override
+	public boolean deleteUser(String jdaId) throws SQLException {
+		log.debug("[Start : delete User ]");
+		// TODO Auto-generated method stub
+		boolean blSuccess=false;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		conn = db.getConnection();
+		StringBuffer sql = new StringBuffer();
+		StringBuffer sql1 = new StringBuffer();
+		
+		conn.setAutoCommit(false); 
+		
+		try {
+			sql1.append("DELETE FROM JDA_USER WHERE JDA_ID = ? ");
+			log.debug("sql JDA_USER >> " + sql1.toString());
+			ps = conn.prepareStatement(sql1.toString());
+			
+			ps.setString(1, jdaId);
+			
+			int rsInt1 = ps.executeUpdate();
+			if (rsInt1 > 0) {
+				blSuccess = true;
+			}
+			
+			sql.append("DELETE FROM JDA_USER_ROLE WHERE JDA_ID = ? ");
+			log.debug("sql JDA_USER_ROLE >> " + sql.toString());
+			ps = conn.prepareStatement(sql.toString());
+			
+			ps.setString(1, jdaId);
+			
+			int rsInt = ps.executeUpdate();
+			if (rsInt > 0) {
+				blSuccess = true;
+			}
+			log.debug("rsInt >> " + rsInt);
+			
+			log.debug("blSuccess >> " + blSuccess );
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				log.error(e1, e1);
+			}
+			log.debug(e.getMessage());
+		}finally{
+			try {
+				if (conn != null)
+					conn.commit();
+			} catch (Exception e) {
+			}
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		
+		return blSuccess;
+	}
+	
 }

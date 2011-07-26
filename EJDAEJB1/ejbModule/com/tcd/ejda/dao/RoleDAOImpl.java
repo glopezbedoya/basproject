@@ -10,6 +10,7 @@ import com.tcd.ejda.connection.JDBCConnection;
 import com.tcd.ejda.model.MenuModel;
 import com.tcd.ejda.model.RoleFunctionModel;
 import com.tcd.ejda.model.RoleModel;
+import com.tcd.ejda.model.UserRoleModel;
 
 import org.apache.log4j.Logger;
 
@@ -220,9 +221,9 @@ public class RoleDAOImpl implements RoleDAO {
 		
 		return vc;
 	}
-	public Vector selectRole() throws SQLException {
+	public Vector selectRoleUser(String iv_user) throws SQLException {
 		// TODO Auto-generated method stub
-		log.debug("[Start : selectRole]");
+		log.debug("[Start : selectRole user]");
 		Vector vc = new Vector();
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -235,7 +236,9 @@ public class RoleDAOImpl implements RoleDAO {
 		boolean isSuccess=false;
 		
 		sqlusr.append("SELECT  ROLE_ID, ROLE_NAME, CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY FROM JDA_ROLE ");
-//		sqlusr.append("SELECT  MENU_ID FROM JDA_MENU ");
+//		if (null!=iv_user && !"".equals(iv_user)){
+//			sqlusr.append(b)
+//		}
 		try {
 			log.debug("sqlusr selectRole >> " + sqlusr.toString());
 			String dsqlusr = sqlusr.toString();
@@ -628,5 +631,61 @@ public class RoleDAOImpl implements RoleDAO {
 		
 		return blSuccess;
 	}
-
+	public Vector selectUserRole(String jdaId) throws SQLException {
+		Vector vc = new Vector();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+				
+		conn = db.getConnection();
+		StringBuffer sqlusr = new StringBuffer();
+		
+		
+		boolean isSuccess=false;
+		
+		sqlusr.append("SELECT JDA_ID,ROLE_ID,IV_USER FROM JDA_USER_ROLE WHERE JDA_ID = ?");
+		try {
+			log.debug("sqlusr >> " + sqlusr.toString());
+			ps = conn.prepareStatement(sqlusr.toString());
+			ps.setString(1,jdaId);
+			
+			rs = ps.executeQuery();
+			
+			while (rs.next()){
+				UserRoleModel rm = new UserRoleModel();
+				rm.setIv_user(rs.getString("IV_USER"));
+				rm.setRole_id(rs.getString("ROLE_ID"));
+				vc.add(rm);
+			}
+			
+			log.debug("[selectUserforUpdate : result ] "+vc);
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		
+		return vc;
+	}
 }

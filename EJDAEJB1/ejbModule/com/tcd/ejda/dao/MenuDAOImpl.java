@@ -25,7 +25,7 @@ public class MenuDAOImpl implements MenuDAO {
 		StringBuffer sqlupd = new StringBuffer();
 //		sqlupd.append("INSERT INTO EJDA_MENU()")
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT MENU_ID,MENU_NAME,MENU_STATUS,DESCRIPTION,CREATE_DATE,CREATE_BY,UPDATE_DATE,UPDATE_BY,MENU_OWNER,MENU_SORT FROM JDA_MENU ORDER BY MENU_SORT ");
+		sql.append("SELECT MENU_ID,MENU_NAME,MENU_STATUS,DESCRIPTION,CREATE_DATE,CREATE_BY,UPDATE_DATE,UPDATE_BY,MENU_OWNER,MENU_SORT,MENU_LINKED FROM JDA_MENU ORDER BY MENU_SORT ");
 		System.out.println("sql >> " + sql.toString());
 		try {
 		ps = conn.prepareStatement(sql.toString());
@@ -44,6 +44,7 @@ public class MenuDAOImpl implements MenuDAO {
 			menuModel.setUpdate_by(rs.getString("UPDATE_BY"));
 			menuModel.setMenu_owner(rs.getString("MENU_OWNER"));
 			menuModel.setMenu_sort(rs.getInt("MENU_SORT"));
+			menuModel.setMenu_linked(rs.getString("MENU_LINKED"));
 			searchMenu.add(menuModel);
 			System.out.println("ID >>> " + rs.getString("MENU_ID") + ":"
 					+ rs.getString("MENU_NAME") + ":" + rs.getString("MENU_OWNER"));
