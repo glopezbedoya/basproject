@@ -31,32 +31,32 @@ public class RoleAction extends AbstractAction {
 	}
 
 	@Override
-	public boolean methodAction(String ejdaAction, HttpServletRequest request) {
+	public boolean methodAction(String ejdaAction) {
 		// TODO Auto-generated method stub
 		log.debug("[ Start : Role Action ]");
 		if(ejdaAction.equalsIgnoreCase("doSearch")){
-			return doSearch(request);
+			return doSearch();
 		}else if(ejdaAction.equalsIgnoreCase("doNew")){
-			return doNew(request);
+			return doNew();
 		}else if(ejdaAction.equalsIgnoreCase("doAdd")){
-			return doAdd(request);
+			return doAdd();
 		}else if(ejdaAction.equalsIgnoreCase("doEdit")){
-			return doEdit(request);
+			return doEdit();
 		}else if(ejdaAction.equalsIgnoreCase("doUpdate")){
-			return doUpdate(request);
+			return doUpdate();
 		}else if(ejdaAction.equalsIgnoreCase("doDelete")){
-			return doDelete(request);
+			return doDelete();
 		}
 		
 		return false;
 	}
 
-	private boolean doDelete(HttpServletRequest request) {
+	private boolean doDelete() {
 		// TODO Auto-generated method stub
 		log.debug("[Start : do Delete ]");
 		boolean result = false;
-		String role_id = request.getParameter("role_id");
-		String role_name = request.getParameter("hrole_name");
+		String role_id = getRequest().getParameter("role_id");
+		String role_name = getRequest().getParameter("hrole_name");
 		log.debug("role id >>> " + role_id);
 		RoleDAO role = new RoleDAOImpl();
 		try {
@@ -64,7 +64,7 @@ public class RoleAction extends AbstractAction {
 				Vector mn = new Vector();
 				mn = role.selectRole(role_name);
 				log.debug("mn >>> " + mn.size());
-				request.getSession().setAttribute("returnVC", mn);
+				getRequest().getSession().setAttribute("returnVC", mn);
 				result = true;
 			}
 		} catch (SQLException e) {
@@ -77,23 +77,23 @@ public class RoleAction extends AbstractAction {
 		return result;
 	}
 
-	private boolean doEdit(HttpServletRequest request) {
+	private boolean doEdit() {
 		// TODO Auto-generated method stub
 		log.debug("[ Start : do Edit ]" );
 		Vector vc = new Vector();
 		boolean result = false;
-		String role_id = request.getParameter("role_id");
+		String role_id = getRequest().getParameter("role_id");
 //		String role_id = "R35";
 		log.debug("== role id : " + role_id);
-		String role_name = request.getParameter("hrole_name");
+		String role_name = getRequest().getParameter("hrole_name");
 		log.debug("=== role_name >> " +role_name);
 		RoleDAO role = new RoleDAOImpl();
 		try {
 			vc = role.selectEditRole(role_id);
 			String returnValue = getInnerTableEdit(vc);
 			log.debug("getInnerTableEdit >> " + returnValue);
-			request.getSession().setAttribute("returnValUpdate", returnValue);
-			request.getSession().setAttribute("hidrolename", role_name);
+			getRequest().getSession().setAttribute("returnValUpdate", returnValue);
+			getRequest().getSession().setAttribute("hidrolename", role_name);
 			result = true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -102,16 +102,16 @@ public class RoleAction extends AbstractAction {
 		return result;
 	}
 
-	private boolean doSearch(HttpServletRequest request) {
+	private boolean doSearch() {
 		// TODO Auto-generated method stub
 		boolean result = false;
-		String role_name = request.getParameter("rolename");
+		String role_name = getRequest().getParameter("rolename");
 		Vector vc = new Vector();
 		RoleDAO role = new RoleDAOImpl();
 		try {
 			vc = role.selectRole(role_name);
 			log.debug("vc >>> " + vc.size());
-			request.getSession().setAttribute("returnVC", vc);
+			getRequest().getSession().setAttribute("returnVC", vc);
 			result = true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -122,7 +122,7 @@ public class RoleAction extends AbstractAction {
 		return result;
 	}
 
-	private boolean doNew(HttpServletRequest request) {
+	private boolean doNew() {
 		// TODO Auto-generated method stub
 		boolean result = false;
 		Vector vc = new Vector();
@@ -131,19 +131,19 @@ public class RoleAction extends AbstractAction {
 		
 		String returnValue = getInnerTable(vc);
 		log.debug("returnValue >> " + returnValue);
-		request.getSession().setAttribute("returnVal", returnValue);
+		getRequest().getSession().setAttribute("returnVal", returnValue);
 		result = true;
 
 		return result;
 	}
 
-	private boolean doUpdate(HttpServletRequest request) {
+	private boolean doUpdate() {
 		// TODO Auto-generated method stub
 		boolean result =false;
 		
-		String role_name = request.getParameter("rolename");
-		String role_fund_id = request.getParameter("role_func_id");
-		String role_id = request.getParameter("role_id");
+		String role_name = getRequest().getParameter("rolename");
+		String role_fund_id = getRequest().getParameter("role_func_id");
+		String role_id = getRequest().getParameter("role_id");
 		log.debug("role_name >> "+role_name);
 		log.debug("role_fund_id >> "+role_fund_id);
 		log.debug("role_id >> "+role_id);
@@ -155,7 +155,7 @@ public class RoleAction extends AbstractAction {
 		role.setRole_name(role_name);
 		role.setUpdate_by("veena");
 		
-		strInqs = request.getParameter("func_type");
+		strInqs = getRequest().getParameter("func_type");
 		log.debug("strinqs >>> " + strInqs);
 		if (null!=strInqs){
 			String inqsTmp[] = strInqs.split("\\|"); 
@@ -208,14 +208,14 @@ public class RoleAction extends AbstractAction {
 			}
 		}
 		
-		request.getSession().setAttribute("returnValUpdate", "");
+		getRequest().getSession().setAttribute("returnValUpdate", "");
 		RoleDAO rd = new RoleDAOImpl();
 		try {
 			if (rd.updateRole(role, vc)){
 				Vector mn = new Vector();
 				mn = rd.selectRole(role_name);
 				log.debug("mn >>> " + vc.size());
-				request.getSession().setAttribute("returnVC", mn);
+				getRequest().getSession().setAttribute("returnVC", mn);
 				result = true;
 			}
 		} catch (SQLException e) {
@@ -227,15 +227,15 @@ public class RoleAction extends AbstractAction {
 //		result=true;
 	
 		
-		request.getSession().setAttribute("returnVal", "");
+		getRequest().getSession().setAttribute("returnVal", "");
 		return result;
 	}
 
-	private boolean doAdd(HttpServletRequest request) {
+	private boolean doAdd() {
 		// TODO Auto-generated method stub
 		boolean result =false;
 		
-		String role_name = request.getParameter("rolename");
+		String role_name = getRequest().getParameter("rolename");
 		String strInqs = "";
 		Vector vc = new Vector();
 		RoleModel role = new RoleModel();
@@ -243,7 +243,7 @@ public class RoleAction extends AbstractAction {
 		role.setCreate_by("veena");
 		role.setUpdate_by("veena");
 		
-		strInqs = request.getParameter("func_type");
+		strInqs = getRequest().getParameter("func_type");
 		log.debug("strinqs >>> " + strInqs);
 		if (null!=strInqs){
 			String inqsTmp[] = strInqs.split("\\|"); 
@@ -296,7 +296,7 @@ public class RoleAction extends AbstractAction {
 		RoleDAO rd = new RoleDAOImpl();
 		try {
 			if (rd.insertRole(role, vc)){
-				request.getSession().setAttribute("returnVal", "");	
+				getRequest().getSession().setAttribute("returnVal", "");	
 				result = true;
 			}
 		} catch (SQLException e) {
@@ -308,7 +308,7 @@ public class RoleAction extends AbstractAction {
 //		result=true;
 	
 		
-		request.getSession().setAttribute("returnVal", "");
+		getRequest().getSession().setAttribute("returnVal", "");
 		return result;
 	}
 
