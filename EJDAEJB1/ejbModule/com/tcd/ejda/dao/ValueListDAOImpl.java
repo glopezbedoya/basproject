@@ -28,11 +28,11 @@ public class ValueListDAOImpl implements ValueListDAO {
 		Object resultElement = null;
 		try {
 			if (!valueListM.isNextPage()) {
-				valueListM.setCount(this.getCount(valueListM));
 //				valueListM.setAtPage(valueListM.getAtPage());
 				valueListM.setAtPage(1);
 				valueListM.setNextPage(true);
-			}			
+			}
+			valueListM.setCount(this.getCount(valueListM));
 			conn = db.getConnection();
 			int beginIndex = (valueListM.getAtPage() - 1) * valueListM.getItemsPerPage();
 			StringBuffer sqlBuffer = new StringBuffer();
@@ -213,6 +213,7 @@ public class ValueListDAOImpl implements ValueListDAO {
 			tranLog.setFirstName(rs.getString("FIRST_NAME"));
 			tranLog.setLastName(rs.getString("LAST_NAME"));
 			tranLog.setDepartment(rs.getString("DEPARTMENT"));
+			tranLog.setTranId(rs.getInt("TRANS_ID"));
 		} catch (SQLException e) {
 			log.error("Mapping Error : SQLException ",e);
 		} catch (Exception e){

@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class TransactionLogModel {
 	
-	private String tranId;
+	private int tranId;
 	private String tranAction;
 	private String description;
 	private String ipAddress;
@@ -13,15 +13,15 @@ public class TransactionLogModel {
 	private String firstName;
 	private String lastName;
 	private String department;
-	private Date tranDateFrom;
-	private Date tranDateTo;
+	private String tranDateFrom;
+	private String tranDateTo;
 	private String menuId;
 	private String userName;
 	
-	public String getTranId() {
+	public int getTranId() {
 		return tranId;
 	}
-	public void setTranId(String tranId) {
+	public void setTranId(int tranId) {
 		this.tranId = tranId;
 	}
 	public String getTranAction() {
@@ -72,16 +72,16 @@ public class TransactionLogModel {
 	public void setDepartment(String department) {
 		this.department = department;
 	}
-	public Date getTranDateFrom() {
+	public String getTranDateFrom() {
 		return tranDateFrom;
 	}
-	public void setTranDateFrom(Date tranDateFrom) {
+	public void setTranDateFrom(String tranDateFrom) {
 		this.tranDateFrom = tranDateFrom;
 	}
-	public Date getTranDateTo() {
+	public String getTranDateTo() {
 		return tranDateTo;
 	}
-	public void setTranDateTo(Date tranDateTo) {
+	public void setTranDateTo(String tranDateTo) {
 		this.tranDateTo = tranDateTo;
 	}
 	public String getMenuId() {

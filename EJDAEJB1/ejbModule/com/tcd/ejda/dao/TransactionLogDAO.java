@@ -9,4 +9,5 @@ public interface TransactionLogDAO {
 
 	public void insertTranLog(TransactionLogModel tranlog) throws SQLException;
 	public Vector searchTransactionLog(TransactionLogModel tranLogCri) throws SQLException;
+	public boolean deleteTransactionLog(String[] tranId) throws SQLException;
 }
