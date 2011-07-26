@@ -6,7 +6,7 @@
 <script type="text/javascript">
 function searchButton(form){
 	
-	$('input[name=ejdaAction]').val('RoleAction');
+	$('input[name=ejdaAction]').val('Role');
 	$('input[name=ejdaMethod]').val('doSearch');
 	$('input[name=screenName]').val('role_menu.jsp');
 	form.submit();
@@ -34,7 +34,7 @@ function AddRole(form){
 	$('input[name=func_type]').val(indextemp);
 
 	
-	$('input[name=ejdaAction]').val('RoleAction');
+	$('input[name=ejdaAction]').val('Role');
 	$('input[name=ejdaMethod]').val('doAdd');
 	$('input[name=screenName]').val('role_menu.jsp');
 	form.submit();
@@ -61,7 +61,7 @@ function UpdateRole(form){
 	 
 	$('input[name=func_type]').val(indextemp);
 
-	$('input[name=ejdaAction]').val('RoleAction');
+	$('input[name=ejdaAction]').val('Role');
 	$('input[name=ejdaMethod]').val('doUpdate');
 	$('input[name=screenName]').val('role_menu.jsp');
 	form.submit();
@@ -72,7 +72,7 @@ function EditRole(form,role_id,role_name){
 	//alert('role_id : ' +role_id);
 	$('input[name=role_id]').val(role_id);
 	$('input[name=hrole_name]').val(role_name);
-	$('input[name=ejdaAction]').val('RoleAction');
+	$('input[name=ejdaAction]').val('Role');
 	$('input[name=ejdaMethod]').val('doEdit');
 	$('input[name=screenName]').val('role_menu.jsp');
 	
@@ -81,7 +81,7 @@ function EditRole(form,role_id,role_name){
 }
 function NewRole(form){
 	
-	$('input[name=ejdaAction]').val('RoleAction');
+	$('input[name=ejdaAction]').val('Role');
 	$('input[name=ejdaMethod]').val('doNew');
 	$('input[name=screenName]').val('role_menu.jsp');
 	form.submit();
@@ -92,7 +92,7 @@ function DeleteRole(form,role_id,role_name){
 	alert('role_id : ' +role_id);
 	$('input[name=role_id]').val(role_id);
 	$('input[name=hrole_name]').val(role_name);
-	$('input[name=ejdaAction]').val('RoleAction');
+	$('input[name=ejdaAction]').val('Role');
 	$('input[name=ejdaMethod]').val('doDelete');
 	$('input[name=screenName]').val('role_menu.jsp');
 	
