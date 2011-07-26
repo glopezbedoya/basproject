@@ -89,7 +89,7 @@ public class RoleAction extends AbstractAction {
 		log.debug("=== role_name >> " +role_name);
 		RoleDAO role = new RoleDAOImpl();
 		try {
-			vc = role.selectEditRole(role_id);
+			vc = role.selectEditRole(role_id); 
 			String returnValue = getInnerTableEdit(vc);
 			log.debug("getInnerTableEdit >> " + returnValue);
 			getRequest().getSession().setAttribute("returnValUpdate", returnValue);
