@@ -53,7 +53,7 @@ public class UserAction extends AbstractAction {
 
 	private boolean doDelete() {
 		log.debug("[Start User Action : do Delete ]");
-		boolean result = false;
+		boolean result = false; 
 		String jda_id = getRequest().getParameter("ejda_id");
 	
 		log.debug("role id >>> " +  jda_id);
