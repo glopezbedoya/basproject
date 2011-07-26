@@ -3,7 +3,7 @@ package com.tcd.ejda.model;
 import java.sql.Date;
 
 public class UserRoleModel {
-	
+	private String jda_id;
 	private String iv_user;
 	private String role_id;
 	private String create_by;
@@ -11,6 +11,14 @@ public class UserRoleModel {
 	
 	private Date create_date;
 	private Date update_date;
+	
+	
+	public String getJda_id() {
+		return jda_id;
+	}
+	public void setJda_id(String jdaId) {
+		jda_id = jdaId;
+	}
 	public String getIv_user() {
 		return iv_user;
 	}
