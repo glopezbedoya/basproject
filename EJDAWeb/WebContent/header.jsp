@@ -26,5 +26,11 @@
 		    <tr>
 		    	<td><%=showMenu %></td>
 		    </tr>
+		    <tr bgcolor="#003399">
+	       	  	<td height="5" ></td> 
+	       	  </tr>
+	       	   <tr>
+           	  	<td height="10"colspan="3"></td>
+           	  </tr>
 	    </table>
  	</table>
