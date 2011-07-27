@@ -168,8 +168,8 @@ public class RoleDAOImpl implements RoleDAO {
 //		sqlusr.append("SELECT ROLE_ID, ROLE_NAME,'<input type=\"hidden\" name=role_id\" value='|| ROLE_ID ||'\"><IMG src=\"images/edit.JPG\"></IMG>' AS EDITS,");
 //		sqlusr.append("'<input type=\"hidden\" name=role_id\" value='|| ROLE_ID ||'\"><IMG src=\"images/delete.JPG\"></IMG>' AS DELETES FROM JDA_ROLE");
 		
-		sqlusr.append("SELECT ROLE_ID, ROLE_NAME,'<input type=\"hidden\" name=\"role_id\" value=\"'|| ROLE_ID ||'\"><input type=\"button\" name=\"edit\" id=\"edit\" value=\"Edit\" onclick=\"EditRole(this.form,'''|| ROLE_ID ||''','''|| ROLE_NAME ||''')\">' AS EDITS,");
-		sqlusr.append("'<input type=\"hidden\" name=role_id\" value='|| ROLE_ID ||'\"><input type=\"button\" name=\"delete\" id=\"delete\" value=\"delete\" onclick=\"DeleteRole(this.form,'''|| ROLE_ID ||''','''|| ROLE_NAME ||''')\">' AS DELETES FROM JDA_ROLE");
+		sqlusr.append("SELECT ROLE_ID, ROLE_NAME,'<input type=\"hidden\" name=\"role_id\" value=\"'|| ROLE_ID ||'\"><img src=\"images/edit.JPG\" name=\"edit\" id=\"edit\" value=\"Edit\" onclick=\"EditRole(this.form,'''|| ROLE_ID ||''','''|| ROLE_NAME ||''')\">' AS EDITS,");
+		sqlusr.append("'<input type=\"hidden\" name=role_id\" value='|| ROLE_ID ||'\"><img src=\"images/delete.JPG\" name=\"delete\" id=\"delete\" value=\"delete\" onclick=\"DeleteRole(this.form,'''|| ROLE_ID ||''','''|| ROLE_NAME ||''')\">' AS DELETES FROM JDA_ROLE");
 		
 		try {
 			log.debug("sqlusr >> " + sqlusr.toString());
