@@ -542,7 +542,8 @@ public class UserDAOImpl implements UserDAO {
 		
 		boolean isSuccess=false;
 		
-		sqlusr.append("SELECT JDA_ID, IV_USER,PASSWORD, USER_NAME, FIRST_NAME, LAST_NAME, DEPARTMENT, USER_STATUS,EFFECTIVE_DATE,EXPIRY_DATE, ");
+		sqlusr.append("SELECT JDA_ID, IV_USER,PASSWORD, USER_NAME, FIRST_NAME, LAST_NAME, DEPARTMENT, USER_STATUS,TO_CHAR(EFFECTIVE_DATE,'YYYY-MM-DD') AS EFFECTIVE_DATE, ");
+		sqlusr.append("TO_CHAR(EXPIRY_DATE,'YYYY-MM-DD') AS EXPIRY_DATE,TO_CHAR(CREATE_DATE,'YYYY-MM-DD') AS CREATE_DATE, ");
 		sqlusr.append("'<img src=\"images/edit.JPG\" name=\"edit\" id=\"edit\" onclick=\"EditUser('|| (rownum-1)||')\">' AS EDITS, ");
 		sqlusr.append("'<img src=\"images/delete.JPG\" name=\"delete\" id=\"delete\" value=\"delete\" onclick=\"DeleteUser('''|| JDA_ID ||''')\">' AS DELETES ");
 		sqlusr.append("FROM JDA_USER ");
@@ -563,8 +564,10 @@ public class UserDAOImpl implements UserDAO {
 				um.setLASTNAME(rs.getString("LAST_NAME"));
 				um.setDEPARTMENT(rs.getString("DEPARTMENT"));
 				um.setUSER_STATUS(rs.getString("USER_STATUS"));
-				um.setEFFECTIVE_DATE(rs.getDate("EFFECTIVE_DATE"));
-				um.setEXPIRY_DATE(rs.getDate("EXPIRY_DATE"));
+//				log.debug("rs.getString(EFFECTIVE_DATE) >> " + Date.valueOf(rs.getString("EFFECTIVE_DATE")));
+				um.setEFFECTIVE_DATE(Date.valueOf(rs.getString("EFFECTIVE_DATE")));
+				um.setEXPIRY_DATE(Date.valueOf(rs.getString("EXPIRY_DATE")));
+				um.setCreate_date(Date.valueOf(rs.getString("CREATE_DATE")));
 				um.setShow_edit(rs.getString("EDITS"));
 				um.setShow_delete(rs.getString("DELETES"));
 				vc.add(um);
@@ -678,6 +681,68 @@ public class UserDAOImpl implements UserDAO {
 		}
 		
 		return blSuccess;
+	}
+	@Override
+	public boolean checkUsernameDup(String user_name, String ejda_id) throws SQLException {
+		
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+				
+		conn = db.getConnection();
+		StringBuffer sqlusr = new StringBuffer();
+		String result = "";
+		
+		boolean isSuccess=false;
+		
+		sqlusr.append("SELECT JDA_ID, IV_USER,PASSWORD, USER_NAME FROM JDA_USER WHERE UPPER(USER_NAME) = ? ");
+		if (!"".equals(ejda_id)){
+			sqlusr.append("AND JDA_ID <> ? ");
+		}
+		
+		try {
+			log.debug("sqlusr >> " + sqlusr.toString());
+			ps = conn.prepareStatement(sqlusr.toString());
+			ps.setString(1,user_name.toUpperCase());
+			if (!"".equals(ejda_id)){
+				ps.setString(2,ejda_id);
+			}
+			rs = ps.executeQuery();
+			
+			if (rs.next()){
+				isSuccess = true;
+			}
+			
+			log.debug("[checkUsernameDup : result ] "+isSuccess);
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error("selectUserforUpdate",e);
+		}finally{
+			
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		
+		return isSuccess;
 	}
 	
 }
