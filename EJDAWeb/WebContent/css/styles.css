@@ -1,6 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
-
+.textHeader {font-family: Arial, MS sans-serif, Helvetica,Verdana;font-size: 9pt;color: #FFFFCC;}
 .text {font-family: Arial, MS sans-serif, Helvetica,Verdana;font-size: 9pt;color: #000099;}
 .textTop { color: #000099; font-family: Arial, MS sans-serif, Helvetica,Verdana; font-size: 8pt; font-weight: bold; }
 .textDisplay {font-family: Arial, MS sans-serif, Helvetica,Verdana;font-size: 10pt;color: #3333FF;}
