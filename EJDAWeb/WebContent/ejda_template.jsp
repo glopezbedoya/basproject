@@ -13,7 +13,8 @@
 	<link href="SpryAssets/SpryMenuBarHorizontal.css" rel="stylesheet" type="text/css" />
 	<script language="javascript" src="js/jquery-1.6.2.min.js" type="text/javascript" ></script>
 	<script language="javascript" src="js/ejdaScript.js" type="text/javascript" ></script>
-	
+	<script language="javascript" src="DateFormat.js"></script>
+	<script language="javascript" src="popcalendar.js"></script>
 </head>
 
 
