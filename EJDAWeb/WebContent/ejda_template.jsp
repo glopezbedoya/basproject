@@ -43,7 +43,7 @@
                  	  	<td height="1"></td>
                 </tr>
                  <tr>
-                    <td align="right" ><font class="textError"> Authorized by veena</font></td>
+                    <td align="right" ><font class="textError"> Authorized by Thai Custom Department</font></td>
                 </tr>
 	    </table>
 </body>
