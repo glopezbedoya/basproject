@@ -14,5 +14,5 @@ public interface UserDAO {
 	public boolean updateUser(UsrModel usrmodel, Vector role) throws SQLException;
 	public Vector selectUserforUpdate(String iv_user,String user_name, String first_name, String last_name,String locked) throws SQLException;
 	public boolean deleteUser(String jda_id) throws SQLException;
-	
+	public boolean checkUsernameDup(String user_name, String ejda_id) throws SQLException;
 }
