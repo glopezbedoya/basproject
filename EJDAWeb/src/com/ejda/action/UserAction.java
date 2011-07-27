@@ -87,6 +87,7 @@ public class UserAction extends AbstractAction {
 		String eff_date = getRequest().getParameter("eff_date");
 		String exp_date = getRequest().getParameter("exp_date");
 		String department =getRequest().getParameter("department");
+		String user_status =getRequest().getParameter("user_status");
 		//String ipAddress = request.getRemoteAddr();
 		
 		log.debug("ejda_id >> " + ejda_id);
@@ -99,6 +100,7 @@ public class UserAction extends AbstractAction {
 		log.debug("eff_date >> " + eff_date);
 		log.debug("exp_date >> " + exp_date);
 		log.debug("department >> " + department);
+		log.debug("user_status >> " + user_status);
 		UsrModel um = new UsrModel();
 		um.setJda_id(ejda_id);
 		um.setIV_USER(iv_user);
@@ -107,12 +109,13 @@ public class UserAction extends AbstractAction {
 		um.setCONPWD(conpwd);
 		um.setLASTNAME(lastname);
 		um.setFIRSTNAME(firstname);
-
-//		um.setEFFECTIVE_DATE(Date.valueOf(DateFormat(eff_date)));
-//		um.setEXPIRY_DATE(Date.valueOf(DateFormat(exp_date)));
+		log.debug("value date >> "+Date.valueOf(eff_date));
+		um.setEFFECTIVE_DATE(Date.valueOf(eff_date));
+		um.setEXPIRY_DATE(Date.valueOf(exp_date));
 		um.setCreate_by("veena");
 		um.setUpdate_by("veena");
 		um.setDEPARTMENT(department);
+		um.setUSER_STATUS(user_status);
 		
 		getRequest().getSession().setAttribute("userModel", um);
 		getRequest().getSession().setAttribute("returnVal", "UPDATE");
@@ -179,7 +182,8 @@ public class UserAction extends AbstractAction {
 		String exp_date = getRequest().getParameter("exp_date");
 		String department =getRequest().getParameter("department");
 		String ipAddress = getRequest().getRemoteAddr();
-		
+		String user_status[] = getRequest().getParameterValues("user_status");
+		String tempUser="";
 		log.debug("user action result iv user >> " +iv_user);
 		log.debug("user action result usrname >> " +usrname);
 		log.debug("user action result pwd >> " +pwd);
@@ -189,10 +193,18 @@ public class UserAction extends AbstractAction {
 		log.debug("user action result eff_date >> " +eff_date);
 		log.debug("user action result exp_date >> " +exp_date);
 		log.debug("user action result department >> " +department);
-		
+		if (null==user_status){
+			log.debug("[ != null >> ]");
+			tempUser = "N";
+		}else{
+			for(int i=0;i<user_status.length;i++){
+				tempUser = user_status[i];
+			}
+		}
+		log.debug("user_status >>> " + tempUser);
 
-		log.debug("[ Date : effective date ]" + DateFormat(eff_date) +":"+Date.valueOf(DateFormat(eff_date)));
-		log.debug("[ Date : expiry date ]" + DateFormat(exp_date) +":"+Date.valueOf(DateFormat(exp_date)));
+//		log.debug("[ Date : effective date ]" + DateFormat(eff_date) +":"+Date.valueOf(DateFormat(eff_date)));
+//		log.debug("[ Date : expiry date ]" + DateFormat(exp_date) +":"+Date.valueOf(DateFormat(exp_date)));
 		um.setJda_id(ejda_id);
 		um.setIV_USER(iv_user);
 		um.setUSERNAME(usrname);
@@ -206,7 +218,7 @@ public class UserAction extends AbstractAction {
 		um.setUpdate_by("veena");
 		um.setDEPARTMENT(department);
 		um.setUSER_IP(ipAddress);
-		
+		um.setUSER_STATUS(tempUser);
 		log.debug("[ ADD ] : " + usrname);
 		
 		String check[] = getRequest().getParameterValues("checkbok");
@@ -352,9 +364,9 @@ public class UserAction extends AbstractAction {
 					if(vc != null && vc.size()>0){	
 						for(int j=0;j<vc.size();j++){
 							RoleModel model = (RoleModel)vc.get(j);
-							//div += "<td>"
-							div	+= "<input type=\"checkbox\" name=\"checkbok\" id=\"checkbox\" value = \""+model.getRole_id()+ "\" /><font class = \"text\">"+model.getRole_name()+"</font>";
-							//	+ "</td>";
+							//div += "<tr><td>"
+								div += "<input type=\"checkbox\" name=\"checkbok\" id=\"checkbox\" value = \""+model.getRole_id()+ "\" /><font class = \"text\">"+model.getRole_name()+"</font> |";
+							//	+ "</td></tr>";
 							
 						}
 					}else{
