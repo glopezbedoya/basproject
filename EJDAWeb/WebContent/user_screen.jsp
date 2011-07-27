@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
      <%@page import="java.util.Vector"%>
     <%@page import="com.tcd.ejda.model.UsrModel" %>
+    <%@page import="com.ejda.util.DisplayFormatUtil" %>
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <script type="text/javascript">
@@ -16,10 +17,30 @@ function searchUser(form){
 function AddRole(form){
 	var errData = validateData();
 	if (errData){
-		$('input[name=ejdaAction]').val('User');
-		$('input[name=ejdaMethod]').val('doAdd');
-		$('input[name=screenName]').val('user_screen.jsp');
-		form.submit();
+		try{
+			$.get(
+			    "/EJDAWeb/AjaxUserServlet?mode=",
+			    {user_name : $('input[name=user_name]').val(),
+			     ejda_id : ''},
+			    function(data) { 
+			    	if ('Y'==data){
+						alert('User name has been alreay use.');
+					}else{
+						
+						$('input[name=ejdaAction]').val('User');
+						$('input[name=ejdaMethod]').val('doAdd');
+						$('input[name=screenName]').val('user_screen.jsp');
+						form.submit();
+						
+					}
+					
+					
+				    }
+				    ,  "text"
+					);
+			}catch(err){
+				alert("error"  + err.message);
+			}
 	}
 	//alert($('input[name=iv_user]').val());
 	
@@ -36,10 +57,30 @@ function NewRole(form){
 function UpdateUser(form){
 	var errData = validateData();
 	if (errData){
-		$('input[name=ejdaAction]').val('User');
-		$('input[name=ejdaMethod]').val('doUpdate');
-		$('input[name=screenName]').val('user_screen.jsp');
-		form.submit();
+	try{
+		$.get(
+		    "/EJDAWeb/AjaxUserServlet?mode=",
+		    {user_name : $('input[name=user_name]').val(),
+		     ejda_id : $('input[name=ejda_id]').val()},
+		    function(data) { 
+				if ('Y'==data){
+					alert('User name has been alreay use.');
+				}else{
+					
+					$('input[name=ejdaAction]').val('User');
+					$('input[name=ejdaMethod]').val('doUpdate');
+					$('input[name=screenName]').val('user_screen.jsp');
+					form.submit();
+					
+				}
+				
+				
+		    }
+		    ,  "text"
+			);
+	}catch(err){
+		alert("error"  + err.message);
+	}
 	}
 }
 function EditUser(row){
@@ -174,6 +215,7 @@ function validateData(){
                       	 
                    	      <tr>
                    	      	<td colspan="2" align="left"><table width="800" border="0" cellspacing="1" cellpadding="1">
+                   	      		
                    	      		 <tr>
 		                      	    <td align="right" width="100"><font class="text">IV User : </font>
 		                      	    		
@@ -229,6 +271,15 @@ function validateData(){
                    	       <%if(null!=vc){%>
 	                   	       <tr>
 	                      	    <td colspan="3" align="center"><table width="800" cellspacing="1" cellpadding="1">
+	                      	    <tr  bgcolor="#003366">
+	                   	    		<td ><font class="textHeader">IV User</font></td>
+	                   	    		
+	                   	    		<td ><font class="textHeader">First Lastname</font></td>
+	                   	    		<td ><font class="textHeader"> Create Date</font></td>
+	                   	    		<td ><font class="textHeader"> Status </font></td>
+	                   	    		<td ><font class="textHeader"> Edit</font></td>
+	                   	    		<td ><font class="textHeader"> Delete</font></td>
+	                   	    		</tr>
 	                      	    <%
 	                   	    	  for (int i = 0; i< vc.size();i++){
 	                   	    		UsrModel rm = (UsrModel)vc.get(i);
@@ -241,8 +292,10 @@ function validateData(){
 	                   	    		if (rm.getUSER_STATUS().equals("L")){
 	                   	    			show_locked = "Locked";
 	                   	    		}
+	                   	    		String Efdate = DisplayFormatUtil.SQLDateToString(rm.getEFFECTIVE_DATE(),"DD/MM/YYYY");
+	                   	    		System.out.println("Efdate >>> " + Efdate);
 	                   	    		%>
-	                   	    		
+	                   	    		<td><font class="text"> <%=DisplayFormatUtil.SQLDateToString(rm.getCreate_date(),"DD/MM/YYYY")%></font></td>
 	                   	    		<td><font class="text"> <%=show_locked %></font></td>
 	                   	    		<td><font class="text"> <%=rm.getShow_edit() %></font></td>
 	                   	    		<td><font class="text"> <%=rm.getShow_delete() %></font></td>
@@ -254,8 +307,8 @@ function validateData(){
 	                   	    		<input type ="hidden" name="firstname_<%=i %>"id="firstname_<%=i %>" value="<%=rm.getFIRSTNAME() %>">
 	                   	    		<input type ="hidden" name="lastname_<%=i %>"id ="lastname_<%=i %>" value="<%=rm.getLASTNAME() %>">
 	                   	    		<input type ="hidden" name="department_<%=i %>"id="department_<%=i %>" value="<%=rm.getDEPARTMENT() %>">
-	                   	    		<input type ="hidden" name="eff_date_<%=i %>" id ="eff_date_<%=i %>"value="<%=rm.getEFFECTIVE_DATE() %>">
-	                   	    		<input type ="hidden" name="exp_date_<%=i %>" id="exp_date_<%=i %>"value="<%=rm.getEXPIRY_DATE() %>">
+	                   	    		<input type ="hidden" name="eff_date_<%=i %>" id ="eff_date_<%=i %>"value="<%=rm.getEFFECTIVE_DATE()%>">
+	                   	    		<input type ="hidden" name="exp_date_<%=i %>" id="exp_date_<%=i %>"value="<%=rm.getEXPIRY_DATE()%>">
 	                   	    		<input type ="hidden" name="user_status_<%=i %>" id="user_status_<%=i %>"value="<%=rm.getUSER_STATUS() %>">
  	                   	    		</tr>
 	                   	      		<input type="hidden" name="ejda_id" value="">
@@ -474,14 +527,14 @@ function validateData(){
                    	       <tr>
 						    <td align="right"><span class="text">Effective Date : </span></td>
 						    <td align="left" width="100">
-						      <input type="text" name="eff_date" id="eff_date"value="<%= um.getEFFECTIVE_DATE()%>" />
+						      <input type="text" name="eff_date" id="eff_date"value="<%= DisplayFormatUtil.SQLDateToString(um.getEFFECTIVE_DATE(),"DD/MM/YYYY")%>" />
 						    </td>
 						    <td ></td>
 						  </tr>
 						   <tr>
 						    <td align="right"><span class="text">Expiry Date : </span></td>
 						    <td align="left" width="100">
-						      <input type="text" name="exp_date" id="exp_date"value="<%=um.getEXPIRY_DATE() %>" />
+						      <input type="text" name="exp_date" id="exp_date"value="<%=DisplayFormatUtil.SQLDateToString(um.getEXPIRY_DATE(),"DD/MM/YYYY") %>" />
 						    </td>
 						    <td ></td>
 						  </tr>
