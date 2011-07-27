@@ -16,6 +16,9 @@ import com.tcd.ejda.model.RoleModel;
 import com.tcd.ejda.model.UserRoleModel;
 import com.tcd.ejda.model.UsrModel;
 import org.apache.log4j.Logger;
+
+import com.ejda.util.DisplayFormatUtil;
+
 public class UserAction extends AbstractAction {
 	private Logger log = Logger.getLogger(UserAction.class);
 	@Override
@@ -110,6 +113,7 @@ public class UserAction extends AbstractAction {
 		um.setLASTNAME(lastname);
 		um.setFIRSTNAME(firstname);
 		log.debug("value date >> "+Date.valueOf(eff_date));
+//		log.debug("value date >> "+DisplayFormatUtil.DateFormatYYYYMMDD(eff_date));
 		um.setEFFECTIVE_DATE(Date.valueOf(eff_date));
 		um.setEXPIRY_DATE(Date.valueOf(exp_date));
 		um.setCreate_by("veena");
@@ -133,6 +137,7 @@ public class UserAction extends AbstractAction {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.debug("UserAction : doEdit",e);
 		}
 		
 		result = true;
@@ -212,8 +217,8 @@ public class UserAction extends AbstractAction {
 		um.setCONPWD(conpwd);
 		um.setLASTNAME(lastname);
 		um.setFIRSTNAME(firstname);
-		um.setEFFECTIVE_DATE(Date.valueOf(DateFormat(eff_date)));
-		um.setEXPIRY_DATE(Date.valueOf(DateFormat(exp_date)));
+		um.setEFFECTIVE_DATE(Date.valueOf(DisplayFormatUtil.DateFormat(eff_date)));
+		um.setEXPIRY_DATE(Date.valueOf(DisplayFormatUtil.DateFormat(exp_date)));
 		um.setCreate_by("veena");
 		um.setUpdate_by("veena");
 		um.setDEPARTMENT(department);
@@ -279,16 +284,16 @@ public class UserAction extends AbstractAction {
 		log.debug("user action result department >> " +department);
 		
 
-		log.debug("[ Date : effective date ]" + DateFormat(eff_date) +":"+Date.valueOf(DateFormat(eff_date)));
-		log.debug("[ Date : expiry date ]" + DateFormat(exp_date) +":"+Date.valueOf(DateFormat(exp_date)));
+		log.debug("[ Date : effective date ]" + DisplayFormatUtil.DateFormat(eff_date) +":"+Date.valueOf(DisplayFormatUtil.DateFormat(eff_date)));
+		log.debug("[ Date : expiry date ]" + DisplayFormatUtil.DateFormat(exp_date) +":"+Date.valueOf(DisplayFormatUtil.DateFormat(exp_date)));
 		um.setIV_USER(iv_user);
 		um.setUSERNAME(usrname);
 		um.setPWD(pwd);
 		um.setCONPWD(conpwd);
 		um.setLASTNAME(lastname);
 		um.setFIRSTNAME(firstname);
-		um.setEFFECTIVE_DATE(Date.valueOf(DateFormat(eff_date)));
-		um.setEXPIRY_DATE(Date.valueOf(DateFormat(exp_date)));
+		um.setEFFECTIVE_DATE(Date.valueOf(DisplayFormatUtil.DateFormat(eff_date)));
+		um.setEXPIRY_DATE(Date.valueOf(DisplayFormatUtil.DateFormat(exp_date)));
 		um.setCreate_by("veena");
 		um.setUpdate_by("veena");
 		um.setDEPARTMENT(department);
@@ -411,29 +416,5 @@ public class UserAction extends AbstractAction {
 		}
 		return innerTable;
 	}
-	private String DateFormat(String dt){
-		SimpleDateFormat inFmt = new SimpleDateFormat("dd/MM/yyyy");
-
-		SimpleDateFormat outFmt = new SimpleDateFormat("yyyy-MM-dd");
-
-		java.util.Date rdt = null;
-		try {
-			rdt = inFmt.parse(dt);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String dateOut = outFmt.format(rdt);
-		
-		return dateOut;
-	}
-	private String CurDate(){
-		java.sql.Timestamp curDate = new java.sql.Timestamp(new java.util.Date().getTime());
-		
-		SimpleDateFormat outFmt = new SimpleDateFormat("yyyy-MM-dd");
-		
-		String dateOut = outFmt.format(curDate);
-				
-		return dateOut;
-	}
+	
 }
