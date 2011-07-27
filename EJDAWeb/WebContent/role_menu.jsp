@@ -75,8 +75,8 @@ function EditRole(form,role_id,role_name){
 	$('input[name=ejdaAction]').val('Role');
 	$('input[name=ejdaMethod]').val('doEdit');
 	$('input[name=screenName]').val('role_menu.jsp');
-	
-	form.submit();
+	document.myForm.submit();
+	//form.submit();
 	
 }
 function NewRole(form){
@@ -84,19 +84,23 @@ function NewRole(form){
 	$('input[name=ejdaAction]').val('Role');
 	$('input[name=ejdaMethod]').val('doNew');
 	$('input[name=screenName]').val('role_menu.jsp');
-	form.submit();
+	document.myForm.submit();
+	//form.submit();
 	
 }
 function DeleteRole(form,role_id,role_name){
 	//alert('EditRole');
-	alert('role_id : ' +role_id);
-	$('input[name=role_id]').val(role_id);
-	$('input[name=hrole_name]').val(role_name);
-	$('input[name=ejdaAction]').val('Role');
-	$('input[name=ejdaMethod]').val('doDelete');
-	$('input[name=screenName]').val('role_menu.jsp');
+	//alert('role_id : ' +role_id);
+	if (confirm('Do you delete this role.')) { 
+		$('input[name=role_id]').val(role_id);
+		$('input[name=hrole_name]').val(role_name);
+		$('input[name=ejdaAction]').val('Role');
+		$('input[name=ejdaMethod]').val('doDelete');
+		$('input[name=screenName]').val('role_menu.jsp');
+		document.myForm.submit();
+	}
 	
-	form.submit();
+	//form.submit();
 	
 }
 function getIndexUnCheckBox(name){
@@ -147,6 +151,45 @@ function getIndexUpdate(name,menuid){
 	//alert('get indexTemp : ' +indexTemp);
 	return indexTemp;
 }
+function checkAllList(name) {
+	
+	var hasCheckAll = true;
+		if ($('input[name='+name+']').attr('checked')){
+			 $('input[name=menuid]').each(function(){
+				$('input[name='+name+$(this).val()+']').each(function(){
+					if(!$(this).attr('disabled')){
+						$(this).attr('checked',true);
+					}
+				});
+			 });
+		}else{
+			$('input[name=menuid]').each(function(){
+				$('input[name='+name+$(this).val()+']').each(function(){
+					$(this).attr('checked',false)
+				});
+			});
+		}
+	
+}
+function cancleDeleteAllCheckBox(obj,name){
+	
+	var hasCheckAll = true;
+	$('input[name=menuid]').each(function(){
+		$('input[name='+name+$(this).val()+']').each(function(){
+			if(!$(this).attr('checked')){
+				hasCheckAll = false;
+			}
+		});
+		if(hasCheckAll){
+			$('input[name='+name+']').attr('checked',true);
+			//document.masterForm.option.checked = true;
+		}else{
+			$('input[name='+name+']').attr('checked',false);
+			//document.masterForm.option.checked = false;
+		}
+	});
+	
+}
 </script>
 
 <%
@@ -156,7 +199,7 @@ function getIndexUpdate(name,menuid){
 		returnVal = (String)request.getSession().getAttribute("returnVal");
 		returnValUpdate = (String)request.getSession().getAttribute("returnValUpdate");
 		System.out.println("Show update >> " + returnValUpdate);
-		
+		System.out.println("vc : "+vc);
 		System.out.println("Show Role Servlet returnVal : "+returnVal);
 		System.out.println("pui >> " +request.getSession().getAttribute("returnVC"));
 		//if (null!=request.getSession().getAttribute("returnVC") && !"".equals(request.getSession().getAttribute("returnVC"))){
@@ -197,17 +240,26 @@ function getIndexUpdate(name,menuid){
                       	  <tr>
                       	    <td colspan="3">&nbsp;</td>
                    	      </tr>
-                      	  <tr>
-                      	    <td >&nbsp;</td>
-                      	    <td colspan="2" align="right"><input type="button" name="add" id="add" value="New Role" onclick="NewRole(this.form)"></td>
-                      	    <input type="hidden" name="cType" id="cType" value="">
-                   	      </tr>
-                   	       <tr>
-                      	    <td colspan="3" height="10"></td>
-                   	      </tr>
-	                   	      <%if(null!=vc){%>
+                      	 
+                   	     
+	                   	      <%if(vc.size()>1){%>
+	                   	       <tr>
+	                      	    <td >&nbsp;</td>
+	                      	    <td colspan="2" align="right"><input type="button" name="add" id="add" value="New Role" onclick="NewRole(this.form)"></td>
+	                      	    <input type="hidden" name="cType" id="cType" value="">
+	                   	      </tr>
+	                   	       <tr>
+	                      	    <td colspan="3" height="10"></td>
+	                   	      </tr>
 	                   	       <tr>
 	                      	    <td colspan="3" align="center"><table width="800" cellspacing="1" cellpadding="1">
+	                      	   	<tr  bgcolor="#003366">
+	                   	    		<td ><font class="textHeader">Role Name</font></td>
+	                   	    		
+	                   	    		<td ><font class="textHeader">Edit Role</font></td>
+	                   	    		<td ><font class="textHeader"> Delete Role</font></td>
+	                   	    		
+	                   	    		</tr>
 	                      	    <%
 	                   	    	  for (int i = 0; i< vc.size();i++){
 	                   	    		RoleModel rm = (RoleModel)vc.get(i);
@@ -217,18 +269,21 @@ function getIndexUpdate(name,menuid){
 	                   	    		<input type="hidden" name="hrole_name" value=""></input>
 	                   	    		<td><font class="text"> <%=rm.getShow_edit() %></font></td>
 	                   	    		<td><font class="text"> <%=rm.getShow_del()%></font></td>
-	                   	    		<td><font class="text"><input type = "button" name="test" value="test"onclick ="EditRole(this.form,'<%=rm.getRole_id() %>','<%=rm.getRole_name() %>')"></img></font></td>
+	                   	    		
 	                   	    		</tr>
 	                   	      		
 	                      	    	
 	                      	    	<%
 	                      	    	
 	                   	    	  } %>
+	                   	    	  <tr>
+	                   	    	  	<td height="20" colspan="3"></td>
+	                   	    	  </tr> 
 	                      	    </table>
 	                      	    		
 	                      	    		
 	                      	    </td>
-	                      	    <td colspan="2">&nbsp;</td>
+	                      	    <td colspan="2" height="50">&nbsp;</td>
 	                   	      </tr>
 	                   	      <%	 }%>
                    	      <%}else if (null!=returnVal && !"".equals(returnVal)){ %>
@@ -244,6 +299,7 @@ function getIndexUpdate(name,menuid){
                    	       <tr>
                       	    <td colspan="3" height="10">&nbsp;</td>
                    	      </tr>
+                   	       
 						   <tr>
                       	    
                       	    <td colspan="3" align="center"><%=returnVal %></td>
@@ -258,7 +314,7 @@ function getIndexUpdate(name,menuid){
 						    
 						  </tr>
                    	      <%
-                   	   			
+                   	   			request.getSession().setAttribute("returnVal","");
                    	      }else if (null!=returnValUpdate ){
                    	    	String role_name = (String)request.getSession().getAttribute("hidrolename");                   	      
                    	      %>
