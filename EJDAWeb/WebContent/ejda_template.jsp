@@ -37,5 +37,14 @@
 	var MenuBar1 = new Spry.Widget.MenuBar("MenuBar1", {imgDown:"SpryAssets/SpryMenuBarDownHover.gif", 
 		imgRight:"SpryAssets/SpryMenuBarRightHover.gif"});
 </script>
+ 		<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
+		   
+		     <tr bgcolor="#003399">
+                 	  	<td height="1"></td>
+                </tr>
+                 <tr>
+                    <td align="right" ><font class="textError"> Authorized by veena</font></td>
+                </tr>
+	    </table>
 </body>
 </html>
