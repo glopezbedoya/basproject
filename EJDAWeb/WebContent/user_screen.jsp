@@ -16,13 +16,13 @@ function searchUser(form){
 function AddRole(form){
 	var errData = validateData();
 	if (errData){
-		alert('test');
+		$('input[name=ejdaAction]').val('User');
+		$('input[name=ejdaMethod]').val('doAdd');
+		$('input[name=screenName]').val('user_screen.jsp');
+		form.submit();
 	}
 	//alert($('input[name=iv_user]').val());
-	//$('input[name=ejdaAction]').val('User');
-	//$('input[name=ejdaMethod]').val('doAdd');
-	//$('input[name=screenName]').val('user_screen.jsp');
-	//form.submit();
+	
 	
 }
 function NewRole(form){
@@ -34,12 +34,13 @@ function NewRole(form){
 	
 }
 function UpdateUser(form){
-	
-	$('input[name=ejdaAction]').val('User');
-	$('input[name=ejdaMethod]').val('doUpdate');
-	$('input[name=screenName]').val('user_screen.jsp');
-	form.submit();
-	
+	var errData = validateData();
+	if (errData){
+		$('input[name=ejdaAction]').val('User');
+		$('input[name=ejdaMethod]').val('doUpdate');
+		$('input[name=screenName]').val('user_screen.jsp');
+		form.submit();
+	}
 }
 function EditUser(row){
 	//alert($('input[name=ejda_id_'+row+']').val());
@@ -53,7 +54,7 @@ function EditUser(row){
 	$('input[name=department]').val($('input[name=department_'+row+']').val());
 	$('input[name=eff_date]').val($('input[name=eff_date_'+row+']').val());
 	$('input[name=exp_date]').val($('input[name=exp_date_'+row+']').val());
-	
+	$('input[name=user_status]').val($('input[name=user_status_'+row+']').val());
 	$('input[name=ejdaAction]').val('User');
 	$('input[name=ejdaMethod]').val('doEdit');
 	$('input[name=screenName]').val('user_screen.jsp');
@@ -62,17 +63,28 @@ function EditUser(row){
 	
 }
 function DeleteUser(jda_id){
-	alert('delete user : ' + jda_id);
-	$('input[name=ejda_id]').val(jda_id);
-	$('input[name=ejdaAction]').val('User');
-	$('input[name=ejdaMethod]').val('doDelete');
-	$('input[name=screenName]').val('user_screen.jsp');
-	document.myForm.submit();
+	//alert('delete user : ' + jda_id);
+	if (confirm('Do you delete this ID.')) { 
+		$('input[name=ejda_id]').val(jda_id);
+		$('input[name=ejdaAction]').val('User');
+		$('input[name=ejdaMethod]').val('doDelete');
+		$('input[name=screenName]').val('user_screen.jsp');
+		document.myForm.submit();
+	}
 	//form.submit();
 	
 }
 function validateData(){
 	var isPass = true;
+	var isChk=false;
+	$('input[name=checkbok]').each(function(){			
+		
+		
+		if ($(this).attr('checked')){
+			isChk = true;
+			
+		}	
+	});
 	if(''== $('input[name=user_name]').val()){
 		
 		alert('Please input User Name.');
@@ -123,20 +135,13 @@ function validateData(){
 		alert('Password and Confirmpassword is not equal.');
 		$('input[name=crmpwd]').focus();
 		isPass = false;
-	}
-	var isChk=false;
-	$('input[name=checkbok]').each(function(){			
-		
-		
-		if ($(this).attr('checked')){
-			isChk = true;
-			
-		}	
-	});
-	if (!isChk){
+	}else if (!isChk){
 		alert('Please select role.');
 		isPass = false;
 	}
+	
+	
+	
 	
 	return isPass;
 }
@@ -171,32 +176,47 @@ function validateData(){
                       	  	<td colspan="2" height="10"></td>
                       	  </tr>
                       	  <%if (null==returnVal || "".equals(returnVal)){ %>
-                      	  <tr>
-                      	    <td align="left" width="250"><font class="text">IV User : </font>
-                      	    		<input type="text" name="iv_user" id="ivuser" value="">
-                      	    		
-                      	    </td>
-                      	    <td>&nbsp;</td>
-                   	      </tr>
+                      	 
                    	      <tr>
-                      	    <td align="left" width="250"><font class="text">First Name : </font>
-                      	    		<input type="text" name="firstname" id="firstname" value="">
-                      	    		
-                      	    </td>
-                      	    <td align="left"><font class="text">Last Name : </font><input type="text" name="lastname" id="lastname" value=""></td>
+                   	      	<td colspan="2" align="left"><table width="800" border="0" cellspacing="1" cellpadding="1">
+                   	      		 <tr>
+		                      	    <td align="right" width="100"><font class="text">IV User : </font>
+		                      	    		
+		                      	    		
+		                      	    </td>
+		                      	    <td colspan="3" align="left"><input type="text" name="siv_user" id="siv_user" value=""></td>
+		                   	      </tr>
+		                   	      	 <tr>
+		                      	    <td align="right" width="100"><font class="text">First Name : </font> </td>
+		                      	    <td align="left"width="100"><input type="text" name="sfirstname" id="sfirstname" value=""></td>
+		                   	                	    
+		                      	    <td align="right"width="100"><font class="text">Last Name : </font></td>
+		                      	    <td align="left"><input type="text" name="slastname" id="slastname" value=""></td>
+		                   	      </tr>
+		                   	      <tr>
+		                      	    <td align="right" width="100"><font class="text">Status :</font></td>
+		                      	    <td  align="left"> <font class="text"><input type="radio" name="radio" id="radio" value="" /> Lock
+		                      	    <input type="radio" name="radio" id="radio" value="" />  Unlock </font></td>
+		                      	    <td align="left" colspan="2"></td>
+		                   	      </tr>
+		                   	       <tr>
+		                      	    <td align="right"></td>
+		                      	    <td align="left"></td>
+		                   	                	    
+		                      	    <td align="right"></td>
+		                      	    <td align="left"><input type="button" name="search" id="search" value="Search"onClick="searchUser(this.form)"></td>
+		                   	      </tr>
+		                   	      </table>
+                   	      	</td>
                    	      </tr>
-                   	      <tr>
-                      	    <td align="left" width="250"><font class="text">Locked : </font>
-                      	    		
-                      	    		
-                      	    </td>
-                      	    <td align="left"><input type="button" name="search" id="search" value="Search"onClick="searchUser(this.form)"></td>
+                   	       <tr>
+                      	    <td colspan="2" align="left"></td>
                    	      </tr>
                       	  <tr>
                       	    <td colspan="2" height="10"></td>
                    	      </tr>
                       	  <tr>
-                      	    <td colspan="2">&nbsp;</td>
+                      	    <td colspan="2"></td>
                    	      </tr>
                       	  
                    	       <tr>
@@ -241,7 +261,7 @@ function validateData(){
 	                   	    		<input type ="hidden" name="department_<%=i %>"id="department_<%=i %>" value="<%=rm.getDEPARTMENT() %>">
 	                   	    		<input type ="hidden" name="eff_date_<%=i %>" id ="eff_date_<%=i %>"value="<%=rm.getEFFECTIVE_DATE() %>">
 	                   	    		<input type ="hidden" name="exp_date_<%=i %>" id="exp_date_<%=i %>"value="<%=rm.getEXPIRY_DATE() %>">
-	                   	    		
+	                   	    		<input type ="hidden" name="user_status_<%=i %>" id="user_status_<%=i %>"value="<%=rm.getUSER_STATUS() %>">
  	                   	    		</tr>
 	                   	      		<input type="hidden" name="ejda_id" value="">
 									<input type="hidden" name="iv_user" value="">
@@ -253,7 +273,7 @@ function validateData(){
 									<input type="hidden" name="department" value="">
 									<input type="hidden" name="eff_date" value="">
 									<input type="hidden" name="exp_date" value="">
-	                      	    	
+	                      	    	<input type="hidden" name="user_status" value="">
 	                      	    	<% } %>
 	                      	    </table>
 	                      	    		
@@ -347,13 +367,28 @@ function validateData(){
 						   <tr>
                       	    <td colspan="3" height="10"></td>
                    	      </tr>
-						   <tr>
-						    <td align="right"><span class="text">Role Name : </span></td>
-						    <td align="left" width="100">
-						     <%=rolename %>
-						    </td>
-						    <td ></td>
-						  </tr>
+						 
+						  
+						  <%
+						    
+						    String checks[] = rolename.split("\\|");
+						    System.out.println("checks >> " + checks.length);
+						    for(int i=0;i<checks.length;i++){
+						    	%>
+						    	<tr>
+						    	<%if (i==0){ %>
+						    	<td align="right"><span class="text">Role Name : </span></td>
+						    	<%}else{ %>
+						    	<td align="right"></td>
+						    	<%} %>
+						    	<td align="left"><%=checks[i] %></td>
+						    	 <td align="left"></td>
+						  		</tr>
+						    	<%
+						    	}
+						    %>
+						   
+						   
 						   <tr>
                       	    <td colspan="3" height="10"></td>
                    	      </tr>
@@ -458,15 +493,48 @@ function validateData(){
 						   <tr>
                       	    <td colspan="3" height="10"></td>
                    	      </tr>
+						   
+						  <%
+						    
+						    String checks[] = rolename.split("\\|");
+						    System.out.println("checks >> " + checks.length);
+						    for(int i=0;i<checks.length;i++){
+						    	%>
+						    	<tr>
+						    	<%if (i==0){ %>
+						    	<td align="right"><span class="text">Role Name : </span></td>
+						    	<%}else{ %>
+						    	<td align="right"></td>
+						    	<%} %>
+						    	<td align="left"><%=checks[i] %></td>
+						    	 <td align="left"></td>
+						  		</tr>
+						    	<%
+						    	}
+						    %>
 						   <tr>
-						    <td align="right"><span class="text">Role Name : </span></td>
+                      	    <td colspan="3" height="10"></td>
+                   	      </tr>
+                   	      <%if ("L".equals(um.getUSER_STATUS())){ %>
+                   	      
+                   	      	 <tr>
+						    <td align="right"><span class="text">Unlock User : </span></td>
 						    <td align="left" width="100">
-						     <%=rolename %>
+						      <input type="checkbox" name="user_status" id="user_status"value="<%=um.getUSER_STATUS() %>" checked="checked" />
 						    </td>
 						    <td ></td>
 						  </tr>
-						   <tr>
-                      	    <td colspan="3" height="10"></td>
+                   	      <%}else{ %>
+                   	       <tr>
+						    <td align="right"><span class="text">User Status: </span></td>
+						    <td align="left" width="100">
+						      <input type="checkbox" name="user_status" id="user_status"value="<%=um.getUSER_STATUS() %>" disabled="disabled" />
+						    </td>
+						    <td ></td>
+						  </tr>
+                   	      <%} %>
+                   	       <tr>
+                      	    <td colspan="3" height="20"></td>
                    	      </tr>
 						   <tr>
 						    <td align="right"></td>
