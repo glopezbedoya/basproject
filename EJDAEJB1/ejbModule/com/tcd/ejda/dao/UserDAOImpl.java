@@ -53,6 +53,7 @@ public class UserDAOImpl implements UserDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error("checkUsernamePassword",e);
 		}finally{
 			try {
 				if (conn != null)
@@ -132,6 +133,7 @@ public class UserDAOImpl implements UserDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error("checkPassword",e);
 		}finally{
 			
 			try {
@@ -171,6 +173,7 @@ public class UserDAOImpl implements UserDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch blockd
 			e.printStackTrace();
+			log.error("updateStatusActivate",e);
 		} finally {
 			try {
 				if (conn != null)
@@ -215,6 +218,7 @@ public class UserDAOImpl implements UserDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch blockd
 			e.printStackTrace();
+			log.error("updateCountUser",e);
 		} finally {
 			try {
 				if (conn != null)
@@ -261,6 +265,7 @@ public class UserDAOImpl implements UserDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch blockd
 			e.printStackTrace();
+			log.error("lockedUser",e);
 		} finally {
 			try {
 				if (conn != null)
@@ -379,6 +384,7 @@ public class UserDAOImpl implements UserDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch blockd
 			e.printStackTrace();
+			log.error("addNewUser",e);
 		} finally {
 			try {
 				if (conn != null)
@@ -430,7 +436,7 @@ public class UserDAOImpl implements UserDAO {
 			StringBuffer sql = new StringBuffer();
 			
 			sql.append("UPDATE JDA_USER SET IV_USER = ?, USER_NAME = ?, PASSWORD = ?, FIRST_NAME = ?, LAST_NAME = ?, ");
-			sql.append("DEPARTMENT = ?, USER_STATUS = 'N', USER_IP = ?, USER_COUNT = 0, EFFECTIVE_DATE = ?, EXPIRY_DATE = ?, ");
+			sql.append("DEPARTMENT = ?, USER_STATUS = ?, USER_IP = ?, USER_COUNT = 0, EFFECTIVE_DATE = ?, EXPIRY_DATE = ?, ");
 			sql.append("UPDATE_DATE = SYSDATE, UPDATE_BY = ? WHERE JDA_ID = ? ");
 					
 			log.debug("sql addNewUser 1>>> " + sql);
@@ -444,6 +450,7 @@ public class UserDAOImpl implements UserDAO {
 			ps.setString(seq++, usrmodel.getFIRSTNAME());
 			ps.setString(seq++, usrmodel.getLASTNAME());
 			ps.setString(seq++, usrmodel.getDEPARTMENT());
+			ps.setString(seq++, usrmodel.getUSER_STATUS());
 			ps.setString(seq++, usrmodel.getUSER_IP());
 			ps.setDate(seq++, new Date(usrmodel.getEFFECTIVE_DATE().getTime()));
 			ps.setDate(seq++, new Date(usrmodel.getEXPIRY_DATE().getTime()));
@@ -568,6 +575,7 @@ public class UserDAOImpl implements UserDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error("selectUserforUpdate",e);
 		}finally{
 			
 			try {
