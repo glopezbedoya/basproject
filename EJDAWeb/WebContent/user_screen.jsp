@@ -169,12 +169,7 @@ function validateData(){
                     <td height="10" align="center"><table width="800" border="0" cellspacing="1" cellpadding="1">
                        <tr>
                       	<td height="30"><table width="800" cellspacing="1" cellpadding="1">
-                      	  <tr bgcolor="#003399">
-                      	  	<td colspan="2" height="5"></td>
-                      	  </tr>
-                      	  <tr>
-                      	  	<td colspan="2" height="10"></td>
-                      	  </tr>
+                      	 
                       	  <%if (null==returnVal || "".equals(returnVal)){ %>
                       	 
                    	      <tr>
@@ -559,12 +554,7 @@ function validateData(){
                       </tr> 
                     </table></td>
                 </tr> 
-                <tr bgcolor="#003399">
-                 	  	<td height="1"></td>
-                </tr>
-                 <tr>
-                    <td align="right" ><font class="textError"> Authorized by veena</font></td>
-                </tr>
+               
 	    </table>
 	    </form>
 <script type="text/javascript">
