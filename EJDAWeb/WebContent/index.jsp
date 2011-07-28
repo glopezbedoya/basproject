@@ -57,7 +57,7 @@
                 <form name="form1" method="post" action="/EJDAWeb/EJDAControler">
                 	<input type="hidden" name="ejdaAction" value="CheckUsernamePassword"> 
 					<input type="hidden" name="ejdaMethod" value="checkUser"> 
-					<input type="hidden" name="screenName" value="role_menu.jsp">
+					<input type="hidden" name="screenName" value="">
                 <tr>
                     <td height="10" align="center"><table width="400" cellspacing="1" cellpadding="1">
                       <tr>
