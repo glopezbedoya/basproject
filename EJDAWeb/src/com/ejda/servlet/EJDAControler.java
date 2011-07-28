@@ -66,6 +66,8 @@ public class EJDAControler extends HttpServlet {
 				((AbstractAction) o).setRequest(request);
 				((AbstractAction) o).init();
 				request.getSession().setAttribute(EJDAConstant.SESSION_NAME.PAGE, screenName);
+				log.debug("screenName = "+screenName);
+				log.debug("page = "+request.getSession().getAttribute(EJDAConstant.SESSION_NAME.PAGE));
 				response.sendRedirect(EJDAConstant.PAGE.INDEX_PAGE);
 			}				
 			

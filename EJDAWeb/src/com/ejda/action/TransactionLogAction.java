@@ -135,7 +135,7 @@ public class TransactionLogAction extends AbstractAction {
 		return sql.toString();
 	}
 	
-	protected Vector getValueListParameters() {
+	private Vector getValueListParameters() {
 		Vector parameters = new Vector();
 		TransactionLogModel tranLogCri = getTranLogBean().getTranLogModelSP();
 		if(!"".equals(tranLogCri.getUserName()) || !"".equals(tranLogCri.getFirstName()) || !"".equals(tranLogCri.getLastName())

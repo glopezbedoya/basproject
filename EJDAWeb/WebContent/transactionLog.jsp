@@ -5,7 +5,8 @@
 
 <%@page import="com.tcd.ejda.model.TransactionLogModel"%>
 <%@page import="com.ejda.sessionBean.TransactionLogBean"%>
-<%@page import="com.ejda.util.DisplayUtil"%><script  type="text/javascript">
+<%@page import="com.ejda.util.DisplayUtil"%>
+<%@page import="com.tcd.ejda.model.ValueListModel"%><script  type="text/javascript">
 function buttonAction(form,action){
 	$('input[name=ejdaAction]').val('TransactionLog');
 	$('input[name=ejdaMethod]').val(action);
@@ -43,13 +44,15 @@ function checkBoxAll(){
 	TransactionLogModel tranLogM = new TransactionLogModel();
 	String bgColor1 = "bordercolor=\"#F4F4F4\"";
 	String bgColor2 = "bgcolor=\"#DFEFFF\"";
+	ValueListModel valueListM = tranLogBean.getValueListM();
+	if(null == valueListM) valueListM = new ValueListModel();
 %>
 <form name="transactionForm" method="post" action="/EJDAWeb/EJDAControler">
 	<input type="hidden" name="ejdaAction" value=""> 
 	<input type="hidden" name="ejdaMethod" value=""> 
 	<input type="hidden" name="screenName" value="">
-	<input type="hidden" name="page" value="<%=tranLogBean.getValueListM().getAtPage() %>" />
-	<input type="hidden" name="volumePerPage" value="<%=tranLogBean.getValueListM().getItemsPerPage() %>" />
+	<input type="hidden" name="page" value="<%=valueListM.getAtPage() %>" />
+	<input type="hidden" name="volumePerPage" value="<%=valueListM.getItemsPerPage() %>" />
 	<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
 		<tr >
           <th colspan="4" align="left" bgcolor="#3399FF" scope="row"><div align="left"><span class="style1">&gt;&gt; &#3592;&#3633;&#3604;&#3585;&#3634;&#3619;&#3612;&#3641;&#3657;&#3651;&#3594;&#3657;&#3619;&#3632;&#3610;&#3610; &gt;&gt; &#3592;&#3633;&#3604;&#3585;&#3634;&#3619;&#3612;&#3641;&#3657;&#3651;&#3594;&#3657;&#3591;&#3634;&#3609;&#3619;&#3632;&#3610;&#3610;</span> </div></th>
@@ -109,11 +112,9 @@ function checkBoxAll(){
          </tr>
 		<!--Panging-->
          <%
-         	int startRec =((tranLogBean.getValueListM().getAtPage()-1)*tranLogBean.getValueListM().getItemsPerPage())+1;
-			int finishRec = startRec + tranLogVt.size()-1;
-			int allPage = tranLogBean.getValueListM().getCount() / tranLogBean.getValueListM().getItemsPerPage();
-			int lastPage = (tranLogBean.getValueListM().getCount()/tranLogBean.getValueListM().getItemsPerPage());
-			if ((tranLogBean.getValueListM().getCount()%tranLogBean.getValueListM().getItemsPerPage())>0)  {
+			int allPage = valueListM.getCount() / valueListM.getItemsPerPage();
+			int lastPage = (valueListM.getCount()/valueListM.getItemsPerPage());
+			if ((valueListM.getCount()%valueListM.getItemsPerPage())>0)  {
 				lastPage++;
 			}
 			if(allPage==0){
@@ -121,7 +122,7 @@ function checkBoxAll(){
 			}
 			String strFirstPage ="";
 			
-			if (tranLogBean.getValueListM().getAtPage()==1) {
+			if (valueListM.getAtPage()==1) {
 				strFirstPage = "<strong><font class=\"text\">1</font></strong>";	
 			} else {
 				strFirstPage = "<a href=\"#\" onclick =\"changePageAndSize('1')\"><font class=\"text\">1</font></a>";
@@ -131,7 +132,7 @@ function checkBoxAll(){
 			
 			/*String strLastPage = "";
 			if (lastPage > 1) {
-				if (lastPage == tranLogBean.getValueListM().getAtPage()){
+				if (lastPage == valueListM.getAtPage()){
 					strLastPage = "<strong><font class=\"text\">"+Integer.toString(lastPage)+"</font></strong>";
 				} else {
 					strLastPage = "<a href=\"#\" onclick =\"changePageAndSize('"+Integer.toString(lastPage)+"')\"><font class=\"text\">"+Integer.toString(lastPage)+"</font></a>";
@@ -152,35 +153,35 @@ function checkBoxAll(){
 			String btnNext = "";
 			String btnBack = "";
 			
-			if (allPage*tranLogBean.getValueListM().getItemsPerPage()  < tranLogBean.getValueListM().getCount()) { 
+			if (allPage*valueListM.getItemsPerPage()  < valueListM.getCount()) { 
 				allPage++;
 			}
 			
-			if(tranLogBean.getValueListM().getAtPage() == allPage){
+			if(valueListM.getAtPage() == allPage){
 				btnLast = DisplayUtil.displayButton("Last","",true);	
 				btnNext = DisplayUtil.displayButton("Next","",true);		
-			}else if (allPage != tranLogBean.getValueListM().getAtPage() && tranLogBean.getValueListM().getAtPage() != 0)	{
+			}else if (allPage != valueListM.getAtPage() && valueListM.getAtPage() != 0)	{
 				btnLast = DisplayUtil.displayButton("Last","onclick=\"changePage("+allPage+",this.form)\"",false);
-				btnNext = DisplayUtil.displayButton("Next","onclick=\"changePage("+(tranLogBean.getValueListM().getAtPage()+1)+",this.form)\"",false);
+				btnNext = DisplayUtil.displayButton("Next","onclick=\"changePage("+(valueListM.getAtPage()+1)+",this.form)\"",false);
 			} else {
 				btnLast = DisplayUtil.displayButton("Last","",true);
 				btnNext = DisplayUtil.displayButton("Next","",true);
 			}
-			if(tranLogBean.getValueListM().getAtPage() == 1){
+			if(valueListM.getAtPage() == 1){
 				btnFirst = 	DisplayUtil.displayButton("First","",true);
 				btnBack =  DisplayUtil.displayButton("Back","",true); 	
-			}else if (tranLogBean.getValueListM().getAtPage() != 1 && tranLogBean.getValueListM().getAtPage() != 0) {    
+			}else if (valueListM.getAtPage() != 1 && valueListM.getAtPage() != 0) {    
 				btnFirst = 	DisplayUtil.displayButton("First","onclick=\"changePage(1,this.form)\"",false);
-				btnBack = DisplayUtil.displayButton("Back","onclick=\"changePage("+(tranLogBean.getValueListM().getAtPage()-1)+",this.form)\"",false);			
+				btnBack = DisplayUtil.displayButton("Back","onclick=\"changePage("+(valueListM.getAtPage()-1)+",this.form)\"",false);			
 			} else {	   
 				btnFirst = DisplayUtil.displayButton("First","",true);
 				btnBack = DisplayUtil.displayButton("Back","",true);	 
 			}
 			
-			String showPage = DisplayUtil.displaySelectPaging("selectPaging",allPage,tranLogBean.getValueListM().getAtPage(),"onchange=\"changeSelectPage(this.form)\"");
+			String showPage = DisplayUtil.displaySelectPaging("selectPaging",allPage,valueListM.getAtPage(),"onchange=\"changeSelectPage(this.form)\"");
 			%>
         <tr>
-          <th colspan="4" scope="row"><div align="right"><span class="style4">&#3649;&#3626;&#3604;&#3591;&#3612;&#3621;&#3585;&#3634;&#3619;&#3588;&#3657;&#3609;&#3627;&#3634; <%=tranLogBean.getValueListM().getAtPage()+"/"+allPage %></span>
+          <th colspan="4" scope="row"><div align="right"><span class="style4">&#3649;&#3626;&#3604;&#3591;&#3612;&#3621;&#3585;&#3634;&#3619;&#3588;&#3657;&#3609;&#3627;&#3634; <%=valueListM.getAtPage()+"/"+allPage %></span>
             <%=showPage %>
          	<%=btnFirst %>
          	<%=btnBack %>
@@ -206,7 +207,7 @@ function checkBoxAll(){
           <th scope="row">&nbsp;</th>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td align="right">จำนวนที่พบ<%=tranLogBean.getValueListM().getCount() %> รายการ</td>
+          <td align="right">จำนวนที่พบ<%=valueListM.getCount() %> รายการ</td>
         </tr>
         <tr>
           <th colspan="4" scope="row"><table width="951" border="0" align="center" cellpadding="0" cellspacing="1">

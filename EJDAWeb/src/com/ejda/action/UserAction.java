@@ -15,12 +15,29 @@ import com.tcd.ejda.dao.UserDAOImpl;
 import com.tcd.ejda.model.RoleModel;
 import com.tcd.ejda.model.UserRoleModel;
 import com.tcd.ejda.model.UsrModel;
+import com.tcd.ejda.model.ValueListModel;
+
 import org.apache.log4j.Logger;
 
+import com.ejda.constant.EJDAConstant;
+import com.ejda.sessionBean.UserBean;
 import com.ejda.util.DisplayFormatUtil;
 
 public class UserAction extends AbstractAction {
 	private Logger log = Logger.getLogger(UserAction.class);
+	private UserBean userBean;
+	
+	private UserBean getUserBean(){
+		UserBean userBean = (UserBean)getRequest().getSession().getAttribute("userBean");
+		if(null == userBean){
+			userBean = new UserBean();
+		}
+		return userBean;
+	}
+	private void setUserBean(UserBean userBean){
+		getRequest().getSession().setAttribute("userBean", userBean);
+	}
+	
 	@Override
 	public void clearSessionNotUsed() {
 		// TODO Auto-generated method stub
@@ -29,8 +46,13 @@ public class UserAction extends AbstractAction {
 
 	@Override
 	public void init() {
-		// TODO Auto-generated method stub
-
+		userBean = getUserBean();
+		userBean.setUsrMSP(new UsrModel());
+		userBean.setUsrVt(new Vector());		
+		ValueListModel valueListM = new ValueListModel();
+		valueListM.setReturnModel("UsrModel");
+		userBean.setValueListM(valueListM);
+		setUserBean(userBean);
 	}
 
 	@Override
@@ -154,15 +176,38 @@ public class UserAction extends AbstractAction {
 		String last_name = getRequest().getParameter("rolename");
 		String locked = getRequest().getParameter("rolename");
 		Vector vc = new Vector();
-
-		UserDAO usr = new UserDAOImpl();
+		
+//		UserDAO usr = new UserDAOImpl();
+//		try {
+//			vc = usr.selectUserforUpdate(iv_user, user_name, first_name,last_name, locked);
+//			log.debug("returnVC >>> " + vc);
+//			getRequest().getSession().setAttribute("returnVC", vc);
+//			result = true;
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		userBean = getUserBean();
+		setCriteriaParameter();
+		ValueListModel valueListM = new ValueListModel();
+		ValueListAction valueListA = new ValueListAction();
 		try {
-			vc = usr.selectUserforUpdate(iv_user, user_name, first_name,last_name, locked);
-			log.debug("returnVC >>> " + vc);
-			getRequest().getSession().setAttribute("returnVC", vc);
+			Vector userVt = new Vector();
+			valueListM = userBean.getValueListM();
+			valueListM.setSQL(this.setSQL(userBean.getUsrMSP()));
+			valueListM.setParameters(getValueListParameters());
+			valueListM.setPage(getRequest().getParameter("page"));
+			valueListM.setItemsPerPage(Integer.parseInt(getRequest().getParameter("volumePerPage")));
+			userBean.setValueListM(valueListA.doSearch(valueListM));
+			userBean.setUsrVt(userBean.getValueListM().getResult());
+			log.debug("tranLogVt.size = " + userBean.getUsrVt().size());
+			log.debug("tranLogBean.getValueListM().getCount() = "+userBean.getValueListM().getCount());
+			getRequest().getSession().removeAttribute("VALUE_LIST");
+			setUserBean(userBean);
 			result = true;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 			
@@ -415,6 +460,29 @@ public class UserAction extends AbstractAction {
 			log.debug("Error >>> "+ e);
 		}
 		return innerTable;
+	}
+	
+	private void setCriteriaParameter(){
+		UsrModel usrMSP = new UsrModel();
+		getUserBean().setUsrMSP(usrMSP);
+	}
+	private Vector getValueListParameters() {
+		Vector parameters = new Vector();
+		
+		log.info("parameters.size() = "+parameters.size());
+		return parameters;
+	}
+	private String setSQL(UsrModel usrM){
+		StringBuffer sql = new StringBuffer();
+		try{
+			sql.append(EJDAConstant.SQL.USER__SCREEN_SQL);
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		sql = removeWasteSQL(sql);
+		return sql.toString();
 	}
 	
 }

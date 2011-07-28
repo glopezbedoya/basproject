@@ -6,6 +6,7 @@ import java.util.Vector;
 import javax.servlet.http.HttpServletRequest;
 
 import com.ejda.constant.EJDAConstant;
+import com.ejda.sessionBean.RoleBean;
 import com.tcd.ejda.dao.MenuDAO;
 import com.tcd.ejda.dao.MenuDAOImpl;
 import com.tcd.ejda.dao.RoleDAO;
@@ -13,11 +14,28 @@ import com.tcd.ejda.dao.RoleDAOImpl;
 import com.tcd.ejda.model.MenuModel;
 import com.tcd.ejda.model.RoleFunctionModel;
 import com.tcd.ejda.model.RoleModel;
+import com.tcd.ejda.model.TransactionLogModel;
+import com.tcd.ejda.model.ValueListModel;
 
 import org.apache.log4j.Logger;
 
 public class RoleAction extends AbstractAction {
 	private Logger log = Logger.getLogger(RoleAction.class);
+	private RoleBean roleBean;
+	
+	private RoleBean getRoleBean(){
+		roleBean = (RoleBean)getRequest().getSession().getAttribute("roleBean");
+		if(null == roleBean){
+			roleBean = new RoleBean();
+		}
+		return roleBean;
+	}
+	
+	private void setRoleBean(RoleBean roleBean){
+		getRequest().getSession().setAttribute("roleBean", roleBean);
+	}
+	
+	
 	@Override
 	public void clearSessionNotUsed() {
 		// TODO Auto-generated method stub
@@ -27,7 +45,14 @@ public class RoleAction extends AbstractAction {
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
-
+		log.debug("*********** init ***********");
+		roleBean = getRoleBean();
+		roleBean.setRoleVt(new Vector());
+		roleBean.setRoleMSP(new RoleModel());
+		ValueListModel valueListM = new ValueListModel();
+		valueListM.setReturnModel("RoleModel");
+		roleBean.setValueListM(valueListM);
+		setRoleBean(roleBean);
 	}
 
 	@Override
@@ -107,13 +132,29 @@ public class RoleAction extends AbstractAction {
 		boolean result = false;
 		String role_name = getRequest().getParameter("rolename");
 		Vector vc = new Vector();
+		ValueListModel valueListM = new ValueListModel();
+		ValueListAction valueListA = new ValueListAction();
 		RoleDAO role = new RoleDAOImpl();
+		setCriteriaParameter();
 		try {
-			vc = role.selectRole(role_name);
-			log.debug("vc >>> " + vc.size());
-			getRequest().getSession().setAttribute("returnVC", vc);
+			Vector tranLogVt = new Vector();
+			valueListM = roleBean.getValueListM();
+			valueListM.setSQL(this.setSQL(roleBean.getRoleMSP()));
+			valueListM.setParameters(getValueListParameters());
+			valueListM.setPage(getRequest().getParameter("page"));
+			valueListM.setItemsPerPage(Integer.parseInt(getRequest().getParameter("volumePerPage")));
+			roleBean.setValueListM(valueListA.doSearch(valueListM));
+			roleBean.setRoleVt(roleBean.getValueListM().getResult());
+			log.debug("tranLogVt.size = " + roleBean.getRoleVt().size());
+			log.debug("tranLogBean.getValueListM().getCount() = "+roleBean.getValueListM().getCount());
+			getRequest().getSession().removeAttribute("VALUE_LIST");
+			setRoleBean(roleBean);
 			result = true;
-		} catch (SQLException e) {
+//			vc = role.selectRole(role_name);
+//			log.debug("vc >>> " + vc.size());
+//			getRequest().getSession().setAttribute("returnVC", vc);
+//			result = true;
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -415,4 +456,30 @@ public class RoleAction extends AbstractAction {
 		}
 		return innerTable;
 	}
+	
+	private void setCriteriaParameter(){
+		RoleModel roleMSP = new RoleModel();
+		getRoleBean().setRoleMSP(roleMSP);
+	}
+	
+	private Vector getValueListParameters() {
+		Vector parameters = new Vector();
+		
+		log.info("parameters.size() = "+parameters.size());
+		return parameters;
+	}
+	private String setSQL(RoleModel roleCri){
+		StringBuffer sql = new StringBuffer();
+		try{
+			sql.append(EJDAConstant.SQL.ROLE_SQL);
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		sql = removeWasteSQL(sql);
+		return sql.toString();
+	}
+	
+	
 }
