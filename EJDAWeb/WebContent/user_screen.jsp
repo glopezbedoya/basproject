@@ -186,6 +186,7 @@ function validateData(){
 	
 	return isPass;
 }
+
 </script>
 
  <%
@@ -268,7 +269,7 @@ function validateData(){
                    	      <tr>
                       	    <td colspan="2" height="10">&nbsp;</td>
                    	      </tr>
-                   	       <%if(null!=vc){%>
+                   	       <%if(vc.size()>1){%>
 	                   	       <tr>
 	                      	    <td colspan="3" align="center"><table width="800" cellspacing="1" cellpadding="1">
 	                      	    <tr  bgcolor="#003366">
@@ -395,11 +396,11 @@ function validateData(){
                    	      </tr>
                    	       <tr>
 						    <td align="right"><span class="text">Effective Date : </span></td>
-						    <td align="left" width="100">
-						      <input type="textbox" name="eff_date">
+						    <td align="left" width="200">
+						      <input type="textbox" name="eff_date" onkeypress="addSlashFormat(event,this)" onblur="checkDateLengthYear(this,'','1800','2300')" maxlength="10">
 								<img
 								id="eff_date_img" style="cursor:hand"
-								src="images/calendar_new.gif"
+								src="images/icon_calendar.gif"
 								onclick="popUpCalendarModify(this,eff_date,'dd/mm/yyyy','','','','bottom',false)"
 								alt="">
 						    </td>
@@ -407,8 +408,13 @@ function validateData(){
 						  </tr>
 						   <tr>
 						    <td align="right"><span class="text">Expiry Date : </span></td>
-						    <td align="left" width="100">
-						      <input type="text" name="exp_date" id="exp_date" onkeydown="javascript:DateFormat(this,this.value,event,false,'1')" value=""/>
+						    <td align="left" width="200">
+						      <input type="text" name="exp_date" id="exp_date" onkeypress="keyPressInteger();addSlashFormat(event,this)" onblur="checkDateLengthYear(this,'','1800','2300')" maxlength="10" value=""/>
+						      <img
+								id="exp_date_img" style="cursor:hand"
+								src="images/icon_calendar.gif"
+								onclick="popUpCalendarModify(this,exp_date,'dd/mm/yyyy','','','','bottom',false)"
+								alt="">
 						    </td>
 						    <td ></td>
 						  </tr>
@@ -526,15 +532,25 @@ function validateData(){
                    	      </tr>
                    	       <tr>
 						    <td align="right"><span class="text">Effective Date : </span></td>
-						    <td align="left" width="100">
-						      <input type="text" name="eff_date" id="eff_date"value="<%= DisplayFormatUtil.SQLDateToString(um.getEFFECTIVE_DATE(),"DD/MM/YYYY")%>" />
+						    <td align="left" width="200">
+						      <input type="text" name="eff_date" id="eff_date"onkeypress="addSlashFormat(event,this)" onblur="checkDateLengthYear(this,'','1800','2300')"value="<%= DisplayFormatUtil.SQLDateToString(um.getEFFECTIVE_DATE(),"DD/MM/YYYY")%>" />
+						       <img
+								id="eff_date_img" style="cursor:hand"
+								src="images/icon_calendar.gif"
+								onclick="popUpCalendarModify(this,eff_date,'dd/mm/yyyy','','','','bottom',false)"
+								alt="">
 						    </td>
 						    <td ></td>
 						  </tr>
 						   <tr>
 						    <td align="right"><span class="text">Expiry Date : </span></td>
-						    <td align="left" width="100">
-						      <input type="text" name="exp_date" id="exp_date"value="<%=DisplayFormatUtil.SQLDateToString(um.getEXPIRY_DATE(),"DD/MM/YYYY") %>" />
+						    <td align="left" width="200">
+						      <input type="text" name="exp_date" id="exp_date"onkeypress="addSlashFormat(event,this)" onblur="checkDateLengthYear(this,'','1800','2300')"value="<%=DisplayFormatUtil.SQLDateToString(um.getEXPIRY_DATE(),"DD/MM/YYYY") %>" />
+						       <img
+								id="exp_date_img" style="cursor:hand"
+								src="images/icon_calendar.gif"
+								onclick="popUpCalendarModify(this,exp_date,'dd/mm/yyyy','','','','bottom',false)"
+								alt="">
 						    </td>
 						    <td ></td>
 						  </tr>
