@@ -10,7 +10,9 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import com.tcd.ejda.connection.JDBCConnection;
+import com.tcd.ejda.model.RoleModel;
 import com.tcd.ejda.model.TransactionLogModel;
+import com.tcd.ejda.model.UsrModel;
 import com.tcd.ejda.model.ValueListModel;
 
 public class ValueListDAOImpl implements ValueListDAO {
@@ -49,7 +51,7 @@ public class ValueListDAOImpl implements ValueListDAO {
 			sqlBuffer.append(" else REGISTER_STATUS_DESC End as REGISTER_STATUS_DESC, ");
 			sqlBuffer.append(" ENG_DESC");
 			sqlBuffer.append(" FROM P10_REGISTER_TYPE p10 join ");
-			sqlBuffer.append("(SELECT ROW_NUMBER() OVER (ORDER BY 0) AS CURSOR_INDEX, m.* FROM (");
+			sqlBuffer.append("(SELECT ROW_NuserMBER() OVER (ORDER BY 0) AS CURSOR_INDEX, m.* FROM (");
 		    End*/
 			//}
 			sqlBuffer.append(valueListM.getSQL());
@@ -190,12 +192,14 @@ public class ValueListDAOImpl implements ValueListDAO {
 
 	private Object mappResultSetToModel(String returnModel,ResultSet rs){
 		Object obj = new Object();
+		log.debug("returnModel = "+returnModel);
 		if(returnModel.equalsIgnoreCase("TransactionLogModel")){
 			obj = mapToTransactionLogModel(rs);
+		}else if(returnModel.equalsIgnoreCase("RoleModel")){
+			obj = mapToRoleModel(rs);
+		}else if(returnModel.equalsIgnoreCase("UsrModel")){
+			obj = mapToUsrModel(rs);
 		}
-//		else if(returnModel.equalsIgnoreCase("ApplicationModel")){
-//			obj = mapToIDPassPortCode(rs);
-//		} 
 		
 		return obj;
 	}
@@ -221,4 +225,47 @@ public class ValueListDAOImpl implements ValueListDAO {
 		}
 		return tranLog;
 	}
+	
+	private RoleModel mapToRoleModel(ResultSet rs){
+		RoleModel roleM = new RoleModel();
+//		Locale locale = new Locale("en");
+		try {
+			roleM.setRole_id(rs.getString("ROLE_ID"));
+			roleM.setRole_name(rs.getString("ROLE_NAME"));
+			roleM.setShow_edit(rs.getString("EDITS"));
+			roleM.setShow_del(rs.getString("DELETES"));
+		} catch (SQLException e) {
+			log.error("Mapping Error : SQLException ",e);
+		} catch (Exception e){
+			log.error("Mapping Error : Exception ",e);
+		}
+		return roleM;
+	}
+	
+	private UsrModel mapToUsrModel(ResultSet rs){
+		UsrModel userM = new UsrModel();
+//		Locale locale = new Locale("en");
+		try {
+			userM.setJda_id(rs.getString("JDA_ID"));
+			userM.setIV_USER(rs.getString("IV_USER"));
+			userM.setUSERNAME(rs.getString("USER_NAME"));
+			userM.setPWD(rs.getString("PASSWORD"));
+			userM.setFIRSTNAME(rs.getString("FIRST_NAME"));
+			userM.setLASTNAME(rs.getString("LAST_NAME"));
+			userM.setDEPARTMENT(rs.getString("DEPARTMENT"));
+			userM.setUSER_STATUS(rs.getString("USER_STATUS"));
+			userM.setEFFECTIVE_DATE(Date.valueOf(rs.getString("EFFECTIVE_DATE")));
+			userM.setEXPIRY_DATE(Date.valueOf(rs.getString("EXPIRY_DATE")));
+			userM.setCreate_date(Date.valueOf(rs.getString("CREATE_DATE")));
+			userM.setShow_edit(rs.getString("EDITS"));
+			userM.setShow_delete(rs.getString("DELETES"));
+		} catch (SQLException e) {
+			log.error("Mapping Error : SQLException ",e);
+		} catch (Exception e){
+			log.error("Mapping Error : Exception ",e);
+		}
+		return userM;
+	}
+	
+	
 }
