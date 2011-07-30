@@ -51,9 +51,12 @@ public class MenuServlet extends HttpServlet {
 			
 				String div = "<ul id=\"MenuBar1\" class=\"MenuBarHorizontal\">";	
 					if(vc != null && vc.size()>0){	
+						
 						for(int j=0;j<vc.size();j++){
 							MenuModel model = (MenuModel)vc.get(j);
-							
+							if (count!=0 && (model.getMenu_status().equals("A") || model.getMenu_status().equals("C"))){
+								div += "</ul></li>";
+							}
 							if (null!=model.getMenu_status() && model.getMenu_status().equals("A")){
 								
 								div += "<li><a href=\"#\">" + model.getMenu_name() + "</a></li>";	
@@ -71,11 +74,10 @@ public class MenuServlet extends HttpServlet {
 									
 								}
 
-								
 //								div += "<li><a href=\"/EJDAWeb/EJDAControler?screenName="+model.getMenu_linked()+"\">" + model.getMenu_name() + "</a></li>";
 	
-//								div += "<li><a href=\"./EJDAControler?screenName=transactionLog.jsp&ejdaAction=TransactionLog\">" + model.getMenu_name() + "</a></li>";
-								div += "<li><a href=\"./EJDAControler?screenName=user_screen.jsp&ejdaAction=User\">" + model.getMenu_name() + "</a></li>";
+								div += "<li><a href=\"./EJDAControler?screenName=transactionLog.jsp&ejdaAction=TransactionLog\">" + model.getMenu_name() + "</a></li>";
+//								div += "<li><a href=\"./EJDAControler?screenName=user_screen.jsp&ejdaAction=User\">" + model.getMenu_name() + "</a></li>";
 
 								count=1;
 								
@@ -88,9 +90,10 @@ public class MenuServlet extends HttpServlet {
 						if (count!=0){
 							div += "</ul>";
 							div += "</li>";
-							div += "</ul>";
+//							div += "</ul>";
 						}
-						
+						div += "<li><a href=\"./EJDAControler?screenName=index.jsp&ejdaAction=logout\">LOGOUT</a></li>";
+						div += "</ul>";
 					}else{
 								div += 		"			<tr class=\"ROW\">"+
 						"									<td colspan=\"6\" height=\"19\" align=\"center\" class=\"bu2\">No record found.</td>"+
