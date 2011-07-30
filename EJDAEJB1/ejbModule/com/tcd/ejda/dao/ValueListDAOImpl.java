@@ -232,8 +232,7 @@ public class ValueListDAOImpl implements ValueListDAO {
 		try {
 			roleM.setRole_id(rs.getString("ROLE_ID"));
 			roleM.setRole_name(rs.getString("ROLE_NAME"));
-			roleM.setShow_edit(rs.getString("EDITS"));
-			roleM.setShow_del(rs.getString("DELETES"));
+			
 		} catch (SQLException e) {
 			log.error("Mapping Error : SQLException ",e);
 		} catch (Exception e){
@@ -257,8 +256,7 @@ public class ValueListDAOImpl implements ValueListDAO {
 			userM.setEFFECTIVE_DATE(Date.valueOf(rs.getString("EFFECTIVE_DATE")));
 			userM.setEXPIRY_DATE(Date.valueOf(rs.getString("EXPIRY_DATE")));
 			userM.setCreate_date(Date.valueOf(rs.getString("CREATE_DATE")));
-			userM.setShow_edit(rs.getString("EDITS"));
-			userM.setShow_delete(rs.getString("DELETES"));
+
 		} catch (SQLException e) {
 			log.error("Mapping Error : SQLException ",e);
 		} catch (Exception e){
