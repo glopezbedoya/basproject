@@ -208,6 +208,85 @@ function cancleDeleteAllCheckBox(obj,name){
 	});
 	
 }
+function checkAll() {
+	
+	var hasCheckAll = true;
+		if ($('input[name=all]').attr('checked')){
+			 $('input[name=menuid]').each(function(){
+				$('input[name=inqs'+$(this).val()+']').each(function(){
+					if(!$(this).attr('disabled')){
+						$(this).attr('checked',true);
+					}
+				});
+				$('input[name=upd'+$(this).val()+']').each(function(){
+					if(!$(this).attr('disabled')){
+						$(this).attr('checked',true);
+					}
+				});
+				$('input[name=del'+$(this).val()+']').each(function(){
+					if(!$(this).attr('disabled')){
+						$(this).attr('checked',true);
+					}
+				});
+				$('input[name=add'+$(this).val()+']').each(function(){
+					if(!$(this).attr('disabled')){
+						$(this).attr('checked',true);
+					}
+				});
+			 });
+			 
+		}else{
+			$('input[name=menuid]').each(function(){
+				$('input[name=inqs'+$(this).val()+']').each(function(){
+					$(this).attr('checked',false)
+				});
+				$('input[name=add'+$(this).val()+']').each(function(){
+					$(this).attr('checked',false)
+				});
+				$('input[name=del'+$(this).val()+']').each(function(){
+					$(this).attr('checked',false)
+				});
+				$('input[name=upd'+$(this).val()+']').each(function(){
+					$(this).attr('checked',false)
+				});
+			});
+		}
+	
+}
+function cancleDeleteAll(obj){
+	
+	var hasCheckAll = true;
+	$('input[name=menuid]').each(function(){
+		$('input[name=inqs'+$(this).val()+']').each(function(){
+			if(!$(this).attr('checked')){
+				hasCheckAll = false;
+			}
+		});
+		$('input[name=add'+$(this).val()+']').each(function(){
+			if(!$(this).attr('checked')){
+				hasCheckAll = false;
+			}
+		});
+		$('input[name=upd'+$(this).val()+']').each(function(){
+			if(!$(this).attr('checked')){
+				hasCheckAll = false;
+			}
+		});
+		$('input[name=del'+$(this).val()+']').each(function(){
+			if(!$(this).attr('checked')){
+				hasCheckAll = false;
+			}
+		});
+		if(hasCheckAll){
+			$('input[name=all]').attr('checked',true);
+			//document.masterForm.option.checked = true;
+		}else{
+			$('input[name=all]').attr('checked',false);
+			//document.masterForm.option.checked = false;
+		}
+	});
+	
+}
 </script>
 
 <%
@@ -215,6 +294,10 @@ function cancleDeleteAllCheckBox(obj,name){
 		String returnVal = "";
 		String returnValUpdate = "";
 		Vector vc = new Vector();
+		
+		String bgColor1 = "bordercolor=\"#F4F4F4\"";
+		String bgColor2 = "bgcolor=\"#DFEFFF\"";
+		
 		returnVal = (String)request.getSession().getAttribute("returnVal");
 		returnValUpdate = (String)request.getSession().getAttribute("returnValUpdate");
 		RoleBean roleBean = (RoleBean)request.getSession().getAttribute("roleBean");
@@ -269,12 +352,7 @@ function cancleDeleteAllCheckBox(obj,name){
                       	    <td colspan="3">&nbsp;</td>
                    	      </tr>
                       	  <%if(vc.size()>0){%>
-                      	  <tr>
-                      	    <td >&nbsp;</td>
-                      	    <td colspan="2" align="right"><input type="button" name="add" id="add" value="New Role" onclick="NewRole(this.form)"></td>
-                      	    <input type="hidden" name="cType" id="cType" value="">
-                   	      </tr>
-                   	      
+                      	                    	      
                    	      <!--Panging-->
 					         <%
 								int allPage = valueListM.getCount() / valueListM.getItemsPerPage();
@@ -362,7 +440,11 @@ function cancleDeleteAllCheckBox(obj,name){
                    	       <tr>
                       	    <td colspan="3" height="10"></td>
                    	      </tr>
-	                   	      <%//if(null!=vc){%>
+	                   	      	<tr>
+                      	    <td >&nbsp;</td>
+                      	    <td colspan="2" align="right"><input type="button" name="add" id="add" value="New Role" onclick="NewRole(this.form)"></td>
+                      	    <input type="hidden" name="cType" id="cType" value="">
+                   	      </tr>
 	                   	       <tr>
 	                      	    <td colspan="3" align="center"><table width="800" cellspacing="1" cellpadding="1">
 	                      	   	<tr  bgcolor="#003366">
@@ -374,13 +456,16 @@ function cancleDeleteAllCheckBox(obj,name){
 	                   	    		</tr>
 	                      	    <%
 	                   	    	  for (int i = 0; i< vc.size();i++){
+	                   	    		String bgColor = "";
 	                   	    		RoleModel rm = (RoleModel)vc.get(i);
+	                   	    		bgColor = (i%2 == 0)?bgColor1:bgColor2;
 	                   	    	%>
 	                   	    		<tr>
-	                   	    		<td><font class="text"> <%=rm.getRole_name() %></font></td>
-	                   	    		<input type="hidden" name="hrole_name" value=""></input>
-	                   	    		<td><font class="text"> <%=rm.getShow_edit() %></font></td>
-	                   	    		<td><font class="text"> <%=rm.getShow_del()%></font></td>
+	                   	    		<td <%=bgColor %>><font class="text"> <%=rm.getRole_name() %></font></td>
+	                   	    		<input type="hidden" name="hrole_name" value="">
+	                   	    		<input type="hidden" name="role_id" value="">
+	                   	    		<td <%=bgColor %>><font class="text"><img src="images/edit.JPG" name="edit" id="edit" value="Edit" style="cursor:hand"onclick="EditRole(this.form,'<%=rm.getRole_id() %>','<%=rm.getRole_name() %>')"></font></td>
+	                   	    		<td <%=bgColor %>><font class="text"> <img src="images/delete.JPG" name="delete" id="delete" value="delete"style="cursor:hand" onclick="DeleteRole(this.form,'<%=rm.getRole_id() %>','<%=rm.getRole_name() %>')"></font></td>
 	                   	    		
 	                   	    		</tr>
 	                   	      		
@@ -441,6 +526,19 @@ function cancleDeleteAllCheckBox(obj,name){
                    	      </tr>
                    	       <tr>
                       	    <td colspan="3" height="10"></td>
+                   	      </tr>
+                   	      <tr>
+                   	      	
+                      	    <td align="center"colspan="3"><font class="text"><input type="checkbox" name="all" id="all" value="" onclick="checkAll()">Select All</font>
+                      	    
+                      	    		
+                      	    </td>
+                      	   <tr>
+                   	      	
+                      	    <td align="center"colspan="3"><font class="textTop">Permission</font>
+                      	    
+                      	    		
+                      	    </td>  
                    	      </tr>
 						   <tr>
                       	    <%log.debug("returnValUpdate : "+returnValUpdate); %>
