@@ -253,10 +253,10 @@ public class RoleAction extends AbstractAction {
 		RoleDAO rd = new RoleDAOImpl();
 		try {
 			if (rd.updateRole(role, vc)){
-				Vector mn = new Vector();
-				mn = rd.selectRole(role_name);
-				log.debug("mn >>> " + vc.size());
-				getRequest().getSession().setAttribute("returnVC", mn);
+//				Vector mn = new Vector();
+//				mn = rd.selectRole(role_name);
+//				log.debug("mn >>> " + vc.size());
+//				getRequest().getSession().setAttribute("returnVC", mn);
 				result = true;
 			}
 		} catch (SQLException e) {
@@ -415,12 +415,12 @@ public class RoleAction extends AbstractAction {
 		try{
 			
 				String div = "<table align=\"center\" width=\"800\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">";
-						div += "<tr>";
-						div += "<td width=\"100\" align = \"left\" ></td>";
-						div += "<td width=\"100\"><input type=\"checkbox\" name=\"inqs\" id=\"inqs\"value=\"\" / onclick=\"checkAllList('inqs')\"><font class=\"text\">Inquiry Data</font></td>";
-						div += "<td width=\"100\"><input type=\"checkbox\" name=\"add\" id=\"add\"value=\"\" onclick=\"checkAllList('add')\" /><font class=\"text\">Add Data</font></td>";
-						div += "<td width=\"100\"><input type=\"checkbox\" name=\"upd\" id=\"upd\"value=\"\" onclick=\"checkAllList('upd')\" /><font class=\"text\">Update Data</font></td>";
-						div += "<td width=\"100\"><input type=\"checkbox\" name=\"del\" id=\"del\"value=\"\"onclick=\"checkAllList('del')\" /><font class=\"text\">Delete Data</font></td>";
+						div += "<tr bgcolor=\"#003366\">";
+						div += "<td width=\"100\"align = \"center\" ><font class=\"textHeader\">Menu Name</font></td>";
+						div += "<td width=\"100\"align = \"center\"><input type=\"checkbox\" name=\"inqs\" id=\"inqs\"value=\"\" / onclick=\"checkAllList('inqs')\"><font class=\"textHeader\">Inquiry Data</font></td>";
+						div += "<td width=\"100\"align = \"center\"><input type=\"checkbox\" name=\"add\" id=\"add\"value=\"\" onclick=\"checkAllList('add')\" /><font class=\"textHeader\">Add Data</font></td>";
+						div += "<td width=\"100\"align = \"center\"><input type=\"checkbox\" name=\"upd\" id=\"upd\"value=\"\" onclick=\"checkAllList('upd')\" /><font class=\"textHeader\">Update Data</font></td>";
+						div += "<td width=\"100\"align = \"center\"><input type=\"checkbox\" name=\"del\" id=\"del\"value=\"\"onclick=\"checkAllList('del')\" /><font class=\"textHeader\">Delete Data</font></td>";
 						div += "</tr>";
 						div += "<tr><td colspan = \"5\" height=\"10\"></td></tr>";
 					if(vc != null && vc.size()>0){	
@@ -433,10 +433,10 @@ public class RoleAction extends AbstractAction {
 							div += "<input type = \"hidden\"name = \"role_func_id\" value=\""+model.getRole_func_id()+"\">";
 							div += "<input type = \"hidden\"name = \"role_id\" value=\""+model.getRole_id()+"\">";
 							if (null!= model.getMenu_status() && !model.getMenu_status().equals("C")){
-								div += "<td width=\"100\"><input type=\"checkbox\" name=\"inqs"+model.getMenu_id()+"\" id=\"inqs\"value=\""+model.getFunc_inqs()+"\" onclick=\"cancleDeleteAllCheckBox(this,'inqs')\" /><font class=\"text\">Inquiry Data</font></td>";
-								div += "<td width=\"100\"><input type=\"checkbox\" name=\"add"+model.getMenu_id()+"\" id=\"add\"value=\""+model.getFunc_add()+"\" onclick=\"cancleDeleteAllCheckBox(this,'add')\"  /><font class=\"text\">Add Data</font></td>";
-								div += "<td width=\"100\"><input type=\"checkbox\" name=\"upd"+model.getMenu_id()+"\" id=\"upd\"value=\""+model.getFunc_update()+"\"  onclick=\"cancleDeleteAllCheckBox(this,'upd')\" /><font class=\"text\">Update Data</font></td>";
-								div += "<td width=\"100\"><input type=\"checkbox\" name=\"del"+model.getMenu_id()+"\" id=\"del\"value=\""+model.getFunc_del()+"\" onclick=\"cancleDeleteAllCheckBox(this,'del')\" /><font class=\"text\">Delete Data</font></td>";
+								div += "<td width=\"100\"align = \"center\"><input type=\"checkbox\" name=\"inqs"+model.getMenu_id()+"\" id=\"inqs\"value=\""+model.getFunc_inqs()+"\" onclick=\"cancleDeleteAllCheckBox(this,'inqs');cancleDeleteAll(this)\" /><font class=\"text\">Inquiry Data</font></td>";
+								div += "<td width=\"100\"align = \"center\"><input type=\"checkbox\" name=\"add"+model.getMenu_id()+"\" id=\"add\"value=\""+model.getFunc_add()+"\" onclick=\"cancleDeleteAllCheckBox(this,'add');cancleDeleteAll(this)\"  /><font class=\"text\">Add Data</font></td>";
+								div += "<td width=\"100\"align = \"center\"><input type=\"checkbox\" name=\"upd"+model.getMenu_id()+"\" id=\"upd\"value=\""+model.getFunc_update()+"\"  onclick=\"cancleDeleteAllCheckBox(this,'upd');cancleDeleteAll(this)\" /><font class=\"text\">Update Data</font></td>";
+								div += "<td width=\"100\"align = \"center\"><input type=\"checkbox\" name=\"del"+model.getMenu_id()+"\" id=\"del\"value=\""+model.getFunc_del()+"\" onclick=\"cancleDeleteAllCheckBox(this,'del');cancleDeleteAll(this)\" /><font class=\"text\">Delete Data</font></td>";
 							}
 							log.debug("div >> " + div);
 							div += "</tr>";
