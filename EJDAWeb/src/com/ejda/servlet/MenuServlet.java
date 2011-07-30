@@ -10,33 +10,34 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ejda.action.CheckUsernamePasswordAction;
 import com.tcd.ejda.model.MenuModel;
 import com.tcd.ejda.dao.MenuDAO;
 import com.tcd.ejda.dao.MenuDAOImpl;
-
+import org.apache.log4j.Logger;
 /**
  * Servlet implementation class MenuServlet
  */
 public class MenuServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private Logger log = Logger.getLogger(MenuServlet.class);  
   	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("[ veena test servlet]");
+		log.debug("[ veena test servlet]");
 		
 		MenuModel menuModel = new MenuModel();
 		
-		System.out.println("menuModel.setMenu_id : " + menuModel.getMenu_id());
+		log.debug("menuModel.setMenu_id : " + menuModel.getMenu_id());
 
 		MenuDAO menus = new MenuDAOImpl();
 		Vector mn = new Vector();
 		mn = menus.SearchMenu();
 		
 		String returnValue = getInnerTable(mn);
-		System.out.println("--- mn : " + mn);
+		log.debug("--- mn : " + mn);
 		request.setAttribute("MyMenu",returnValue);
 		
 		
@@ -69,17 +70,20 @@ public class MenuServlet extends HttpServlet {
 									div += "<ul>";
 									
 								}
-				
-								div += "<li><a href=\"./EJDAControler?screenName=transactionLog.jsp&ejdaAction=TransactionLog\">" + model.getMenu_name() + "</a></li>";
+
 								
+//								div += "<li><a href=\"/EJDAWeb/EJDAControler?screenName="+model.getMenu_linked()+"\">" + model.getMenu_name() + "</a></li>";
+	
+//								div += "<li><a href=\"./EJDAControler?screenName=transactionLog.jsp&ejdaAction=TransactionLog\">" + model.getMenu_name() + "</a></li>";
+								div += "<li><a href=\"./EJDAControler?screenName=user_screen.jsp&ejdaAction=User\">" + model.getMenu_name() + "</a></li>";
+
 								count=1;
 								
 							}
-							if(model.getMenu_owner().equals("C")){
-								div += "</li>";
-							}
-													
-								
+//							if(model.getMenu_owner().equals("C")){
+//								div += "</li>";
+//							}
+							
 						}
 						if (count!=0){
 							div += "</ul>";
@@ -96,9 +100,9 @@ public class MenuServlet extends HttpServlet {
 				
 				innerTable +=div;
 
-			System.out.println("[ getInnerTable ] : innerTable = "+innerTable);
+			log.debug("[ getInnerTable ] : innerTable = "+innerTable);
 		}catch(Exception e){
-			System.out.println("Error >>> "+ e);
+			log.debug("Error >>> "+ e);
 		}
 		return innerTable;
 	}
