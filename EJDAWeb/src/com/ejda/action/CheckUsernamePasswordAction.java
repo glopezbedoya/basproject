@@ -1,11 +1,17 @@
 package com.ejda.action;
 
+import java.sql.SQLException;
+import java.util.Vector;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
+import com.tcd.ejda.dao.RoleMenuDAO;
+import com.tcd.ejda.dao.RoleMenuDAOImpl;
 import com.tcd.ejda.dao.UserDAO;
 import com.tcd.ejda.dao.UserDAOImpl;
+import com.tcd.ejda.model.RoleMenuModel;
 
 public class CheckUsernamePasswordAction extends AbstractAction {
 	
@@ -43,6 +49,7 @@ public class CheckUsernamePasswordAction extends AbstractAction {
 	public boolean checkUser(){
 		
 		boolean result = false;
+		Vector vc = new Vector();
 		// TODO Auto-generated method stub
 		log.debug("[ Start : CheckUsernamePasswordServlet ]");
 		String username = getRequest().getParameter("user");
@@ -54,6 +61,16 @@ public class CheckUsernamePasswordAction extends AbstractAction {
 		log.debug("result >>> " + result);
 		resultCheckUser = "N";
 		if (resultCheckUser.equals("N")){
+			RoleMenuDAO dao = new RoleMenuDAOImpl();
+			try {
+				vc = dao.getRoleMenu(username);
+				log.debug("getRoleMenu vc >>>> " + vc.size());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				log.debug("getRoleMenu",e);
+				e.printStackTrace();
+			}
+			
 			result = true;
 //			request.getSession().setAttribute(EJDAConstant.SESSION_NAME.PAGE, "user_screen.jsp");
 //			request.getSession().setAttribute(EJDAConstant.SESSION_NAME.PAGE, "role_menu.jsp");
@@ -66,5 +83,5 @@ public class CheckUsernamePasswordAction extends AbstractAction {
 		}
 		return result;
 	}
-
+	
 }
