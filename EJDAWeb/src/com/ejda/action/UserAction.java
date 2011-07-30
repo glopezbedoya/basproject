@@ -149,7 +149,7 @@ public class UserAction extends AbstractAction {
 		Vector roleUser = new Vector();
 		RoleDAO role = new RoleDAOImpl();
 		try {
-			vc = role.selectRole(iv_user);
+			vc = role.selectRole("");
 			String returnValue = getInnerTable(vc);
 			roleUser = role.selectUserRole(ejda_id);
 			String returnHidden = getInnerTextBox(roleUser);
@@ -289,6 +289,10 @@ public class UserAction extends AbstractAction {
 		UserDAO userDAO = new UserDAOImpl();
 		try {
 			if (userDAO.updateUser(um, vc)){
+				getRequest().getSession().removeAttribute("UserRole");
+				getRequest().getSession().removeAttribute("rolename");
+				getRequest().getSession().removeAttribute("userModel");
+				getRequest().getSession().removeAttribute("returnVal");
 				result = true;
 				log.debug("success");
 			}
