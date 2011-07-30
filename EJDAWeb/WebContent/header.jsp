@@ -21,7 +21,7 @@
 	        <th scope="row"><img src="images/header.JPG" width="945" height="146" />
 	      </tr>
 	       <tr>
-		    	<td><%=showMenu %></td>
+		    	<td bgcolor="#EEEEEE" align="right"><%=showMenu %></td>
 		    </tr>
 		    <tr bgcolor="#003399">
 	       	  	<td height="5" ></td> 
