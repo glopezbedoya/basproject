@@ -239,6 +239,7 @@ function changeSelectPage(form){
 
 
 	    <table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
+	    
 	    <tr>
                     <td height="10" align="center"><table width="800" border="0" cellspacing="1" cellpadding="1">
                        <tr>
@@ -405,13 +406,12 @@ function changeSelectPage(form){
 	                   	    		if (rm.getUSER_STATUS().equals("L")){
 	                   	    			show_locked = "Locked";
 	                   	    		}
-	                   	    		String Efdate = DisplayFormatUtil.SQLDateToString(rm.getEFFECTIVE_DATE(),"DD/MM/YYYY");
-	                   	    		System.out.println("Efdate >>> " + Efdate);
+	                   	    		
 	                   	    		%>
 	                   	    		<td><font class="text"> <%=DisplayFormatUtil.SQLDateToString(rm.getCreate_date(),"DD/MM/YYYY")%></font></td>
 	                   	    		<td><font class="text"> <%=show_locked %></font></td>
-	                   	    		<td><font class="text"> <%=rm.getShow_edit() %></font></td>
-	                   	    		<td><font class="text"> <%=rm.getShow_delete() %></font></td>
+	                   	    		<td><font class="text"> <img src="images/edit.JPG" name="edit" id="edit" style="cursor:hand" onclick="EditUser('<%=i %>')"></font></td>
+	                   	    		<td><font class="text"> <img src="images/delete.JPG" name="delete" id="delete" value="delete"style="cursor:hand" onclick="DeleteUser('<%=rm.getJda_id() %>')"></font></td>
 	                   	    		<input type ="hidden" name="ejda_id_<%=i %>" id = "ejda_id_<%=i %>" value="<%=rm.getJda_id() %>">
 	                   	    		<input type ="hidden" name="iv_user_<%=i %>" id = "iv_user_<%=i %>" value="<%=rm.getIV_USER() %>">
 	                   	    		<input type ="hidden" name="user_name_<%=i %>" id ="user_name_<%=i %>" value="<%=rm.getUSERNAME() %>">
@@ -509,7 +509,7 @@ function changeSelectPage(form){
                    	       <tr>
 						    <td align="right"><span class="text">Effective Date : </span></td>
 						    <td align="left" width="200">
-						      <input type="textbox" name="eff_date" onkeypress="addSlashFormat(event,this)" onblur="checkDateLengthYear(this,'','1800','2300')" maxlength="10">
+						      <input type="textbox" name="eff_date" style="cursor:hand"onkeypress="addSlashFormat(event,this)" onblur="checkDateLengthYear(this,'','1800','2300')" maxlength="10">
 								<img
 								id="eff_date_img" style="cursor:hand"
 								src="images/icon_calendar.gif"
@@ -521,7 +521,7 @@ function changeSelectPage(form){
 						   <tr>
 						    <td align="right"><span class="text">Expiry Date : </span></td>
 						    <td align="left" width="200">
-						      <input type="text" name="exp_date" id="exp_date" onkeypress="keyPressInteger();addSlashFormat(event,this)" onblur="checkDateLengthYear(this,'','1800','2300')" maxlength="10" value=""/>
+						      <input type="text" name="exp_date" id="exp_date"style="cursor:hand" onkeypress="addSlashFormat(event,this)" onblur="checkDateLengthYear(this,'','1800','2300')" maxlength="10" value=""/>
 						      <img
 								id="exp_date_img" style="cursor:hand"
 								src="images/icon_calendar.gif"
@@ -725,7 +725,7 @@ function changeSelectPage(form){
 						  </table>
 						  </td></tr>
 						   <%
-						   request.getSession().setAttribute("returnVal", "");						   
+						  // request.getSession().setAttribute("returnVal", "");						   
                    	      		} %>
 						   <tr>
                       	    <td>&nbsp;</td>
