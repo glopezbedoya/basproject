@@ -20,10 +20,7 @@
 	      <tr>
 	        <th scope="row"><img src="images/header.JPG" width="945" height="146" />
 	      </tr>
-	    </table>
-	   </tr>
-	    <table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
-		    <tr>
+	       <tr>
 		    	<td><%=showMenu %></td>
 		    </tr>
 		    <tr bgcolor="#003399">
@@ -33,4 +30,6 @@
            	  	<td height="10"colspan="3"></td>
            	  </tr>
 	    </table>
+	   </tr>
+	   
  	</table>
