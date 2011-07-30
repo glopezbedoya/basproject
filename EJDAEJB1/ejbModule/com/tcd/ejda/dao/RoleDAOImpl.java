@@ -168,13 +168,17 @@ public class RoleDAOImpl implements RoleDAO {
 //		sqlusr.append("SELECT ROLE_ID, ROLE_NAME,'<input type=\"hidden\" name=role_id\" value='|| ROLE_ID ||'\"><IMG src=\"images/edit.JPG\"></IMG>' AS EDITS,");
 //		sqlusr.append("'<input type=\"hidden\" name=role_id\" value='|| ROLE_ID ||'\"><IMG src=\"images/delete.JPG\"></IMG>' AS DELETES FROM JDA_ROLE");
 		
-		sqlusr.append("SELECT ROLE_ID, ROLE_NAME,'<input type=\"hidden\" name=\"role_id\" value=\"'|| ROLE_ID ||'\"><img src=\"images/edit.JPG\" name=\"edit\" id=\"edit\" value=\"Edit\" onclick=\"EditRole(this.form,'''|| ROLE_ID ||''','''|| ROLE_NAME ||''')\">' AS EDITS,");
-		sqlusr.append("'<input type=\"hidden\" name=role_id\" value='|| ROLE_ID ||'\"><img src=\"images/delete.JPG\" name=\"delete\" id=\"delete\" value=\"delete\" onclick=\"DeleteRole(this.form,'''|| ROLE_ID ||''','''|| ROLE_NAME ||''')\">' AS DELETES FROM JDA_ROLE");
-		
+		sqlusr.append("SELECT ROLE_ID, ROLE_NAME FROM JDA_ROLE");
+		if (null!=RoleName && !"".equals(RoleName)){
+			sqlusr.append(" WHERE UPPER(ROLE_NAME) LIKE ? ");
+		}
 		try {
 			log.debug("sqlusr >> " + sqlusr.toString());
 			ps = conn.prepareStatement(sqlusr.toString());
-//			ps.setString(1,RoleName.toUpperCase());
+			if (null!=RoleName && !"".equals(RoleName)){
+				ps.setString(1,"%" + RoleName.toUpperCase() + "%");
+			}
+			
 			
 			rs = ps.executeQuery();
 			
@@ -182,8 +186,8 @@ public class RoleDAOImpl implements RoleDAO {
 				RoleModel rm = new RoleModel();
 				rm.setRole_id(rs.getString("ROLE_ID"));
 				rm.setRole_name(rs.getString("ROLE_NAME"));
-				rm.setShow_edit(rs.getString("EDITS"));
-				rm.setShow_del(rs.getString("DELETES"));
+//				rm.setShow_edit(rs.getString("EDITS"));
+//				rm.setShow_del(rs.getString("DELETES"));
 //				rm.setCreate_date(rs.getDate("CREATE_DATE"));
 //				rm.setRole_id(rs.getString("CREATE_BY"));
 //				rm.setUpdate_date(rs.getDate("UPDATE_DATE"));
@@ -221,6 +225,7 @@ public class RoleDAOImpl implements RoleDAO {
 		
 		return vc;
 	}
+	
 	public Vector selectRoleUser(String iv_user) throws SQLException {
 		// TODO Auto-generated method stub
 		log.debug("[Start : selectRole user]");
