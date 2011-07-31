@@ -585,6 +585,10 @@ function changeSelectPage(form){
 						   <tr>
 						    <td align="right"></td>
 						    <td colspan="2" align="left" width="100">
+						    <input type="hidden" name="txtIVUser" value="<%=users.getIV_USER() %>">
+						    <input type="hidden" name="txtFirstName" value="<%=users.getFIRSTNAME() %>">
+						    <input type="hidden" name="txtLastName" value="<%=users.getLASTNAME() %>">
+						    <input type="hidden" name="rdoStatus" value="<%=users.getUSER_STATUS() %>">
 						      <input type="button" name="add" id="add" value="Add User" onClick="AddRole(this.form)">
 						      <input type="hidden" name="cType" id="cType" value="">
 						      <input type="button" name="Reset" id="Reset" value="Reset" onClick="Reset()">
@@ -739,6 +743,10 @@ function changeSelectPage(form){
 						   <tr>
 						    <td align="right"></td>
 						    <td colspan="2" align="left" width="100">
+						     <input type="hidden" name="txtIVUser" value="<%=users.getIV_USER() %>">
+						    <input type="hidden" name="txtFirstName" value="<%=users.getFIRSTNAME() %>">
+						    <input type="hidden" name="txtLastName" value="<%=users.getLASTNAME() %>">
+						    <input type="hidden" name="rdoStatus" value="<%=users.getUSER_STATUS() %>">
 						      <input type="button" name="upd" id="upd" value="Update User" onClick="UpdateUser(this.form)">
 						      <input type="hidden" name="cType" id="cType" value="">
 						      <input type="button" name="Reset" id="Reset" value="Reset" onClick="Reset()">
