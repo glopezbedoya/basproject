@@ -547,6 +547,9 @@ public class UserDAOImpl implements UserDAO {
 		sqlusr.append("'<img src=\"images/edit.JPG\" name=\"edit\" id=\"edit\" onclick=\"EditUser('|| (rownum-1)||')\">' AS EDITS, ");
 		sqlusr.append("'<img src=\"images/delete.JPG\" name=\"delete\" id=\"delete\" value=\"delete\" onclick=\"DeleteUser('''|| JDA_ID ||''')\">' AS DELETES ");
 		sqlusr.append("FROM JDA_USER ");
+		if (!"".equals(ivUser) || !"".equals(userName) || !"".equals(first_name) || !"".equals(lastName) || !"".equals(locked)){
+		
+		}
 		try {
 			log.debug("sqlusr >> " + sqlusr.toString());
 			ps = conn.prepareStatement(sqlusr.toString());
@@ -743,6 +746,54 @@ public class UserDAOImpl implements UserDAO {
 		}
 		
 		return isSuccess;
+	}
+	@Override
+	public boolean logoutUser(String userName) throws SQLException {
+		boolean blSuccess = false;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Connection conn = db.getConnection();
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append("UPDATE JDA_USER SET USER_COUNT = 0, USER_STATUS = 'N' WHERE UPPER(USER_NAME) = ? ");
+		log.debug("sql logoutUser >>> " + sql);
+		try {
+			ps = conn.prepareStatement(sql.toString());
+			ps.setString(1, userName.toUpperCase());
+			
+			int rsInt = ps.executeUpdate();
+			if (rsInt > 0) {
+				blSuccess = true;
+			}
+			log.debug(" rsInt = " +rsInt );
+		} catch (SQLException e) {
+			// TODO Auto-generated catch blockd
+			e.printStackTrace();
+			log.error("updateCountUser",e);
+		} finally {
+			try {
+				if (conn != null)
+					log.debug("commit");
+					conn.commit();
+			} catch (Exception e) {
+			}
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+
+		}
+		
+		
+		return blSuccess;
 	}
 	
 }
