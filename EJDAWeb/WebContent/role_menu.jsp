@@ -509,6 +509,7 @@ function cancleDeleteAll(obj){
                    	      <tr>
 						    <td align="right"></td>
 						    <td colspan="2" align="right" width="100">
+						    <input type="hidden" name="txtRoleName" value="<%=roles.getRole_name() %>">
 						      <input type="button" name="add" id="add" value="Add Role" onClick="AddRole(this.form)">
 						      <input type="hidden" name="cType" id="cType" value="">
 						      <input type="button" name="Reset" id="Reset" value="Reset" onClick="Reset()">
@@ -555,6 +556,7 @@ function cancleDeleteAll(obj){
                    	      <tr>
 						    <td align="right"></td>
 						    <td colspan="2" align="right" width="100">
+						      <input type="hidden" name="txtRoleName" value="<%=roles.getRole_name() %>">
 						      <input type="button" name="add" id="add" value="Update Role" onClick="UpdateRole(this.form)">
 						      <input type="hidden" name="cType" id="cType" value="">
 						      <input type="button" name="Reset" id="Reset" value="Reset" onClick="Reset()">
