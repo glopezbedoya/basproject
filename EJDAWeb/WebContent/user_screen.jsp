@@ -12,6 +12,11 @@
 
 <%@page import="com.ejda.sessionBean.UserBean"%>
 <%@page import="org.apache.log4j.Logger"%><script type="text/javascript">
+function popupPolicy(){
+
+	newwindow=window.open("popupPolicy.jsp","","width=500,height=400")
+	newwindow.creator=self
+}
 function searchUser(form){
 	
 	$('input[name=ejdaAction]').val('User');
@@ -490,7 +495,9 @@ function changeSelectPage(form){
 						    <td align="left" width="100">
 						      <input type="password" name="password" id="password" value="" />
 						    </td>
-						    <td align="left" ><input type="checkbox" name="checkbox" id="checkbox" /><font class="text">Password Policy</font></td>
+						    <td align="left" ><input type="checkbox" name="checkbox" id="checkbox"checked="checked"  /><font class="text">Password Policy</font>
+						    <input type = "button" name="popPolicy" id = "polPolicy" value="View Policy" onclick="popupPolicy()">
+						    </td>
 						  </tr>
 						   <tr>
 						    <td align="right"><span class="text">Confirm Password : </span></td>
@@ -630,7 +637,9 @@ function changeSelectPage(form){
 						    <td align="left" width="100">
 						      <input type="password" name="password" id="password" value="<%=um.getPWD() %>" />
 						    </td>
-						    <td align="left" ><input type="checkbox" name="checkbox" id="checkbox" /><font class="text">Password Policy</font></td>
+						    <td align="left" ><input type="checkbox" name="checkbox" id="checkbox" checked="checked" /><font class="text">Password Policy</font>
+						    <input type = "button" name="popPolicy" id = "polPolicy" value="View Policy" onclick="popupPolicy()">
+						    </td>
 						  </tr>
 						   <tr>
 						    <td align="right"><span class="text">Confirm Password : </span></td>
