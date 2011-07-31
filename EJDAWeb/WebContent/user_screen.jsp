@@ -213,13 +213,13 @@ function changeSelectPage(form){
  		Logger log = Logger.getLogger("JspLog");
 		String returnVal = "";
  		UserBean userBean = (UserBean)request.getSession().getAttribute("userBean");
+ 		UsrModel users = userBean.getUsrMSP();
  		Vector vc = new Vector();
 		returnVal = (String)request.getSession().getAttribute("returnVal");
 		System.out.println("Show Role Servlet menu : "+returnVal);
-		/*if (null!=request.getSession().getAttribute("returnVC")){
-			vc  =(Vector) request.getSession().getAttribute("returnVC");
-			System.out.println("Show Role Servlet vector : "+vc.size());
-		}*/
+		
+		log.debug("users.getUSER_STATUS() >> " +users.getUSER_STATUS());
+		
 		log.debug("userBean.getUsrVt() = "+userBean.getUsrVt());
 		if(null != userBean.getUsrVt()){
 			vc = (Vector) userBean.getUsrVt();
@@ -255,19 +255,43 @@ function changeSelectPage(form){
 		                      	    		
 		                      	    		
 		                      	    </td>
-		                      	    <td colspan="3" align="left"><input type="text" name="siv_user" id="siv_user" value=""></td>
+		                      	    <td colspan="3" align="left"><%=DisplayUtil.displayInputTextBox("txtIVUser",users.getIV_USER(),"") %></td>
 		                   	      </tr>
 		                   	      	 <tr>
 		                      	    <td align="right" width="100"><font class="text">First Name : </font> </td>
-		                      	    <td align="left"width="100"><input type="text" name="sfirstname" id="sfirstname" value=""></td>
+		                      	    <td align="left"width="100"><%=DisplayUtil.displayInputTextBox("txtFirstName",users.getFIRSTNAME(),"") %></td>
 		                   	                	    
 		                      	    <td align="right"width="100"><font class="text">Last Name : </font></td>
-		                      	    <td align="left"><input type="text" name="slastname" id="slastname" value=""></td>
+		                      	    <td align="left"><%=DisplayUtil.displayInputTextBox("txtLastName",users.getLASTNAME(),"") %></td>
 		                   	      </tr>
 		                   	      <tr>
 		                      	    <td align="right" width="100"><font class="text">Status :</font></td>
-		                      	    <td  align="left"> <font class="text"><input type="radio" name="radio" id="radio" value="" /> Lock
-		                      	    <input type="radio" name="radio" id="radio" value="" />  Unlock </font></td>
+		                      	   
+		                      	    <td  align="left"> <font class="text">
+		                      	     <%if (null==users.getUSER_STATUS()){%>
+		                      	     
+		                      	     <input type="radio" name="rdoStatus" id="rdoStatus" value="LOCK" /> Lock
+		                      	     <input type="radio" name="rdoStatus" id="rdoStatus" value="UNLOCK" />  Unlock 
+		                      	     <input type="radio" name="rdoStatus" id="rdoStatus" value="ALL"checked="checked"/>  All 
+		                      	     <%}else{ %>
+			                      	     <%if ("LOCK".equals(users.getUSER_STATUS())){%>
+			                      	    	<input type="radio" name="rdoStatus" id="rdoStatus" value="LOCK"checked="checked" /> Lock
+			                      	    <%}else{ %>
+			                      	    <input type="radio" name="rdoStatus" id="rdoStatus" value="LOCK" /> Lock
+			                      	    <%} %>
+			                      	    <% if ("UNLOCK".equals(users.getUSER_STATUS())){%>
+			                      	    <input type="radio" name="rdoStatus" id="rdoStatus" value="UNLOCK" checked="checked"/>  Unlock 
+			                      	     <%}else{ %>
+			                      	    <input type="radio" name="rdoStatus" id="rdoStatus" value="UNLOCK" />  Unlock 
+			                      	    <%} %>
+			                      	    <%if ("ALL".equals(users.getUSER_STATUS())){%>
+			                      	    <input type="radio" name="rdoStatus" id="rdoStatus" value="ALL"checked="checked"/>  All 
+			                      	     <%}else{ %>
+			                      	    <input type="radio" name="rdoStatus" id="rdoStatus" value="ALL" />  All 
+			                      	    <%} %>
+		                      	    <%} %>
+		                      	    </font>
+		                      	    </td>
 		                      	    <td align="left" colspan="2"></td>
 		                   	      </tr>
 		                   	       <tr>
