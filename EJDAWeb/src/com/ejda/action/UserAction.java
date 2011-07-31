@@ -170,23 +170,13 @@ public class UserAction extends AbstractAction {
 		// TODO Auto-generated method stub
 		log.debug("[Start : do search ]");
 		boolean result = false;
-		String user_name = getRequest().getParameter("rolename");
-		String iv_user = getRequest().getParameter("rolename");
-		String first_name = getRequest().getParameter("rolename");
-		String last_name = getRequest().getParameter("rolename");
-		String locked = getRequest().getParameter("rolename");
+//		String user_name = getRequest().getParameter("rolename");
+//		String iv_user = getRequest().getParameter("rolename");
+//		String first_name = getRequest().getParameter("rolename");
+//		String last_name = getRequest().getParameter("rolename");
+		String locked = getRequest().getParameter("rdoStatus");
+		log.debug("locked >> " +locked);
 		Vector vc = new Vector();
-		
-//		UserDAO usr = new UserDAOImpl();
-//		try {
-//			vc = usr.selectUserforUpdate(iv_user, user_name, first_name,last_name, locked);
-//			log.debug("returnVC >>> " + vc);
-//			getRequest().getSession().setAttribute("returnVC", vc);
-//			result = true;
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		
 		userBean = getUserBean();
 		setCriteriaParameter();
@@ -468,19 +458,64 @@ public class UserAction extends AbstractAction {
 	
 	private void setCriteriaParameter(){
 		UsrModel usrMSP = new UsrModel();
+		usrMSP.setIV_USER(getRequest().getParameter("txtIVUser"));
+		usrMSP.setFIRSTNAME(getRequest().getParameter("txtFirstName"));
+		usrMSP.setLASTNAME(getRequest().getParameter("txtLastName"));
+		usrMSP.setUSER_STATUS(getRequest().getParameter("rdoStatus"));
 		getUserBean().setUsrMSP(usrMSP);
 	}
+	
 	private Vector getValueListParameters() {
 		Vector parameters = new Vector();
-		
+		UsrModel usrCri = getUserBean().getUsrMSP();
+		log.debug("getValueListParameters >> " + usrCri.getUSER_STATUS());
 		log.info("parameters.size() = "+parameters.size());
+		if(!"".equals(usrCri.getIV_USER()) || !"".equals(usrCri.getFIRSTNAME()) || !"".equals(usrCri.getLASTNAME()) || !"".equals(usrCri.getUSER_STATUS())){
+			if(!"".equals(usrCri.getIV_USER())) {
+				log.debug("User name = "+usrCri.getIV_USER());
+				parameters.add("%"+usrCri.getIV_USER().toUpperCase()+"%");
+			}
+			if(!"".equals(usrCri.getFIRSTNAME())) {
+				log.debug("User name = "+usrCri.getFIRSTNAME());
+				parameters.add("%"+usrCri.getFIRSTNAME().toUpperCase()+"%");
+			}
+			if(!"".equals(usrCri.getLASTNAME())) {
+				log.debug("User name = "+usrCri.getLASTNAME());
+				parameters.add("%"+usrCri.getLASTNAME().toUpperCase()+"%");
+			}
+			if(!"".equals(usrCri.getUSER_STATUS())) {
+				log.debug("getUSER_STATUS = "+usrCri.getUSER_STATUS());
+				if (!"ALL".equals(usrCri.getUSER_STATUS())){
+					parameters.add("'L'");
+				}
+			}
+		}
 		return parameters;
 	}
 	private String setSQL(UsrModel usrM){
 		StringBuffer sql = new StringBuffer();
+		log.debug("setSQL >>> "+usrM.getUSER_STATUS());
 		try{
 			sql.append(EJDAConstant.SQL.USER__SCREEN_SQL);
-			
+			if(!"".equals(usrM.getIV_USER()) || !"".equals(usrM.getFIRSTNAME()) || !"".equals(usrM.getLASTNAME()) || !"".equals(usrM.getUSER_STATUS())){
+				sql.append(" WHERE ");
+				if(!"".equals(usrM.getIV_USER()))
+					sql.append(" UPPER(IV_USER) like ? AND ");
+				if(!"".equals(usrM.getFIRSTNAME()))
+					sql.append(" UPPER(FIRST_NAME) like ? AND ");
+				if(!"".equals(usrM.getLASTNAME()))
+					sql.append(" UPPER(LAST_NAME) like ? AND ");
+				if(!"".equals(usrM.getUSER_STATUS())){
+					if (!"ALL".equals(usrM.getUSER_STATUS())){
+						if ("LOCK".equals(usrM.getUSER_STATUS()))
+							sql.append(" USER_STATUS = ? AND ");
+						if ("UNLOCK".equals(usrM.getUSER_STATUS()))
+							sql.append(" USER_STATUS <> ? AND ");
+					}
+					
+				}
+					
+		}
 		}catch(Exception e){
 			e.printStackTrace();
 		}

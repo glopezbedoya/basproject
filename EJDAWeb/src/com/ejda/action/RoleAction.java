@@ -459,6 +459,7 @@ public class RoleAction extends AbstractAction {
 	
 	private void setCriteriaParameter(){
 		RoleModel roleMSP = new RoleModel();
+		roleMSP.setRole_name(getRequest().getParameter("txtRoleName"));
 		getRoleBean().setRoleMSP(roleMSP);
 	}
 	
@@ -466,13 +467,23 @@ public class RoleAction extends AbstractAction {
 		Vector parameters = new Vector();
 		
 		log.info("parameters.size() = "+parameters.size());
+		RoleModel roleCri = getRoleBean().getRoleMSP();
+		if(!"".equals(roleCri.getRole_name())) {
+			log.debug("Role name = "+roleCri.getRole_name());
+			parameters.add("%"+roleCri.getRole_name().toUpperCase()+"%");
+		}
+		
 		return parameters;
 	}
 	private String setSQL(RoleModel roleCri){
 		StringBuffer sql = new StringBuffer();
 		try{
 			sql.append(EJDAConstant.SQL.ROLE_SQL);
-			
+			if(!"".equals(roleCri.getRole_name())){
+					sql.append(" WHERE ");
+					if(!"".equals(roleCri.getRole_name()))
+						sql.append(" UPPER(ROLE_NAME) like ? AND ");
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
