@@ -6,6 +6,7 @@
 <%@page import="com.ejda.util.DisplayUtil"%>
 <%@page import="com.tcd.ejda.model.ValueListModel"%>
 <%@page import="com.ejda.sessionBean.RoleBean"%>
+
 <%@page import="org.apache.log4j.Logger"%><script type="text/javascript">
 function searchButton(form){
 	
@@ -298,9 +299,13 @@ function cancleDeleteAll(obj){
 		String bgColor1 = "bordercolor=\"#F4F4F4\"";
 		String bgColor2 = "bgcolor=\"#DFEFFF\"";
 		
+		
 		returnVal = (String)request.getSession().getAttribute("returnVal");
 		returnValUpdate = (String)request.getSession().getAttribute("returnValUpdate");
 		RoleBean roleBean = (RoleBean)request.getSession().getAttribute("roleBean");
+		
+		RoleModel roles = roleBean.getRoleMSP();
+		log.debug("roles test >>> " + DisplayUtil.displayInputTextBox("role_name",roles.getRole_name(),"") );
 		log.debug("Show update >> " + returnValUpdate);
 		
 		log.debug("Show Role Servlet returnVal : "+returnVal);
@@ -342,8 +347,8 @@ function cancleDeleteAll(obj){
                       	  <%if ((null==returnVal  || "".equals(returnVal)) && (null==returnValUpdate  || "".equals(returnValUpdate))){ %>
                       	  <tr>
                       	    <td align="left"><font class="text">Role Name : </font>
-                      	    		<input type="text" name="rolename" id="rolename" value="">
                       	    		
+                      	    		<%=DisplayUtil.displayInputTextBox("txtRoleName",roles.getRole_name(),"") %>
                       	    		<input type="button" name="search" id="search" value="Search" onclick="searchButton(this.form)">
                       	    </td>
                       	    <td colspan="2">&nbsp;</td>
