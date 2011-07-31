@@ -64,6 +64,7 @@ public class CheckUsernamePasswordAction extends AbstractAction {
 			RoleMenuDAO dao = new RoleMenuDAOImpl();
 			try {
 				vc = dao.getRoleMenu(username);
+				getRequest().getSession().setAttribute("iuser", username);
 				log.debug("getRoleMenu vc >>>> " + vc.size());
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

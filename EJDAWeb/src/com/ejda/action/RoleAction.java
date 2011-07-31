@@ -90,7 +90,8 @@ public class RoleAction extends AbstractAction {
 				mn = role.selectRole(role_name);
 				log.debug("mn >>> " + mn.size());
 				getRequest().getSession().setAttribute("returnVC", mn);
-				result = true;
+				result = doSearch();
+//				result = true;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -108,6 +109,7 @@ public class RoleAction extends AbstractAction {
 		Vector vc = new Vector();
 		boolean result = false;
 		String role_id = getRequest().getParameter("role_id");
+		log.debug("Role action : doEdit 1 setCriteriaParameter >>> "+getRequest().getParameter("txtRoleName"));
 //		String role_id = "R35";
 		log.debug("== role id : " + role_id);
 		String role_name = getRequest().getParameter("hrole_name");
@@ -119,6 +121,7 @@ public class RoleAction extends AbstractAction {
 			log.debug("getInnerTableEdit >> " + returnValue);
 			getRequest().getSession().setAttribute("returnValUpdate", returnValue);
 			getRequest().getSession().setAttribute("hidrolename", role_name);
+			log.debug("Role action : doEdit 2 setCriteriaParameter >>> "+getRequest().getParameter("txtRoleName"));
 			result = true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -181,10 +184,14 @@ public class RoleAction extends AbstractAction {
 	private boolean doUpdate() {
 		// TODO Auto-generated method stub
 		boolean result =false;
-		
+		log.debug("Role action : doUpdate setCriteriaParameter >>> "+getRequest().getParameter("txtRoleName"));
 		String role_name = getRequest().getParameter("rolename");
 		String role_fund_id = getRequest().getParameter("role_func_id");
 		String role_id = getRequest().getParameter("role_id");
+		String iuser = (String) getRequest().getSession().getAttribute("iuser");
+		if (null==iuser || "".equals(iuser)){
+			iuser = "system";
+		}
 		log.debug("role_name >> "+role_name);
 		log.debug("role_fund_id >> "+role_fund_id);
 		log.debug("role_id >> "+role_id);
@@ -194,23 +201,23 @@ public class RoleAction extends AbstractAction {
 		RoleModel role = new RoleModel();
 		role.setRole_id(role_id);
 		role.setRole_name(role_name);
-		role.setUpdate_by("veena");
+		role.setUpdate_by(iuser);
 		
 		strInqs = getRequest().getParameter("func_type");
 		log.debug("strinqs >>> " + strInqs);
 		if (null!=strInqs){
 			String inqsTmp[] = strInqs.split("\\|"); 
 			for(int j=0;j<inqsTmp.length;j++){
-				log.debug("inqsTmp[j] >>> " + inqsTmp[j]);
+				//log.debug("inqsTmp[j] >>> " + inqsTmp[j]);
 				//inqsM001=M001=Y:addM001=M001=Y:updM001=M001=Y:delM001=M001=Y:
 				if (null!=inqsTmp[j] && !"".equals(inqsTmp[j])){
-					log.debug("inqsTmp[j] >>> " + inqsTmp[j]);
+					//log.debug("inqsTmp[j] >>> " + inqsTmp[j]);
 					String temps[] = inqsTmp[j].split(":");
 						if (!"".equals(temps[0])){
 						RoleFunctionModel rfModel = new RoleFunctionModel();
 						//inqsM001=M001=Y
 						for (int k=0;k<temps.length; k++){
-							log.debug("temp >>> " + temps[k]);
+							//log.debug("temp >>> " + temps[k]);
 							
 							String ftype[]=temps[k].split("=");
 							String tmpmenu = "";
@@ -218,29 +225,29 @@ public class RoleAction extends AbstractAction {
 							rfModel.setMenu_id(ftype[1]);
 	
 							if (ftype[0].subSequence(0,4).equals("inqs")){
-								log.debug("inqs >> " + ftype[2]);
+								//log.debug("inqs >> " + ftype[2]);
 								rfModel.setFunc_inqs(ftype[2]);
 								
 							}
 							if (ftype[0].subSequence(0,3).equals("add")){
-								log.debug("add >> " + ftype[2]);
+								//log.debug("add >> " + ftype[2]);
 								rfModel.setFunc_add(ftype[2]);
 								
 							}
 							if (ftype[0].subSequence(0,3).equals("upd")){
-								log.debug("upd >> " + ftype[2]);
+								//log.debug("upd >> " + ftype[2]);
 								rfModel.setFunc_update(ftype[2]);
 								
 							}
 							if (ftype[0].subSequence(0,3).equals("del")){
-								log.debug("del >> " + ftype[2]);
+								//log.debug("del >> " + ftype[2]);
 								rfModel.setFunc_del(ftype[2]);
 								
 							}
-//							rfModel.setCreate_by("veena");
+//							rfModel.setCreate_by(iuser);
 							rfModel.setRole_func_id(role_fund_id);
 							rfModel.setRole_id(role_id);
-							rfModel.setUpdate_by("veena");
+							rfModel.setUpdate_by(iuser);
 						}
 						
 						vc.add(rfModel);
@@ -253,11 +260,9 @@ public class RoleAction extends AbstractAction {
 		RoleDAO rd = new RoleDAOImpl();
 		try {
 			if (rd.updateRole(role, vc)){
-//				Vector mn = new Vector();
-//				mn = rd.selectRole(role_name);
-//				log.debug("mn >>> " + vc.size());
-//				getRequest().getSession().setAttribute("returnVC", mn);
-				result = true;
+				log.debug("Role action : do Update success setCriteriaParameter >>> "+getRequest().getParameter("txtRoleName"));
+				result = doSearch();
+//				result = true;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -268,7 +273,7 @@ public class RoleAction extends AbstractAction {
 //		result=true;
 	
 		
-		getRequest().getSession().setAttribute("returnVal", "");
+		//getRequest().getSession().setAttribute("returnVal", "");
 		return result;
 	}
 
@@ -277,28 +282,32 @@ public class RoleAction extends AbstractAction {
 		boolean result =false;
 		
 		String role_name = getRequest().getParameter("rolename");
+		String iuser = (String) getRequest().getSession().getAttribute("iuser");
+		if (null==iuser || "".equals(iuser)){
+			iuser = "system";
+		}
 		String strInqs = "";
 		Vector vc = new Vector();
 		RoleModel role = new RoleModel();
 		role.setRole_name(role_name);
-		role.setCreate_by("veena");
-		role.setUpdate_by("veena");
+		role.setCreate_by(iuser);
+		role.setUpdate_by(iuser);
 		
 		strInqs = getRequest().getParameter("func_type");
-		log.debug("strinqs >>> " + strInqs);
+		//log.debug("strinqs >>> " + strInqs);
 		if (null!=strInqs){
 			String inqsTmp[] = strInqs.split("\\|"); 
 			for(int j=0;j<inqsTmp.length;j++){
-				log.debug("inqsTmp[j] >>> " + inqsTmp[j]);
+				//log.debug("inqsTmp[j] >>> " + inqsTmp[j]);
 				//inqsM001=M001=Y:addM001=M001=Y:updM001=M001=Y:delM001=M001=Y:
 				if (null!=inqsTmp[j] && !"".equals(inqsTmp[j])){
-					log.debug("inqsTmp[j] >>> " + inqsTmp[j]);
+					//log.debug("inqsTmp[j] >>> " + inqsTmp[j]);
 					String temps[] = inqsTmp[j].split(":");
 						if (!"".equals(temps[0])){
 						RoleFunctionModel rfModel = new RoleFunctionModel();
 						//inqsM001=M001=Y
 						for (int k=0;k<temps.length; k++){
-							log.debug("temp >>> " + temps[k]);
+							//log.debug("temp >>> " + temps[k]);
 							
 							String ftype[]=temps[k].split("=");
 							String tmpmenu = "";
@@ -306,27 +315,27 @@ public class RoleAction extends AbstractAction {
 							rfModel.setMenu_id(ftype[1]);
 	
 							if (ftype[0].subSequence(0,4).equals("inqs")){
-								log.debug("inqs >> " + ftype[2]);
+								//log.debug("inqs >> " + ftype[2]);
 								rfModel.setFunc_inqs(ftype[2]);
 								
 							}
 							if (ftype[0].subSequence(0,3).equals("add")){
-								log.debug("add >> " + ftype[2]);
+								//log.debug("add >> " + ftype[2]);
 								rfModel.setFunc_add(ftype[2]);
 								
 							}
 							if (ftype[0].subSequence(0,3).equals("upd")){
-								log.debug("upd >> " + ftype[2]);
+								//log.debug("upd >> " + ftype[2]);
 								rfModel.setFunc_update(ftype[2]);
 								
 							}
 							if (ftype[0].subSequence(0,3).equals("del")){
-								log.debug("del >> " + ftype[2]);
+								//log.debug("del >> " + ftype[2]);
 								rfModel.setFunc_del(ftype[2]);
 								
 							}
-							rfModel.setCreate_by("veena");
-							rfModel.setUpdate_by("veena");
+							rfModel.setCreate_by(iuser);
+							rfModel.setUpdate_by(iuser);
 						}
 						
 						vc.add(rfModel);
@@ -337,8 +346,9 @@ public class RoleAction extends AbstractAction {
 		RoleDAO rd = new RoleDAOImpl();
 		try {
 			if (rd.insertRole(role, vc)){
-				getRequest().getSession().setAttribute("returnVal", "");	
-				result = true;
+				//getRequest().getSession().setAttribute("returnVal", "");	
+				result = doSearch();
+//				result = true;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -459,6 +469,7 @@ public class RoleAction extends AbstractAction {
 	
 	private void setCriteriaParameter(){
 		RoleModel roleMSP = new RoleModel();
+		log.debug("Role action : setCriteriaParameter >>> "+getRequest().getParameter("txtRoleName"));
 		roleMSP.setRole_name(getRequest().getParameter("txtRoleName"));
 		getRoleBean().setRoleMSP(roleMSP);
 	}

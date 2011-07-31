@@ -223,6 +223,10 @@ public class UserAction extends AbstractAction {
 		String department =getRequest().getParameter("department");
 		String ipAddress = getRequest().getRemoteAddr();
 		String user_status[] = getRequest().getParameterValues("user_status");
+		String iuser = (String) getRequest().getSession().getAttribute("iuser");
+		if (null==iuser || "".equals(iuser)){
+			iuser = "system";
+		}
 		String tempUser="";
 		log.debug("user action result iv user >> " +iv_user);
 		log.debug("user action result usrname >> " +usrname);
@@ -270,8 +274,8 @@ public class UserAction extends AbstractAction {
 				urm.setJda_id(ejda_id);
 				urm.setIv_user(iv_user);
 				urm.setRole_id(check[i]);
-				urm.setCreate_by("veena");
-				urm.setUpdate_by("veena");
+				urm.setCreate_by(iuser);
+				urm.setUpdate_by(iuser);
 				vc.add(urm);
 				log.debug("checked box : " + check[i]);
 			}
@@ -283,7 +287,8 @@ public class UserAction extends AbstractAction {
 				getRequest().getSession().removeAttribute("rolename");
 				getRequest().getSession().removeAttribute("userModel");
 				getRequest().getSession().removeAttribute("returnVal");
-				result = true;
+				result = doSearch();
+				//result = true;
 				log.debug("success");
 			}
 		} catch (SQLException e) {
@@ -311,7 +316,10 @@ public class UserAction extends AbstractAction {
 		String exp_date = getRequest().getParameter("exp_date");
 		String department =getRequest().getParameter("department");
 		String ipAddress = getRequest().getRemoteAddr();
-		
+		String iuser = (String) getRequest().getSession().getAttribute("iuser");
+		if (null==iuser || "".equals(iuser)){
+			iuser = "system";
+		}
 		log.debug("user action result iv user >> " +iv_user);
 		log.debug("user action result usrname >> " +usrname);
 		log.debug("user action result pwd >> " +pwd);
@@ -333,8 +341,8 @@ public class UserAction extends AbstractAction {
 		um.setFIRSTNAME(firstname);
 		um.setEFFECTIVE_DATE(Date.valueOf(DisplayFormatUtil.DateFormat(eff_date)));
 		um.setEXPIRY_DATE(Date.valueOf(DisplayFormatUtil.DateFormat(exp_date)));
-		um.setCreate_by("veena");
-		um.setUpdate_by("veena");
+		um.setCreate_by(iuser);
+		um.setUpdate_by(iuser);
 		um.setDEPARTMENT(department);
 		um.setUSER_IP(ipAddress);
 		
@@ -358,6 +366,7 @@ public class UserAction extends AbstractAction {
 		UserDAO userDAO = new UserDAOImpl();
 		try {
 			if (userDAO.addNewUser(um, vc)){
+				doSearch();
 				result = true;
 				log.debug("success");
 			}
