@@ -73,10 +73,19 @@ public class MenuServlet extends HttpServlet {
 									div += "<ul>";
 									
 								}
-
+								div += "<li><a href=\"./EJDAControler?screenName=EJDA"+model.getMenu_id()+".jsp&ejdaAction=EJDA"+model.getMenu_id()+"\">" + model.getMenu_name() + "</a></li>";
+//								if("Transaction Log".equalsIgnoreCase(model.getMenu_name())){
+//									div += "<li><a href=\"./EJDAControler?screenName=EJDAM008.jsp&ejdaAction=EJDAM008\">" + model.getMenu_name() + "</a></li>";
+//								}else if("User Roles".equalsIgnoreCase(model.getMenu_name())){
+//									div += "<li><a href=\"./EJDAControler?screenName=role_menu.jsp&ejdaAction=Role\">" + model.getMenu_name() + "</a></li>";
+//								}else if("User Login".equalsIgnoreCase(model.getMenu_name())){
+//									div += "<li><a href=\"./EJDAControler?screenName=user_screen.jsp&ejdaAction=User\">" + model.getMenu_name() + "</a></li>";
+//								}else{
+//									div += "<li><a href=\"./EJDAControler?screenName=role_menu.jsp&ejdaAction=Role\">" + model.getMenu_name() + "</a></li>";
+//								}
 //								div += "<li><a href=\"/EJDAWeb/EJDAControler?screenName="+model.getMenu_linked()+"\">" + model.getMenu_name() + "</a></li>";
 	
-								div += "<li><a href=\"./EJDAControler?screenName=transactionLog.jsp&ejdaAction=TransactionLog\">" + model.getMenu_name() + "</a></li>";
+//								div += "<li><a href=\"./EJDAControler?screenName=transactionLog.jsp&ejdaAction=TransactionLog\">" + model.getMenu_name() + "</a></li>";
 //								div += "<li><a href=\"./EJDAControler?screenName=user_screen.jsp&ejdaAction=User\">" + model.getMenu_name() + "</a></li>";
 
 								count=1;
