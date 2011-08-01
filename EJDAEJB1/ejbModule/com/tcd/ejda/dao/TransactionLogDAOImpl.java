@@ -30,12 +30,12 @@ public class TransactionLogDAOImpl implements TransactionLogDAO {
 		StringBuffer sqlupd = new StringBuffer();
 //		sqlupd.append("INSERT INTO EJDA_MENU()")
 		StringBuffer sql = new StringBuffer();
-		sql.append("insert into JDA_TRANSACTION_LOG (TRANS_ID, TRANS_ACTION, DESCRIPTION, IP_ADDRESS, TRANS_DATE, TRANS_BY) values (?, ?, ?, ?, ?, ?)");
+		sql.append("insert into JDA_TRANSACTION_LOG (TRANS_ID,TRANS_MENU_ID, TRANS_ACTION, DESCRIPTION, IP_ADDRESS, TRANS_DATE, TRANS_BY) values ((select TRAN_ID_SEQ.nextval as SEQ from dual ), ?, ?, ?, ?, ?, ?)");
 		log.debug("sql >> " + sql.toString());
 		try {
 			ps = conn.prepareStatement(sql.toString());
 			int parameterIndex = 1;
-			ps.setInt(parameterIndex++, tranlog.getTranId());
+			ps.setString(parameterIndex++, tranlog.getMenuId());
 			ps.setString(parameterIndex++, tranlog.getTranAction());
 			ps.setString(parameterIndex++, tranlog.getDescription());
 			ps.setString(parameterIndex++, tranlog.getIpAddress());
