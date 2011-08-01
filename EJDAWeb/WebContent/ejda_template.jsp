@@ -16,7 +16,19 @@
 	<script language="javascript" src="js/DateFormat.js"></script>
 	<script language="javascript" src="js/popcalendar.js"></script>
 </head>
+<script>
+window.onbeforeunload = confirmExit;
 
+function confirmExit(){
+	if (window.event){
+		if (window.event.clientY < 0) { 
+			//browser is closed'
+			alert('Log Out');
+			//window.location.href = '';
+		}
+	}
+}
+</script>
 
 <body>
 <% 
