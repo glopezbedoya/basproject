@@ -11,11 +11,40 @@
 
 
 <%@page import="com.ejda.sessionBean.UserBean"%>
-<%@page import="org.apache.log4j.Logger"%><script type="text/javascript">
+<%@page import="org.apache.log4j.Logger"%>
+<script type="text/javascript">
 function popupPolicy(){
 
 	newwindow=window.open("popupPolicy.jsp","","width=500,height=400")
 	newwindow.creator=self
+}
+function checkPassword(){
+	//alert($('input[name=password]').val());
+	var response = '';
+	var passVal = $('input[name=password]').val();
+	if (''!=passVal){
+		alert('passVal : '+passVal);
+		if ($('input[name=strongpwd]').attr('checked')){
+			//alert('strongpwd');
+			response = strongPwd($('input[name=password]').val());
+			
+		}	
+		//alert('response : ' + response);
+		if ('' != response && (response == 'weak' && response != 'very weak')){
+			alert('Your password is ' + response + '.');
+			//$('input[name=password]').focus();
+		}
+		//alert('checkPassword : ' + response);
+	}
+}
+
+function Reset(){
+	
+	$('input[name=ejdaAction]').val('User');
+	$('input[name=ejdaMethod]').val('doSearch');
+	$('input[name=screenName]').val('user_screen.jsp');
+	//document.myForm.submit();
+	form.submit();
 }
 function searchUser(form){
 	
@@ -26,7 +55,7 @@ function searchUser(form){
 	
 }
 function AddRole(form){
-	var errData = validateData();
+	var errData = validateData('ADD');
 	if (errData){
 		try{
 			$.get(
@@ -66,7 +95,7 @@ function NewRole(form){
 	
 }
 function UpdateUser(form){
-	var errData = validateData();
+	var errData = validateData('EDIT');
 	if (errData){
 	try{
 		$.get(
@@ -126,7 +155,7 @@ function DeleteUser(jda_id){
 	//form.submit();
 	
 }
-function validateData(){
+function validateData(type){
 	var isPass = true;
 	var isChk=false;
 	$('input[name=checkbok]').each(function(){			
@@ -142,12 +171,12 @@ function validateData(){
 		alert('Please input User Name.');
 		$('input[name=user_name]').focus();
 		isPass = false;
-	}else if(''== $('input[name=password]').val()){
+	}else if(''== $('input[name=password]').val() && type == 'ADD'){
 		
 		alert('Please input Password.');
 		$('input[name=password]').focus();
 		isPass = false;
-	}else if(''== $('input[name=crmpwd]').val()){
+	}else if(''== $('input[name=crmpwd]').val()  && type == 'ADD'){
 		
 		alert('Please input Confirm Password.');
 		$('input[name=crmpwd]').focus();
@@ -215,6 +244,10 @@ function changeSelectPage(form){
 </script>
 
  <%
+ 		
+		String bgColor1 = "bordercolor=\"#F4F4F4\"";
+		String bgColor2 = "bgcolor=\"#DFEFFF\"";
+		
  		Logger log = Logger.getLogger("JspLog");
 		String returnVal = "";
  		UserBean userBean = (UserBean)request.getSession().getAttribute("userBean");
@@ -256,7 +289,7 @@ function changeSelectPage(form){
                    	      	<td colspan="2" align="left"><table width="800" border="0" cellspacing="1" cellpadding="1">
                    	      		
                    	      		 <tr>
-		                      	    <td align="right" width="100"><font class="text">IV User : </font>
+		                      	    <td align="right" width="100"><font class="text">ID : </font>
 		                      	    		
 		                      	    		
 		                      	    </td>
@@ -272,12 +305,12 @@ function changeSelectPage(form){
 		                   	      <tr>
 		                      	    <td align="right" width="100"><font class="text">Status :</font></td>
 		                      	   
-		                      	    <td  align="left"> <font class="text">
+		                      	    <td  align="left" colspan="2"> <font class="text">
 		                      	     <%if (null==users.getUSER_STATUS()){%>
 		                      	     
 		                      	     <input type="radio" name="rdoStatus" id="rdoStatus" value="LOCK" /> Lock
-		                      	     <input type="radio" name="rdoStatus" id="rdoStatus" value="UNLOCK" />  Unlock 
-		                      	     <input type="radio" name="rdoStatus" id="rdoStatus" value="ALL"checked="checked"/>  All 
+		                      	     <input type="radio" name="rdoStatus" id="rdoStatus" value="UNLOCK" />  No lock 
+		                      	     <input type="radio" name="rdoStatus" id="rdoStatus" value="ALL"checked="checked"/> Select All 
 		                      	     <%}else{ %>
 			                      	     <%if ("LOCK".equals(users.getUSER_STATUS())){%>
 			                      	    	<input type="radio" name="rdoStatus" id="rdoStatus" value="LOCK"checked="checked" /> Lock
@@ -285,27 +318,21 @@ function changeSelectPage(form){
 			                      	    <input type="radio" name="rdoStatus" id="rdoStatus" value="LOCK" /> Lock
 			                      	    <%} %>
 			                      	    <% if ("UNLOCK".equals(users.getUSER_STATUS())){%>
-			                      	    <input type="radio" name="rdoStatus" id="rdoStatus" value="UNLOCK" checked="checked"/>  Unlock 
+			                      	    <input type="radio" name="rdoStatus" id="rdoStatus" value="UNLOCK" checked="checked"/>  No lock 
 			                      	     <%}else{ %>
-			                      	    <input type="radio" name="rdoStatus" id="rdoStatus" value="UNLOCK" />  Unlock 
+			                      	    <input type="radio" name="rdoStatus" id="rdoStatus" value="UNLOCK" />  No lock 
 			                      	    <%} %>
 			                      	    <%if ("ALL".equals(users.getUSER_STATUS())){%>
-			                      	    <input type="radio" name="rdoStatus" id="rdoStatus" value="ALL"checked="checked"/>  All 
+			                      	    <input type="radio" name="rdoStatus" id="rdoStatus" value="ALL"checked="checked"/> Select All 
 			                      	     <%}else{ %>
-			                      	    <input type="radio" name="rdoStatus" id="rdoStatus" value="ALL" />  All 
+			                      	    <input type="radio" name="rdoStatus" id="rdoStatus" value="ALL" /> Select All 
 			                      	    <%} %>
 		                      	    <%} %>
 		                      	    </font>
 		                      	    </td>
-		                      	    <td align="left" colspan="2"></td>
-		                   	      </tr>
-		                   	       <tr>
-		                      	    <td align="right"></td>
-		                      	    <td align="left"></td>
-		                   	                	    
-		                      	    <td align="right"></td>
 		                      	    <td align="left"><input type="button" name="search" id="search" value="Search"onClick="searchUser(this.form)"></td>
 		                   	      </tr>
+		                   	      
 		                   	      </table>
                    	      	</td>
                    	      </tr>
@@ -323,16 +350,12 @@ function changeSelectPage(form){
                       	    <td colspan="2" height="10">&nbsp;</td>
                    	      </tr>
                    	     
-                   	      <tr>
-                      	    <td>&nbsp;</td>
-                      	    <td  align="right"><input type="button" name="new" id="new" value="New User" onClick="NewRole(this.form)"></td>
-                   	      	<input type="hidden" name="cType" id="cType" value="">
-                   	      </tr>
+                   	     
                    	      <tr>
                       	    <td colspan="2" height="10">&nbsp;</td>
                    	      </tr>
                    	       <%if(vc.size()>0){%>
-                   	       		
+                   	       
                    	       		<!--Panging-->
 						         <%
 									int allPage = valueListM.getCount() / valueListM.getItemsPerPage();
@@ -404,7 +427,7 @@ function changeSelectPage(form){
 									String showPage = DisplayUtil.displaySelectPaging("selectPaging",allPage,valueListM.getAtPage(),"onchange=\"changeSelectPage(this.form)\"");
 									%>
 						        <tr>
-						          <th colspan="4" scope="row"><div align="right"><span class="style4">&#3649;&#3626;&#3604;&#3591;&#3612;&#3621;&#3585;&#3634;&#3619;&#3588;&#3657;&#3609;&#3627;&#3634; <%=valueListM.getAtPage()+"/"+allPage %></span>
+						          <th colspan="4" scope="row"><div align="right"><span class="textPage">&#3649;&#3626;&#3604;&#3591;&#3612;&#3621;&#3585;&#3634;&#3619;&#3588;&#3657;&#3609;&#3627;&#3634; <%=valueListM.getAtPage()+"/"+allPage %></span>
 						            <%=showPage %>
 						         	<%=btnFirst %>
 						         	<%=btnBack %>
@@ -412,6 +435,18 @@ function changeSelectPage(form){
 						         	<%=btnLast %>
 						          </div></th>
 						        </tr>
+							         <tr>
+						          <th scope="row">&nbsp;</th>					          
+						          <td align="right"><span class="textPage">จำนวนที่พบ<%=valueListM.getCount() %> รายการ</span></td>
+						        </tr>
+							        <tr>
+									<td colspan="2" height="10"></td>					        
+						        </tr>
+						        <tr>
+	                      	    <td>&nbsp;</td>
+	                      	    <td  align="right"><input type="button" name="new" id="new" value="New User" onClick="NewRole(this.form)"></td>
+	                   	      	<input type="hidden" name="cType" id="cType" value="">
+	                   	      </tr>
 	                   	       <tr>
 	                      	    <td colspan="3" align="center"><table width="800" cellspacing="1" cellpadding="1">
 	                      	    <tr  bgcolor="#003366">
@@ -425,22 +460,26 @@ function changeSelectPage(form){
 	                   	    		</tr>
 	                      	    <%
 	                   	    	  for (int i = 0; i< vc.size();i++){
+	                   	    		String bgColor = "";
 	                   	    		UsrModel rm = (UsrModel)vc.get(i);
+	                   	    		bgColor = (i%2 == 0)?bgColor1:bgColor2;
 	                   	    	%>
 	                   	    		<tr>
-	                   	    		<td><font class="text"> <%=rm.getIV_USER() %></font></td>
-	                   	    		<td><font class="text"> <%=rm.getFIRSTNAME() %> <%=rm.getLASTNAME() %></font></td>
+	                   	    		<td <%=bgColor %>><font class="text"> <%=rm.getIV_USER() %></font></td>
+	                   	    		<td <%=bgColor %>><font class="text"> <%=rm.getFIRSTNAME() %> <%=rm.getLASTNAME() %></font></td>
 	                   	    		<%
 	                   	    		String show_locked = "";
 	                   	    		if (rm.getUSER_STATUS().equals("L")){
-	                   	    			show_locked = "Locked";
+	                   	    			show_locked = "<font class=\"textRed\"> Locked</font>";
+	                   	    		}else{
+	                   	    			show_locked = "No Lock";
 	                   	    		}
 	                   	    		
 	                   	    		%>
-	                   	    		<td><font class="text"> <%=DisplayFormatUtil.SQLDateToString(rm.getCreate_date(),"DD/MM/YYYY")%></font></td>
-	                   	    		<td><font class="text"> <%=show_locked %></font></td>
-	                   	    		<td><font class="text"> <img src="images/edit.JPG" name="edit" id="edit" style="cursor:hand" onclick="EditUser('<%=i %>')"></font></td>
-	                   	    		<td><font class="text"> <img src="images/delete.JPG" name="delete" id="delete" value="delete"style="cursor:hand" onclick="DeleteUser('<%=rm.getJda_id() %>')"></font></td>
+	                   	    		<td <%=bgColor %>><font class="text"> <%=DisplayFormatUtil.SQLDateToString(rm.getCreate_date(),"DD/MM/YYYY")%></font></td>
+	                   	    		<td <%=bgColor %>><font class="text"> <%=show_locked %></font></td>
+	                   	    		<td <%=bgColor %>><font class="text"> <img src="images/edit.JPG" name="edit" id="edit" style="cursor:hand" onclick="EditUser('<%=i %>')"></font></td>
+	                   	    		<td <%=bgColor %>><font class="text"> <img src="images/delete.JPG" name="delete" id="delete" value="delete"style="cursor:hand" onclick="DeleteUser('<%=rm.getJda_id() %>')"></font></td>
 	                   	    		<input type ="hidden" name="ejda_id_<%=i %>" id = "ejda_id_<%=i %>" value="<%=rm.getJda_id() %>">
 	                   	    		<input type ="hidden" name="iv_user_<%=i %>" id = "iv_user_<%=i %>" value="<%=rm.getIV_USER() %>">
 	                   	    		<input type ="hidden" name="user_name_<%=i %>" id ="user_name_<%=i %>" value="<%=rm.getUSERNAME() %>">
@@ -482,7 +521,7 @@ function changeSelectPage(form){
                    	      </tr>
                    	      <tr>
                    	      <td colspan="3">
-                   	      <table width="600" cellspacing="1" cellpadding="1" align="center">
+                   	      <table width="600" cellspacing="1" cellpadding="1" align="center" background="images/back_line.png">
                    	       <tr>
 						    <td align="right"><span class="text">User Name : </span></td>
 						    <td align="left" width="100">
@@ -493,9 +532,9 @@ function changeSelectPage(form){
 						  <tr>
 						    <td align="right"><span class="text">Password : </span></td>
 						    <td align="left" width="100">
-						      <input type="password" name="password" id="password" value="" />
+						      <input type="password" name="password" id="password" value="" onblur="checkPassword();"/>
 						    </td>
-						    <td align="left" ><input type="checkbox" name="checkbox" id="checkbox"checked="checked"  /><font class="text">Password Policy</font>
+						    <td align="left" ><input type="checkbox" name="strongpwd" id="strongpwd" checked="checked"  /><font class="text">Password Policy</font>
 						    <input type = "button" name="popPolicy" id = "polPolicy" value="View Policy" onclick="popupPolicy()">
 						    </td>
 						  </tr>
@@ -598,7 +637,7 @@ function changeSelectPage(form){
 						    <input type="hidden" name="rdoStatus" value="<%=users.getUSER_STATUS() %>">
 						      <input type="button" name="add" id="add" value="Add User" onClick="AddRole(this.form)">
 						      <input type="hidden" name="cType" id="cType" value="">
-						      <input type="button" name="Reset" id="Reset" value="Reset" onClick="Reset()">
+						      <input type="button" name="cancel" id="cancel" value="Cancel" onClick="Reset(this.form)">
 						    </td>
 						    
 						  </tr>
@@ -628,23 +667,23 @@ function changeSelectPage(form){
                    	       <tr>
 						    <td align="right"><span class="text">User Name : </span></td>
 						    <td align="left" width="100">
-						      <input type="text" name="user_name" id="user_name"value="<%=um.getUSERNAME() %>" />
+						      <input type="text" name="user_name" id="user_name" value="<%=um.getUSERNAME() %>" />
 						    </td>
 						    <td ></td>
 						  </tr>
 						  <tr>
 						    <td align="right"><span class="text">Password : </span></td>
 						    <td align="left" width="100">
-						      <input type="password" name="password" id="password" value="<%=um.getPWD() %>" />
+						      <input type="password" name="password" id="password" value=""onblur="checkPassword();" />
 						    </td>
-						    <td align="left" ><input type="checkbox" name="checkbox" id="checkbox" checked="checked" /><font class="text">Password Policy</font>
+						    <td align="left" ><input type="checkbox" name="strongpwd" id="strongpwd" checked="checked"   /><font class="text">Password Policy</font>
 						    <input type = "button" name="popPolicy" id = "polPolicy" value="View Policy" onclick="popupPolicy()">
 						    </td>
 						  </tr>
 						   <tr>
 						    <td align="right"><span class="text">Confirm Password : </span></td>
 						    <td align="left" width="100">
-						      <input type="password" name="crmpwd" id="crmpwd"value="<%=um.getPWD() %>" />
+						      <input type="password" name="crmpwd" id="crmpwd"value="" />
 						    </td>
 						    <td ></td>
 						  </tr>
@@ -758,7 +797,7 @@ function changeSelectPage(form){
 						    <input type="hidden" name="rdoStatus" value="<%=users.getUSER_STATUS() %>">
 						      <input type="button" name="upd" id="upd" value="Update User" onClick="UpdateUser(this.form)">
 						      <input type="hidden" name="cType" id="cType" value="">
-						      <input type="button" name="Reset" id="Reset" value="Reset" onClick="Reset()">
+						      <input type="button" name="cancel" id="cancel" value="Cancel" onClick="Reset(this.form)">
 						      <%=roleHidden %>
 						    </td>
 						    
