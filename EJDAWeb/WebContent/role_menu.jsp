@@ -23,26 +23,28 @@ function AddRole(form){
 	 var delCheck = '';
 	 var i =0;
 	 var indextemp = '';
-	 $('input[name=menuid]').each(function(){
+	 var errData = validateData();
+	 if (errData){
+		 $('input[name=menuid]').each(function(){
+			 
+			 if (null!=$(this).val() && "C"!=$('input[name=status]').val()){
+				 //inqsCheck = inqsCheck + getIndexUnCheckBox('inqs'+$(this).val());
+				 indextemp = indextemp + getIndexUnCheckBox('inqs'+$(this).val()) + getIndexUnCheckBox('add'+$(this).val()) + 
+										 getIndexUnCheckBox('upd'+$(this).val()) + getIndexUnCheckBox('del'+$(this).val()) +'|';
+	    
+			 }
+			
+			 i=i+1;
+		 });
 		 
-		 if (null!=$(this).val() && "C"!=$('input[name=status]').val()){
-			 //inqsCheck = inqsCheck + getIndexUnCheckBox('inqs'+$(this).val());
-			 indextemp = indextemp + getIndexUnCheckBox('inqs'+$(this).val()) + getIndexUnCheckBox('add'+$(this).val()) + 
-									 getIndexUnCheckBox('upd'+$(this).val()) + getIndexUnCheckBox('del'+$(this).val()) +'|';
-    
-		 }
+		$('input[name=func_type]').val(indextemp);
+	
 		
-		 i=i+1;
-	 });
-	 
-	$('input[name=func_type]').val(indextemp);
-
-	
-	$('input[name=ejdaAction]').val('Role');
-	$('input[name=ejdaMethod]').val('doAdd');
-	$('input[name=screenName]').val('role_menu.jsp');
-	form.submit();
-	
+		$('input[name=ejdaAction]').val('Role');
+		$('input[name=ejdaMethod]').val('doAdd');
+		$('input[name=screenName]').val('role_menu.jsp');
+		form.submit();
+	 }
 }
 function UpdateRole(form){
 	 var inqsCheck = '';
@@ -51,25 +53,44 @@ function UpdateRole(form){
 	 var delCheck = '';
 	 var i =0;
 	 var indextemp = '';
+	 var errData = validateData();
+	 if (errData){
 	 $('input[name=menuid]').each(function(){
+			 
+			 if (null!=$(this).val() && "C"!=$('input[name=status]').val()){
+				 //inqsCheck = inqsCheck + getIndexUnCheckBox('inqs'+$(this).val());
+				 indextemp = indextemp + getIndexUpdate('inqs'+$(this).val(),$(this).val()) + getIndexUpdate('add'+$(this).val(),$(this).val()) + 
+							 getIndexUpdate('upd'+$(this).val(),$(this).val()) + getIndexUpdate('del'+$(this).val(),$(this).val()) +'|';
+	   
+			 }
+			
+			 i=i+1;
+		 });
 		 
-		 if (null!=$(this).val() && "C"!=$('input[name=status]').val()){
-			 //inqsCheck = inqsCheck + getIndexUnCheckBox('inqs'+$(this).val());
-			 indextemp = indextemp + getIndexUpdate('inqs'+$(this).val(),$(this).val()) + getIndexUpdate('add'+$(this).val(),$(this).val()) + 
-						 getIndexUpdate('upd'+$(this).val(),$(this).val()) + getIndexUpdate('del'+$(this).val(),$(this).val()) +'|';
-   
-		 }
-		
-		 i=i+1;
-	 });
-	 
-	$('input[name=func_type]').val(indextemp);
-
-	$('input[name=ejdaAction]').val('Role');
-	$('input[name=ejdaMethod]').val('doUpdate');
-	$('input[name=screenName]').val('role_menu.jsp');
-	form.submit();
+		$('input[name=func_type]').val(indextemp);
 	
+		$('input[name=ejdaAction]').val('Role');
+		$('input[name=ejdaMethod]').val('doUpdate');
+		$('input[name=screenName]').val('role_menu.jsp');
+		form.submit();
+	 }
+}
+function validateData(){
+	var isPass = true;
+	var isChk=false;
+	if (''== $('input[name=rolename]').val()){
+		alert('Please input Role name.');
+		$('input[name=rolename]').focus();
+		isPass = false;
+	}
+}
+function Reset(form){
+	alert(form);
+	$('input[name=ejdaAction]').val('Role');
+	$('input[name=ejdaMethod]').val('doSearch');
+	$('input[name=screenName]').val('role_menu.jsp');
+	//document.myForm.submit();
+	form.submit();
 }
 function EditRole(form,role_id,role_name){
 	//alert('EditRole');
@@ -429,7 +450,7 @@ function cancleDeleteAll(obj){
 								String showPage = DisplayUtil.displaySelectPaging("selectPaging",allPage,valueListM.getAtPage(),"onchange=\"changeSelectPage(this.form)\"");
 								%>
 					        <tr>
-					          <th colspan="4" scope="row"><div align="right"><span class="style4">&#3649;&#3626;&#3604;&#3591;&#3612;&#3621;&#3585;&#3634;&#3619;&#3588;&#3657;&#3609;&#3627;&#3634; <%=valueListM.getAtPage()+"/"+allPage %></span>
+					          <th colspan="4" scope="row"><div align="right"><span class="textPage">&#3649;&#3626;&#3604;&#3591;&#3612;&#3621;&#3585;&#3634;&#3619;&#3588;&#3657;&#3609;&#3627;&#3634; <%=valueListM.getAtPage()+"/"+allPage %></span>
 					            <%=showPage %>
 					         	<%=btnFirst %>
 					         	<%=btnBack %>
@@ -439,7 +460,7 @@ function cancleDeleteAll(obj){
 					        </tr>
 					        <tr>
 					          <th scope="row">&nbsp;</th>					          
-					          <td align="right">จำนวนที่พบ<%=valueListM.getCount() %> รายการ</td>
+					          <td align="right"><span class="textPage">จำนวนที่พบ<%=valueListM.getCount() %> รายการ</span></td>
 					        </tr>
                    	      
                    	       <tr>
@@ -510,9 +531,9 @@ function cancleDeleteAll(obj){
 						    <td align="right"></td>
 						    <td colspan="2" align="right" width="100">
 						    <input type="hidden" name="txtRoleName" value="<%=roles.getRole_name() %>">
-						      <input type="button" name="add" id="add" value="Add Role" onClick="AddRole(this.form)">
+						      <input type="button" name="add" id="add" value=" Add Role " onClick="AddRole(this.form)">
 						      <input type="hidden" name="cType" id="cType" value="">
-						      <input type="button" name="Reset" id="Reset" value="Reset" onClick="Reset()">
+						      <input type="button" name="Reset" id="Reset" value="  Reset  " onClick="Reset(this.form)">
 						    </td>
 						    
 						  </tr>
@@ -559,7 +580,7 @@ function cancleDeleteAll(obj){
 						      <input type="hidden" name="txtRoleName" value="<%=roles.getRole_name() %>">
 						      <input type="button" name="add" id="add" value="Update Role" onClick="UpdateRole(this.form)">
 						      <input type="hidden" name="cType" id="cType" value="">
-						      <input type="button" name="Reset" id="Reset" value="Reset" onClick="Reset()">
+						      <input type="button" name="Reset" id="Reset" value="  Reset  " onClick="Reset(this.form)">
 						    </td>
 						    
 						  </tr>
