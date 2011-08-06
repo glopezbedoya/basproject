@@ -18,7 +18,7 @@
 	  <tr>
 	    <table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
 	      <tr>
-	        <th scope="row"><img src="images/header.JPG" width="945" height="146" />
+	        <th scope="row"><img src="images/header.png" width="941" height="125" />
 	      </tr>
 	       <tr>
 		    	<td bgcolor="#EEEEEE" align="right"><%=showMenu %></td>
