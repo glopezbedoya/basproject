@@ -26,62 +26,73 @@
 	<input type="hidden" name="page" value="<%=valueListM.getAtPage() %>" />
 	<input type="hidden" name="volumePerPage" value="<%=valueListM.getItemsPerPage() %>" />
 	<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
-		<tr >
-          <th colspan="4" align="left" bgcolor="#3399FF" scope="row"><div align="left"><span class="style1">&gt;&gt; &#3592;&#3633;&#3604;&#3585;&#3634;&#3619;&#3612;&#3641;&#3657;&#3651;&#3594;&#3657;&#3619;&#3632;&#3610;&#3610; &gt;&gt; &#3592;&#3633;&#3604;&#3585;&#3634;&#3619;&#3612;&#3641;&#3657;&#3651;&#3594;&#3657;&#3591;&#3634;&#3609;&#3619;&#3632;&#3610;&#3610;</span> </div></th>
-        </tr>
+		
         <tr align="left">
-          <th scope="row">&nbsp;</th>
+          <td align="right" class="style1" scope="row">&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-        </tr>
-        <tr align="left">
-          <th colspan="4" scope="row">
-            <p class="style1">วัน เดือน ปี ที่เข้าระบบ </p>
-          </th>
         </tr>
         <tr>
-       		<th align="right" class="style1" scope="row">
+        	<td><table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
+        	
+        <tr>
+       		<td align="right" class="style1" scope="row">
        			<span class="text"> Date From :</span>&nbsp;
-       		</th>
-       		<td>
-       			<%=DisplayFormatUtil.displayTextBoxCalendar("txtTranDateFrom",(null != tranLogModelSP.getTranDateFrom()) ? tranLogModelSP.getTranDateFrom():"") %> - 
-       			<%=DisplayFormatUtil.displayTextBoxCalendar("txtTranDateTo",(null != tranLogModelSP.getTranDateTo()) ? tranLogModelSP.getTranDateTo():"") %>
+       		
+       		</td>
+       		<td width="200">
+       			<%=DisplayFormatUtil.displayTextBoxCalendar("txtTranDateFrom",(null != tranLogModelSP.getTranDateFrom()) ? tranLogModelSP.getTranDateFrom():"") %>
+       		</td>
+       		<td class="text" width="70" align="right"> To : </td>
+       		<td> 
+       		   	<%=DisplayFormatUtil.displayTextBoxCalendar("txtTranDateTo",(null != tranLogModelSP.getTranDateTo()) ? tranLogModelSP.getTranDateTo():"") %>
        		</td>
         </tr>
         <tr>
-       		<th align="right" class="style1" scope="row">
-       			<span class="text"> User Name :</span>&nbsp;
-       		</th>
-       		<td>
+       		<td align="right" class="style1" scope="row">
+       			<span class="text"> User Name : </span>
+       		
+       		</td>
+       		<td width="150">
        			<%=DisplayFormatUtil.displayInputTextBox("txtUserName",tranLogModelSP.getUserName(),"") %>
-       		</td>	          		
-       		<th align="right" class="style1" scope="row">
-       			<span class="text"> Department :</span>&nbsp;
-       		</th>
-       		<td>
+       		</td>
+       		<td align="right" class="style1" scope="row">	          		
+       		
+       			<span class="text"> Department : </span>
+       		
+       		</td>
+       		<td >
        			<%=DisplayFormatUtil.displayInputTextBox("txtDepartment",tranLogModelSP.getDepartment(),"") %>
        		</td>	          		
         </tr>
         <tr>
-        	<th align="right" class="style1" scope="row">
-       			<span class="text"> First Name :</span>&nbsp;
-       		</th>
-       		<td>
+        	<td align="right" class="style1" scope="row">
+       			<span class="text"> First Name :</span>
+       		
+       		</td>
+       		<td >
        			<%=DisplayFormatUtil.displayInputTextBox("txtFirstName",tranLogModelSP.getFirstName(),"") %>
        		</td>	          		
-       		<th align="right" class="style1" scope="row">
-       			<span class="text"> Last Name :</span>&nbsp;
-       		</th>
-       		<td>
+       		<td align="right" class="style1" scope="row">
+       			<span class="text"> Last Name :</span>
+       		
+       		</td>
+       		<td >
        			<%=DisplayFormatUtil.displayInputTextBox("txtLastName",tranLogModelSP.getLastName(),"") %>
        		</td>
         </tr>
         <tr>
-       		<th colspan="4" align="left" class="style1" scope="row">
+        	<td colspan="4" height="10"></td>
+        </tr>
+        <tr>
+       		<th colspan="4" align="center" class="style1" scope="row">
        			<%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'doSearch')\"",false) %>
        		</th>
          </tr>
+         </table>
+        	</td>
+        </tr>
 		<!--Panging-->
          <%
 			int allPage = valueListM.getCount() / valueListM.getItemsPerPage();
@@ -152,8 +163,10 @@
 			
 			String showPage = DisplayFormatUtil.displaySelectPaging("selectPaging",allPage,valueListM.getAtPage(),"onchange=\"changeSelectPage(this.form)\"");
 			%>
+			 <%
+            	if(tranLogVt != null && tranLogVt.size() > 0){%>
         <tr>
-          <th colspan="4" scope="row"><div align="right"><span class="style4">&#3649;&#3626;&#3604;&#3591;&#3612;&#3621;&#3585;&#3634;&#3619;&#3588;&#3657;&#3609;&#3627;&#3634; <%=valueListM.getAtPage()+"/"+allPage %></span>
+          <th colspan="4" scope="row"><div align="right"><span  class="textPage">&#3649;&#3626;&#3604;&#3591;&#3612;&#3621;&#3585;&#3634;&#3619;&#3588;&#3657;&#3609;&#3627;&#3634; <%=valueListM.getAtPage()+"/"+allPage %></span>
             <%=showPage %>
          	<%=btnFirst %>
          	<%=btnBack %>
@@ -167,19 +180,20 @@
           <td>&nbsp;</td>
           <td>&nbsp;</td>
         </tr>
+       
         <tr>
+          <th scope="row" align="right" class="textPage">จำนวนที่พบ<%=valueListM.getCount() %> รายการ</th>
+          
+         
+        </tr>
+       
+         <tr>
           <th scope="row">&nbsp;</th>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td><div align="right">
           	<%=DisplayFormatUtil.displayButton("Delete","onclick=\"buttonAction(this.form,'doDelete')\"",false) %>
           </div></td>
-        </tr>
-        <tr>
-          <th scope="row">&nbsp;</th>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td align="right">จำนวนที่พบ<%=valueListM.getCount() %> รายการ</td>
         </tr>
         <tr>
           <th colspan="4" scope="row"><table width="951" border="0" align="center" cellpadding="0" cellspacing="1">
@@ -197,7 +211,6 @@
               <td width="129" bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">IP Address</div></td>
             </tr>
             <%
-            	if(tranLogVt != null && tranLogVt.size() > 0){
             		String bgColor;
             		for(int i=0;i<tranLogVt.size();i++){
             			tranLogM = (TransactionLogModel)tranLogVt.get(i);            	
@@ -205,12 +218,12 @@
             %>
 			            <tr>
 			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=tranLogM.getTranId() %>"/></th>
-			              <th <%=bgColor %> class="style17" scope="row"><%=tranLogM.getUserName() %></th>
-			              <td <%=bgColor %> class="style17"><%=tranLogM.getFirstName() + " " + tranLogM.getLastName() %></td>
-			              <td <%=bgColor %> class="style17"><%=tranLogM.getDepartment() %></td>
-			              <td <%=bgColor %> class="style17"><div align="center" class="style17"><%=tranLogM.getTranAction() %></div></td>
-			              <td <%=bgColor %> class="style17"><div align="center"><%=tranLogM.getTranDate() %></div></td>
-			              <td <%=bgColor %> class="style17"><div align="center"><%=tranLogM.getIpAddress() %></div></td>
+			              <th <%=bgColor %> class="text" scope="row"><%=tranLogM.getUserName() %></th>
+			              <td <%=bgColor %> class="text"><%=tranLogM.getFirstName() + " " + tranLogM.getLastName() %></td>
+			              <td <%=bgColor %> class="text"><%=tranLogM.getDepartment() %></td>
+			              <td <%=bgColor %> class="text"><div align="center" class="style17"><%=tranLogM.getTranAction() %></div></td>
+			              <td <%=bgColor %> class="text"><div align="center"><%=tranLogM.getTranDate() %></div></td>
+			              <td <%=bgColor %> class="text"><div align="center"><%=tranLogM.getIpAddress() %></div></td>
 			            </tr>
             <%		}
             	}

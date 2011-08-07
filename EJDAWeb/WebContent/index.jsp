@@ -12,21 +12,21 @@
     	<%
     		Logger logger = Logger.getLogger("JspLog");
 	    	String getResult = "";
-    		getResult = (String)request.getAttribute("messages");
+    		getResult = (String)request.getSession().getAttribute("messages");
+    		
     		logger.debug("Index >> " + getResult);
-    		System.out.println("Index >> " + getResult);
-    		
-    		String errMessage ="กรุณาใส่ User และ Password";
+    		    		
+    		String errMessage ="";
     		if (null != getResult && !"".equals(getResult) && getResult.equals("L")){
-    			errMessage ="User ถูก Locked";	
+    			errMessage ="*User ถูก Locked";	
     		}else if (null != getResult &&  !"".equals(getResult) && getResult.equals("A")){
-    			errMessage ="User ถูกใช้งานอยู่";	
+    			errMessage ="*User ถูกใช้งานอยู่";	
     		}else if (null != getResult && !"".equals(getResult) && getResult.equals("W")){
-    			errMessage ="Password ผิด";	
+    			errMessage ="*Password ผิด";	
     		}else if (null != getResult && !"".equals(getResult) && getResult.equals("STATUS")){
-    			errMessage ="ไม่พบ User นี้ในระบบ";	
+    			errMessage ="*ไม่พบ User นี้ในระบบ";	
     		}
-    		
+    		request.getSession().removeAttribute("messages");
     		
     		
     	%>
@@ -38,36 +38,35 @@
   	<tr><td>
       <table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
 	      <tr>
-	        <th scope="row"><img src="images/header.JPG" width="945" height="146" />
+	        <th scope="row"><img src="images/header.png" width="941" height="125" />
 	      </tr>
       </table>
   	<td></tr>
-	<tr><td align="center"> 
-	    <table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
-	    <tr>
-	    	<td height="10"></td>
-	    </tr>
-	    <tr>
-	    	<td></td>
-	    </tr>
-	    </table>
-      </td></tr>
+	
       <tr><td align="center">
-                <table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
+                <table align="center" width="800" border="0" cellspacing="0" cellpadding="0" >
                 <form name="form1" method="post" action="/EJDAWeb/EJDAControler">
                 	<input type="hidden" name="ejdaAction" value="CheckUsernamePassword"> 
 					<input type="hidden" name="ejdaMethod" value="checkUser"> 
 					<input type="hidden" name="screenName" value="">
+				<tr>
+					<td height="50"></td>
+				</tr>	
                 <tr>
-                    <td height="10" align="center"><table width="400" cellspacing="1" cellpadding="1">
+                	
+                    <td height="10" align="center"><table width="400" cellspacing="1" cellpadding="1" background="images/u2.png">
+                     
                       <tr>
-                      	<td colspan="2" height="30"></td>
+                      	<td align="center" colspan="2" height="30"class="textTop">Please submit User name and Password</td>
                       </tr>
                       <tr>
-                        <td align="right" class="text" >User Name :</td>
+                      	<td align="center" colspan="2" height="30"class="text"></td>
+                      </tr>
+                      <tr>
+                        <td align="right" class="textMenu" >User Name :</td>
                         <td  align="left" >
                           
-                            <input type="text" name="user" id="user" maxlength="20" value="">
+                            <input type="text" name="user" id="user" maxlength="20" value=""size="20">
                      
                         </td>
                       </tr>
@@ -75,20 +74,22 @@
                       	<td colspan="2" height="5"></td>
                       </tr> 
                       <tr>
-                        <td align="right"><font class="text">Password :</font></td>
-                        <td align="left"> <input type="password" name="pwd" id="pwd"  maxlength="20"value=""></td>
+                        <td align="right"><font class="textMenu">Password :</font></td>
+                        <td align="left"> <input type="password" name="pwd" id="pwd"  maxlength="20"value="" size="20"></td>
                       </tr>
                        <tr>
-                      	<td colspan="2" height="5"></td>
+                      	<td colspan="2" height="15"></td>
                       </tr> 
                       <tr>
-                        <td align="right"></td>
-                        <td align="left"> <font class="textError">*<%=errMessage %></font></td>
+                        <td align="center" colspan="2" class="textError" ><%=errMessage %></td>
+                        
                       </tr>
-                      
+                       <tr>
+                      	<td colspan="2" height="10"></td>
+                      </tr> 
                       <tr>
-                        <td align="right"></td>
-                        <td align="left"> <input type="submit" name="logon" id="logon" value="Login" maxlength="20"></td>
+                        
+                        <td colspan="2" align="center"> <input type="submit" name="logon" id="logon" value="   Login   " maxlength="20" size="20"></td>
                       </tr>
                        <tr>
                       	<td colspan="2" height="30"></td>
@@ -96,9 +97,7 @@
                     </table></td>
                 </tr>
                 </form>
-                 <tr>
-                    <td align="right" >Authorized by veena</td>
-                </tr>
+                 
 	 		</table>
       </td></tr>
       </table>
