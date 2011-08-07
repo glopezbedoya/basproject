@@ -51,7 +51,7 @@ public class MenuServlet extends HttpServlet {
 			
 				String div = "<ul id=\"MenuBar1\" class=\"MenuBarHorizontal\">";	
 					if(vc != null && vc.size()>0){	
-						
+						div += "<li><a href=\"./index2.jsp\">HOME</a>";
 						for(int j=0;j<vc.size();j++){
 							MenuModel model = (MenuModel)vc.get(j);
 							if (count!=0 && (model.getMenu_status().equals("A") || model.getMenu_status().equals("C"))){
@@ -101,7 +101,7 @@ public class MenuServlet extends HttpServlet {
 							div += "</li>";
 //							div += "</ul>";
 						}
-						div += "<li><a href=\"./EJDAControler?screenName=index.jsp&ejdaAction=logout\">LOGOUT</a></li>";
+						div += "<li><a href=\"./EJDAControler?screenName=index.jsp&ejdaAction=Logout\">LOGOUT</a></li>";
 						div += "</ul>";
 					}else{
 								div += 		"			<tr class=\"ROW\">"+
