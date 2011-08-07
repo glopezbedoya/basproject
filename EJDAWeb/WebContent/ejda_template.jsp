@@ -15,6 +15,7 @@
 	<script language="javascript" src="js/ejdaScript.js" type="text/javascript" ></script>
 	<script language="javascript" src="js/DateFormat.js"></script>
 	<script language="javascript" src="js/popcalendar.js"></script>
+	<script language="javascript" src="js/strongPassword.js"></script>
 </head>
 <script>
 window.onbeforeunload = confirmExit;
@@ -40,18 +41,18 @@ function confirmExit(){
 		screenName = (String)request.getParameter("screenName");
 	}
 	log.debug("screenName = "+screenName);*/
-	request.getSession().removeAttribute(EJDAConstant.SESSION_NAME.PAGE);	
-
+	//request.getSession().removeAttribute(EJDAConstant.SESSION_NAME.PAGE);	
+	request.getSession().setAttribute(EJDAConstant.SESSION_NAME.PAGE,"");	
 %>
 <jsp:include page="header.jsp" flush="true" />
-<jsp:include page="<%=screenName%>" flush="true" />
+<jsp:include page="<%=screenName %>" flush="true" />
 
 <script  type="text/javascript">
 	var MenuBar1 = new Spry.Widget.MenuBar("MenuBar1", {imgDown:"SpryAssets/SpryMenuBarDownHover.gif", 
 		imgRight:"SpryAssets/SpryMenuBarRightHover.gif"});
 </script>
  		<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
-		   
+		    
 		     <tr bgcolor="#003399">
                  	  	<td height="1"></td>
                 </tr>
