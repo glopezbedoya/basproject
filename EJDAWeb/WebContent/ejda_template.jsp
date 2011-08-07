@@ -40,7 +40,7 @@ function confirmExit(){
 		screenName = (String)request.getParameter("screenName");
 	}
 	log.debug("screenName = "+screenName);*/
-		
+	request.getSession().removeAttribute(EJDAConstant.SESSION_NAME.PAGE);	
 
 %>
 <jsp:include page="header.jsp" flush="true" />
