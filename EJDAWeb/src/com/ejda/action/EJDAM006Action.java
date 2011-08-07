@@ -22,7 +22,6 @@ import com.tcd.ejda.model.ValueListModel;
 import org.apache.log4j.Logger;
 
 import com.ejda.constant.EJDAConstant;
-import com.ejda.rsa.PwdEncryption;
 import com.ejda.sessionBean.UserBean;
 import com.ejda.util.DisplayFormatUtil;
 import com.ejda.util.EJDAUtil;
