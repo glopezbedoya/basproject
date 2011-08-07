@@ -12,7 +12,9 @@ import com.tcd.ejda.dao.RoleDAO;
 import com.tcd.ejda.dao.RoleDAOImpl;
 import com.tcd.ejda.dao.UserDAO;
 import com.tcd.ejda.dao.UserDAOImpl;
+import com.tcd.ejda.md5.EncryptMD5;
 import com.tcd.ejda.model.RoleModel;
+import com.tcd.ejda.model.TransactionLogModel;
 import com.tcd.ejda.model.UserRoleModel;
 import com.tcd.ejda.model.UsrModel;
 import com.tcd.ejda.model.ValueListModel;
@@ -20,10 +22,15 @@ import com.tcd.ejda.model.ValueListModel;
 import org.apache.log4j.Logger;
 
 import com.ejda.constant.EJDAConstant;
+import com.ejda.rsa.PwdEncryption;
 import com.ejda.sessionBean.UserBean;
 import com.ejda.util.DisplayFormatUtil;
-
+import com.ejda.util.EJDAUtil;
 public class EJDAM006Action extends AbstractAction {
+	
+	
+	/*
+	 * User Action*/
 	private Logger log = Logger.getLogger(EJDAM006Action.class);
 	private UserBean userBean;
 	
@@ -46,6 +53,7 @@ public class EJDAM006Action extends AbstractAction {
 
 	@Override
 	public void init() {
+		getRequest().getSession().removeAttribute("returnVal");
 		userBean = getUserBean();
 		userBean.setUsrMSP(new UsrModel());
 		userBean.setUsrVt(new Vector());		
@@ -80,11 +88,23 @@ public class EJDAM006Action extends AbstractAction {
 		log.debug("[Start User Action : do Delete ]");
 		boolean result = false; 
 		String jda_id = getRequest().getParameter("ejda_id");
-	
+		String ipAddress = getRequest().getRemoteAddr();
+		String iuser = (String) getRequest().getSession().getAttribute("iuser");
+		if (null==iuser || "".equals(iuser)){
+			iuser = "system";
+		}
 		log.debug("role id >>> " +  jda_id);
 		UserDAO user = new UserDAOImpl();
 		try {
 			if (user.deleteUser(jda_id)){
+				TransactionLogModel transactionLogModel = new TransactionLogModel() ;
+				EJDAUtil ejda = new EJDAUtil();
+				transactionLogModel.setMenuId("M006");
+				transactionLogModel.setTranAction("DEL");
+				transactionLogModel.setDescription("Delete User");
+				transactionLogModel.setIpAddress(ipAddress);
+				transactionLogModel.setTranBy(iuser);
+				ejda.insertTranLog(transactionLogModel);
 				result = true;
 			}
 		} catch (SQLException e) {
@@ -170,23 +190,10 @@ public class EJDAM006Action extends AbstractAction {
 		// TODO Auto-generated method stub
 		log.debug("[Start : do search ]");
 		boolean result = false;
-		String user_name = getRequest().getParameter("rolename");
-		String iv_user = getRequest().getParameter("rolename");
-		String first_name = getRequest().getParameter("rolename");
-		String last_name = getRequest().getParameter("rolename");
-		String locked = getRequest().getParameter("rolename");
+
+		String locked = getRequest().getParameter("rdoStatus");
+		log.debug("locked >> " +locked);
 		Vector vc = new Vector();
-		
-//		UserDAO usr = new UserDAOImpl();
-//		try {
-//			vc = usr.selectUserforUpdate(iv_user, user_name, first_name,last_name, locked);
-//			log.debug("returnVC >>> " + vc);
-//			getRequest().getSession().setAttribute("returnVC", vc);
-//			result = true;
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		
 		userBean = getUserBean();
 		setCriteriaParameter();
@@ -233,6 +240,10 @@ public class EJDAM006Action extends AbstractAction {
 		String department =getRequest().getParameter("department");
 		String ipAddress = getRequest().getRemoteAddr();
 		String user_status[] = getRequest().getParameterValues("user_status");
+		String iuser = (String) getRequest().getSession().getAttribute("iuser");
+		if (null==iuser || "".equals(iuser)){
+			iuser = "system";
+		}
 		String tempUser="";
 		log.debug("user action result iv user >> " +iv_user);
 		log.debug("user action result usrname >> " +usrname);
@@ -243,13 +254,16 @@ public class EJDAM006Action extends AbstractAction {
 		log.debug("user action result eff_date >> " +eff_date);
 		log.debug("user action result exp_date >> " +exp_date);
 		log.debug("user action result department >> " +department);
-		if (null==user_status){
+		if (!"".equals(conpwd)){
+			EncryptMD5 en = new EncryptMD5();
+			conpwd = en.getHash(pwd);
+		}
+//		PwdEncryption pwdEncrypt = new PwdEncryption();
+//		conpwd = pwdEncrypt.PwdEncryption(conpwd);
+		log.debug("EncryptMD5 >>> " + conpwd);
+		if (null!=user_status){
 			log.debug("[ != null >> ]");
 			tempUser = "N";
-		}else{
-			for(int i=0;i<user_status.length;i++){
-				tempUser = user_status[i];
-			}
 		}
 		log.debug("user_status >>> " + tempUser);
 
@@ -258,14 +272,14 @@ public class EJDAM006Action extends AbstractAction {
 		um.setJda_id(ejda_id);
 		um.setIV_USER(iv_user);
 		um.setUSERNAME(usrname);
-		um.setPWD(pwd);
+		um.setPWD(conpwd);
 		um.setCONPWD(conpwd);
 		um.setLASTNAME(lastname);
 		um.setFIRSTNAME(firstname);
 		um.setEFFECTIVE_DATE(Date.valueOf(DisplayFormatUtil.DateFormat(eff_date)));
 		um.setEXPIRY_DATE(Date.valueOf(DisplayFormatUtil.DateFormat(exp_date)));
-		um.setCreate_by("veena");
-		um.setUpdate_by("veena");
+		um.setCreate_by(iuser);
+		um.setUpdate_by(iuser);
 		um.setDEPARTMENT(department);
 		um.setUSER_IP(ipAddress);
 		um.setUSER_STATUS(tempUser);
@@ -280,8 +294,8 @@ public class EJDAM006Action extends AbstractAction {
 				urm.setJda_id(ejda_id);
 				urm.setIv_user(iv_user);
 				urm.setRole_id(check[i]);
-				urm.setCreate_by("veena");
-				urm.setUpdate_by("veena");
+				urm.setCreate_by(iuser);
+				urm.setUpdate_by(iuser);
 				vc.add(urm);
 				log.debug("checked box : " + check[i]);
 			}
@@ -293,7 +307,16 @@ public class EJDAM006Action extends AbstractAction {
 				getRequest().getSession().removeAttribute("rolename");
 				getRequest().getSession().removeAttribute("userModel");
 				getRequest().getSession().removeAttribute("returnVal");
-				result = true;
+				TransactionLogModel transactionLogModel = new TransactionLogModel() ;
+				EJDAUtil ejda = new EJDAUtil();
+				transactionLogModel.setMenuId("M006");
+				transactionLogModel.setTranAction("UPDATE");
+				transactionLogModel.setDescription("Update User");
+				transactionLogModel.setIpAddress(ipAddress);
+				transactionLogModel.setTranBy(iuser);
+				ejda.insertTranLog(transactionLogModel);
+				result = doSearch();
+				//result = true;
 				log.debug("success");
 			}
 		} catch (SQLException e) {
@@ -321,7 +344,14 @@ public class EJDAM006Action extends AbstractAction {
 		String exp_date = getRequest().getParameter("exp_date");
 		String department =getRequest().getParameter("department");
 		String ipAddress = getRequest().getRemoteAddr();
+		String iuser = (String) getRequest().getSession().getAttribute("iuser");
 		
+		EncryptMD5 en = new EncryptMD5();
+		conpwd = en.getHash(conpwd);
+		
+		if (null==iuser || "".equals(iuser)){
+			iuser = "system";
+		}
 		log.debug("user action result iv user >> " +iv_user);
 		log.debug("user action result usrname >> " +usrname);
 		log.debug("user action result pwd >> " +pwd);
@@ -337,14 +367,14 @@ public class EJDAM006Action extends AbstractAction {
 		log.debug("[ Date : expiry date ]" + DisplayFormatUtil.DateFormat(exp_date) +":"+Date.valueOf(DisplayFormatUtil.DateFormat(exp_date)));
 		um.setIV_USER(iv_user);
 		um.setUSERNAME(usrname);
-		um.setPWD(pwd);
+		um.setPWD(conpwd);
 		um.setCONPWD(conpwd);
 		um.setLASTNAME(lastname);
 		um.setFIRSTNAME(firstname);
 		um.setEFFECTIVE_DATE(Date.valueOf(DisplayFormatUtil.DateFormat(eff_date)));
 		um.setEXPIRY_DATE(Date.valueOf(DisplayFormatUtil.DateFormat(exp_date)));
-		um.setCreate_by("veena");
-		um.setUpdate_by("veena");
+		um.setCreate_by(iuser);
+		um.setUpdate_by(iuser);
 		um.setDEPARTMENT(department);
 		um.setUSER_IP(ipAddress);
 		
@@ -359,8 +389,8 @@ public class EJDAM006Action extends AbstractAction {
 				
 				urm.setIv_user(iv_user);
 				urm.setRole_id(check[i]);
-				urm.setCreate_by("veena");
-				urm.setUpdate_by("veena");
+				urm.setCreate_by(iuser);
+				urm.setUpdate_by(iuser);
 				vc.add(urm);
 				log.debug("checked box : " + check[i]);
 			}
@@ -368,7 +398,15 @@ public class EJDAM006Action extends AbstractAction {
 		UserDAO userDAO = new UserDAOImpl();
 		try {
 			if (userDAO.addNewUser(um, vc)){
-				result = true;
+				TransactionLogModel transactionLogModel = new TransactionLogModel() ;
+				EJDAUtil ejda = new EJDAUtil();
+				transactionLogModel.setMenuId("M006");
+				transactionLogModel.setTranAction("ADD");
+				transactionLogModel.setDescription("Add User");
+				transactionLogModel.setIpAddress(ipAddress);
+				transactionLogModel.setTranBy(iuser);
+				ejda.insertTranLog(transactionLogModel);
+				result = doSearch();
 				log.debug("success");
 			}
 		} catch (SQLException e) {
@@ -468,19 +506,64 @@ public class EJDAM006Action extends AbstractAction {
 	
 	private void setCriteriaParameter(){
 		UsrModel usrMSP = new UsrModel();
+		usrMSP.setIV_USER(getRequest().getParameter("txtIVUser"));
+		usrMSP.setFIRSTNAME(getRequest().getParameter("txtFirstName"));
+		usrMSP.setLASTNAME(getRequest().getParameter("txtLastName"));
+		usrMSP.setUSER_STATUS(getRequest().getParameter("rdoStatus"));
 		getUserBean().setUsrMSP(usrMSP);
 	}
+	
 	private Vector getValueListParameters() {
 		Vector parameters = new Vector();
-		
+		UsrModel usrCri = getUserBean().getUsrMSP();
+		log.debug("getValueListParameters >> " + usrCri.getUSER_STATUS());
 		log.info("parameters.size() = "+parameters.size());
+		if(!"".equals(usrCri.getIV_USER()) || !"".equals(usrCri.getFIRSTNAME()) || !"".equals(usrCri.getLASTNAME()) || !"".equals(usrCri.getUSER_STATUS())){
+			if(!"".equals(usrCri.getIV_USER())) {
+				log.debug("User name = "+usrCri.getIV_USER());
+				parameters.add("%"+usrCri.getIV_USER().toUpperCase()+"%");
+			}
+			if(!"".equals(usrCri.getFIRSTNAME())) {
+				log.debug("User name = "+usrCri.getFIRSTNAME());
+				parameters.add("%"+usrCri.getFIRSTNAME().toUpperCase()+"%");
+			}
+			if(!"".equals(usrCri.getLASTNAME())) {
+				log.debug("User name = "+usrCri.getLASTNAME());
+				parameters.add("%"+usrCri.getLASTNAME().toUpperCase()+"%");
+			}
+			if(!"".equals(usrCri.getUSER_STATUS())) {
+				log.debug("getUSER_STATUS = "+usrCri.getUSER_STATUS());
+				if (!"ALL".equals(usrCri.getUSER_STATUS())){
+					parameters.add("'L'");
+				}
+			}
+		}
 		return parameters;
 	}
 	private String setSQL(UsrModel usrM){
 		StringBuffer sql = new StringBuffer();
+		log.debug("setSQL >>> "+usrM.getUSER_STATUS());
 		try{
 			sql.append(EJDAConstant.SQL.USER__SCREEN_SQL);
-			
+			if(!"".equals(usrM.getIV_USER()) || !"".equals(usrM.getFIRSTNAME()) || !"".equals(usrM.getLASTNAME()) || !"".equals(usrM.getUSER_STATUS())){
+				sql.append(" WHERE ");
+				if(!"".equals(usrM.getIV_USER()))
+					sql.append(" UPPER(IV_USER) like ? AND ");
+				if(!"".equals(usrM.getFIRSTNAME()))
+					sql.append(" UPPER(FIRST_NAME) like ? AND ");
+				if(!"".equals(usrM.getLASTNAME()))
+					sql.append(" UPPER(LAST_NAME) like ? AND ");
+				if(!"".equals(usrM.getUSER_STATUS())){
+					if (!"ALL".equals(usrM.getUSER_STATUS())){
+						if ("LOCK".equals(usrM.getUSER_STATUS()))
+							sql.append(" USER_STATUS = ? AND ");
+						if ("UNLOCK".equals(usrM.getUSER_STATUS()))
+							sql.append(" USER_STATUS <> ? AND ");
+					}
+					
+				}
+					
+		}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -488,5 +571,14 @@ public class EJDAM006Action extends AbstractAction {
 		sql = removeWasteSQL(sql);
 		return sql.toString();
 	}
-	
+//	public TransactionLogModel tranLogModel(String doType){
+//		TransactionLogModel TransactionLogModel = null;
+//		EJDAUtil ejda = new EJDAUtil();
+//		TransactionLogModel.setMenuId("M006");
+//		TransactionLogModel.setTranAction(doType);
+//		TransactionLogModel.setDescription(doType);
+//		TransactionLogModel.setIpAddress(ipAddress);
+//		ejda.insertTranLog(TransactionLogModel);
+//		return TransactionLogModel;
+//	}
 }

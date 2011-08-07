@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import com.ejda.constant.EJDAConstant;
 import com.ejda.sessionBean.TransactionLogBean;
+import com.ejda.util.EJDAUtil;
 import com.tcd.ejda.dao.TransactionLogDAO;
 import com.tcd.ejda.dao.TransactionLogDAOImpl;
 import com.tcd.ejda.model.TransactionLogModel;
@@ -28,6 +29,7 @@ public class EJDAM008Action extends AbstractAction {
 	public void init() {
 		// TODO Auto-generated method stub
 		log.debug("*********** init ***********");
+		
 		tranLogBean = getTranLogBean();
 		tranLogBean.setTranLogVt(new Vector<TransactionLogModel>());
 		tranLogBean.setTranLogModelSP(new TransactionLogModel());
@@ -164,11 +166,24 @@ public class EJDAM008Action extends AbstractAction {
 	public boolean doDelete(){
 		log.debug("********** doDelete **********");
 		boolean result = false;
+		String ipAddress = getRequest().getRemoteAddr();
+		String iuser = (String) getRequest().getSession().getAttribute("iuser");
+		if (null==iuser || "".equals(iuser)){
+			iuser = "system";
+		}
 		TransactionLogModel tranLogCri = new TransactionLogModel();
 		String[] deleteTranId = (String[])getRequest().getParameterValues("checkBox");
 		try{
 			TransactionLogDAO dao = new TransactionLogDAOImpl();
 			result = dao.deleteTransactionLog(deleteTranId);
+			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
+			EJDAUtil ejda = new EJDAUtil();
+			transactionLogModel.setMenuId("M008");
+			transactionLogModel.setTranAction("DEL");
+			transactionLogModel.setDescription("Delete Transaction");
+			transactionLogModel.setIpAddress(ipAddress);
+			transactionLogModel.setTranBy(iuser);
+			ejda.insertTranLog(transactionLogModel);
 			result = doSearch();
 			
 			log.debug("result = "+result);
