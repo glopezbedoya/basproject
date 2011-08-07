@@ -5,7 +5,7 @@ import java.util.Vector;
 public class ValueListModel {
 
 	private int atPage = 1;
-    private int itemsPerPage = 10;
+    private int itemsPerPage = 20;
     private String SQL = "";
     private boolean nextPage = false;
     private int count = 0;
