@@ -112,7 +112,7 @@ public class TransactionLogDAOImpl implements TransactionLogDAO {
 			rs = ps.executeQuery();
 			while(rs.next()){
 				TransactionLogModel tranLogM = new TransactionLogModel();
-				tranLogM.setTranId(rs.getInt("TRANS_ID"));
+				tranLogM.setTranId(rs.getString("TRANS_ID"));
 				tranLogM.setTranAction(rs.getString("TRANS_ACTION"));
 				tranLogM.setDescription(rs.getString("DESCRIPTION"));
 				tranLogM.setIpAddress(rs.getString("IP_ADDRESS"));
@@ -177,7 +177,7 @@ public class TransactionLogDAOImpl implements TransactionLogDAO {
 			ps = conn.prepareStatement(sql.toString());
 			int parameterIndex = 1;
 			for(int i=0;i<tranId.length;i++){
-				log.debug("tranId = "+tranId);
+				log.debug("tranId"+i+" = "+tranId[i]);
 				ps.setString(parameterIndex++, tranId[i]);
 			}
 			int deleteRow = ps.executeUpdate();
