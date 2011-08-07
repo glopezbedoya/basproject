@@ -17,7 +17,7 @@ public class LogoutAction extends AbstractAction {
 	public void init() {
 		// TODO Auto-generated method stub
 		log.debug("*********** init ***********");
-		log.debug("[Start : Logout Action]");
+		log.debug("[Start : Logout Action ]");
 		log.debug("i user >> " + getRequest().getSession().getAttribute("iuser"));
 		String iuser = (String)getRequest().getSession().getAttribute("iuser");
 		UserDAO dao = new UserDAOImpl();
