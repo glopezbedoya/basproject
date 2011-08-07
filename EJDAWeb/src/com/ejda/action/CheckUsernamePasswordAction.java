@@ -1,5 +1,6 @@
 package com.ejda.action;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Vector;
 
@@ -7,10 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
+import com.ejda.rsa.PwdEncryption;
+import com.ejda.rsa.RSAEncryptDecrypt;
 import com.tcd.ejda.dao.RoleMenuDAO;
 import com.tcd.ejda.dao.RoleMenuDAOImpl;
 import com.tcd.ejda.dao.UserDAO;
 import com.tcd.ejda.dao.UserDAOImpl;
+import com.tcd.ejda.md5.EncryptMD5;
 import com.tcd.ejda.model.RoleMenuModel;
 
 public class CheckUsernamePasswordAction extends AbstractAction {
@@ -56,11 +60,15 @@ public class CheckUsernamePasswordAction extends AbstractAction {
 		String pwd = getRequest().getParameter("pwd");
 		log.debug(" get Parameter : " + username + ":" + pwd);
 		
+		EncryptMD5 en = new EncryptMD5();
+		pwd = en.getHash(pwd);
+		
 		UserDAO usr = new UserDAOImpl();
 		String resultCheckUser = usr.checkUsernamePassword("", username, pwd);
-		log.debug("result >>> " + result);
-		resultCheckUser = "N";
+		log.debug("result >>> " + resultCheckUser);
+		//resultCheckUser = "N";
 		if (resultCheckUser.equals("N")){
+			
 			RoleMenuDAO dao = new RoleMenuDAOImpl();
 			try {
 				vc = dao.getRoleMenu(username);
@@ -73,13 +81,12 @@ public class CheckUsernamePasswordAction extends AbstractAction {
 			}
 			
 			result = true;
-//			request.getSession().setAttribute(EJDAConstant.SESSION_NAME.PAGE, "user_screen.jsp");
-//			request.getSession().setAttribute(EJDAConstant.SESSION_NAME.PAGE, "role_menu.jsp");
-//			response.sendRedirect(EJDAConstant.PAGE.INDEX_PAGE);
+
 		}else{
 			log.debug("else >> " + result);
+			getRequest().getSession().setAttribute("messages",resultCheckUser);
 			result = false;
-//			request.setAttribute("messages",result);
+			
 //			response.sendRedirect("index.jsp");
 		}
 		return result;
