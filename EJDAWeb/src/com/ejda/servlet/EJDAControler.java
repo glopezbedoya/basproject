@@ -59,6 +59,8 @@ public class EJDAControler extends HttpServlet {
 //						((AbstractAction) o).clearSessionNotUsed();
 					log.debug("Success");
 					request.getSession().setAttribute(EJDAConstant.SESSION_NAME.PAGE, screenName);
+					response.sendRedirect(EJDAConstant.PAGE.INDEX2_PAGE);
+				}else{
 					response.sendRedirect(EJDAConstant.PAGE.INDEX_PAGE);
 				}
 			}else{
@@ -71,7 +73,7 @@ public class EJDAControler extends HttpServlet {
 				if(ejdaAction.equalsIgnoreCase("Logout")){
 					response.sendRedirect(screenName);
 				}else{
-					response.sendRedirect(EJDAConstant.PAGE.INDEX_PAGE);
+					response.sendRedirect(EJDAConstant.PAGE.INDEX2_PAGE);
 				}
 			}				
 			
