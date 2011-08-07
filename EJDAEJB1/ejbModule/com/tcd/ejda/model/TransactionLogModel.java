@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class TransactionLogModel {
 	
-	private int tranId;
+	private String tranId;
 	private String tranAction;
 	private String description;
 	private String ipAddress;
@@ -18,10 +18,11 @@ public class TransactionLogModel {
 	private String menuId;
 	private String userName;
 	
-	public int getTranId() {
+	
+	public String getTranId() {
 		return tranId;
 	}
-	public void setTranId(int tranId) {
+	public void setTranId(String tranId) {
 		this.tranId = tranId;
 	}
 	public String getTranAction() {

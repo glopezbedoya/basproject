@@ -217,7 +217,7 @@ public class ValueListDAOImpl implements ValueListDAO {
 			tranLog.setFirstName(rs.getString("FIRST_NAME"));
 			tranLog.setLastName(rs.getString("LAST_NAME"));
 			tranLog.setDepartment(rs.getString("DEPARTMENT"));
-			tranLog.setTranId(rs.getInt("TRANS_ID"));
+			tranLog.setTranId(rs.getString("TRANS_ID"));
 		} catch (SQLException e) {
 			log.error("Mapping Error : SQLException ",e);
 		} catch (Exception e){
