@@ -31,8 +31,8 @@ public class UserDAOImpl implements UserDAO {
 		
 		String result="STATUS";
 		boolean isSuccess=false;
-		
-		sqlusr.append("SELECT  IV_USER, USER_NAME, USER_COUNT FROM JDA_USER WHERE UPPER(USER_NAME) = ? ");
+		String status="";
+		sqlusr.append("SELECT  IV_USER, USER_NAME, USER_COUNT, USER_STATUS FROM JDA_USER WHERE UPPER(USER_NAME) = ? ");
 		try {
 			log.debug("sqlusr >> " + sqlusr.toString());
 			ps = conn.prepareStatement(sqlusr.toString());
@@ -40,12 +40,19 @@ public class UserDAOImpl implements UserDAO {
 			
 			rs = ps.executeQuery();
 			if (rs.next()){
-				if (rs.getInt("USER_COUNT") >= 3){
-					isSuccess = lockedUser(rs.getString("IV_USER"),rs.getString("USER_NAME"), conn);
-				}else{
-					result = checkPassword(rs.getString("USER_NAME"), pwd, conn);
-				}
 				
+				if (!"".equals(rs.getString("USER_STATUS")) && !"L".equals(rs.getString("USER_STATUS"))){
+					
+				
+					if (rs.getInt("USER_COUNT") >= 3){
+						isSuccess = lockedUser(rs.getString("IV_USER"),rs.getString("USER_NAME"), conn);
+						result = "L";
+					}else{
+						result = checkPassword(rs.getString("USER_NAME"), pwd, conn);
+					}
+				}else{
+					result = rs.getString("USER_STATUS");
+				}
 			}
 			
 			log.debug("[checkUsernamePassword : result ] "+result);
@@ -435,10 +442,16 @@ public class UserDAOImpl implements UserDAO {
 		try {
 			StringBuffer sql = new StringBuffer();
 			
-			sql.append("UPDATE JDA_USER SET IV_USER = ?, USER_NAME = ?, PASSWORD = ?, FIRST_NAME = ?, LAST_NAME = ?, ");
-			sql.append("DEPARTMENT = ?, USER_STATUS = ?, USER_IP = ?, USER_COUNT = 0, EFFECTIVE_DATE = ?, EXPIRY_DATE = ?, ");
-			sql.append("UPDATE_DATE = SYSDATE, UPDATE_BY = ? WHERE JDA_ID = ? ");
-					
+			sql.append("UPDATE JDA_USER SET IV_USER = ?, USER_NAME = ?, FIRST_NAME = ?, LAST_NAME = ?, ");
+			sql.append("DEPARTMENT = ?, USER_IP = ?, USER_COUNT = 0, EFFECTIVE_DATE = ?, EXPIRY_DATE = ?, ");
+			sql.append("UPDATE_DATE = SYSDATE, UPDATE_BY = ? ");
+			if (null!=usrmodel.getPWD() && !"".equals(usrmodel.getPWD())){
+				sql.append(", PASSWORD = ? ");
+			}
+			if (null!=usrmodel.getUSER_STATUS() && !"".equals(usrmodel.getUSER_STATUS())){
+				sql.append(", USER_STATUS = ? ");
+			}
+			sql.append(" WHERE JDA_ID = ? ");
 			log.debug("sql addNewUser 1>>> " + sql);
 			ps = conn.prepareStatement(sql.toString());
 			
@@ -446,15 +459,19 @@ public class UserDAOImpl implements UserDAO {
 			
 			ps.setString(seq++, usrmodel.getIV_USER());
 			ps.setString(seq++, usrmodel.getUSERNAME());
-			ps.setString(seq++, usrmodel.getPWD());
 			ps.setString(seq++, usrmodel.getFIRSTNAME());
 			ps.setString(seq++, usrmodel.getLASTNAME());
 			ps.setString(seq++, usrmodel.getDEPARTMENT());
-			ps.setString(seq++, usrmodel.getUSER_STATUS());
 			ps.setString(seq++, usrmodel.getUSER_IP());
 			ps.setDate(seq++, new Date(usrmodel.getEFFECTIVE_DATE().getTime()));
 			ps.setDate(seq++, new Date(usrmodel.getEXPIRY_DATE().getTime()));
 			ps.setString(seq++, usrmodel.getUpdate_by());
+			if (null!=usrmodel.getPWD() && !"".equals(usrmodel.getPWD())){
+				ps.setString(seq++, usrmodel.getPWD());
+			}
+			if (null!=usrmodel.getUSER_STATUS() && !"".equals(usrmodel.getUSER_STATUS())){
+				ps.setString(seq++, usrmodel.getUSER_STATUS());
+			}
 			ps.setString(seq++, usrmodel.getJda_id());
 			
 			int rsInt = ps.executeUpdate();
