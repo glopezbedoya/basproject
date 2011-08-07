@@ -11,6 +11,12 @@ public class EJDAUtil {
 	
 	public void insertTranLog(TransactionLogModel tranLogM){
 		try{
+			log.debug("" +tranLogM.getMenuId());
+			log.debug(""+tranLogM.getTranAction());
+			log.debug(""+tranLogM.getDescription());
+			log.debug(""+tranLogM.getIpAddress());
+			log.debug(""+tranLogM.getTranBy());
+			
 			TransactionLogDAO dao = new TransactionLogDAOImpl();
 			dao.insertTranLog(tranLogM);
 		}catch (Exception e) {
