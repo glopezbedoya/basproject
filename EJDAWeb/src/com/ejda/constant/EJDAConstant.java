@@ -7,7 +7,8 @@ public class EJDAConstant {
 	}
 	
 	public interface PAGE {
-		public final String INDEX_PAGE = "index2.jsp";
+		public final String INDEX_PAGE = "index.jsp";
+		public final String INDEX2_PAGE = "index2.jsp";
 	}
 	
 	public interface SQL{
