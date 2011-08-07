@@ -24,22 +24,38 @@ public class TransactionLogDAOImpl implements TransactionLogDAO {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		String trans_id = "";
 		Vector searchMenu = new Vector();
 		
 		conn = db.getConnection();
+		StringBuffer sqlSeq = new StringBuffer();
+		sqlSeq.append("select TRAN_ID_SEQ.nextval as SEQ from dual ");
+		
+		log.debug("sql insert>>>>>>>>>>>>  " + sqlSeq.toString());
+		ps = conn.prepareStatement(sqlSeq.toString());
+		rs = ps.executeQuery();
+		while (rs.next()) {
+			
+			trans_id = "T" + rs.getString("SEQ");
+
+		}
+		rs.close();
+		
 		StringBuffer sqlupd = new StringBuffer();
 //		sqlupd.append("INSERT INTO EJDA_MENU()")
 		StringBuffer sql = new StringBuffer();
-		sql.append("insert into JDA_TRANSACTION_LOG (TRANS_ID,TRANS_MENU_ID, TRANS_ACTION, DESCRIPTION, IP_ADDRESS, TRANS_DATE, TRANS_BY) values ((select TRAN_ID_SEQ.nextval as SEQ from dual ), ?, ?, ?, ?, ?, ?)");
+//		sql.append("insert into JDA_TRANSACTION_LOG (TRANS_ID,TRANS_MENU_ID, TRANS_ACTION, DESCRIPTION, IP_ADDRESS, TRANS_DATE, TRANS_BY) values ((select TRAN_ID_SEQ.nextval as SEQ from dual ), ?, ?, ?, ?, ?, ?)");
+		sql.append("insert into JDA_TRANSACTION_LOG (TRANS_ID,TRANS_MENU_ID, TRANS_ACTION, DESCRIPTION, IP_ADDRESS, TRANS_DATE, TRANS_BY) values (?, ?, ?, ?, ?, SYSDATE, ?)");
 		log.debug("sql >> " + sql.toString());
 		try {
 			ps = conn.prepareStatement(sql.toString());
 			int parameterIndex = 1;
+			ps.setString(parameterIndex++, trans_id);
 			ps.setString(parameterIndex++, tranlog.getMenuId());
 			ps.setString(parameterIndex++, tranlog.getTranAction());
 			ps.setString(parameterIndex++, tranlog.getDescription());
 			ps.setString(parameterIndex++, tranlog.getIpAddress());
-			ps.setDate(parameterIndex++, new Date(tranlog.getTranDate().getTime()));
+//			ps.setDate(parameterIndex++, new Date(tranlog.getTranDate().getTime()));
 			ps.setString(parameterIndex++, tranlog.getTranBy());
 			rs = ps.executeQuery();
 		
@@ -47,6 +63,7 @@ public class TransactionLogDAOImpl implements TransactionLogDAO {
 		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			log.error("insertTranLog",e);
 			e.printStackTrace();
 		}finally{
 			try {
