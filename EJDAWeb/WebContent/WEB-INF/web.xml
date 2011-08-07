@@ -39,4 +39,14 @@
     <servlet-name>EJDAControler</servlet-name>
     <url-pattern>/EJDAControler</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AjaxUserServlet</display-name>
+    <servlet-name>AjaxUserServlet</servlet-name>
+    <servlet-class>com.ejda.servlet.AjaxUserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AjaxUserServlet</servlet-name>
+    <url-pattern>/AjaxUserServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
