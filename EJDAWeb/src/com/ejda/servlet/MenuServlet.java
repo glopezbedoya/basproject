@@ -51,11 +51,12 @@ public class MenuServlet extends HttpServlet {
 			
 				String div = "<ul id=\"MenuBar1\" class=\"MenuBarHorizontal\">";	
 					if(vc != null && vc.size()>0){	
-						div += "<li><a href=\"./index2.jsp\">HOME</a>";
+						div += "<li><a href=\"./index2.jsp\">HOME</a></li>";
 						for(int j=0;j<vc.size();j++){
 							MenuModel model = (MenuModel)vc.get(j);
 							if (count!=0 && (model.getMenu_status().equals("A") || model.getMenu_status().equals("C"))){
 								div += "</ul></li>";
+								count=0;
 							}
 							if (null!=model.getMenu_status() && model.getMenu_status().equals("A")){
 								
