@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import com.tcd.ejda.connection.JDBCConnection;
+import com.tcd.ejda.connection.JDBCServiceLocator;
 import com.tcd.ejda.model.MenuModel;
 import com.tcd.ejda.model.RoleFunctionModel;
 import com.tcd.ejda.model.RoleModel;
@@ -16,7 +17,7 @@ import org.apache.log4j.Logger;
 
 public class RoleDAOImpl implements RoleDAO {
 	private Logger log = Logger.getLogger(RoleDAOImpl.class);
-	JDBCConnection db = new JDBCConnection();
+	JDBCServiceLocator db = new JDBCServiceLocator();
 	@Override
 	public boolean insertRole(RoleModel roleModel, Vector vc) throws SQLException{
 		// TODO Auto-generated method stub
@@ -27,7 +28,12 @@ public class RoleDAOImpl implements RoleDAO {
 		String role_id = "";
 		String func_role_id = "";
 		
-		conn = db.getConnection();
+		try {
+			conn = db.getConnection();
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		StringBuffer sql = new StringBuffer();
 		StringBuffer sql1 = new StringBuffer();
 		conn.setAutoCommit(false); 
@@ -158,7 +164,12 @@ public class RoleDAOImpl implements RoleDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 				
-		conn = db.getConnection();
+		try {
+			conn = db.getConnection();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		StringBuffer sqlusr = new StringBuffer();
 		
 		
@@ -234,7 +245,12 @@ public class RoleDAOImpl implements RoleDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 				
-		conn = db.getConnection();
+		try {
+			conn = db.getConnection();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		StringBuffer sqlusr = new StringBuffer();
 		conn.setAutoCommit(false);
 		
@@ -306,7 +322,12 @@ public class RoleDAOImpl implements RoleDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 				
-		conn = db.getConnection();
+		try {
+			conn = db.getConnection();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		StringBuffer sql = new StringBuffer();
 		
 		
@@ -372,7 +393,12 @@ public class RoleDAOImpl implements RoleDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 				
-		conn = db.getConnection();
+		try {
+			conn = db.getConnection();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		StringBuffer sql = new StringBuffer();
 		
 		
@@ -445,7 +471,12 @@ public class RoleDAOImpl implements RoleDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
-		conn = db.getConnection();
+		try {
+			conn = db.getConnection();
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		StringBuffer sql = new StringBuffer();
 		StringBuffer sql1 = new StringBuffer();
 		conn.setAutoCommit(false); 
@@ -554,7 +585,12 @@ public class RoleDAOImpl implements RoleDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
-		conn = db.getConnection();
+		try {
+			conn = db.getConnection();
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		StringBuffer sql = new StringBuffer();
 		StringBuffer sql1 = new StringBuffer();
 		StringBuffer sql2 = new StringBuffer();
@@ -642,7 +678,12 @@ public class RoleDAOImpl implements RoleDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 				
-		conn = db.getConnection();
+		try {
+			conn = db.getConnection();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		StringBuffer sqlusr = new StringBuffer();
 		
 		

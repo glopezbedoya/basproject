@@ -10,6 +10,7 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import com.tcd.ejda.connection.JDBCConnection;
+import com.tcd.ejda.connection.JDBCServiceLocator;
 import com.tcd.ejda.model.RoleModel;
 import com.tcd.ejda.model.TransactionLogModel;
 import com.tcd.ejda.model.UsrModel;
@@ -19,7 +20,7 @@ public class ValueListDAOImpl implements ValueListDAO {
 	
 	private Logger log = Logger.getLogger(ValueListDAOImpl.class);
 	
-	JDBCConnection db = new JDBCConnection();
+	JDBCServiceLocator db = new JDBCServiceLocator();
 	
 	public ValueListModel getResult(ValueListModel valueListM) throws SQLException {
 		log.debug("[ getResult ]  : START ValueListDAOImpl");
@@ -35,7 +36,12 @@ public class ValueListDAOImpl implements ValueListDAO {
 				valueListM.setNextPage(true);
 			}
 			valueListM.setCount(this.getCount(valueListM));
-			conn = db.getConnection();
+			try {
+				conn = db.getConnection();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			int beginIndex = (valueListM.getAtPage() - 1) * valueListM.getItemsPerPage();
 			StringBuffer sqlBuffer = new StringBuffer();
 			
@@ -136,7 +142,12 @@ public class ValueListDAOImpl implements ValueListDAO {
 //			} else {
 				newSql = valueListM.getSQL();
 //			}			
-				conn = db.getConnection();
+				try {
+					conn = db.getConnection();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			StringBuffer sqlBuffer = new StringBuffer();
 			sqlBuffer.append("SELECT COUNT(*) AS COUNT FROM ( ");
 			sqlBuffer.append(newSql);
