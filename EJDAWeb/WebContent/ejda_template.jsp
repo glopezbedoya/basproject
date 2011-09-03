@@ -9,6 +9,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>eJDA Role Menu</title>
 	<link href="css/styles.css" rel="stylesheet" type="text/css" />
+	<link href="css/jquery.modaldialog.css" rel="stylesheet" type="text/css" />
 	<script src="SpryAssets/SpryMenuBar.js" type="text/javascript"></script>
 	<link href="SpryAssets/SpryMenuBarHorizontal.css" rel="stylesheet" type="text/css" />
 	<script language="javascript" src="js/jquery-1.6.2.min.js" type="text/javascript" ></script>
@@ -16,6 +17,9 @@
 	<script language="javascript" src="js/DateFormat.js"></script>
 	<script language="javascript" src="js/popcalendar.js"></script>
 	<script language="javascript" src="js/strongPassword.js"></script>
+	<script language="javascript" src="js/jquery.modaldialog.js"></script>
+	<script language="javascript" src="js/openDialog.js"></script>
+	<script language="javascript" src="js/general.js"></script>
 </head>
 <script>
 window.onbeforeunload = confirmExit;
