@@ -113,20 +113,6 @@
 			
 			
 			
-			/*String strLastPage = "";
-			if (lastPage > 1) {
-				if (lastPage == valueListM.getAtPage()){
-					strLastPage = "<strong><font class=\"text\">"+Integer.toString(lastPage)+"</font></strong>";
-				} else {
-					strLastPage = "<a href=\"#\" onclick =\"changePageAndSize('"+Integer.toString(lastPage)+"')\"><font class=\"text\">"+Integer.toString(lastPage)+"</font></a>";
-				}	
-			} else {
-				strLastPage	 = "";	
-			}*/
-			
-			//TODO Pageing length
-			//int lengthPage = 5; 
-			//int lengthPage = Integer.parseInt(PropsUtil.get("limit.page.pagingsize.eaf").toString());
 			String strScript = "";
 			String strScriptBack = "";	
 			String strFirst =  "<a href=\"#\" onclick =\"changePageAndSize('1')\"><font class=\"text\">First</font></a>";
