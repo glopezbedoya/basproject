@@ -52,7 +52,8 @@ public class EJDAM006Action extends AbstractAction {
 
 	@Override
 	public void init() {
-		getRequest().getSession().removeAttribute("returnVal");
+		log.debug("***[ Start : User action ]***");
+		getRequest().getSession().setAttribute("returnVal", "");
 		userBean = getUserBean();
 		userBean.setUsrMSP(new UsrModel());
 		userBean.setUsrVt(new Vector());		
@@ -104,7 +105,8 @@ public class EJDAM006Action extends AbstractAction {
 				transactionLogModel.setIpAddress(ipAddress);
 				transactionLogModel.setTranBy(iuser);
 				ejda.insertTranLog(transactionLogModel);
-				result = true;
+				getRequest().getSession().setAttribute("responseMessage", "Delete User Successful.");
+				result = doSearch();
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -189,7 +191,7 @@ public class EJDAM006Action extends AbstractAction {
 		// TODO Auto-generated method stub
 		log.debug("[Start : do search ]");
 		boolean result = false;
-
+		getRequest().getSession().setAttribute("returnVal", "");
 		String locked = getRequest().getParameter("rdoStatus");
 		log.debug("locked >> " +locked);
 		Vector vc = new Vector();
@@ -314,6 +316,7 @@ public class EJDAM006Action extends AbstractAction {
 				transactionLogModel.setIpAddress(ipAddress);
 				transactionLogModel.setTranBy(iuser);
 				ejda.insertTranLog(transactionLogModel);
+				getRequest().getSession().setAttribute("responseMessage", "Update User Successful.");
 				result = doSearch();
 				//result = true;
 				log.debug("success");
@@ -397,6 +400,10 @@ public class EJDAM006Action extends AbstractAction {
 		UserDAO userDAO = new UserDAOImpl();
 		try {
 			if (userDAO.addNewUser(um, vc)){
+				getRequest().getSession().removeAttribute("UserRole");
+				getRequest().getSession().removeAttribute("rolename");
+				getRequest().getSession().removeAttribute("userModel");
+				getRequest().getSession().removeAttribute("returnVal");
 				TransactionLogModel transactionLogModel = new TransactionLogModel() ;
 				EJDAUtil ejda = new EJDAUtil();
 				transactionLogModel.setMenuId("M006");
@@ -405,6 +412,8 @@ public class EJDAM006Action extends AbstractAction {
 				transactionLogModel.setIpAddress(ipAddress);
 				transactionLogModel.setTranBy(iuser);
 				ejda.insertTranLog(transactionLogModel);
+				//getRequest().getSession().removeAttribute("returnVal");
+				getRequest().getSession().setAttribute("responseMessage", "Insert User Successful.");
 				result = doSearch();
 				log.debug("success");
 			}
