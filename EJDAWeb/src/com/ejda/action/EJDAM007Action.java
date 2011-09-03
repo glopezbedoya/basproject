@@ -107,6 +107,7 @@ public class EJDAM007Action extends AbstractAction {
 				transactionLogModel.setIpAddress(ipAddress);
 				transactionLogModel.setTranBy(iuser);
 				ejda.insertTranLog(transactionLogModel);
+				getRequest().getSession().setAttribute("responseMessage", "Delete Role Successful.");
 				result = doSearch();
 //				result = true;
 			}
@@ -287,6 +288,7 @@ public class EJDAM007Action extends AbstractAction {
 				transactionLogModel.setIpAddress(ipAddress);
 				transactionLogModel.setTranBy(iuser);
 				ejda.insertTranLog(transactionLogModel);
+				getRequest().getSession().setAttribute("responseMessage", "Update Role Successful.");
 				result = doSearch();
 //				result = true;
 			}
@@ -381,6 +383,7 @@ public class EJDAM007Action extends AbstractAction {
 				transactionLogModel.setIpAddress(ipAddress);
 				transactionLogModel.setTranBy(iuser);
 				ejda.insertTranLog(transactionLogModel);
+				getRequest().getSession().setAttribute("responseMessage", "Insert Role Successful.");
 				result = doSearch();
 //				result = true;
 			}

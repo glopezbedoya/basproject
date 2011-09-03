@@ -176,14 +176,14 @@ public class EJDAM008Action extends AbstractAction {
 		try{
 			TransactionLogDAO dao = new TransactionLogDAOImpl();
 			result = dao.deleteTransactionLog(deleteTranId);
-			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
-			EJDAUtil ejda = new EJDAUtil();
-			transactionLogModel.setMenuId("M008");
-			transactionLogModel.setTranAction("DEL");
-			transactionLogModel.setDescription("Delete Transaction");
-			transactionLogModel.setIpAddress(ipAddress);
-			transactionLogModel.setTranBy(iuser);
-			ejda.insertTranLog(transactionLogModel);
+//			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
+//			EJDAUtil ejda = new EJDAUtil();
+//			transactionLogModel.setMenuId("M008");
+//			transactionLogModel.setTranAction("DEL");
+//			transactionLogModel.setDescription("Delete Transaction");
+//			transactionLogModel.setIpAddress(ipAddress);
+//			transactionLogModel.setTranBy(iuser);
+//			ejda.insertTranLog(transactionLogModel);
 			result = doSearch();
 			
 			log.debug("result = "+result);
