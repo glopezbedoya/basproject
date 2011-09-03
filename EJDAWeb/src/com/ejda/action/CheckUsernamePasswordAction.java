@@ -57,7 +57,7 @@ public class CheckUsernamePasswordAction extends AbstractAction {
 		String username = getRequest().getParameter("user");
 		String pwd = getRequest().getParameter("pwd");
 		log.debug(" get Parameter : " + username + ":" + pwd);
-		
+
 		EncryptMD5 en = new EncryptMD5();
 		pwd = en.getHash(pwd);
 		
@@ -72,6 +72,7 @@ public class CheckUsernamePasswordAction extends AbstractAction {
 				vc = dao.getRoleMenu(username);
 				getRequest().getSession().setAttribute("iuser", username);
 				log.debug("getRoleMenu vc >>>> " + vc.size());
+				getRequest().getSession().setAttribute("rolectrl", vc);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				log.debug("getRoleMenu",e);
