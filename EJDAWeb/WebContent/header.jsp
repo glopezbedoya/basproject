@@ -12,8 +12,16 @@
 		System.out.println("Show menu : " + showMenu);
 		
 %>
-  
+
   <body>
+    <script type="text/javascript">
+	function displayResponseMessage(message) {
+		jQuery.modaldialog.success(message,{
+			timeout: 2
+			, showClose: false
+		});
+	}
+	</script>
   	<table align="center" width="100%" border="0" cellspacing="0" cellpadding="0">
 	  <tr>
 	    <table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
