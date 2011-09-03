@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import com.tcd.ejda.connection.JDBCConnection;
+import com.tcd.ejda.connection.JDBCServiceLocator;
 import com.tcd.ejda.model.RoleModel;
 import com.tcd.ejda.model.UserRoleModel;
 import com.tcd.ejda.model.UsrModel;
@@ -16,7 +17,8 @@ import org.apache.log4j.Logger;
 public class UserDAOImpl implements UserDAO {
 	
 
-	JDBCConnection db = new JDBCConnection();
+//	JDBCConnection db = new JDBCConnection();
+	JDBCServiceLocator db = new JDBCServiceLocator();
 	private Logger log = Logger.getLogger(UserDAOImpl.class);
 	@Override
 	public String checkUsernamePassword(String ivUser, String username, String pwd) {
@@ -25,15 +27,21 @@ public class UserDAOImpl implements UserDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		Vector vc = new Vector();
-		
-		conn = db.getConnection();
-		StringBuffer sqlusr = new StringBuffer();
-		
 		String result="STATUS";
 		boolean isSuccess=false;
 		String status="";
-		sqlusr.append("SELECT  IV_USER, USER_NAME, USER_COUNT, USER_STATUS FROM JDA_USER WHERE UPPER(USER_NAME) = ? ");
+		
 		try {
+			try {
+				conn = db.getConnection();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			log.debug("get conn checkUsernamePassword >> " + conn);
+			StringBuffer sqlusr = new StringBuffer();
+			sqlusr.append("SELECT  IV_USER, USER_NAME, USER_COUNT, USER_STATUS FROM JDA_USER WHERE UPPER(USER_NAME) = ? ");
+			
 			log.debug("sqlusr >> " + sqlusr.toString());
 			ps = conn.prepareStatement(sqlusr.toString());
 			ps.setString(1,username.toUpperCase());
@@ -304,7 +312,12 @@ public class UserDAOImpl implements UserDAO {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		conn = db.getConnection();
+		try {
+			conn = db.getConnection();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		String jda_id = "";
 		//conn.setAutoCommit(false);
 		log.debug("Strat : add New User Result >> " + usrmodel.getIV_USER());
@@ -424,7 +437,12 @@ public class UserDAOImpl implements UserDAO {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		conn = db.getConnection();
+		try {
+			conn = db.getConnection();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		//conn.setAutoCommit(false);
 		log.debug("Strat : add New User Result >> " + usrmodel.getIV_USER());
 		log.debug("Strat : add New User Result >> " + usrmodel.getUSERNAME());
@@ -553,7 +571,12 @@ public class UserDAOImpl implements UserDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 				
-		conn = db.getConnection();
+		try {
+			conn = db.getConnection();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		StringBuffer sqlusr = new StringBuffer();
 		
 		
@@ -633,7 +656,12 @@ public class UserDAOImpl implements UserDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
-		conn = db.getConnection();
+		try {
+			conn = db.getConnection();
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		StringBuffer sql = new StringBuffer();
 		StringBuffer sql1 = new StringBuffer();
 		
@@ -709,7 +737,12 @@ public class UserDAOImpl implements UserDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 				
-		conn = db.getConnection();
+		try {
+			conn = db.getConnection();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		StringBuffer sqlusr = new StringBuffer();
 		String result = "";
 		
@@ -769,7 +802,13 @@ public class UserDAOImpl implements UserDAO {
 		boolean blSuccess = false;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Connection conn = db.getConnection();
+		Connection conn = null;
+		try {
+			conn = db.getConnection();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("UPDATE JDA_USER SET USER_COUNT = 0, USER_STATUS = 'N' WHERE UPPER(USER_NAME) = ? ");

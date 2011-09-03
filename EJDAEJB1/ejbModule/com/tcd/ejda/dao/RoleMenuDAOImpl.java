@@ -9,20 +9,27 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import com.tcd.ejda.connection.JDBCConnection;
+import com.tcd.ejda.connection.JDBCServiceLocator;
 import com.tcd.ejda.model.RoleMenuModel;
 import com.tcd.ejda.model.RoleModel;
 
 public class RoleMenuDAOImpl implements RoleMenuDAO {
 	private Logger log = Logger.getLogger(RoleMenuDAOImpl.class);
-	JDBCConnection db = new JDBCConnection();
+	JDBCServiceLocator db = new JDBCServiceLocator();
 	@Override
+	
 	public Vector getRoleMenu(String user_name) throws SQLException {
 		Vector vc = new Vector();
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 				
-		conn = db.getConnection();
+		try {
+			conn = db.getConnection();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		StringBuffer sql = new StringBuffer();
 		
 		

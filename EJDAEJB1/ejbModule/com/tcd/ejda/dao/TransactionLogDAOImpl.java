@@ -10,12 +10,13 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import com.tcd.ejda.connection.JDBCConnection;
+import com.tcd.ejda.connection.JDBCServiceLocator;
 import com.tcd.ejda.model.MenuModel;
 import com.tcd.ejda.model.TransactionLogModel;
 
 public class TransactionLogDAOImpl implements TransactionLogDAO {
 	
-	JDBCConnection db = new JDBCConnection();
+	JDBCServiceLocator db = new JDBCServiceLocator();
 	
 	private Logger log = Logger.getLogger(TransactionLogDAOImpl.class); 
 	
@@ -27,7 +28,12 @@ public class TransactionLogDAOImpl implements TransactionLogDAO {
 		String trans_id = "";
 		Vector searchMenu = new Vector();
 		
-		conn = db.getConnection();
+		try {
+			conn = db.getConnection();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		StringBuffer sqlSeq = new StringBuffer();
 		sqlSeq.append("select TRAN_ID_SEQ.nextval as SEQ from dual ");
 		
@@ -99,7 +105,12 @@ public class TransactionLogDAOImpl implements TransactionLogDAO {
 		ResultSet rs = null;
 		Vector resultVt = new Vector();
 		try{
-			conn = db.getConnection();
+			try {
+				conn = db.getConnection();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			StringBuffer sqlupd = new StringBuffer();
 //			sqlupd.append("INSERT INTO EJDA_MENU()")
 			StringBuffer sql = new StringBuffer();
