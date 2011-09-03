@@ -5,9 +5,11 @@
 
 <%@page import="com.ejda.util.DisplayUtil"%>
 <%@page import="com.tcd.ejda.model.ValueListModel"%>
+<%@page import="com.tcd.ejda.model.RoleMenuModel"%>
 <%@page import="com.ejda.sessionBean.RoleBean"%>
 
 <%@page import="org.apache.log4j.Logger"%><script type="text/javascript">
+
 function searchButton(form){
 	
 	$('input[name=ejdaAction]').val('EJDAM007');
@@ -317,8 +319,44 @@ function cancleDeleteAll(obj){
 		Logger log = Logger.getLogger("JspLog");
 		String returnVal = "";
 		String returnValUpdate = "";
+		String addDisabled="";
+		String updDisabled="";
+		String delDisabled="";
+		String inqDisabled="";
 		Vector vc = new Vector();
+		Vector rolevc = new Vector();
+		rolevc = (Vector)request.getSession().getAttribute("rolectrl");
 		
+		if (null!=rolevc){
+			for (int j=0; j<rolevc.size();j++){
+				log.debug("rolevc : " + rolevc);
+				RoleMenuModel roleM = (RoleMenuModel)rolevc.get(j);
+				if (roleM.getMENU_ID().equals("M007")){
+					log.debug("getFunc_add = "+roleM.getFUN_ADD());
+					log.debug("getFunc_del = "+roleM.getFUN_DELETE());
+					log.debug("getFunc_inqs = "+roleM.getFUN_INQUIRY());
+					log.debug("getFunc_update = "+roleM.getFUN_UPDATE());
+					if (!roleM.getFUN_ADD().equals("Y")){
+						addDisabled = "disabled=\"disabled\"";
+					}
+					if (!roleM.getFUN_DELETE().equals("Y")){
+						delDisabled = "disabled=\"disabled\"";
+					}
+					if (!roleM.getFUN_INQUIRY().equals("Y")){
+						inqDisabled = "disabled=\"disabled\"";
+					}
+					if (!roleM.getFUN_UPDATE().equals("Y")){
+						updDisabled = "disabled=\"disabled\"";
+					}
+				}
+			}
+		
+		}
+		log.debug("addDisabled >> " +addDisabled);
+		log.debug("delDisabled >> " +delDisabled);
+		log.debug("inqDisabled >> " +inqDisabled);
+		log.debug("updDisabled >> " +updDisabled);
+		rolevc = (Vector)request.getSession().getAttribute("rolectrl");
 		String bgColor1 = "bordercolor=\"#F4F4F4\"";
 		String bgColor2 = "bgcolor=\"#DFEFFF\"";
 		
@@ -350,7 +388,20 @@ function cancleDeleteAll(obj){
 		if(null == valueListM) valueListM = new ValueListModel();
 		
  %>
- 
+ <%
+ String responseMessage = (String) request.getSession().getAttribute("responseMessage");
+ 	log.debug("responseMessage 1 -> " + responseMessage);
+	if(!"".equalsIgnoreCase(responseMessage) && null != responseMessage){
+%> <script language="javascript">
+			jQuery(document).ready(function(){
+				displayResponseMessage("<%=responseMessage%>");
+				return false;
+			});
+		</script> <%
+			request.getSession().removeAttribute("responseMessage");
+	}
+	/* end responseMessage to user */
+%>
 <form name="myForm" method="post" action="/EJDAWeb/EJDAControler">
 <input type="hidden" name="ejdaAction" value=""> 
 <input type="hidden" name="ejdaMethod" value=""> 
@@ -372,9 +423,12 @@ function cancleDeleteAll(obj){
                       	    <td align="left"><font class="text">Role Name : </font>
                       	    		
                       	    		<%=DisplayUtil.displayInputTextBox("txtRoleName",roles.getRole_name(),"") %>
-                      	    		<input type="button" name="search" id="search" value="Search" onclick="searchButton(this.form)">
+                      	    		<input type="button" name="search" id="search" value="Search" onclick="searchButton(this.form)"<%=inqDisabled %>>
                       	    </td>
-                      	    <td colspan="2">&nbsp;</td>
+                      	    </tr>
+	                   	      	
+                      	    <td colspan="2" align="right"><input type="button" name="add" id="add" value="New Role" onclick="NewRole(this.form)" <%=addDisabled %>></td>
+                      	    <input type="hidden" name="cType" id="cType" value="">
                    	      </tr>
                       	  <tr>
                       	    <td colspan="3">&nbsp;</td>
@@ -467,12 +521,7 @@ function cancleDeleteAll(obj){
                    	      
                    	       <tr>
                       	    <td colspan="3" height="10"></td>
-                   	      </tr>
-	                   	      	<tr>
-                      	    <td >&nbsp;</td>
-                      	    <td colspan="2" align="right"><input type="button" name="add" id="add" value="New Role" onclick="NewRole(this.form)"></td>
-                      	    <input type="hidden" name="cType" id="cType" value="">
-                   	      </tr>
+                   	      
 	                   	       <tr>
 	                      	    <td colspan="3" align="center"><table width="800" cellspacing="1" cellpadding="1">
 	                      	   	<tr  bgcolor="#003366">
@@ -492,8 +541,8 @@ function cancleDeleteAll(obj){
 	                   	    		<td <%=bgColor %>><font class="text"> <%=rm.getRole_name() %></font></td>
 	                   	    		<input type="hidden" name="hrole_name" value="">
 	                   	    		<input type="hidden" name="role_id" value="">
-	                   	    		<td <%=bgColor %>><font class="text"><img src="images/edit.JPG" name="edit" id="edit" value="Edit" style="cursor:hand"onclick="EditRole(this.form,'<%=rm.getRole_id() %>','<%=rm.getRole_name() %>')"></font></td>
-	                   	    		<td <%=bgColor %>><font class="text"> <img src="images/delete.JPG" name="delete" id="delete" value="delete"style="cursor:hand" onclick="DeleteRole(this.form,'<%=rm.getRole_id() %>','<%=rm.getRole_name() %>')"></font></td>
+	                   	    		<td <%=bgColor %>><font class="text"><img src="images/edit.JPG" name="edit" id="edit" value="Edit"  style="cursor:hand"onclick="EditRole(this.form,'<%=rm.getRole_id() %>','<%=rm.getRole_name() %>')"<%=updDisabled %>></font></td>
+	                   	    		<td <%=bgColor %>><font class="text"> <img src="images/delete.JPG" name="delete" id="delete" value="delete"style="cursor:hand" onclick="DeleteRole(this.form,'<%=rm.getRole_id() %>','<%=rm.getRole_name() %>')"<%=delDisabled %>></font></td>
 	                   	    		
 	                   	    		</tr>
 	                   	      		
@@ -533,7 +582,7 @@ function cancleDeleteAll(obj){
 						    <td align="right"></td>
 						    <td colspan="2" align="right" width="100">
 						    <input type="hidden" name="txtRoleName" value="<%=roles.getRole_name() %>">
-						      <input type="button" name="add" id="add" value=" Add Role " onClick="AddRole(this.form)">
+						      <input type="button" name="add" id="add" value=" Add Role " onClick="AddRole(this.form)" >
 						      <input type="hidden" name="cType" id="cType" value="">
 						      <input type="button" name="Reset" id="Reset" value="  Reset  " onClick="Reset(this.form)">
 						    </td>

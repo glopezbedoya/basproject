@@ -23,7 +23,7 @@ function checkPassword(){
 	var response = '';
 	var passVal = $('input[name=password]').val();
 	if (''!=passVal){
-		alert('passVal : '+passVal);
+		//alert('passVal : '+passVal);
 		if ($('input[name=strongpwd]').attr('checked')){
 			//alert('strongpwd');
 			response = strongPwd($('input[name=password]').val());
@@ -38,7 +38,7 @@ function checkPassword(){
 	}
 }
 
-function Reset(){
+function Reset(form){
 	
 	$('input[name=ejdaAction]').val('EJDAM006');
 	$('input[name=ejdaMethod]').val('doSearch');
@@ -267,6 +267,20 @@ function changeSelectPage(form){
 		ValueListModel valueListM = userBean.getValueListM();
 		if(null == valueListM) valueListM = new ValueListModel();
  %>
+ <%
+ String responseMessage = (String) request.getSession().getAttribute("responseMessage");
+ 	log.debug("responseMessage 1 -> " + responseMessage);
+	if(!"".equalsIgnoreCase(responseMessage) && null != responseMessage){
+%> <script language="javascript">
+			jQuery(document).ready(function(){
+				displayResponseMessage("<%=responseMessage%>");
+				return false;
+			});
+		</script> <%
+			request.getSession().removeAttribute("responseMessage");
+	}
+	/* end responseMessage to user */
+%>
 <form name="myForm" method="post" action="/EJDAWeb/EJDAControler">
 <input type="hidden" name="ejdaAction" value=""> 
 <input type="hidden" name="ejdaMethod" value=""> 
@@ -294,6 +308,11 @@ function changeSelectPage(form){
 		                      	    		
 		                      	    </td>
 		                      	    <td colspan="3" align="left"><%=DisplayUtil.displayInputTextBox("txtIVUser",users.getIV_USER(),"") %></td>
+		                      	    
+	                      	    
+		                      	    <td  align="right"><input type="button" name="new" id="new" value="New User" onClick="NewRole(this.form)"></td>
+		                   	      	<input type="hidden" name="cType" id="cType" value="">
+		                   	     
 		                   	      </tr>
 		                   	      	 <tr>
 		                      	    <td align="right" width="100"><font class="text">First Name : </font> </td>
@@ -301,6 +320,7 @@ function changeSelectPage(form){
 		                   	                	    
 		                      	    <td align="right"width="100"><font class="text">Last Name : </font></td>
 		                      	    <td align="left"><%=DisplayUtil.displayInputTextBox("txtLastName",users.getLASTNAME(),"") %></td>
+		                      	    <td></td>
 		                   	      </tr>
 		                   	      <tr>
 		                      	    <td align="right" width="100"><font class="text">Status :</font></td>
@@ -331,8 +351,11 @@ function changeSelectPage(form){
 		                      	    </font>
 		                      	    </td>
 		                      	    <td align="left"><input type="button" name="search" id="search" value="Search"onClick="searchUser(this.form)"></td>
+		                      	     <td></td>
 		                   	      </tr>
 		                   	      
+                   	     
+                   	     
 		                   	      </table>
                    	      	</td>
                    	      </tr>
@@ -349,9 +372,7 @@ function changeSelectPage(form){
                    	       <tr>
                       	    <td colspan="2" height="10">&nbsp;</td>
                    	      </tr>
-                   	     
-                   	     
-                   	      <tr>
+                   	      
                       	    <td colspan="2" height="10">&nbsp;</td>
                    	      </tr>
                    	       <%if(vc.size()>0){%>
@@ -442,11 +463,7 @@ function changeSelectPage(form){
 							        <tr>
 									<td colspan="2" height="10"></td>					        
 						        </tr>
-						        <tr>
-	                      	    <td>&nbsp;</td>
-	                      	    <td  align="right"><input type="button" name="new" id="new" value="New User" onClick="NewRole(this.form)"></td>
-	                   	      	<input type="hidden" name="cType" id="cType" value="">
-	                   	      </tr>
+						       
 	                   	       <tr>
 	                      	    <td colspan="3" align="center"><table width="800" cellspacing="1" cellpadding="1">
 	                      	    <tr  bgcolor="#003366">
@@ -521,7 +538,7 @@ function changeSelectPage(form){
                    	      </tr>
                    	      <tr>
                    	      <td colspan="3">
-                   	      <table width="600" cellspacing="1" cellpadding="1" align="center" background="images/back_line.png">
+                   	      <table width="600" cellspacing="1" cellpadding="1" align="center" >
                    	       <tr>
 						    <td align="right"><span class="text">User Name : </span></td>
 						    <td align="left" width="100">
