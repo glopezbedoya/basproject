@@ -7,7 +7,7 @@
 <%@page import="com.ejda.sessionBean.TransactionLogBean"%>
 <%@page import="com.ejda.util.DisplayFormatUtil"%>
 <%@page import="com.tcd.ejda.model.ValueListModel"%>
-<script language="javascript" src="js/EJDAM010.js"></script>
+<script language="javascript" src="js/EJDAM014.js"></script>
 <%
 	Logger log = Logger.getLogger("JspLog");
 	TransactionLogBean tranLogBean = (TransactionLogBean)request.getSession().getAttribute("TransactionLogBean");
@@ -28,7 +28,7 @@
 	<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
 		
         <tr align="left">
-          <td align="right" class="style1" scope="row">TABLE 1</td>
+          <td align="right" class="style1" scope="row">TABLE 2</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
@@ -38,31 +38,45 @@
         	
         <tr>
        		<td align="right" class="style1" scope="row">
-       			<span class="text"> </span>&nbsp;
+       			<span class="text"> Date From :</span>&nbsp;
        		
        		</td>
        		<td width="200">
        		</td>
-       		<td class="text" width="70" align="right"> </td>
+       		<td class="text" width="70" align="right"> To : </td>
        		<td> 
        		</td>
         </tr>
         <tr>
        		<td align="right" class="style1" scope="row">
-       			<span class="text">Form name </span>
+       			<span class="text"> User Name : </span>
        		
        		</td>
-       		<td width="150"><%=DisplayFormatUtil.displayInputTextBox("txtFormName",tranLogModelSP.getUserName(),"") %>
+       		<td width="150">
        		</td>
        		<td align="right" class="style1" scope="row">	          		
        		
-       			<span class="text"></span>
+       			<span class="text"> Department : </span>
        		
        		</td>
        		<td >
        		</td>	          		
         </tr>
-        
+        <tr>
+        	<td align="right" class="style1" scope="row">
+       			<span class="text"> First Name :</span>
+       		
+       		</td>
+       		<td >
+       		</td>	          		
+       		<td align="right" class="style1" scope="row">
+       			<span class="text"> Last Name :</span>
+       		
+       		</td>
+       		<td >
+       			<input type = "button" value="Test"onClick="openForm1(this.form)">
+       		</td>
+        </tr>
         
         <tr>
        		<th colspan="4" align="center" class="style1" scope="row">
