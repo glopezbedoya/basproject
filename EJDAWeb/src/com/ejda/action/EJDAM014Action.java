@@ -14,9 +14,9 @@ import com.tcd.ejda.dao.TransactionLogDAOImpl;
 import com.tcd.ejda.model.TransactionLogModel;
 import com.tcd.ejda.model.ValueListModel;
 
-public class EJDAM010Action extends AbstractAction {
+public class EJDAM014Action extends AbstractAction {
 
-	private Logger log = Logger.getLogger(EJDAM010Action.class);
+	private Logger log = Logger.getLogger(EJDAM014Action.class);
 	private TransactionLogBean tranLogBean;
 	
 	@Override
@@ -28,7 +28,7 @@ public class EJDAM010Action extends AbstractAction {
 	@Override
 	public void init() {
 		/** EJDA Form no 1****/
-		log.debug("*********** EJDAM010Action ***********");
+		log.debug("*********** EJDAM014Action ***********");
 		
 		tranLogBean = getTranLogBean();
 		tranLogBean.setTranLogVt(new Vector<TransactionLogModel>());
