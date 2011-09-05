@@ -20,7 +20,13 @@ function openForm1(form){
 	$('input[name=screenName]').val('eJdaForm1.jsp');
 	form.submit();
 }
-
+function CancelButton(form){
+	//alert('doChangeForm ' + form);
+	$('input[name=ejdaAction]').val('EJDAM010');
+	$('input[name=ejdaMethod]').val('openForm1');
+	$('input[name=screenName]').val('EJDAM010.jsp');
+	form.submit();
+}
 function changeSelectPage(form){
 	$('input[name=ejdaAction]').val('EJDAM010');
 	$('input[name=ejdaMethod]').val('doSearch');
