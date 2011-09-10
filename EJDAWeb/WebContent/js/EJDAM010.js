@@ -19,7 +19,7 @@ function buttonAction(form,action){
 }
 
 function updateEJDATable2(form,fn_no){
-	alert('fn_no : ' +fn_no);
+	//alert('fn_no : ' +fn_no);
 	$('input[name=form_no]').val(fn_no);
 	$('input[name=ejdaAction]').val('EJDAM010');
 	$('input[name=ejdaMethod]').val('doUpdate');
