@@ -2,22 +2,23 @@ package com.ejda.action;
 
 import java.util.Vector;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.log4j.Logger;
 
 import com.ejda.constant.EJDAConstant;
+import com.ejda.sessionBean.Form1Bean;
 import com.ejda.sessionBean.TransactionLogBean;
-import com.ejda.util.EJDAUtil;
+import com.tcd.ejda.dao.Form1DAO;
+import com.tcd.ejda.dao.Form1DAOImpl;
 import com.tcd.ejda.dao.TransactionLogDAO;
 import com.tcd.ejda.dao.TransactionLogDAOImpl;
+import com.tcd.ejda.model.Form1Model;
 import com.tcd.ejda.model.TransactionLogModel;
 import com.tcd.ejda.model.ValueListModel;
 
 public class EJDAM014Action extends AbstractAction {
 
 	private Logger log = Logger.getLogger(EJDAM014Action.class);
-	private TransactionLogBean tranLogBean;
+	private Form1Bean form1Bean;
 	
 	@Override
 	public void clearSessionNotUsed() {
@@ -30,13 +31,13 @@ public class EJDAM014Action extends AbstractAction {
 		/** EJDA Form no 1****/
 		log.debug("*********** EJDAM014Action ***********");
 		
-		tranLogBean = getTranLogBean();
-		tranLogBean.setTranLogVt(new Vector<TransactionLogModel>());
-		tranLogBean.setTranLogModelSP(new TransactionLogModel());
+		form1Bean = getForm1Bean();
+		form1Bean.setForm1Vt(new Vector<Form1Model>());
+		form1Bean.setForm1ModelSP(new Form1Model());
 		ValueListModel valueListM = new ValueListModel();
-		valueListM.setReturnModel("TransactionLogModel");
-		tranLogBean.setValueListM(valueListM);
-		setTranLogBean(tranLogBean);
+		valueListM.setReturnModel("Form1Model");
+		form1Bean.setValueListM(valueListM);
+		setForm1Bean(form1Bean);
 	}
 
 	@Override
@@ -46,12 +47,41 @@ public class EJDAM014Action extends AbstractAction {
 			return doSearch();
 		}else if(ejdaMethod.equalsIgnoreCase("doDelete")){
 			return doDelete();
-		}else if (ejdaMethod.equalsIgnoreCase("openForm1")){
-			return openForm1();
+		}else if (ejdaMethod.equalsIgnoreCase("doUpdate")){
+			return doUpdate();
+		}else if (ejdaMethod.equalsIgnoreCase("doSubmitButton")){
+			return doSubmitButton();
 		}
 		
 		
 		return false;
+	}
+	private boolean doSubmitButton() {
+		boolean result = false;
+		String iuser = (String) getRequest().getSession().getAttribute("iuser");
+		if (null==iuser || "".equals(iuser)){
+			iuser = "system";
+		}
+		Form1Model form1 = new Form1Model();
+		form1.setForm_name("FN_" + iuser);
+		form1.setForm_status("S");
+		form1.setUpdate_by(iuser);
+		try{
+			Form1DAO dao = new Form1DAOImpl();
+			dao.UpdateFrom1Table(form1);
+			result = doSearch();
+			
+			log.debug("result = "+result);
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
+	}
+	private boolean doUpdate() {
+		String form_no = getRequest().getParameter("form_no");
+		getRequest().getSession().setAttribute("form_no", form_no);
+		return true;
 	}
 
 	private boolean openForm1() {
@@ -68,26 +98,27 @@ public class EJDAM014Action extends AbstractAction {
 	
 	public boolean doSearch(){
 		log.debug("*********** doSearch ***********");
-//		log.debug("ejdaMethod = "+getRequest().getParameter("ejdaMethod"));
 		boolean result = false;
 		setCriteriaPameter();
-		tranLogBean = getTranLogBean();
+		form1Bean = getForm1Bean();
 		ValueListModel valueListM = new ValueListModel();
 		ValueListAction valueListA = new ValueListAction();
 		log.debug("getRequest().getParameter(Page)"+getRequest().getParameter("Page"));
 		try{
 			Vector tranLogVt = new Vector();
-			valueListM = tranLogBean.getValueListM();
-			valueListM.setSQL(this.setSQL(tranLogBean.tranLogModelSP));
+			valueListM = form1Bean.getValueListM();
+			valueListM.setSQL(this.setSQL(form1Bean.form1ModelSP));
 			valueListM.setParameters(getValueListParameters());
 			valueListM.setPage(getRequest().getParameter("page"));
 			valueListM.setItemsPerPage(Integer.parseInt(getRequest().getParameter("volumePerPage")));
-			tranLogBean.setValueListM(valueListA.doSearch(valueListM));
-			tranLogBean.setTranLogVt(tranLogBean.getValueListM().getResult());
-			log.debug("tranLogVt.size = " + tranLogBean.getTranLogVt().size());
-			log.debug("tranLogBean.getValueListM().getCount() = "+tranLogBean.getValueListM().getCount());
+			
+			form1Bean.setValueListM(valueListA.doSearch(valueListM));
+			form1Bean.setForm1Vt(form1Bean.getValueListM().getResult());
+			form1Bean.setActionName("EJDAM014");
+			log.debug("form1Bean = " + form1Bean.getForm1Vt().size());
+			log.debug("tranLogBean.getValueListM().getCount() = "+form1Bean.getValueListM().getCount());
 			getRequest().getSession().removeAttribute("VALUE_LIST");
-			setTranLogBean(tranLogBean);
+			setForm1Bean(form1Bean);
 			result = true;
 		}catch (Exception e) {
 			// TODO: handle exception
@@ -97,76 +128,63 @@ public class EJDAM014Action extends AbstractAction {
 		return result;
 	}
 	
-	public TransactionLogBean getTranLogBean(){
-		TransactionLogBean tranLogBean = (TransactionLogBean) getRequest().getSession().getAttribute("TransactionLogBean");
-		if(tranLogBean == null){
-			tranLogBean = new TransactionLogBean();
+	public Form1Bean getForm1Bean() {
+		Form1Bean form1Bean = (Form1Bean)getRequest().getSession().getAttribute("Form1Bean");
+		if (null == form1Bean){
+			form1Bean = new Form1Bean();
 		}
-		return tranLogBean;
+		return form1Bean;
+	}
+
+	public void setForm1Bean(Form1Bean form1Bean) {
+		getRequest().getSession().setAttribute("Form1Bean", form1Bean);
 	}
 	
-	public void setTranLogBean(TransactionLogBean tranLogBean){
-		getRequest().getSession().setAttribute("TransactionLogBean", tranLogBean);
-	}
-	
-	private void setCriteriaPameter(){
-		TransactionLogModel tranLogCri = new TransactionLogModel();
-		tranLogCri.setTranDateFrom(getRequest().getParameter("txtTranDateFrom"));
-		tranLogCri.setTranDateTo(getRequest().getParameter("txtTranDateTo"));
-		tranLogCri.setUserName(getRequest().getParameter("txtUserName"));
-		tranLogCri.setFirstName(getRequest().getParameter("txtFirstName"));
-		tranLogCri.setLastName(getRequest().getParameter("txtLastName"));
+private void setCriteriaPameter(){
 		
-		getTranLogBean().setTranLogModelSP(tranLogCri);
+		Form1Model form1 = new Form1Model();
+		form1.setForm_name(getRequest().getParameter("txtFormName"));
+		
+		getForm1Bean().setForm1ModelSP(form1);
 	}
 	
-	private String setSQL(TransactionLogModel tranLogCri){
+	private String setSQL(Form1Model form1Cri){
 		StringBuffer sql = new StringBuffer();
+		StringBuffer sql1 = new StringBuffer();
+		String sqlCommand ="";
+		String sqlWhere="";
 		try{
-			sql.append(EJDAConstant.SQL.TRAN_LOG_SQL);
-			
-			if(!"".equals(tranLogCri.getUserName()) || !"".equals(tranLogCri.getFirstName()) || !"".equals(tranLogCri.getLastName())
-				|| (!"".equals(tranLogCri.getTranDateFrom()) && !"".equals(tranLogCri.getTranDateTo()))){
-				sql.append(" WHERE ");
-				if(!"".equals(tranLogCri.getUserName()))
-					sql.append(" U.USER_NAME = ? AND ");
-				if(!"".equals(tranLogCri.getFirstName()))
-					sql.append(" U.FIRST_NAME = ? AND ");
-				if(!"".equals(tranLogCri.getLastName()))
-					sql.append(" U.LAST_NAME = ? AND ");
-				if(!"".equals(tranLogCri.getTranDateFrom()) && !"".equals(tranLogCri.getTranDateTo())){
-					sql.append(" L.TRANS_DATE BETWEEN TO_DATE(?,'dd/mm/yyyy HH24:MI') AND TO_DATE(?,'dd/mm/yyyy HH24:MI') AND ");
-				}
+			sql.append(EJDAConstant.SQL.FORM1_TABLE2_SQL);
+			if (sql.indexOf("WHERE") != -1){
+				sqlWhere = sql.substring(sql.indexOf("WHERE"),sql.length());
+				sqlCommand = sql.substring(0, sql.lastIndexOf("WHERE"));
 			}
+			if (!"".equals(form1Cri.getForm_name())){
+				//sql.append(" WHERE ");
+				sqlWhere = " FORM_NAME = ? AND ";
+				
+			}
+			
+			log.debug("sqlWhere >> " + sqlWhere);
+			log.debug("sqlCommand >> " + sqlCommand);
+			
+			sql1.append(sqlCommand + " " + sqlWhere);
+			
+			log.debug("sql >> " + sql1.toString());
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
-		sql = removeWasteSQL(sql);
-		return sql.toString();
+		sql1 = removeWasteSQL(sql1);
+		return sql1.toString();
 	}
 	
 	private Vector getValueListParameters() {
 		Vector parameters = new Vector();
-		TransactionLogModel tranLogCri = getTranLogBean().getTranLogModelSP();
-		if(!"".equals(tranLogCri.getUserName()) || !"".equals(tranLogCri.getFirstName()) || !"".equals(tranLogCri.getLastName())
-				|| (null != tranLogCri.getTranDateFrom() && null != tranLogCri.getTranDateTo())){
-			if(!"".equals(tranLogCri.getUserName().trim())) {
-				log.debug("User = "+tranLogCri.getUserName());
-				parameters.add(tranLogCri.getUserName());
-			}
-			if(!"".equals(tranLogCri.getFirstName().trim())) {
-				log.debug("First Name = "+tranLogCri.getFirstName());
-				parameters.add("%"+tranLogCri.getFirstName()+"%");
-			}
-			if(!"".equals(tranLogCri.getLastName().trim())) {
-				log.debug("Last Name = "+tranLogCri.getLastName());
-				parameters.add("%"+tranLogCri.getLastName()+"%");
-			}
-			if(!"".equals(tranLogCri.getTranDateFrom()) && !"".equals(tranLogCri.getTranDateTo())){
-				parameters.add(tranLogCri.getTranDateFrom() + "00:00");
-				parameters.add(tranLogCri.getTranDateTo() + "23:59");
-			}
+		Form1Model form1 = getForm1Bean().getForm1ModelSP();
+		if (!"".equals(form1.getForm_name())){
+			log.debug("Form Name = "+form1.getForm_name());
+			parameters.add(form1.getForm_name());
 		}
 		log.info("parameters.size() = "+parameters.size());
 		return parameters;
