@@ -1,15 +1,16 @@
 
 function CancelButton(form,action){
 	
-	alert('CancelButton ' + form);
-	alert('CancelButton ' + action);
+	//alert('CancelButton ' + form);
+	//alert('CancelButton ' + action);
 	$('input[name=ejdaAction]').val(action);
 	$('input[name=ejdaMethod]').val('doSearch');
 	$('input[name=screenName]').val(action+'.jsp');
 	form.submit();
 }
 function validateSubmitButton(form,action){
-	alert('validateSubmitButton : ' +action);
+	//alert('validateSubmitButton : ' +action);
+	
 	$('input[name=ejdaAction]').val(action);
 	$('input[name=ejdaMethod]').val('doSubmitButton');
 	$('input[name=screenName]').val(action+'.jsp');
