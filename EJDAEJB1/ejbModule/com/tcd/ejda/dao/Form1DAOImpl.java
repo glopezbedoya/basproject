@@ -105,7 +105,6 @@ public class Form1DAOImpl implements Form1DAO {
 			e2.printStackTrace();
 		}
 		StringBuffer sql = new StringBuffer();
-		StringBuffer sql1 = new StringBuffer();
 		conn.setAutoCommit(false); 
 		
 		try {
