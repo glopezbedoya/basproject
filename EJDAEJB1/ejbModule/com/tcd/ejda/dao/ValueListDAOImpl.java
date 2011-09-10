@@ -9,8 +9,8 @@ import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
-import com.tcd.ejda.connection.JDBCConnection;
 import com.tcd.ejda.connection.JDBCServiceLocator;
+import com.tcd.ejda.model.Form1Model;
 import com.tcd.ejda.model.RoleModel;
 import com.tcd.ejda.model.TransactionLogModel;
 import com.tcd.ejda.model.UsrModel;
@@ -49,16 +49,6 @@ public class ValueListDAOImpl implements ValueListDAO {
 			//if(!CheckPage.equals("customerRegistration")){
 			sqlBuffer.append("SELECT c.* FROM (SELECT ROW_NUMBER() OVER (ORDER BY 0) AS CURSOR_INDEX, m.* FROM (");
 			
-			//}else{
-			/*Jarinya Add 09/10/2009
-			sqlBuffer.append(" SELECT distinct c.*, Case when REGISTER_STATUS = 'E' then 'Activate' ");
-			sqlBuffer.append(" when REGISTER_STATUS = 'N' AND DELETED_DATE IS NULL then 'Disable' "); 
-			sqlBuffer.append(" when REGISTER_STATUS = 'D' AND DELETED_DATE IS NOT NULL then 'Deleted' "); 
-			sqlBuffer.append(" else REGISTER_STATUS_DESC End as REGISTER_STATUS_DESC, ");
-			sqlBuffer.append(" ENG_DESC");
-			sqlBuffer.append(" FROM P10_REGISTER_TYPE p10 join ");
-			sqlBuffer.append("(SELECT ROW_NuserMBER() OVER (ORDER BY 0) AS CURSOR_INDEX, m.* FROM (");
-		    End*/
 			//}
 			sqlBuffer.append(valueListM.getSQL());
 			if(valueListM.getOrderBy() != null && !"".equals(valueListM.getOrderBy())){
@@ -203,15 +193,16 @@ public class ValueListDAOImpl implements ValueListDAO {
 
 	private Object mappResultSetToModel(String returnModel,ResultSet rs){
 		Object obj = new Object();
-		log.debug("returnModel = "+returnModel);
+		log.debug("mappResultSetToModel returnModel = "+returnModel);
 		if(returnModel.equalsIgnoreCase("TransactionLogModel")){
 			obj = mapToTransactionLogModel(rs);
 		}else if(returnModel.equalsIgnoreCase("RoleModel")){
 			obj = mapToRoleModel(rs);
 		}else if(returnModel.equalsIgnoreCase("UsrModel")){
 			obj = mapToUsrModel(rs);
+		}else if(returnModel.equalsIgnoreCase("Form1Model")){
+			obj = mapToForm1Model(rs);
 		}
-		
 		return obj;
 	}
 	
@@ -275,6 +266,21 @@ public class ValueListDAOImpl implements ValueListDAO {
 		}
 		return userM;
 	}
-	
+	private Form1Model mapToForm1Model(ResultSet rs){
+		Form1Model from1 = new Form1Model();
+//		Locale locale = new Locale("en");
+		try {
+			from1.setForm_name(rs.getString("FORM_NAME"));
+			from1.setForm_no(rs.getString("FORM_NO"));
+			from1.setForm_status(rs.getString("STATUS"));
+			from1.setUpdate_by(rs.getString("UPDATE_BY"));
+			
+		} catch (SQLException e) {
+			log.error("Mapping Error : SQLException ",e);
+		} catch (Exception e){
+			log.error("Mapping Error : Exception ",e);
+		}
+		return from1;
+	}
 	
 }
