@@ -7,6 +7,8 @@ import org.apache.log4j.Logger;
 import com.ejda.constant.EJDAConstant;
 import com.ejda.sessionBean.Form1Bean;
 import com.ejda.sessionBean.TransactionLogBean;
+import com.tcd.ejda.dao.Form1DAO;
+import com.tcd.ejda.dao.Form1DAOImpl;
 import com.tcd.ejda.dao.TransactionLogDAO;
 import com.tcd.ejda.dao.TransactionLogDAOImpl;
 import com.tcd.ejda.model.Form1Model;
@@ -47,12 +49,38 @@ public class EJDAM018Action extends AbstractAction {
 			return doDelete();
 		}else if (ejdaMethod.equalsIgnoreCase("doUpdate")){
 			return doUpdate();
+		}else if (ejdaMethod.equalsIgnoreCase("doSubmitButton")){
+			return doSubmitButton();
 		}
 		
 		
 		return false;
 	}
-
+	private boolean doSubmitButton() {
+		boolean result = false;
+		String iuser = (String) getRequest().getSession().getAttribute("iuser");
+		String formNo = (String) getRequest().getSession().getAttribute("form_no");
+		
+		if (null==iuser || "".equals(iuser)){
+			iuser = "system";
+		}
+		Form1Model form1 = new Form1Model();
+		form1.setForm_name("FN_" + iuser);
+		form1.setForm_status("P");
+		form1.setUpdate_by(iuser);
+		form1.setForm_no(formNo);
+		try{
+			Form1DAO dao = new Form1DAOImpl();
+			dao.UpdateFrom1Table(form1);
+			result = doSearch();
+			
+			log.debug("result = "+result);
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
+	}
 	private boolean doUpdate() {
 		String form_no = getRequest().getParameter("form_no");
 		getRequest().getSession().setAttribute("form_no", form_no);
@@ -89,6 +117,7 @@ public class EJDAM018Action extends AbstractAction {
 			
 			form1Bean.setValueListM(valueListA.doSearch(valueListM));
 			form1Bean.setForm1Vt(form1Bean.getValueListM().getResult());
+			form1Bean.setActionName("EJDAM018");
 			log.debug("form1Bean = " + form1Bean.getForm1Vt().size());
 			log.debug("tranLogBean.getValueListM().getCount() = "+form1Bean.getValueListM().getCount());
 			getRequest().getSession().removeAttribute("VALUE_LIST");
