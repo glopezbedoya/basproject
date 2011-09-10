@@ -3,78 +3,85 @@
 <%@page import="java.util.Vector"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@page import="com.tcd.ejda.model.TransactionLogModel"%>
-<%@page import="com.ejda.sessionBean.TransactionLogBean"%>
+<%@page import="com.tcd.ejda.model.Form1Model"%>
+<%@page import="com.ejda.sessionBean.Form1Bean"%>
 <%@page import="com.ejda.util.DisplayFormatUtil"%>
 <%@page import="com.tcd.ejda.model.ValueListModel"%>
 <script language="javascript" src="js/EJDAM010.js"></script>
 <%
 	Logger log = Logger.getLogger("JspLog");
-	TransactionLogBean tranLogBean = (TransactionLogBean)request.getSession().getAttribute("TransactionLogBean");
-	TransactionLogModel tranLogModelSP = tranLogBean.getTranLogModelSP();
-	Vector tranLogVt = tranLogBean.getTranLogVt();
-	TransactionLogModel tranLogM = new TransactionLogModel();
+	Form1Bean form1Bean = (Form1Bean)request.getSession().getAttribute("Form1Bean");
+	log.debug("form1Bean :: " + form1Bean);
+	Form1Model form1ModelSP = form1Bean.getForm1ModelSP();
+	Vector form1Vt = form1Bean.getForm1Vt();
+	Form1Model form1M = new Form1Model();
+	String form_action = (String)form1Bean.getActionName();
+	
 	String bgColor1 = "bordercolor=\"#F4F4F4\"";
 	String bgColor2 = "bgcolor=\"#DFEFFF\"";
-	ValueListModel valueListM = tranLogBean.getValueListM();
+	ValueListModel valueListM = form1Bean.getValueListM();
+	
 	if(null == valueListM) valueListM = new ValueListModel();
+	
 %>
 <form name="ejdaformNo1" method="post" action="/EJDAWeb/EJDAControler">
 	<input type="hidden" name="ejdaAction" value=""> 
 	<input type="hidden" name="ejdaMethod" value=""> 
 	<input type="hidden" name="screenName" value="">
+	<input type="hidden" name="actionName" value="">
 	<input type="hidden" name="page" value="<%=valueListM.getAtPage() %>" />
 	<input type="hidden" name="volumePerPage" value="<%=valueListM.getItemsPerPage() %>" />
 	<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
 		
         <tr align="left">
-          <td align="right" class="style1" scope="row">TABLE 1</td>
+          <td align="left" class="style1" scope="row">TABLE 1</td>
           <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
+          
         </tr>
         <tr>
         	<td><table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
         	
         <tr>
-       		<td align="right" class="style1" scope="row">
-       			<span class="text"> </span>&nbsp;
        		
-       		</td>
-       		<td width="200">
-       		</td>
-       		<td class="text" width="70" align="right"> </td>
-       		<td> 
-       		</td>
+       		<td width="100"></td>
+       		<td width="700"class="text" align="right"><%=DisplayFormatUtil.displayButton("AddForm1","onclick=\"buttonAction(this.form,'doAdd')\"",false) %> </td>
+       		
         </tr>
         <tr>
-       		<td align="right" class="style1" scope="row">
-       			<span class="text">Form name </span>
        		
-       		</td>
-       		<td width="150"><%=DisplayFormatUtil.displayInputTextBox("txtFormName",tranLogModelSP.getUserName(),"") %>
-       		</td>
-       		<td align="right" class="style1" scope="row">	          		
+       		<td height="20"></td>
+       		<td class="text" align="right"> </td>
        		
-       			<span class="text"></span>
-       		
-       		</td>
-       		<td >
-       		</td>	          		
         </tr>
-        
-        
         <tr>
-       		<th colspan="4" align="center" class="style1" scope="row">
-       		</th>
+       		<td align="left"><span class="text">Form name </span></td>
+       		<td align="left"><%=DisplayFormatUtil.displayInputTextBox("txtFormName",form1ModelSP.getForm_name(),"") %><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'doSearch')\"",false) %></td>
+       		          		
+        </tr>
+        <tr>
+        	<td ></td>
+        	<td></td>
+       		
          </tr>
+        <tr>
+       		
+       		<td height="20"></td>
+       		<td class="text" align="right"> </td>
+       		
+        </tr>
+        
          </table>
         	</td>
         </tr>
 		<!--Panging-->
          <%
+         log.debug("valueListM >> " + valueListM.getCount());
+         log.debug("valueListM >> " + valueListM.getItemsPerPage());
 			int allPage = valueListM.getCount() / valueListM.getItemsPerPage();
 			int lastPage = (valueListM.getCount()/valueListM.getItemsPerPage());
+			
+			log.debug("allPage >> " + allPage);
+			log.debug("lastPage >> " + lastPage);
 			if ((valueListM.getCount()%valueListM.getItemsPerPage())>0)  {
 				lastPage++;
 			}
@@ -133,7 +140,7 @@
 			String showPage = DisplayFormatUtil.displaySelectPaging("selectPaging",allPage,valueListM.getAtPage(),"onchange=\"changeSelectPage(this.form)\"");
 			%>
 			 <%
-            	if(tranLogVt != null && tranLogVt.size() > 0){%>
+            	if(form1Vt != null && form1Vt.size() > 0){%>
         <tr>
           <th colspan="4" scope="row"><div align="right"><span  class="textPage">&#3649;&#3626;&#3604;&#3591;&#3612;&#3621;&#3585;&#3634;&#3619;&#3588;&#3657;&#3609;&#3627;&#3634; <%=valueListM.getAtPage()+"/"+allPage %></span>
             <%=showPage %>
@@ -165,34 +172,29 @@
           </div></td>
         </tr>
         <tr>
-          <th colspan="4" scope="row"><table width="951" border="0" align="center" cellpadding="0" cellspacing="1">
+          <th colspan="4" scope="row" align="center"><table width="951" border="0" align="center" cellpadding="0" cellspacing="1">
             <tr>
               <th width="20" bgcolor="#0099CC" class="style13" scope="row">
                 <label>
                   <input type="checkbox" name="checkAllBox" id="checkAllBox" onclick="checkBoxAll()"/>
                 </label>
               </th>
-              <th width="67" bgcolor="#0099CC" class="textHeader" scope="row">User Name</th>
-              <td width="174" bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">&#3594;&#3639;&#3656;&#3629; - &#3609;&#3634;&#3617;&#3626;&#3585;&#3640;&#3621; </div></td>
-              <td width="154" bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">หน่วยงาน</div></td>
-              <td width="205" bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">Action</div></td>
-              <td width="135" bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">เวลา</div></td>
-              <td width="129" bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">IP Address</div></td>
+              <th bgcolor="#0099CC" class="textHeader" scope="row">Form No.</th>
+              <td bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">Form Name</div></td>
+              <td bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">Form Status</div></td>
             </tr>
             <%
+            	log.debug("bgColor fom1Vt.size() : " + form1Vt.size());
             		String bgColor;
-            		for(int i=0;i<tranLogVt.size();i++){
-            			tranLogM = (TransactionLogModel)tranLogVt.get(i);            	
+            		for(int i=0;i<form1Vt.size();i++){
+            			form1M = (Form1Model)form1Vt.get(i);            	
             			bgColor = (i%2 == 0)?bgColor1:bgColor2;
             %>
-			            <tr>
-			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=tranLogM.getTranId() %>"/></th>
-			              <th <%=bgColor %> class="text" scope="row"><%=tranLogM.getUserName() %></th>
-			              <td <%=bgColor %> class="text"><%=tranLogM.getFirstName() + " " + tranLogM.getLastName() %></td>
-			              <td <%=bgColor %> class="text"><%=tranLogM.getDepartment() %></td>
-			              <td <%=bgColor %> class="text"><div align="center" class="style17"><%=tranLogM.getTranAction() %></div></td>
-			              <td <%=bgColor %> class="text"><div align="center"><%=tranLogM.getTranDate() %></div></td>
-			              <td <%=bgColor %> class="text"><div align="center"><%=tranLogM.getIpAddress() %></div></td>
+			            <tr onclick="updateEJDATable2(this.form,'<%=form1M.getForm_no() %>');">
+			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form1M.getForm_no() %>"/></th>
+			              <td <%=bgColor %> class="text"><%=form1M.getForm_no()%></td>
+			              <td <%=bgColor %> class="text"><%=form1M.getForm_name()%></td>
+			              <td <%=bgColor %> class="text"><%=form1M.getForm_status()%></td>
 			            </tr>
             <%		}
             	}
@@ -203,9 +205,7 @@
               <th scope="row">&nbsp;</th>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
+             
             </tr>
           </table></th>
         </tr>

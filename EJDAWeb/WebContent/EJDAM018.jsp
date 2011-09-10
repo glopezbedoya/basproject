@@ -7,7 +7,7 @@
 <%@page import="com.ejda.sessionBean.Form1Bean"%>
 <%@page import="com.ejda.util.DisplayFormatUtil"%>
 <%@page import="com.tcd.ejda.model.ValueListModel"%>
-<script language="javascript" src="js/EJDAM014.js"></script>
+<script language="javascript" src="js/EJDAM018.js"></script>
 <%
 	Logger log = Logger.getLogger("JspLog");
 	Form1Bean form1Bean = (Form1Bean)request.getSession().getAttribute("Form1Bean");
@@ -15,8 +15,6 @@
 	Form1Model form1ModelSP = form1Bean.getForm1ModelSP();
 	Vector form1Vt = form1Bean.getForm1Vt();
 	Form1Model form1M = new Form1Model();
-	String form_action = (String)form1Bean.getActionName();
-	
 	String bgColor1 = "bordercolor=\"#F4F4F4\"";
 	String bgColor2 = "bgcolor=\"#DFEFFF\"";
 	ValueListModel valueListM = form1Bean.getValueListM();
@@ -31,47 +29,39 @@
 	<input type="hidden" name="actionName" value="">
 	<input type="hidden" name="page" value="<%=valueListM.getAtPage() %>" />
 	<input type="hidden" name="volumePerPage" value="<%=valueListM.getItemsPerPage() %>" />
-	
-	<input type="hidden" id="form_no" name="form_no"value="">
-	
 	<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
 		
         <tr align="left">
-          <td align="left" class="style1" scope="row">TABLE 2</td>
+          <td align="left" class="style1" scope="row">TABLE 3</td>
           <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
+          
         </tr>
         <tr>
         	<td><table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
         	
-       
-        <tr>
-       		<td align="left" class="style1" scope="row" width="100">
-       			<span class="text">Form name </span>
+        
        		
-       		</td>
-       		<td width="700" align="left"><%=DisplayFormatUtil.displayInputTextBox("txtFormName",form1ModelSP.getForm_name(),"") %>
-       		<%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'doSearch')\"",false) %>
-       		</td>
-       		<td align="left" class="style1" scope="row">	          		
+       		<td height="20"></td>
+       		<td class="text" align="right"> </td>
        		
-       			<span class="text"></span>
-       		
-       		</td>
-       		<td >
-       		</td>	          		
         </tr>
         <tr>
-       		<th colspan="4" align="center" class="style1" scope="row">
-       			
-       		</th>
-         </tr>
-        
+       		<td align="left"><span class="text">Form name </span></td>
+       		<td align="left"><%=DisplayFormatUtil.displayInputTextBox("txtFormName",form1ModelSP.getForm_name(),"") %><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'doSearch')\"",false) %></td>
+       		          		
+        </tr>
         <tr>
-       		<th colspan="4" align="center" class="style1" scope="row">
-       		</th>
+        	<td ></td>
+        	<td></td>
+       		
          </tr>
+        <tr>
+       		
+       		<td height="20"></td>
+       		<td class="text" align="right"> </td>
+       		
+        </tr>
+        
          </table>
         	</td>
         </tr>
@@ -97,6 +87,10 @@
 			} else {
 				strFirstPage = "<a href=\"#\" onclick =\"changePageAndSize('1')\"><font class=\"text\">1</font></a>";
 			}
+			
+			
+			
+			
 			
 			//TODO Pageing length
 			//int lengthPage = 5; 
@@ -181,7 +175,6 @@
               <td bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">Form Name</div></td>
               <td bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">Form Status</div></td>
             </tr>
-            
             <%
             	log.debug("bgColor fom1Vt.size() : " + form1Vt.size());
             		String bgColor;
@@ -189,9 +182,9 @@
             			form1M = (Form1Model)form1Vt.get(i);            	
             			bgColor = (i%2 == 0)?bgColor1:bgColor2;
             %>
-			            <tr onclick="updateEJDATable2(this.form,'<%=form1M.getForm_no() %>');">
+			            <tr>
 			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form1M.getForm_no() %>"/></th>
-			              <td <%=bgColor %> class="text"><%=form1M.getForm_no()%><input type="hidden" id="form_no_<%=i %>" name="form_no_<%=i %>" value="<%=form1M.getForm_no() %>" > </td>
+			              <td <%=bgColor %> class="text"><%=form1M.getForm_no()%></td>
 			              <td <%=bgColor %> class="text"><%=form1M.getForm_name()%></td>
 			              <td <%=bgColor %> class="text"><%=form1M.getForm_status()%></td>
 			            </tr>
@@ -204,7 +197,7 @@
               <th scope="row">&nbsp;</th>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
-              
+             
             </tr>
           </table></th>
         </tr>
