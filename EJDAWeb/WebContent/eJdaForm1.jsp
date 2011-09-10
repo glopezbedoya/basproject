@@ -1,15 +1,44 @@
+<%@page import="com.tcd.ejda.model.Form1Model"%>
+<%@page import="com.ejda.sessionBean.Form1Bean"%>
+<%@page import="com.ejda.util.DisplayFormatUtil"%>
+<%@page import="com.tcd.ejda.model.ValueListModel"%>
+<%@page import="org.apache.log4j.Logger"%>
+<%@page import="java.util.Vector"%>
 <script language="javascript" src="js/ejdaform1.js"></script>
 <form name="ejdaformNo1" method="post" action="/EJDAWeb/EJDAControler">
+<%
+	Logger log = Logger.getLogger("JspLog");
+	Form1Bean form1Bean = (Form1Bean)request.getSession().getAttribute("Form1Bean");
+	log.debug("form1Bean :: " + form1Bean);
+	Form1Model form1ModelSP = form1Bean.getForm1ModelSP();
+	Vector form1Vt = form1Bean.getForm1Vt();
+	Form1Model form1M = new Form1Model();
+	String form_action = (String)form1Bean.getActionName();
+	String form_no = (String)request.getParameter("form_no");
+	String bgColor1 = "bordercolor=\"#F4F4F4\"";
+	String bgColor2 = "bgcolor=\"#DFEFFF\"";
+	ValueListModel valueListM = form1Bean.getValueListM();
+	
+	if(null == valueListM) valueListM = new ValueListModel();
+		
+	%>
 	<input type="hidden" name="ejdaAction" value=""> 
 	<input type="hidden" name="ejdaMethod" value=""> 
 	<input type="hidden" name="screenName" value="">
+	<input type="hidden" name="screenName" value="">
+	<input type="hidden" name="actionName" value="">
+	<input type="hidden" name="form_no" value="<%=form_no %>">
+	<input type="hidden" name="page" value="<%=valueListM.getAtPage() %>" />
+	<input type="hidden" name="volumePerPage" value="<%=valueListM.getItemsPerPage() %>" />
+	
+	
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td align="center"><table width="800" border="0" cellspacing="1" cellpadding="1" bgcolor="#F8F8F8">
       <tr>
         <td width="50%" colspan="2" align="center"><table border="0" cellspacing="1" cellpadding="1">
           <tr>
-            <td colspan="2" align="left" >&nbsp;</td>
+            <td colspan="2" align="left" class="textDesc" ><%=form_action %></td>
           </tr>
           <tr>
             <td colspan="2" align="left" ><font class="textDescBold">1.Consignor/Exporter(Name and address)</font></td>
@@ -551,9 +580,15 @@
         <td>&nbsp;</td>
       </tr>
       <tr>
-        <td colspan="3" align="center"><input type="button" name="Save" id="Save" value="  Save  " onclick="validateSaveButton()"/>
-          <input type="button" name="Submit" id="Submit" value="  Submit  "  onclick="validateSubmitButton()"/>
-          <input type="button" name="Cancel" id="Cancel" value="  Cancel  " onclick="CancelButton(this.form)"/></td>
+      	<%
+			String disable = "";
+      		if (null!=form_action && !"EJDAM010".equals(form_action)){
+      			disable = "disabled = \"disabled\"";
+      		}
+      	%>
+        <td colspan="3" align="center"><input type="button" name="Save" id="Save" <%=disable %>value="  Save  " onclick="validateSaveButton(this.form,'<%=form_action %>')"/>
+          <input type="button" name="Submit" id="Submit" value="  Submit  "  onclick="validateSubmitButton(this.form,'<%=form_action %>')"/>
+          <input type="button" name="Cancel" id="Cancel" value="  Cancel  " onclick="CancelButton(this.form,'<%=form_action %>')"/></td>
         </tr>
       <tr>
         <td colspan="2">&nbsp;</td>
