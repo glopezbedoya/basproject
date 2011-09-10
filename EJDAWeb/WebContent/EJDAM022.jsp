@@ -15,6 +15,8 @@
 	Form1Model form1ModelSP = form1Bean.getForm1ModelSP();
 	Vector form1Vt = form1Bean.getForm1Vt();
 	Form1Model form1M = new Form1Model();
+	String form_action = (String)form1Bean.getActionName();
+	
 	String bgColor1 = "bordercolor=\"#F4F4F4\"";
 	String bgColor2 = "bgcolor=\"#DFEFFF\"";
 	ValueListModel valueListM = form1Bean.getValueListM();
@@ -28,6 +30,7 @@
 	<input type="hidden" name="screenName" value="">
 	<input type="hidden" name="actionName" value="">
 	<input type="hidden" name="page" value="<%=valueListM.getAtPage() %>" />
+	<input type="hidden" id="form_no" name="form_no"value="">
 	<input type="hidden" name="volumePerPage" value="<%=valueListM.getItemsPerPage() %>" />
 	<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
 		
@@ -182,7 +185,7 @@
             			form1M = (Form1Model)form1Vt.get(i);            	
             			bgColor = (i%2 == 0)?bgColor1:bgColor2;
             %>
-			            <tr>
+			            <tr onclick="updateEJDATable4(this.form,'<%=form1M.getForm_no() %>');">
 			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form1M.getForm_no() %>"/></th>
 			              <td <%=bgColor %> class="text"><%=form1M.getForm_no()%></td>
 			              <td <%=bgColor %> class="text"><%=form1M.getForm_name()%></td>

@@ -50,3 +50,4 @@
     <url-pattern>/AjaxUserServlet</url-pattern>
   </servlet-mapping>
 </web-app>
+
