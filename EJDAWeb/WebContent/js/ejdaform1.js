@@ -1,12 +1,29 @@
 
-function CancelButton(form){
-	//alert('doChangeForm ' + form);
-	$('input[name=ejdaAction]').val('EJDAM010');
-	$('input[name=ejdaMethod]').val('openForm1');
-	$('input[name=screenName]').val('EJDAM010.jsp');
+function CancelButton(form,action){
+	
+	alert('CancelButton ' + form);
+	alert('CancelButton ' + action);
+	$('input[name=ejdaAction]').val(action);
+	$('input[name=ejdaMethod]').val('doSearch');
+	$('input[name=screenName]').val(action+'.jsp');
 	form.submit();
 }
-
+function validateSubmitButton(form,action){
+	alert('validateSubmitButton : ' +action);
+	$('input[name=ejdaAction]').val(action);
+	$('input[name=ejdaMethod]').val('doSubmitButton');
+	$('input[name=screenName]').val(action+'.jsp');
+	form.submit();
+	
+}
+function validateSaveButton(form,action){
+	
+	$('input[name=ejdaAction]').val(action);
+	$('input[name=ejdaMethod]').val('doSaveButton');
+	$('input[name=screenName]').val(action+'.jsp');
+	form.submit();
+	
+}
 function addQualityBaseTabJS(){
 	try{
 		var tbl = document.getElementById('qualityBaseTab');
