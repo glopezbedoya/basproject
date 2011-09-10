@@ -189,7 +189,7 @@
             %>
 			            <tr onclick="updateEJDATable2(this.form,'<%=form1M.getForm_no() %>');">
 			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form1M.getForm_no() %>"/></th>
-			              <td <%=bgColor %> class="text"><%=form1M.getForm_no()%><input type="hidden" id="form_no_<%=i %>" name="form_no_<%=i %>" value="<%=form1M.getForm_no() %>" > </td>
+			              <td <%=bgColor %> class="text"><%=form1M.getForm_no()%></td>
 			              <td <%=bgColor %> class="text"><%=form1M.getForm_name()%></td>
 			              <td <%=bgColor %> class="text"><%=form1M.getForm_status()%></td>
 			            </tr>

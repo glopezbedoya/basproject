@@ -16,8 +16,8 @@ function buttonAction(form,action){
 		alert('No Data Select');
 	}
 }
-function updateEJDATable2(form,fn_no){
-	alert('fn_no : ' +fn_no);
+function updateEJDATable3(form,fn_no){
+	//alert('fn_no : ' +fn_no);
 	$('input[name=form_no]').val(fn_no);
 	$('input[name=ejdaAction]').val('EJDAM018');
 	$('input[name=ejdaMethod]').val('doUpdate');
@@ -26,13 +26,7 @@ function updateEJDATable2(form,fn_no){
 	document.ejdaformNo1.submit();
 }
 
-function CancelButton(form){
-	//alert('doChangeForm ' + form);
-	$('input[name=ejdaAction]').val('EJDAM018');
-	$('input[name=ejdaMethod]').val('openForm1');
-	$('input[name=screenName]').val('EJDAM018.jsp');
-	form.submit();
-}
+
 function changeSelectPage(form){
 	$('input[name=ejdaAction]').val('EJDAM018');
 	$('input[name=ejdaMethod]').val('doSearch');
