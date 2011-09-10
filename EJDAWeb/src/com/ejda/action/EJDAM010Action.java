@@ -91,9 +91,13 @@ public class EJDAM010Action extends AbstractAction {
 	}
 
 	private boolean doSubmitButton() {
+		log.debug("---Start : doSubmitButton---");
 		boolean result = false;
 		String iuser = (String) getRequest().getSession().getAttribute("iuser");
 		String formNo = (String) getRequest().getSession().getAttribute("form_no");
+		
+		log.debug("iuser = " + iuser);
+		log.debug("formNo = " + formNo);
 		if (null==iuser || "".equals(iuser)){
 			iuser = "system";
 		}
@@ -104,7 +108,9 @@ public class EJDAM010Action extends AbstractAction {
 		form1.setForm_no(formNo);
 		try{
 			Form1DAO dao = new Form1DAOImpl();
-			dao.UpdateFrom1Table(form1);
+			//dao.UpdateFrom1Table(form1);
+			dao.saveFrom1Table1(form1);
+			doSearch();
 			result = doSearch();
 			
 			log.debug("result = "+result);
@@ -191,10 +197,10 @@ public class EJDAM010Action extends AbstractAction {
 		String sqlWhere="";
 		try{
 			sql.append(EJDAConstant.SQL.FORM1_TABLE1_SQL);
-			if (sql.indexOf("WHERE") != -1){
-				sqlWhere = sql.substring(sql.indexOf("WHERE"),sql.length());
-				sqlCommand = sql.substring(0, sql.lastIndexOf("WHERE"));
-			}
+//			if (sql.indexOf("WHERE") != -1){
+//				sqlWhere = sql.substring(sql.indexOf("WHERE"),sql.length());
+//				sqlCommand = sql.substring(0, sql.lastIndexOf("WHERE"));
+//			}
 			if (!"".equals(form1Cri.getForm_name())){
 				//sql.append(" WHERE ");
 				sqlWhere = " FORM_NAME = ? AND ";
@@ -205,14 +211,14 @@ public class EJDAM010Action extends AbstractAction {
 			log.debug("sqlCommand >> " + sqlCommand);
 			
 			sql1.append(sqlCommand + " " + sqlWhere);
-			
+			//sql.append(sql.toString());
 			log.debug("sql >> " + sql1.toString());
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
-		sql1 = removeWasteSQL(sql1);
-		return sql1.toString();
+		sql = removeWasteSQL(sql);
+		return sql.toString();
 	}
 	
 	private Vector getValueListParameters() {

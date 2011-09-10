@@ -59,6 +59,8 @@ public class EJDAM014Action extends AbstractAction {
 	private boolean doSubmitButton() {
 		boolean result = false;
 		String iuser = (String) getRequest().getSession().getAttribute("iuser");
+		String formNo = (String) getRequest().getSession().getAttribute("form_no");
+		
 		if (null==iuser || "".equals(iuser)){
 			iuser = "system";
 		}
@@ -66,6 +68,7 @@ public class EJDAM014Action extends AbstractAction {
 		form1.setForm_name("FN_" + iuser);
 		form1.setForm_status("S");
 		form1.setUpdate_by(iuser);
+		form1.setForm_no(formNo);
 		try{
 			Form1DAO dao = new Form1DAOImpl();
 			dao.UpdateFrom1Table(form1);
@@ -81,6 +84,8 @@ public class EJDAM014Action extends AbstractAction {
 	private boolean doUpdate() {
 		String form_no = getRequest().getParameter("form_no");
 		getRequest().getSession().setAttribute("form_no", form_no);
+		
+		log.debug("doUpdate : form_no = " +form_no);
 		return true;
 	}
 
