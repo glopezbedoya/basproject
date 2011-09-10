@@ -95,6 +95,8 @@
         </tr>
 		<!--Panging-->
          <%
+         log.debug("valueListM >> " + valueListM.getCount());
+         log.debug("valueListM >> " + valueListM.getItemsPerPage());
 			int allPage = valueListM.getCount() / valueListM.getItemsPerPage();
 			int lastPage = (valueListM.getCount()/valueListM.getItemsPerPage());
 			if ((valueListM.getCount()%valueListM.getItemsPerPage())>0)  {
