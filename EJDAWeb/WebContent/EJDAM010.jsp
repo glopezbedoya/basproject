@@ -29,6 +29,7 @@
 	<input type="hidden" name="ejdaMethod" value=""> 
 	<input type="hidden" name="screenName" value="">
 	<input type="hidden" name="actionName" value="">
+	<input type="hidden" name="form_no" value="">
 	<input type="hidden" name="page" value="<%=valueListM.getAtPage() %>" />
 	<input type="hidden" name="volumePerPage" value="<%=valueListM.getItemsPerPage() %>" />
 	<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
@@ -167,9 +168,7 @@
           <th scope="row">&nbsp;</th>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td><div align="right">
-          	<%=DisplayFormatUtil.displayButton("Delete","onclick=\"buttonAction(this.form,'doDelete')\"",false) %>
-          </div></td>
+          
         </tr>
         <tr>
           <th colspan="4" scope="row" align="center"><table width="951" border="0" align="center" cellpadding="0" cellspacing="1">
@@ -190,11 +189,13 @@
             			form1M = (Form1Model)form1Vt.get(i);            	
             			bgColor = (i%2 == 0)?bgColor1:bgColor2;
             %>
+            
 			            <tr onclick="updateEJDATable2(this.form,'<%=form1M.getForm_no() %>');">
 			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form1M.getForm_no() %>"/></th>
 			              <td <%=bgColor %> class="text"><%=form1M.getForm_no()%></td>
 			              <td <%=bgColor %> class="text"><%=form1M.getForm_name()%></td>
 			              <td <%=bgColor %> class="text"><%=form1M.getForm_status()%></td>
+			              
 			            </tr>
             <%		}
             	}
