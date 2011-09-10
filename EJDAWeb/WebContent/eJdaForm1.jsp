@@ -14,7 +14,8 @@
 	Vector form1Vt = form1Bean.getForm1Vt();
 	Form1Model form1M = new Form1Model();
 	String form_action = (String)form1Bean.getActionName();
-	String form_no = (String)request.getParameter("form_no");
+	String form_no = (String)request.getSession().getAttribute("form_no");
+	
 	String bgColor1 = "bordercolor=\"#F4F4F4\"";
 	String bgColor2 = "bgcolor=\"#DFEFFF\"";
 	ValueListModel valueListM = form1Bean.getValueListM();
@@ -38,7 +39,7 @@
       <tr>
         <td width="50%" colspan="2" align="center"><table border="0" cellspacing="1" cellpadding="1">
           <tr>
-            <td colspan="2" align="left" class="textDesc" ><%=form_action %></td>
+            <td colspan="2" align="left" class="textDesc" ><%=form_no %> : <%=form_action %></td>
           </tr>
           <tr>
             <td colspan="2" align="left" ><font class="textDescBold">1.Consignor/Exporter(Name and address)</font></td>

@@ -165,9 +165,7 @@
           <th scope="row">&nbsp;</th>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td><div align="right">
-          	<%=DisplayFormatUtil.displayButton("Delete","onclick=\"buttonAction(this.form,'doDelete')\"",false) %>
-          </div></td>
+          
         </tr>
         <tr>
           <th colspan="4" scope="row" align="center"><table width="951" border="0" align="center" cellpadding="0" cellspacing="1">
