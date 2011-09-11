@@ -105,13 +105,13 @@
 }
 
 .success {
-	background: #fff url(../img/p_bg.jpg) bottom right no-repeat;
+	background: #fff;
 	border: 1px solid #999999;
 	border-top: none
 }
 
 .successheader {
-	background: url(../img/p_hd.gif) repeat-x;
+	background: url(../img/success1_h.gif) repeat-x;
 	color: #000000;
 	border: 1px solid #60a174;
 	border-bottom: none
