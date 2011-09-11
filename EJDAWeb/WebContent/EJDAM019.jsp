@@ -3,23 +3,24 @@
 <%@page import="java.util.Vector"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@page import="com.tcd.ejda.model.Form1Model"%>
-<%@page import="com.ejda.sessionBean.Form1Bean"%>
+<%@page import="com.tcd.ejda.model.Form2Model"%>
+<%@page import="com.ejda.sessionBean.Form2Bean"%>
 <%@page import="com.ejda.util.DisplayFormatUtil"%>
 <%@page import="com.tcd.ejda.model.ValueListModel"%>
-<script language="javascript" src="js/EJDAM018.js"></script>
+<script language="javascript" src="js/EJDAM019.js"></script>
 <%
+	/**  EJDA Form 2 *******/
 	Logger log = Logger.getLogger("JspLog");
-	Form1Bean form1Bean = (Form1Bean)request.getSession().getAttribute("Form1Bean");
-	log.debug("form1Bean :: " + form1Bean);
-	Form1Model form1ModelSP = form1Bean.getForm1ModelSP();
-	Vector form1Vt = form1Bean.getForm1Vt();
-	Form1Model form1M = new Form1Model();
-	String form_action = (String)form1Bean.getActionName();
+	Form2Bean form2Bean = (Form2Bean)request.getSession().getAttribute("form2Bean");
+	log.debug("form2Bean :: " + form2Bean);
+	Form2Model form2ModelSP = form2Bean.getForm2ModelSP();
+	Vector form2Vt = form2Bean.getForm2Vt();
+	Form2Model form2M = new Form2Model();
+	String form_action = (String)form2Bean.getActionName();
 	
 	String bgColor1 = "bordercolor=\"#F4F4F4\"";
 	String bgColor2 = "bgcolor=\"#DFEFFF\"";
-	ValueListModel valueListM = form1Bean.getValueListM();
+	ValueListModel valueListM = form2Bean.getValueListM();
 	
 	if(null == valueListM) valueListM = new ValueListModel();
 	
@@ -38,18 +39,18 @@
 	}
 	/* end responseMessage to user */
 %>	
-<form name="ejdaformNo1" method="post" action="/EJDAWeb/EJDAControler">
+<form name="ejdaformNo2" method="post" action="/EJDAWeb/EJDAControler">
 	<input type="hidden" name="ejdaAction" value=""> 
 	<input type="hidden" name="ejdaMethod" value=""> 
 	<input type="hidden" name="screenName" value="">
 	<input type="hidden" name="actionName" value="">
+	<input type="hidden" name="form_no" value="">
 	<input type="hidden" name="page" value="<%=valueListM.getAtPage() %>" />
 	<input type="hidden" name="volumePerPage" value="<%=valueListM.getItemsPerPage() %>" />
-	<input type="hidden" id="form_no" name="form_no"value="">
 	<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
 		
         <tr align="left">
-          <td align="left" class="style1" scope="row"><font class="textTop">TABLE 3 >> FORM No. 1</font></td>
+          <td align="left" class="style1" scope="row"><font class="textTop">TABLE 3 >> FORM No. 2</font></td>
           <td>&nbsp;</td>
           
         </tr>
@@ -57,6 +58,7 @@
         	<td><table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
         	
         
+        <tr>
        		
        		<td height="20"></td>
        		<td class="text" align="right"> </td>
@@ -64,7 +66,7 @@
         </tr>
         <tr>
        		<td align="left"><span class="text">Form name </span></td>
-       		<td align="left"><%=DisplayFormatUtil.displayInputTextBox("txtFormName",form1ModelSP.getForm_name(),"") %><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'doSearch')\"",false) %></td>
+       		<td align="left"><%=DisplayFormatUtil.displayInputTextBox("txtFormName",form2ModelSP.getForm_name(),"") %><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'doSearch')\"",false) %></td>
        		          		
         </tr>
         <tr>
@@ -149,7 +151,7 @@
 			String showPage = DisplayFormatUtil.displaySelectPaging("selectPaging",allPage,valueListM.getAtPage(),"onchange=\"changeSelectPage(this.form)\"");
 			%>
 			 <%
-            	if(form1Vt != null && form1Vt.size() > 0){%>
+            	if(form2Vt != null && form2Vt.size() > 0){%>
         <tr>
           <th colspan="4" scope="row"><div align="right"><span  class="textPage">&#3649;&#3626;&#3604;&#3591;&#3612;&#3621;&#3585;&#3634;&#3619;&#3588;&#3657;&#3609;&#3627;&#3634; <%=valueListM.getAtPage()+"/"+allPage %></span>
             <%=showPage %>
@@ -176,9 +178,7 @@
           <th scope="row">&nbsp;</th>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td><div align="right">
-          	<%=DisplayFormatUtil.displayButton("Delete","onclick=\"buttonAction(this.form,'doDelete')\"",false) %>
-          </div></td>
+          
         </tr>
         <tr>
           <th colspan="4" scope="row" align="center"><table width="951" border="0" align="center" cellpadding="0" cellspacing="1">
@@ -193,17 +193,18 @@
               <td bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">Form Status</div></td>
             </tr>
             <%
-            	log.debug("bgColor fom1Vt.size() : " + form1Vt.size());
             		String bgColor;
-            		for(int i=0;i<form1Vt.size();i++){
-            			form1M = (Form1Model)form1Vt.get(i);            	
+            		for(int i=0;i<form2Vt.size();i++){
+            			form2M = (Form2Model)form2Vt.get(i);            	
             			bgColor = (i%2 == 0)?bgColor1:bgColor2;
             %>
-			            <tr onclick="updateEJDATable3(this.form,'<%=form1M.getForm_no() %>');" style="cursor:hand">
-			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form1M.getForm_no() %>"/></th>
-			              <td <%=bgColor %> class="text"><%=form1M.getForm_no()%></td>
-			              <td <%=bgColor %> class="text"><%=form1M.getForm_name()%></td>
-			              <td <%=bgColor %> class="text"><%=form1M.getForm_status()%></td>
+            
+			            <tr onclick="updateEJDATable3(this.form,'<%=form2M.getForm_no() %>');" style="cursor:hand">
+			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form2M.getForm_no() %>"/></th>
+			              <td <%=bgColor %> class="text"><%=form2M.getForm_no()%></td>
+			              <td <%=bgColor %> class="text"><%=form2M.getForm_name()%></td>
+			              <td <%=bgColor %> class="text"><%=form2M.getForm_status()%></td>
+			              
 			            </tr>
             <%		}
             	}

@@ -24,6 +24,20 @@
 	if(null == valueListM) valueListM = new ValueListModel();
 	
 %>
+<%
+ String responseMessage = (String) request.getSession().getAttribute("responseMessage");
+ 	log.debug("responseMessage 1 -> " + responseMessage);
+	if(!"".equalsIgnoreCase(responseMessage) && null != responseMessage){
+%> <script language="javascript">
+			jQuery(document).ready(function(){
+				displayResponseMessage("<%=responseMessage%>");
+				return false;
+			});
+		</script> <%
+			request.getSession().removeAttribute("responseMessage");
+	}
+	/* end responseMessage to user */
+%>	
 <form name="ejdaformNo1" method="post" action="/EJDAWeb/EJDAControler">
 	<input type="hidden" name="ejdaAction" value=""> 
 	<input type="hidden" name="ejdaMethod" value=""> 
@@ -37,7 +51,7 @@
 	<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
 		
         <tr align="left">
-          <td align="left" class="style1" scope="row">TABLE 2</td>
+          <td align="left" class="style1" scope="row"><font class="textTop">TABLE 2 >> FORM No. 1</font></td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
@@ -187,7 +201,7 @@
             			form1M = (Form1Model)form1Vt.get(i);            	
             			bgColor = (i%2 == 0)?bgColor1:bgColor2;
             %>
-			            <tr onclick="updateEJDATable2(this.form,'<%=form1M.getForm_no() %>');">
+			            <tr onclick="updateEJDATable2(this.form,'<%=form1M.getForm_no() %>');" style="cursor:hand">
 			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form1M.getForm_no() %>"/></th>
 			              <td <%=bgColor %> class="text"><%=form1M.getForm_no()%></td>
 			              <td <%=bgColor %> class="text"><%=form1M.getForm_name()%></td>
