@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import com.ejda.constant.EJDAConstant;
 import com.ejda.sessionBean.Form1Bean;
+import com.ejda.util.EJDAUtil;
 import com.tcd.ejda.dao.Form1DAO;
 import com.tcd.ejda.dao.Form1DAOImpl;
 import com.tcd.ejda.dao.TransactionLogDAO;
@@ -95,6 +96,7 @@ public class EJDAM010Action extends AbstractAction {
 		boolean result = false;
 		String iuser = (String) getRequest().getSession().getAttribute("iuser");
 		String formNo = (String) getRequest().getSession().getAttribute("form_no");
+		String ipAddress = getRequest().getRemoteAddr();
 		
 		log.debug("iuser = " + iuser);
 		log.debug("formNo = " + formNo);
@@ -110,6 +112,17 @@ public class EJDAM010Action extends AbstractAction {
 			Form1DAO dao = new Form1DAOImpl();
 			//dao.UpdateFrom1Table(form1);
 			dao.saveFrom1Table1(form1);
+			
+			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
+			EJDAUtil ejda = new EJDAUtil();
+			transactionLogModel.setMenuId("M010");
+			transactionLogModel.setTranAction("ADD");
+			transactionLogModel.setDescription("Save and submit EJDA Table 1 Form 1");
+			transactionLogModel.setIpAddress(ipAddress);
+			transactionLogModel.setTranBy(iuser);
+			ejda.insertTranLog(transactionLogModel);
+			
+			getRequest().getSession().setAttribute("responseMessage", "Submit Form 1 Successfully.");
 			doSearch();
 			result = doSearch();
 			
@@ -201,18 +214,16 @@ public class EJDAM010Action extends AbstractAction {
 //				sqlWhere = sql.substring(sql.indexOf("WHERE"),sql.length());
 //				sqlCommand = sql.substring(0, sql.lastIndexOf("WHERE"));
 //			}
-			if (!"".equals(form1Cri.getForm_name())){
-				//sql.append(" WHERE ");
-				sqlWhere = " FORM_NAME = ? AND ";
-				
-			}
+//			if (!"".equals(form1Cri.getForm_name())){
+//				//sql.append(" WHERE ");
+//				sqlWhere = " FORM_NAME = ? AND ";
+//				
+//			}
 			
-			log.debug("sqlWhere >> " + sqlWhere);
-			log.debug("sqlCommand >> " + sqlCommand);
 			
-			sql1.append(sqlCommand + " " + sqlWhere);
+			
 			//sql.append(sql.toString());
-			log.debug("sql >> " + sql1.toString());
+			log.debug("sql >> " + sql.toString());
 		}catch(Exception e){
 			e.printStackTrace();
 		}

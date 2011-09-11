@@ -5,21 +5,20 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import com.ejda.constant.EJDAConstant;
-import com.ejda.sessionBean.Form1Bean;
-import com.ejda.sessionBean.TransactionLogBean;
+import com.ejda.sessionBean.Form2Bean;
 import com.ejda.util.EJDAUtil;
-import com.tcd.ejda.dao.Form1DAO;
-import com.tcd.ejda.dao.Form1DAOImpl;
+import com.tcd.ejda.dao.Form2DAO;
+import com.tcd.ejda.dao.Form2DAOImpl;
 import com.tcd.ejda.dao.TransactionLogDAO;
 import com.tcd.ejda.dao.TransactionLogDAOImpl;
-import com.tcd.ejda.model.Form1Model;
+import com.tcd.ejda.model.Form2Model;
 import com.tcd.ejda.model.TransactionLogModel;
 import com.tcd.ejda.model.ValueListModel;
 
-public class EJDAM022Action extends AbstractAction {
+public class EJDAM011Action extends AbstractAction {
 
-	private Logger log = Logger.getLogger(EJDAM022Action.class);
-	private Form1Bean form1Bean;
+	private Logger log = Logger.getLogger(EJDAM011Action.class);
+	private Form2Bean form2Bean;
 	
 	@Override
 	public void clearSessionNotUsed() {
@@ -29,16 +28,17 @@ public class EJDAM022Action extends AbstractAction {
 
 	@Override
 	public void init() {
-		/** EJDA Form no 1****/
-		log.debug("*********** EJDAM022Action ***********");
+		/** EJDA Form no 2****/
+		log.debug("*********** EJDAM011Action ***********");
 		
-		form1Bean = getForm1Bean();
-		form1Bean.setForm1Vt(new Vector<Form1Model>());
-		form1Bean.setForm1ModelSP(new Form1Model());
+		
+		form2Bean = getform2Bean();
+		form2Bean.setForm2Vt(new Vector<Form2Model>());
+		form2Bean.setForm2ModelSP(new Form2Model());
 		ValueListModel valueListM = new ValueListModel();
-		valueListM.setReturnModel("Form1Model");
-		form1Bean.setValueListM(valueListM);
-		setForm1Bean(form1Bean);
+		valueListM.setReturnModel("form2Model");
+		form2Bean.setValueListM(valueListM);
+		setform2Bean(form2Bean);
 	}
 
 	@Override
@@ -48,43 +48,39 @@ public class EJDAM022Action extends AbstractAction {
 			return doSearch();
 		}else if(ejdaMethod.equalsIgnoreCase("doDelete")){
 			return doDelete();
-		}else if (ejdaMethod.equalsIgnoreCase("doUpdate")){
-			return doUpdate();
+		}else if (ejdaMethod.equalsIgnoreCase("doAdd")){
+			return doAdd();
 		}else if (ejdaMethod.equalsIgnoreCase("doSubmitButton")){
 			return doSubmitButton();
+		}else if (ejdaMethod.equalsIgnoreCase("doSaveButton")){
+			return doSaveButton();
+		}else if (ejdaMethod.equalsIgnoreCase("doUpdate")){
+			return doUpdate();
 		}
 		
 		
 		return false;
 	}
-	private boolean doSubmitButton() {
+	
+	private boolean doUpdate() {
+		String form_no = getRequest().getParameter("form_no");
+		getRequest().getSession().setAttribute("form_no", form_no);
+		return true;
+	}
+	
+	private boolean doSaveButton() {
 		boolean result = false;
 		String iuser = (String) getRequest().getSession().getAttribute("iuser");
-		String formNo = (String) getRequest().getSession().getAttribute("form_no");
-		String ipAddress = getRequest().getRemoteAddr();
-		
 		if (null==iuser || "".equals(iuser)){
 			iuser = "system";
 		}
-		Form1Model form1 = new Form1Model();
-		form1.setForm_name("FN_" + iuser);
-		form1.setForm_status("C");
-		form1.setUpdate_by(iuser);
-		form1.setForm_no(formNo);
+		Form2Model form2 = new Form2Model();
+		form2.setForm_name("FN_" + iuser);
+		form2.setForm_status("D");
+		form2.setUpdate_by(iuser);
 		try{
-			Form1DAO dao = new Form1DAOImpl();
-			dao.UpdateFrom1Table(form1);
-			
-			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
-			EJDAUtil ejda = new EJDAUtil();
-			transactionLogModel.setMenuId("M022");
-			transactionLogModel.setTranAction("UPD");
-			transactionLogModel.setDescription("Update EJDA Table 4 Form 1");
-			transactionLogModel.setIpAddress(ipAddress);
-			transactionLogModel.setTranBy(iuser);
-			ejda.insertTranLog(transactionLogModel);
-			
-			getRequest().getSession().setAttribute("responseMessage", "Submit Form 1 Successfully.");
+//			form2DAO dao = new form2DAOImpl();
+//			dao.saveFrom1Table1(form2);
 			result = doSearch();
 			
 			log.debug("result = "+result);
@@ -94,15 +90,55 @@ public class EJDAM022Action extends AbstractAction {
 		}
 		return result;
 	}
-	private boolean doUpdate() {
-		String form_no = getRequest().getParameter("form_no");
-		getRequest().getSession().setAttribute("form_no", form_no);
-		return true;
+
+	private boolean doSubmitButton() {
+		log.debug("---Start : doSubmitButton---");
+		boolean result = false;
+		String iuser = (String) getRequest().getSession().getAttribute("iuser");
+		String formNo = (String) getRequest().getSession().getAttribute("form_no");
+		String ipAddress = getRequest().getRemoteAddr();
+		
+		log.debug("iuser = " + iuser);
+		log.debug("formNo = " + formNo);
+		if (null==iuser || "".equals(iuser)){
+			iuser = "system";
+		}
+		Form2Model form2 = new Form2Model();
+		form2.setForm_name("FN_" + iuser);
+		form2.setForm_status("A");
+		form2.setUpdate_by(iuser);
+		form2.setForm_no(formNo);
+		try{
+			Form2DAO dao = new Form2DAOImpl();
+			//dao.UpdateFrom1Table(form2);
+			dao.saveFrom2Table2(form2);
+			
+			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
+			EJDAUtil ejda = new EJDAUtil();
+			transactionLogModel.setMenuId("M011");
+			transactionLogModel.setTranAction("ADD");
+			transactionLogModel.setDescription("Save and submit EJDA Table 1 Form 2");
+			transactionLogModel.setIpAddress(ipAddress);
+			transactionLogModel.setTranBy(iuser);
+			ejda.insertTranLog(transactionLogModel);
+			
+			getRequest().getSession().setAttribute("responseMessage", "Submit Form 2 Successfully.");
+			doSearch();
+			result = doSearch();
+			
+			log.debug("result = "+result);
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
 	}
 
-	private boolean openForm1() {
+	private boolean doAdd() {
 		// TODO Auto-generated method stub
 		log.debug("*********** doChangePage ***********");
+		form2Bean = getform2Bean();
+		form2Bean.setActionName("EJDAM011");
 		return true;
 	}
 
@@ -114,27 +150,29 @@ public class EJDAM022Action extends AbstractAction {
 	
 	public boolean doSearch(){
 		log.debug("*********** doSearch ***********");
+//		log.debug("ejdaMethod = "+getRequest().getParameter("ejdaMethod"));
 		boolean result = false;
 		setCriteriaPameter();
-		form1Bean = getForm1Bean();
+		form2Bean = getform2Bean();
 		ValueListModel valueListM = new ValueListModel();
 		ValueListAction valueListA = new ValueListAction();
 		log.debug("getRequest().getParameter(Page)"+getRequest().getParameter("Page"));
 		try{
 			Vector tranLogVt = new Vector();
-			valueListM = form1Bean.getValueListM();
-			valueListM.setSQL(this.setSQL(form1Bean.form1ModelSP));
+			valueListM = form2Bean.getValueListM();
+			valueListM.setSQL(this.setSQL(form2Bean.form2ModelSP));
 			valueListM.setParameters(getValueListParameters());
 			valueListM.setPage(getRequest().getParameter("page"));
 			valueListM.setItemsPerPage(Integer.parseInt(getRequest().getParameter("volumePerPage")));
 			
-			form1Bean.setValueListM(valueListA.doSearch(valueListM));
-			form1Bean.setForm1Vt(form1Bean.getValueListM().getResult());
-			form1Bean.setActionName("EJDAM022");
-			log.debug("form1Bean = " + form1Bean.getForm1Vt().size());
-			log.debug("tranLogBean.getValueListM().getCount() = "+form1Bean.getValueListM().getCount());
+			form2Bean.setValueListM(valueListA.doSearch(valueListM));
+			form2Bean.setForm2Vt(form2Bean.getValueListM().getResult());
+			form2Bean.setActionName("EJDAM011");
+			log.debug("form2Bean = " + form2Bean.getForm2Vt().size());
+			log.debug("form2Bean.getValueListM().getCount() = "+form2Bean.getValueListM().getCount());
+			log.debug("form2Bean setActionName = " + form2Bean.getActionName());
 			getRequest().getSession().removeAttribute("VALUE_LIST");
-			setForm1Bean(form1Bean);
+			setform2Bean(form2Bean);
 			result = true;
 		}catch (Exception e) {
 			// TODO: handle exception
@@ -144,38 +182,39 @@ public class EJDAM022Action extends AbstractAction {
 		return result;
 	}
 	
-	public Form1Bean getForm1Bean() {
-		Form1Bean form1Bean = (Form1Bean)getRequest().getSession().getAttribute("Form1Bean");
-		if (null == form1Bean){
-			form1Bean = new Form1Bean();
+	public Form2Bean getform2Bean() {
+		Form2Bean form2Bean = (Form2Bean)getRequest().getSession().getAttribute("form2Bean");
+		if (null == form2Bean){
+			form2Bean = new Form2Bean();
 		}
-		return form1Bean;
+		return form2Bean;
 	}
 
-	public void setForm1Bean(Form1Bean form1Bean) {
-		getRequest().getSession().setAttribute("Form1Bean", form1Bean);
+	public void setform2Bean(Form2Bean form2Bean) {
+		getRequest().getSession().setAttribute("form2Bean", form2Bean);
+	}
+
+	
+	private void setCriteriaPameter(){
+		
+		Form2Model form2 = new Form2Model();
+		form2.setForm_name(getRequest().getParameter("txtFormName"));
+		
+		getform2Bean().setForm2ModelSP(form2);
 	}
 	
-private void setCriteriaPameter(){
-		
-		Form1Model form1 = new Form1Model();
-		form1.setForm_name(getRequest().getParameter("txtFormName"));
-		
-		getForm1Bean().setForm1ModelSP(form1);
-	}
-	
-	private String setSQL(Form1Model form1Cri){
+	private String setSQL(Form2Model form2Cri){
 		StringBuffer sql = new StringBuffer();
 		StringBuffer sql1 = new StringBuffer();
 		String sqlCommand ="";
 		String sqlWhere="";
 		try{
-			sql.append(EJDAConstant.SQL.FORM1_TABLE4_SQL);
+			sql.append(EJDAConstant.SQL.FORM2_TABLE1_SQL);
 //			if (sql.indexOf("WHERE") != -1){
 //				sqlWhere = sql.substring(sql.indexOf("WHERE"),sql.length());
 //				sqlCommand = sql.substring(0, sql.lastIndexOf("WHERE"));
 //			}
-//			if (!"".equals(form1Cri.getForm_name())){
+//			if (!"".equals(form2Cri.getForm_name())){
 //				//sql.append(" WHERE ");
 //				sqlWhere = " FORM_NAME = ? AND ";
 //				
@@ -185,7 +224,7 @@ private void setCriteriaPameter(){
 //			log.debug("sqlCommand >> " + sqlCommand);
 //			
 //			sql1.append(sqlCommand + " " + sqlWhere);
-//			
+//			//sql.append(sql.toString());
 //			log.debug("sql >> " + sql1.toString());
 		}catch(Exception e){
 			e.printStackTrace();
@@ -197,10 +236,10 @@ private void setCriteriaPameter(){
 	
 	private Vector getValueListParameters() {
 		Vector parameters = new Vector();
-		Form1Model form1 = getForm1Bean().getForm1ModelSP();
-		if (!"".equals(form1.getForm_name())){
-			log.debug("Form Name = "+form1.getForm_name());
-			parameters.add(form1.getForm_name());
+		Form2Model form2 = getform2Bean().getForm2ModelSP();
+		if (!"".equals(form2.getForm_name())){
+			log.debug("Form Name = "+form2.getForm_name());
+			parameters.add(form2.getForm_name());
 		}
 		log.info("parameters.size() = "+parameters.size());
 		return parameters;
@@ -219,14 +258,6 @@ private void setCriteriaPameter(){
 		try{
 			TransactionLogDAO dao = new TransactionLogDAOImpl();
 			result = dao.deleteTransactionLog(deleteTranId);
-//			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
-//			EJDAUtil ejda = new EJDAUtil();
-//			transactionLogModel.setMenuId("M008");
-//			transactionLogModel.setTranAction("DEL");
-//			transactionLogModel.setDescription("Delete Transaction");
-//			transactionLogModel.setIpAddress(ipAddress);
-//			transactionLogModel.setTranBy(iuser);
-//			ejda.insertTranLog(transactionLogModel);
 			result = doSearch();
 			
 			log.debug("result = "+result);

@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import com.ejda.constant.EJDAConstant;
 import com.ejda.sessionBean.Form1Bean;
 import com.ejda.sessionBean.TransactionLogBean;
+import com.ejda.util.EJDAUtil;
 import com.tcd.ejda.dao.Form1DAO;
 import com.tcd.ejda.dao.Form1DAOImpl;
 import com.tcd.ejda.dao.TransactionLogDAO;
@@ -60,7 +61,7 @@ public class EJDAM014Action extends AbstractAction {
 		boolean result = false;
 		String iuser = (String) getRequest().getSession().getAttribute("iuser");
 		String formNo = (String) getRequest().getSession().getAttribute("form_no");
-		
+		String ipAddress = getRequest().getRemoteAddr();
 		if (null==iuser || "".equals(iuser)){
 			iuser = "system";
 		}
@@ -72,6 +73,17 @@ public class EJDAM014Action extends AbstractAction {
 		try{
 			Form1DAO dao = new Form1DAOImpl();
 			dao.UpdateFrom1Table(form1);
+			
+			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
+			EJDAUtil ejda = new EJDAUtil();
+			transactionLogModel.setMenuId("M014");
+			transactionLogModel.setTranAction("UPD");
+			transactionLogModel.setDescription("Update EJDA Table 2 Form 1");
+			transactionLogModel.setIpAddress(ipAddress);
+			transactionLogModel.setTranBy(iuser);
+			ejda.insertTranLog(transactionLogModel);
+			
+			getRequest().getSession().setAttribute("responseMessage", "Submit Form 1 Successfully.");
 			result = doSearch();
 			
 			log.debug("result = "+result);
@@ -160,28 +172,28 @@ private void setCriteriaPameter(){
 		String sqlWhere="";
 		try{
 			sql.append(EJDAConstant.SQL.FORM1_TABLE2_SQL);
-			if (sql.indexOf("WHERE") != -1){
-				sqlWhere = sql.substring(sql.indexOf("WHERE"),sql.length());
-				sqlCommand = sql.substring(0, sql.lastIndexOf("WHERE"));
-			}
-			if (!"".equals(form1Cri.getForm_name())){
-				//sql.append(" WHERE ");
-				sqlWhere = " FORM_NAME = ? AND ";
-				
-			}
-			
-			log.debug("sqlWhere >> " + sqlWhere);
-			log.debug("sqlCommand >> " + sqlCommand);
-			
-			sql1.append(sqlCommand + " " + sqlWhere);
-			
-			log.debug("sql >> " + sql1.toString());
+//			if (sql.indexOf("WHERE") != -1){
+//				sqlWhere = sql.substring(sql.indexOf("WHERE"),sql.length());
+//				sqlCommand = sql.substring(0, sql.lastIndexOf("WHERE"));
+//			}
+//			if (!"".equals(form1Cri.getForm_name())){
+//				//sql.append(" WHERE ");
+//				sqlWhere = " FORM_NAME = ? AND ";
+//				
+//			}
+//			
+//			log.debug("sqlWhere >> " + sqlWhere);
+//			log.debug("sqlCommand >> " + sqlCommand);
+//			
+//			sql1.append(sqlCommand + " " + sqlWhere);
+//			
+//			log.debug("sql >> " + sql1.toString());
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
-		sql1 = removeWasteSQL(sql1);
-		return sql1.toString();
+		sql = removeWasteSQL(sql);
+		return sql.toString();
 	}
 	
 	private Vector getValueListParameters() {
