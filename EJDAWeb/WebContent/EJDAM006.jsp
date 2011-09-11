@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
      <%@page import="java.util.Vector"%>
     <%@page import="com.tcd.ejda.model.UsrModel" %>
+    <%@page import="com.tcd.ejda.model.RoleMenuModel"%>
     <%@page import="com.ejda.util.DisplayFormatUtil" %>
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -245,6 +246,12 @@ function changeSelectPage(form){
 
  <%
 		String iuser = (String) request.getSession().getAttribute("iuser");
+	 	String addDisabled="";
+		String updDisabled="";
+		String delDisabled="";
+		String inqDisabled="";
+		String cursors="style=\"cursor:hand\"";
+	
 		String bgColor1 = "bordercolor=\"#F4F4F4\"";
 		String bgColor2 = "bgcolor=\"#DFEFFF\"";
 		
@@ -263,7 +270,34 @@ function changeSelectPage(form){
 			vc = (Vector) userBean.getUsrVt();
 			log.debug("vc size = "+vc.size());
 		}
+		Vector rolevc = new Vector();
+		rolevc = (Vector)request.getSession().getAttribute("rolectrl");
 		
+		if (null!=rolevc){
+			for (int j=0; j<rolevc.size();j++){
+				log.debug("rolevc : " + rolevc);
+				RoleMenuModel roleM = (RoleMenuModel)rolevc.get(j);
+				if (roleM.getMENU_ID().equals("M006")){
+					if (!roleM.getFUN_ADD().equals("Y")){
+						addDisabled = "disabled=\"disabled\"";
+						cursors = "";
+					}
+					if (!roleM.getFUN_DELETE().equals("Y")){
+						delDisabled = "disabled=\"disabled\"";
+						cursors = "";
+					}
+					if (!roleM.getFUN_INQUIRY().equals("Y")){
+						inqDisabled = "disabled=\"disabled\"";
+						cursors = "";
+					}
+					if (!roleM.getFUN_UPDATE().equals("Y")){
+						updDisabled = "disabled=\"disabled\"";
+						cursors = "";
+					}
+				}
+			}
+		
+		}
 		ValueListModel valueListM = userBean.getValueListM();
 		if(null == valueListM) valueListM = new ValueListModel();
  %>
@@ -310,7 +344,7 @@ function changeSelectPage(form){
 		                      	    <td colspan="3" align="left"><%=DisplayUtil.displayInputTextBox("txtIVUser",users.getIV_USER(),"") %></td>
 		                      	    
 	                      	    
-		                      	    <td  align="right"><input type="button" name="new" id="new" value="New User" onClick="NewRole(this.form)"></td>
+		                      	    <td  align="right"><input type="button" name="new" id="new" value="New User" onClick="NewRole(this.form)" <%=addDisabled %>></td>
 		                   	      	<input type="hidden" name="cType" id="cType" value="">
 		                   	     
 		                   	      </tr>
@@ -350,7 +384,7 @@ function changeSelectPage(form){
 		                      	    <%} %>
 		                      	    </font>
 		                      	    </td>
-		                      	    <td align="left"><input type="button" name="search" id="search" value="Search"onClick="searchUser(this.form)"></td>
+		                      	    <td align="left"><input type="button" name="search" id="search" value="Search"onClick="searchUser(this.form)"<%=inqDisabled %>></td>
 		                      	     <td></td>
 		                   	      </tr>
 		                   	      
@@ -495,8 +529,8 @@ function changeSelectPage(form){
 	                   	    		%>
 	                   	    		<td <%=bgColor %>><font class="text"> <%=DisplayFormatUtil.SQLDateToString(rm.getCreate_date(),"DD/MM/YYYY")%></font></td>
 	                   	    		<td <%=bgColor %>><font class="text"> <%=show_locked %></font></td>
-	                   	    		<td <%=bgColor %>><font class="text"> <img src="images/edit.JPG" name="edit" id="edit" style="cursor:hand" onclick="EditUser('<%=i %>')"></font></td>
-	                   	    		<td <%=bgColor %>><font class="text"> <img src="images/delete.JPG" name="delete" id="delete" value="delete"style="cursor:hand" onclick="DeleteUser('<%=rm.getJda_id() %>')"></font></td>
+	                   	    		<td <%=bgColor %>><font class="text"> <img src="images/edit.JPG" name="edit" id="edit" <%=cursors %> onclick="EditUser('<%=i %>')" <%=updDisabled %>></font></td>
+	                   	    		<td <%=bgColor %>><font class="text"> <img src="images/delete.JPG" name="delete" id="delete" value="delete"<%=cursors %> onclick="DeleteUser('<%=rm.getJda_id() %>')"<%=delDisabled %>></font></td>
 	                   	    		<input type ="hidden" name="ejda_id_<%=i %>" id = "ejda_id_<%=i %>" value="<%=rm.getJda_id() %>">
 	                   	    		<input type ="hidden" name="iv_user_<%=i %>" id = "iv_user_<%=i %>" value="<%=rm.getIV_USER() %>">
 	                   	    		<input type ="hidden" name="user_name_<%=i %>" id ="user_name_<%=i %>" value="<%=rm.getUSERNAME() %>">

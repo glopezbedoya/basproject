@@ -1,35 +1,35 @@
-<%@page import="com.tcd.ejda.model.Form1Model"%>
-<%@page import="com.ejda.sessionBean.Form1Bean"%>
+<%@page import="com.tcd.ejda.model.Form2Model"%>
+<%@page import="com.ejda.sessionBean.Form2Bean"%>
 <%@page import="com.ejda.util.DisplayFormatUtil"%>
 <%@page import="com.tcd.ejda.model.ValueListModel"%>
 <%@page import="org.apache.log4j.Logger"%>
 <%@page import="java.util.Vector"%>
-<script language="javascript" src="js/ejdaform1.js"></script>
-<form name="ejdaformNo1" method="post" action="/EJDAWeb/EJDAControler">
+<script language="javascript" src="js/ejdaform2.js"></script>
+<form name="ejdaformNo2" method="post" action="/EJDAWeb/EJDAControler">
 <%
 	Logger log = Logger.getLogger("JspLog");
-	Form1Bean form1Bean = (Form1Bean)request.getSession().getAttribute("Form1Bean");
-	log.debug("form1Bean :: " + form1Bean);
-	Form1Model form1ModelSP = form1Bean.getForm1ModelSP();
-	Vector form1Vt = form1Bean.getForm1Vt();
-	Form1Model form1M = new Form1Model();
-	String form_action = (String)form1Bean.getActionName();
+	Form2Bean form2Bean = (Form2Bean)request.getSession().getAttribute("form2Bean");
+	log.debug("form2Bean :: " + form2Bean);
+	Form2Model form2ModelSP = form2Bean.getForm2ModelSP();
+	Vector form2Vt = form2Bean.getForm2Vt();
+	Form2Model form2M = new Form2Model();
+	String form_action = (String)form2Bean.getActionName();
 	String form_no = (String)request.getSession().getAttribute("form_no");
 	String showName = "";
 	
-	if (null!=form_action && "EJDAM010".equals(form_action)){
-		showName ="Table 1 : Form no. 1";
+	if (null!=form_action && "EJDAM011".equals(form_action)){
+		showName ="Table 1 : Form no. 2";
 	
-	}else if (null!=form_action && "EJDAM014".equals(form_action)){
-		showName ="Table 2 : Form no. 1";
-	}else if (null!=form_action && "EJDAM018".equals(form_action)){
-		showName ="Table 3 : Form no. 1";
-	}else if (null!=form_action && "EJDAM022".equals(form_action)){
-		showName ="Table 4 : Form no. 1";
+	}else if (null!=form_action && "EJDAM015".equals(form_action)){
+		showName ="Table 2 : Form no. 2";
+	}else if (null!=form_action && "EJDAM019".equals(form_action)){
+		showName ="Table 3 : Form no. 2";
+	}else if (null!=form_action && "EJDAM023".equals(form_action)){
+		showName ="Table 4 : Form no. 2";
 	}
 	String bgColor1 = "bordercolor=\"#F4F4F4\"";
 	String bgColor2 = "bgcolor=\"#DFEFFF\"";
-	ValueListModel valueListM = form1Bean.getValueListM();
+	ValueListModel valueListM = form2Bean.getValueListM();
 	
 	if(null == valueListM) valueListM = new ValueListModel();
 		
@@ -43,6 +43,8 @@
 	<input type="hidden" name="page" value="<%=valueListM.getAtPage() %>" />
 	<input type="hidden" name="volumePerPage" value="<%=valueListM.getItemsPerPage() %>" />
 	
+	
+
 <%
  String responseMessage = (String) request.getSession().getAttribute("responseMessage");
  	log.debug("responseMessage 1 -> " + responseMessage);
@@ -56,20 +58,24 @@
 			request.getSession().removeAttribute("responseMessage");
 	}
 	/* end responseMessage to user */
-%>	
+%>
+
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td align="center"><table width="800" border="0" cellspacing="1" cellpadding="1" bgcolor="#F8F8F8">
       <tr>
         <td width="50%" colspan="2" align="center"><table border="0" cellspacing="1" cellpadding="1">
-           <tr>
+        <tr>
             <td colspan="2" align="left" class="textDesc" >>> <%=showName %></td>
           </tr>
-          <tr>
+        	<tr>
             <td colspan="2" align="left" class="textDesc" ><%=form_no %> : <%=form_action %></td>
           </tr>
           <tr>
-            <td colspan="2" align="left" ><font class="textDescBold">1.Consignor/Exporter(Name and address)</font></td>
+            <td colspan="2" align="left" >&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="2" align="left" width="400" ><font class="textDescBold">1.Consignor/Exporter(Name and address)</font></td>
            </tr>
            <tr>
             <td colspan="2" align="left" height="20"></td>
@@ -160,11 +166,7 @@
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td colspan="2" align="left"><font class="textDescBold">14.Manifest   Registration No.</font></td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td colspan="2" align="left"><input type="text" name="ManifestRegis" id="ManifestRegis" /></td>
+            <td colspan="2" align="left">&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
@@ -210,35 +212,35 @@
           </table></td>
       </tr>
       <tr>
-        <td align="center" ><table border="0" cellspacing="1" cellpadding="1">
+        <td ><table border="0" cellspacing="1" cellpadding="1">
           <tr>
             <td colspan="2"><font class="textDescBold">4.Mode of   Transport </font></td>
             </tr>
           <tr>
-            <td width="100" align="left"><font class="textDesc"><input type="radio" name="radio" id="TransportMode" value="Sea" />
+            <td width="25%"><font class="textDesc"><input type="radio" name="radio" id="TransportMode" value="Sea" />
               Sea</font></td>
-            <td width="150" align="left"><font class="textDesc"><input type="radio" name="radio" id="TransportMode2" value="Sea" />
+            <td width="75%"><font class="textDesc"><input type="radio" name="radio" id="TransportMode2" value="Sea" />
               Rail</font></td>
             
             </tr>
           <tr>
-            <td align="left"><font class="textDesc"><input type="radio" name="radio" id="TransportMode5" value="Sea" />
+            <td><font class="textDesc"><input type="radio" name="radio" id="TransportMode5" value="Sea" />
               Road</font></td>
-            <td align="left"><font class="textDesc"><input type="radio" name="radio" id="TransportMode6" value="Sea" />
+            <td><font class="textDesc"><input type="radio" name="radio" id="TransportMode6" value="Sea" />
               Air</font></td>
             
             </tr>
           <tr>
-            <td align="left"><font class="textDesc"><input type="radio" name="radio" id="TransportMode3" value="Sea" />
+            <td><font class="textDesc"><input type="radio" name="radio" id="TransportMode3" value="Sea" />
               Pipe</font></td>
-            <td align="left"><font class="textDesc"><input type="radio" name="radio" id="TransportMode4" value="Sea" />
+            <td><font class="textDesc"><input type="radio" name="radio" id="TransportMode4" value="Sea" />
               Other(specify)
               </td>
             
             </tr>
           <tr>
-            <td align="left"></td>
-            <td align="left"><input type="text" name="TMOther" id="TMOther" /></td>
+            <td></td>
+            <td><input type="text" name="TMOther" id="TMOther" /></td>
             
             </tr>
           </table></td>
@@ -255,85 +257,105 @@
           </td>
         <td rowspan="3" align="center"><table width="472" border="0" cellpadding="1" cellspacing="1">
           <tr>
-            <td width="170" align="left"><font class="textDescBold">16.Import permit   No.</font></td>
-            <td colspan="2" align="left"><font class="textDescBold">17. Exchange Control Ref.</font></td>
+            <td width="170" colspan="2" align="left"><font class="textDescBold">15.Special Treatment</font></td>
+            <td width="159" align="left"><font class="textDescBold">16.Export Permit No.</font></td>
+            <td align="left"><font class="textDescBold">17.Exchange Control Ref.</font></td>
             </tr>
           <tr>
-            <td align="left"><input type="text" name="ImportPermitNo" id="ImportPermitNo" /></td>
-            <td align="left" colspan="2"><input type="text" name="ExchgCtrlRef" id="ExchgCtrlRef" /></td>
+            <td colspan="2" align="left"><input type="text" name="ImportPermitNo" id="ImportPermitNo" /></td>
+            <td align="left"><input type="text" name="ExchgCtrlRef" id="ExchgCtrlRef" /></td>
+            <td align="left"><input type="text" name="ExchgCtrlRef2" id="ExchgCtrlRef2" /></td>
             </tr>
           <tr>
-            <td>&nbsp;</td>
+            <td colspan="2">&nbsp;</td>
             <td colspan="2">&nbsp;</td>
             </tr>
           <tr>
-            <td align="left" ><font class="textDescBold">18. Special Treatment</font></td>
+            <td colspan="2" align="left" ><font class="textDescBold">18.Country of Origin</font></td>
             <td colspan="2" align="left" ><font class="textDescBold">19. Bill of Lading or comsignment Note No.</font></td>
             </tr>
           <tr>
+            <td align="left" ><font class="textDesc">Code </font>             </td>
             <td align="left" ><input type="text" name="SpecialTreatment" id="SpecialTreatment" /></td>
-            <td colspan="2" align="left" ><input type="text" name="BillLadingNote" id="BillLadingNote" /></td>
+            <td align="right" ><font class="textDesc">Code</font></td>
+            <td align="left" ><input type="text" name="BillLadingNote" id="BillLadingNote" /></td>
             </tr>
           <tr>
-            <td>&nbsp;</td>
+            <td align="left"><font class="textDesc">Desc</font></td>
+            <td align="left"><input type="text" name="SpecialTreatment2" id="SpecialTreatment2" /></td>
+            <td align="right"><font class="textDesc">Desc</font></td>
+            <td align="left"><input type="text" name="BillLadingNote2" id="BillLadingNote2" /></td>
+            </tr>
+          <tr>
+            <td colspan="2" align="left" >&nbsp;</td>
+            <td colspan="2" align="left" >&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="2" align="left" ><font class="textDescBold">20.Terms of Delivery and Payment</font></td>
+            <td align="left" ><font class="textDescBold">21.Currency Code</font></td>
+            <td align="left" ><font class="textDescBold">22.Amount Recrived/to be Received</font></td>
+            </tr>
+          <tr>
+            <td colspan="2" align="left" ><input type="text" name="TermDelivePayment" id="TermDelivePayment" /></td>
+            <td align="left" ><input type="text" name="CountryPayment" id="CountryPayment" /></td>
+            <td align="left" ><input type="text" name="CountryPayment2" id="CountryPayment2" /></td>
+            </tr>
+          <tr>
+            <td colspan="2">&nbsp;</td>
             <td colspan="2">&nbsp;</td>
             </tr>
           <tr>
-            <td align="left" ><font class="textDescBold">20. Terms of Delivery and Payment</font></td>
-            <td colspan="2" align="left" ><font class="textDescBold">21. County to Which payment of Goods to be made</font></td>
-            </tr>
-          <tr>
-            <td align="left" ><input type="text" name="TermDelivePayment" id="TermDelivePayment" /></td>
-            <td colspan="2" align="left" ><input type="text" name="CountryPayment" id="CountryPayment" /></td>
-            </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td colspan="2">&nbsp;</td>
-            </tr>
-          <tr>
-            <td align="left" ><font class="textDescBold">22. Exchange Rate</font>
+            <td colspan="2" align="left" ><font class="textDescBold">23. Exchange Rate</font>
               </td>
-            <td colspan="2" align="left" ><font class="textDescBold">23. FOB Value
+            <td align="left" ><font class="textDescBold">24.Equivalent
               
-              </font></td>
+            </font></td>
+            <td align="left" ><font class="textDescBold">25.Insurance </font></td>
             </tr>
           <tr>
-            <td align="left" ><input type="text" name="ExchangeRate" id="ExchangeRate" /></td>
-            <td colspan="2" align="left" ><input type="text" name="FOBValue" id="FOBValue" /></td>
+            <td colspan="2" align="left" ><input type="text" name="ExchangeRate" id="ExchangeRate" /></td>
+            <td align="left" ><input type="text" name="FOBValue" id="FOBValue" /></td>
+            <td align="left" ><input type="text" name="FOBValue2" id="FOBValue2" /></td>
             </tr>
           <tr>
-            <td>&nbsp;</td>
+            <td colspan="2">&nbsp;</td>
             <td colspan="2">&nbsp;</td>
             </tr>
           <tr>
-            <td align="left" ><font class="textDescBold">24. Insurance</font></td>
-            <td width="159" align="left" ><font class="textDescBold">25. Freight</font></td>
-            <td width="133" align="left" ><font class="textDescBold">22. CIF Value</font></td>
+            <td colspan="3" align="left" ><font class="textDescBold">26.Payment for Goods Received/to be Received</font></td>
+            <td width="133" align="left" ><font class="textDescBold">27.freight</font></td>
             </tr>
           <tr>
+            <td align="left" ><font class="textDesc">Code</font></td>
             <td align="left" ><input type="text" name="ExchangeRate2" id="ExchangeRate2" /></td>
-            <td align="left" ><input type="text" name="ExchangeRate3" id="ExchangeRate3" /></td>
+            <td align="left" >&nbsp;</td>
             <td align="left" ><input type="text" name="ExchangeRate4" id="ExchangeRate4" /></td>
+          </tr>
+          <tr>
+            <td align="left" ><font class="textDesc">Descriptiont</font></td>
+            <td align="left" ><input type="text" name="ExchangeRate3" id="ExchangeRate3" /></td>
+            <td align="left" >&nbsp;</td>
+            <td align="left" >&nbsp;</td>
             </tr>
           <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            </tr>
-          <tr>
-            <td align="left" ><font class="textDescBold">24. Gross Wt.(Kg.)</font></td>
-            <td align="left" ><font class="textDescBold">24. Measurement(m3)</font></td>
-            <td align="left" ><font class="textDescBold">24. Other Charges</font></td>
-            </tr>
-          <tr>
-            <td align="left" ><input type="text" name="ExchangeRate5" id="ExchangeRate5" /></td>
-            <td align="left" ><input type="text" name="ExchangeRate6" id="ExchangeRate6" /></td>
-            <td align="left" ><input type="text" name="ExchangeRate7" id="ExchangeRate7" /></td>
-            </tr>
-          <tr>
-            <td>&nbsp;</td>
             <td colspan="2">&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
             </tr>
+          <tr>
+            <td colspan="2" align="left" ><font class="textDescBold">28.Gross Wt.(kg.)</font></td>
+            <td align="left" ><font class="textDescBold">29.Measurement </font></td>
+            <td align="left" ><font class="textDescBold">30.FOB Value</font></td>
+          </tr>
+          <tr>
+            <td colspan="2" align="left" ><input type="text" name="ExchangeRate3" id="ExchangeRate3" /></td>
+            <td align="left" ><input type="text" name="FOBValue3" id="FOBValue3" /></td>
+            <td align="left" ><input type="text" name="FOBValue3" id="FOBValue4" /></td>
+          </tr>
+          <tr>
+            <td colspan="2">&nbsp;</td>
+            <td colspan="2">&nbsp;</td>
+          </tr>
         </table></td>
       </tr>
       <tr>
@@ -390,9 +412,9 @@
       <tr>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
-        <td></td>
+        <td>&nbsp;</td>
       </tr>
-      <tr>
+     <tr>
         <td colspan="3" align="center"><table id= "packageTab" border="0" cellspacing="1" cellpadding="1">
         	 <tr>
           	<td><input type="button" name = "InsertPackage" value="Insert" onclick="addPackageTabJS();"></td>
@@ -457,17 +479,11 @@
                 <td colspan="2">&nbsp;</td>
               </tr>
               <tr>
-                <td colspan="2"><font class="textDescBold">48. Name of Declarant</font></td>
-              </tr>
-              <tr>
-                <td colspan="2"><input type="text" name="DeclarantName" id="DeclarantName" /></td>
-              </tr>
-              <tr>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td colspan="2"><font class="textDescBold">49. Identity Card/Passport No.</font></td>
+                <td colspan="2"><font class="textDescBold">50. Identity Card/Passport No.</font></td>
               </tr>
               <tr>
                 <td colspan="2"><input type="text" name="IDCard" id="IDCard" /></td>
@@ -477,7 +493,7 @@
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td colspan="2"><font class="textDescBold">50. Status</font></td>
+                <td colspan="2"><font class="textDescBold">51. Status</font></td>
               </tr>
               <tr>
                 <td><font class="textDescBold"><input type="radio" name="radio" id="Status" value="Active" />
@@ -490,7 +506,7 @@
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td colspan="2"><font class="textDescBold">51. I cerify that this declaration is true and complete.</font></td>
+                <td colspan="2"><font class="textDescBold">52. I cerify that this declaration is true and complete.</font></td>
               </tr>
               <tr>
                 <td colspan="2"><input type="text" name="Cerify" id="Cerify" /></td>
@@ -512,7 +528,7 @@
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td colspan="2"><font class="textDescBold">52. Removal from Customs Control authorized by</font></td>
+                <td colspan="2"><font class="textDescBold">53. Removal from Customs Control authorized by</font></td>
                 </tr>
               <tr>
                 <td colspan="2"><textarea name="RemoveFromCus" id="RemoveFromCus" cols="45" rows="5"></textarea></td>
@@ -528,32 +544,8 @@
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td><font class="textDescBold">53. Total Duty/Tax Payable</font></td>
-                <td><input type="text" name="TotalDutyTax" id="TotalDutyTax" /></td>
+                <td colspan="2"><font class="textDescBold">57. Manualscript Recerpt No.(If applicable)</font></td>
               </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td><font class="textDescBold">54. Other Charges</font></td>
-                <td><input type="text" name="OtherCharges" id="OtherCharges" /></td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td><font class="textDescBold">55. Total Amount Payable</font></td>
-                <td><input type="text" name="TotalAmountPaya" id="TotalAmountPaya" /></td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td colspan="2"><font class="textDescBold">56. Manualscript Recerpt No.(If applicable)</font></td>
-                </tr>
               <tr>
                 <td colspan="2"><textarea name="ManualRecerpt" id="ManualRecerpt" cols="45" rows="5"></textarea></td>
                 </tr>
@@ -608,14 +600,8 @@
         <td>&nbsp;</td>
       </tr>
       <tr>
-      	<%
-			String disable = "";
-      		if (null!=form_action && !"EJDAM010".equals(form_action)){
-      			disable = "disabled = \"disabled\"";
-      		}
-      	%>
-        <td colspan="3" align="center"><!-- <input type="button" name="Save" id="Save" <%//=disable %>value="  Save  " onclick="validateSaveButton(this.form,'<%=form_action %>')"/>-->
-          <input type="button" name="Submit" id="Submit" value="  Submit  "  onclick="validateSubmitButton(this.form,'<%=form_action %>')"/>
+        <td colspan="3" align="center">
+           <input type="button" name="Submit" id="Submit" value="  Submit  "  onclick="validateSubmitButton(this.form,'<%=form_action %>')"/>
           <input type="button" name="Cancel" id="Cancel" value="  Cancel  " onclick="CancelButton(this.form,'<%=form_action %>')"/></td>
         </tr>
       <tr>
@@ -625,5 +611,6 @@
     </table></td>
   </tr>
 </table>
-
-</form>
+</body>
+</html>
+	
