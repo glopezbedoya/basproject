@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import com.tcd.ejda.connection.JDBCServiceLocator;
 import com.tcd.ejda.model.Form1Model;
+import com.tcd.ejda.model.Form2Model;
 import com.tcd.ejda.model.RoleModel;
 import com.tcd.ejda.model.TransactionLogModel;
 import com.tcd.ejda.model.UsrModel;
@@ -202,6 +203,8 @@ public class ValueListDAOImpl implements ValueListDAO {
 			obj = mapToUsrModel(rs);
 		}else if(returnModel.equalsIgnoreCase("Form1Model")){
 			obj = mapToForm1Model(rs);
+		}else if(returnModel.equalsIgnoreCase("Form2Model")){
+			obj = mapToForm2Model(rs);
 		}
 		return obj;
 	}
@@ -276,11 +279,27 @@ public class ValueListDAOImpl implements ValueListDAO {
 			from1.setUpdate_by(rs.getString("UPDATE_BY"));
 			
 		} catch (SQLException e) {
-			log.error("Mapping Error : SQLException ",e);
+			log.error("mapToForm1Model Error : SQLException ",e);
 		} catch (Exception e){
-			log.error("Mapping Error : Exception ",e);
+			log.error("mapToForm1Model Error : Exception ",e);
 		}
 		return from1;
+	}
+	private Form2Model mapToForm2Model(ResultSet rs){
+		Form2Model from2 = new Form2Model();
+//		Locale locale = new Locale("en");
+		try {
+			from2.setForm_name(rs.getString("FORM_NAME"));
+			from2.setForm_no(rs.getString("FORM_NO"));
+			from2.setForm_status(rs.getString("STATUS"));
+			from2.setUpdate_by(rs.getString("UPDATE_BY"));
+			
+		} catch (SQLException e) {
+			log.error("mapToForm2Model Error : SQLException ",e);
+		} catch (Exception e){
+			log.error("mapToForm2Model Error : Exception ",e);
+		}
+		return from2;
 	}
 	
 }
