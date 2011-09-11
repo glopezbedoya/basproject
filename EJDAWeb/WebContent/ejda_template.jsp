@@ -28,8 +28,8 @@ function confirmExit(){
 	if (window.event){
 		if (window.event.clientY < 0) { 
 			//browser is closed'
-			alert('Log Out');
-			//window.location.href = '';
+			//alert('Log Out');
+			window.location.href = './EJDAControler?screenName=index.jsp&ejdaAction=Logout';
 		}
 	}
 }
