@@ -73,6 +73,7 @@ public class EJDAM008Action extends AbstractAction {
 			valueListM.setParameters(getValueListParameters());
 			valueListM.setPage(getRequest().getParameter("page"));
 			valueListM.setItemsPerPage(Integer.parseInt(getRequest().getParameter("volumePerPage")));
+			
 			tranLogBean.setValueListM(valueListA.doSearch(valueListM));
 			tranLogBean.setTranLogVt(tranLogBean.getValueListM().getResult());
 			log.debug("tranLogVt.size = " + tranLogBean.getTranLogVt().size());
