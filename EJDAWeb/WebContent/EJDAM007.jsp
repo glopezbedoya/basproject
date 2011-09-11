@@ -89,13 +89,14 @@ function validateData(){
 	return isPass;
 }
 function Reset(form){
-	alert(form);
+	//alert('Reset');
 	$('input[name=ejdaAction]').val('EJDAM007');
 	$('input[name=ejdaMethod]').val('doSearch');
 	$('input[name=screenName]').val('EJDAM007.jsp');
 	//document.myForm.submit();
 	form.submit();
 }
+
 function EditRole(form,role_id,role_name){
 	//alert('EditRole');
 	//alert('role_id : ' +role_id);
@@ -323,6 +324,7 @@ function cancleDeleteAll(obj){
 		String updDisabled="";
 		String delDisabled="";
 		String inqDisabled="";
+		String cursors="style=\"cursor:hand\"";
 		Vector vc = new Vector();
 		Vector rolevc = new Vector();
 		rolevc = (Vector)request.getSession().getAttribute("rolectrl");
@@ -338,15 +340,19 @@ function cancleDeleteAll(obj){
 					log.debug("getFunc_update = "+roleM.getFUN_UPDATE());
 					if (!roleM.getFUN_ADD().equals("Y")){
 						addDisabled = "disabled=\"disabled\"";
+						cursors = "";
 					}
 					if (!roleM.getFUN_DELETE().equals("Y")){
 						delDisabled = "disabled=\"disabled\"";
+						cursors = "";
 					}
 					if (!roleM.getFUN_INQUIRY().equals("Y")){
 						inqDisabled = "disabled=\"disabled\"";
+						cursors = "";
 					}
 					if (!roleM.getFUN_UPDATE().equals("Y")){
 						updDisabled = "disabled=\"disabled\"";
+						cursors = "";
 					}
 				}
 			}
@@ -425,10 +431,10 @@ function cancleDeleteAll(obj){
                       	    		<%=DisplayUtil.displayInputTextBox("txtRoleName",roles.getRole_name(),"") %>
                       	    		<input type="button" name="search" id="search" value="Search" onclick="searchButton(this.form)"<%=inqDisabled %>>
                       	    </td>
-                      	    </tr>
-	                   	      	
-                      	    <td colspan="2" align="right"><input type="button" name="add" id="add" value="New Role" onclick="NewRole(this.form)" <%=addDisabled %>></td>
+                      	      <td colspan="2" align="right"><input type="button" name="add" id="add" value="New Role" onclick="NewRole(this.form)" <%=addDisabled %>></td>
                       	    <input type="hidden" name="cType" id="cType" value="">
+	                   	      	
+                      	  
                    	      </tr>
                       	  <tr>
                       	    <td colspan="3">&nbsp;</td>
@@ -541,8 +547,8 @@ function cancleDeleteAll(obj){
 	                   	    		<td <%=bgColor %>><font class="text"> <%=rm.getRole_name() %></font></td>
 	                   	    		<input type="hidden" name="hrole_name" value="">
 	                   	    		<input type="hidden" name="role_id" value="">
-	                   	    		<td <%=bgColor %>><font class="text"><img src="images/edit.JPG" name="edit" id="edit" value="Edit"  style="cursor:hand"onclick="EditRole(this.form,'<%=rm.getRole_id() %>','<%=rm.getRole_name() %>')"<%=updDisabled %>></font></td>
-	                   	    		<td <%=bgColor %>><font class="text"> <img src="images/delete.JPG" name="delete" id="delete" value="delete"style="cursor:hand" onclick="DeleteRole(this.form,'<%=rm.getRole_id() %>','<%=rm.getRole_name() %>')"<%=delDisabled %>></font></td>
+	                   	    		<td <%=bgColor %>><font class="text"><img src="images/edit.JPG" name="edit" id="edit" value="Edit" <%=cursors %> onclick="EditRole(this.form,'<%=rm.getRole_id() %>','<%=rm.getRole_name() %>')"<%=updDisabled %>></font></td>
+	                   	    		<td <%=bgColor %>><font class="text"> <img src="images/delete.JPG" name="delete" id="delete" value="delete"<%=cursors %> onclick="DeleteRole(this.form,'<%=rm.getRole_id() %>','<%=rm.getRole_name() %>')"<%=delDisabled %>></font></td>
 	                   	    		
 	                   	    		</tr>
 	                   	      		
@@ -584,7 +590,7 @@ function cancleDeleteAll(obj){
 						    <input type="hidden" name="txtRoleName" value="<%=roles.getRole_name() %>">
 						      <input type="button" name="add" id="add" value=" Add Role " onClick="AddRole(this.form)" >
 						      <input type="hidden" name="cType" id="cType" value="">
-						      <input type="button" name="Reset" id="Reset" value="  Reset  " onClick="Reset(this.form)">
+						      <input type="button" name="Reset" id="Reset" value="  Cancel  " onClick="Reset(this.form)">
 						    </td>
 						    
 						  </tr>
@@ -631,7 +637,7 @@ function cancleDeleteAll(obj){
 						      <input type="hidden" name="txtRoleName" value="<%=roles.getRole_name() %>">
 						      <input type="button" name="add" id="add" value="Update Role" onClick="UpdateRole(this.form)">
 						      <input type="hidden" name="cType" id="cType" value="">
-						      <input type="button" name="Reset" id="Reset" value="  Reset  " onClick="Reset(this.form)">
+						      <input type="button" name="Reset" id="Reset" value="  Cancel  " onClick="Reset(this.form)">
 						    </td>
 						    
 						  </tr>
