@@ -279,3 +279,78 @@ function addPackageTabJS(){
   		showMessageError(e,'addPackageTabJS');
   	}				
 }
+function removeRowFromTable(){
+
+	var tbl = document.getElementById('packageTab');
+	var lastRow = tbl.rows.length;
+	var chkItem = window.document.ejdaformNo1.checkall1;
+	if(chkItem == undefined){
+		alert('undefined');
+	}else if(chkItem.length != undefined){
+		//alert('chkItem.length = '+chkItem.length);
+		for(var i = (chkItem.length-1); i>=0; i--){
+			//alert('at i = '+i+', and check is = '+chkItem[i].checked);
+			if(chkItem[i].checked==true){
+				//alert('at i = '+i+', and check is = '+chkItem[i].checked);
+				var rowDelete = tbl.getElementsByTagName('TR');
+				var atMainRow = getMainRow(i);
+				//moveToHiddenTable(rowDelete[(i+1)],(i+1));
+				moveToHiddenTable(rowDelete(atMainRow),(i+1));
+				//getMainRow(i);
+				//tbl.deleteRow(i+1);
+			}
+		}
+	}else{
+		//alert('one item');
+		if(chkItem.checked==true){
+			//tbl.deleteRow(1);
+			var rowDelete = tbl.getElementsByTagName('TR');
+			var atMainRow = getMainRow(0);
+			//alert('atMainRow = '+atMainRow);
+			moveToHiddenTable(rowDelete(atMainRow),1);
+			//getMainRow(0);
+		}
+	}	
+}
+function getMainRow(index){
+	var tbl = document.getElementById('packageTab');
+	var rowDelete = tbl.getElementsByTagName('TR');
+	var atMainRow = -1;
+	for(var i=0;i<rowDelete.length;i++){
+		for(var j=0;j<rowDelete[i].getElementsByTagName('input').length;j++){
+			//if(rowDelete[i].getElementsByTagName('input')[j].name == 'FIClearing_ITEM_STATUS'){
+				atMainRow++;
+			//}
+		}
+		//alert('=== function getMainRow() === \n\n from all = '+rowDelete.length+'\n i = '+i+' \n\n atMainRow = '+atMainRow+'\n index = '+index);
+		if(atMainRow == index){
+			//alert('=== function getMainRow() === \n\n from all = '+rowDelete.length+'\n i = '+i+' \n\n atMainRow = '+atMainRow+'\n index = '+index);
+			return i;
+		}
+	}
+}
+function moveToHiddenTable(obj,rowIndex){
+	
+	//alert('=== moveToHiddenTable === \n\n obj = '+obj+'\n i = '+rowIndex);
+	var tdElement = obj.getElementsByTagName('TD');
+	var isNew = false;
+//*** specific row ***/	
+	var inputElement = tdElement[0].getElementsByTagName('input');
+	for(var i=0; i<inputElement.length; i++){
+		isNew = true;
+	}
+
+	//alert('=== moveToHiddenTable === \n\n rowIndex = '+rowIndex+'\n isNew = '+isNew);
+	if(isNew == false){
+		var tbl = document.getElementById('tblHiddenFIClearing');
+		var lastRow = tbl.rows.length;
+		var iteration = lastRow;
+		var row = tbl.insertRow(lastRow);
+		row.appendChild(obj);
+	}else{
+		var tbl = document.getElementById('packageTab');
+		var lastRow = tbl.rows.length;
+		//alert('lastRow = '+lastRow+'\n rowIndex = '+rowIndex);
+		tbl.deleteRow(rowIndex);
+	}
+}
