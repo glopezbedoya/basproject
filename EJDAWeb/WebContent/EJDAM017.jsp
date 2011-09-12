@@ -35,7 +35,7 @@
 	<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
 		
         <tr align="left">
-          <td align="left" class="style1" scope="row">TABLE 2</td>
+          <td align="left" class="style1" scope="row"><font class="textTop">TABLE 2 >> FORM No. 4</font></td>
           <td>&nbsp;</td>
           
         </tr>
@@ -184,7 +184,7 @@
             			bgColor = (i%2 == 0)?bgColor1:bgColor2;
             %>
             
-			            <tr onclick="updateEJDATable2(this.form,'<%=form4M.getForm_no() %>');">
+			            <tr onclick="updateEJDATable2(this.form,'<%=form4M.getForm_no() %>');" style="cursor:hand">
 			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form4M.getForm_no() %>"/></th>
 			              <td <%=bgColor %> class="text"><%=form4M.getForm_no()%></td>
 			              <td <%=bgColor %> class="text"><%=form4M.getForm_name()%></td>
