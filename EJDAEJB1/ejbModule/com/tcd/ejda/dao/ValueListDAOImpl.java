@@ -11,6 +11,8 @@ import org.apache.log4j.Logger;
 
 import com.tcd.ejda.connection.JDBCServiceLocator;
 import com.tcd.ejda.model.Form1Model;
+import com.tcd.ejda.model.Form3Model;
+import com.tcd.ejda.model.Form4Model;
 import com.tcd.ejda.model.Form2Model;
 import com.tcd.ejda.model.RoleModel;
 import com.tcd.ejda.model.TransactionLogModel;
@@ -203,9 +205,14 @@ public class ValueListDAOImpl implements ValueListDAO {
 			obj = mapToUsrModel(rs);
 		}else if(returnModel.equalsIgnoreCase("Form1Model")){
 			obj = mapToForm1Model(rs);
+		}else if(returnModel.equalsIgnoreCase("Form3Model")){
+			obj = mapToForm3Model(rs);
+		}else if(returnModel.equalsIgnoreCase("Form4Model")){
+			obj = mapToForm4Model(rs);
 		}else if(returnModel.equalsIgnoreCase("Form2Model")){
 			obj = mapToForm2Model(rs);
 		}
+		
 		return obj;
 	}
 	
@@ -300,6 +307,38 @@ public class ValueListDAOImpl implements ValueListDAO {
 			log.error("mapToForm2Model Error : Exception ",e);
 		}
 		return from2;
+	}
+	
+	private Form3Model mapToForm3Model(ResultSet rs){
+		Form3Model from4 = new Form3Model();
+		try {
+			from4.setForm_name(rs.getString("FORM_NAME"));
+			from4.setForm_no(rs.getString("FORM_NO"));
+			from4.setForm_status(rs.getString("STATUS"));
+			from4.setUpdate_by(rs.getString("UPDATE_BY"));
+			
+		} catch (SQLException e) {
+			log.error("Mapping Error : SQLException ",e);
+		} catch (Exception e){
+			log.error("Mapping Error : Exception ",e);
+		}
+		return from4;
+	}
+	
+	private Form4Model mapToForm4Model(ResultSet rs){
+		Form4Model from4 = new Form4Model();
+		try {
+			from4.setForm_name(rs.getString("FORM_NAME"));
+			from4.setForm_no(rs.getString("FORM_NO"));
+			from4.setForm_status(rs.getString("STATUS"));
+			from4.setUpdate_by(rs.getString("UPDATE_BY"));
+			
+		} catch (SQLException e) {
+			log.error("Mapping Error : SQLException ",e);
+		} catch (Exception e){
+			log.error("Mapping Error : Exception ",e);
+		}
+		return from4;
 	}
 	
 }
