@@ -88,7 +88,8 @@ function validateData(){
 	}
 	return isPass;
 }
-function Reset(form){
+
+function CancelButton(form){
 	//alert('Reset');
 	$('input[name=ejdaAction]').val('EJDAM007');
 	$('input[name=ejdaMethod]').val('doSearch');
@@ -96,6 +97,7 @@ function Reset(form){
 	//document.myForm.submit();
 	form.submit();
 }
+
 
 function EditRole(form,role_id,role_name){
 	//alert('EditRole');
@@ -590,7 +592,7 @@ function cancleDeleteAll(obj){
 						    <input type="hidden" name="txtRoleName" value="<%=roles.getRole_name() %>">
 						      <input type="button" name="add" id="add" value=" Add Role " onClick="AddRole(this.form)" >
 						      <input type="hidden" name="cType" id="cType" value="">
-						      <input type="button" name="Reset" id="Reset" value="  Cancel  " onClick="Reset(this.form)">
+						      <input type="button" name="Reset" id="Reset" value="  Cancel  " onClick="CancelButton(this.form)">
 						    </td>
 						    
 						  </tr>
@@ -637,7 +639,7 @@ function cancleDeleteAll(obj){
 						      <input type="hidden" name="txtRoleName" value="<%=roles.getRole_name() %>">
 						      <input type="button" name="add" id="add" value="Update Role" onClick="UpdateRole(this.form)">
 						      <input type="hidden" name="cType" id="cType" value="">
-						      <input type="button" name="Reset" id="Reset" value="  Cancel  " onClick="Reset(this.form)">
+						      <input type="button" name="Reset" id="Reset" value="  Cancel  " onClick="CancelButton(this.form)">
 						    </td>
 						    
 						  </tr>

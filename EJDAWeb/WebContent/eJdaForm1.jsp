@@ -32,7 +32,9 @@
 	ValueListModel valueListM = form1Bean.getValueListM();
 	
 	if(null == valueListM) valueListM = new ValueListModel();
-		
+	
+	log.debug("valueListM.getAtPage() >> " + valueListM.getAtPage());
+	log.debug("valueListM.getItemsPerPage() >> " + valueListM.getItemsPerPage());
 	%>
 	<input type="hidden" name="ejdaAction" value=""> 
 	<input type="hidden" name="ejdaMethod" value=""> 
@@ -396,7 +398,7 @@
         <td colspan="3" align="center"><table id= "packageTab" border="0" cellspacing="1" cellpadding="1">
         	 <tr>
           	<td><input type="button" name = "InsertPackage" value="Insert" onclick="addPackageTabJS();"></td>
-            <td><font class="textHeader"><input type="button" name = "DeletePackage" value="Delete" onclick="deletePackageTabJS();"></font></td>
+            <td><font class="textHeader"><input type="button" name = "DeletePackage" value="Delete" ></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
