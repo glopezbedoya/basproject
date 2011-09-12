@@ -96,7 +96,8 @@ public class EJDAM013Action extends AbstractAction {
 		form4.setForm_no(formNo);
 		try{
 			Form4DAO dao = new Form4DAOImpl();
-			dao.UpdateFrom4Table(form4);
+//			dao.UpdateFrom4Table(form4);
+			dao.saveFrom4Table1(form4);
 			result = doSearch();
 			
 			log.debug("result = "+result);
@@ -199,7 +200,7 @@ public class EJDAM013Action extends AbstractAction {
 		}
 		Form4Model form4 = new Form4Model();
 		form4.setForm_name("FN_" + iuser);
-		form4.setForm_status("D");
+		form4.setForm_status("A");
 		form4.setUpdate_by(iuser);
 		try{
 			Form4DAO dao = new Form4DAOImpl();
