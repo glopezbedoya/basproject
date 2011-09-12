@@ -237,7 +237,7 @@ public class EJDAM011Action extends AbstractAction {
 	private Vector getValueListParameters() {
 		Vector parameters = new Vector();
 		Form2Model form2 = getform2Bean().getForm2ModelSP();
-		if (!"".equals(form2.getForm_name())){
+		if (null!= form2.getForm_name() && !"".equals(form2.getForm_name())){
 			log.debug("Form Name = "+form2.getForm_name());
 			parameters.add(form2.getForm_name());
 		}

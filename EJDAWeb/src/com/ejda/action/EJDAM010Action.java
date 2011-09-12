@@ -198,6 +198,7 @@ public class EJDAM010Action extends AbstractAction {
 	private void setCriteriaPameter(){
 		
 		Form1Model form1 = new Form1Model();
+		log.debug("getRequest().getParameter(txtFormName)>>> " + getRequest().getParameter("txtFormName"));
 		form1.setForm_name(getRequest().getParameter("txtFormName"));
 		
 		getForm1Bean().setForm1ModelSP(form1);
@@ -235,7 +236,8 @@ public class EJDAM010Action extends AbstractAction {
 	private Vector getValueListParameters() {
 		Vector parameters = new Vector();
 		Form1Model form1 = getForm1Bean().getForm1ModelSP();
-		if (!"".equals(form1.getForm_name())){
+		log.debug("form1.getForm_name() >> " + form1.getForm_name());
+		if (null!= form1.getForm_name() && !"".equals(form1.getForm_name())){
 			log.debug("Form Name = "+form1.getForm_name());
 			parameters.add(form1.getForm_name());
 		}
