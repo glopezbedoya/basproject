@@ -91,7 +91,7 @@ public class EJDAM025Action extends AbstractAction {
 		}
 		Form4Model form4 = new Form4Model();
 		form4.setForm_name("FN_" + iuser);
-		form4.setForm_status("P");
+		form4.setForm_status("C");
 		form4.setUpdate_by(iuser);
 		form4.setForm_no(formNo);
 		try{

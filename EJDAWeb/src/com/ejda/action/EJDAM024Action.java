@@ -89,7 +89,7 @@ public class EJDAM024Action extends AbstractAction {
 		}
 		Form3Model form3 = new Form3Model();
 		form3.setForm_name("FN_" + iuser);
-		form3.setForm_status("P");
+		form3.setForm_status("C");
 		form3.setUpdate_by(iuser);
 		form3.setForm_no(formNo);
 		try{
