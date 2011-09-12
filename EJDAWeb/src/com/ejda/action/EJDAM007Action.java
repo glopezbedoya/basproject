@@ -152,6 +152,11 @@ public class EJDAM007Action extends AbstractAction {
 		// TODO Auto-generated method stub
 		boolean result = false;
 		String role_name = getRequest().getParameter("rolename");
+		
+		getRequest().getSession().removeAttribute("returnVal");
+		getRequest().getSession().removeAttribute("returnValUpdate");
+		getRequest().getSession().removeAttribute("returnVC");
+		
 		Vector vc = new Vector();
 		ValueListModel valueListM = new ValueListModel();
 		ValueListAction valueListA = new ValueListAction();
