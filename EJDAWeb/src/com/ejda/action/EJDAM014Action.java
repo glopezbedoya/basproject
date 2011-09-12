@@ -199,7 +199,7 @@ private void setCriteriaPameter(){
 	private Vector getValueListParameters() {
 		Vector parameters = new Vector();
 		Form1Model form1 = getForm1Bean().getForm1ModelSP();
-		if (!"".equals(form1.getForm_name())){
+		if (null!= form1.getForm_name() && !"".equals(form1.getForm_name())){
 			log.debug("Form Name = "+form1.getForm_name());
 			parameters.add(form1.getForm_name());
 		}
