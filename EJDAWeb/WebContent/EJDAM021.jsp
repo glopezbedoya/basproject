@@ -50,7 +50,7 @@
         </tr>
         <tr>
        		<td align="left"><span class="text">Form name </span></td>
-       		<td align="left"><%=DisplayFormatUtil.displayInputTextBox("txtFormName",form4ModelSP.getForm_name(),"") %><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'EJDAM021','doSearch','EJDAM013.jsp')\"",false) %></td>
+       		<td align="left"><%=DisplayFormatUtil.displayInputTextBox("txtFormName",form4ModelSP.getForm_name(),"") %><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'EJDAM021','doSearch','EJDAM021.jsp')\"",false) %></td>
        		          		
         </tr>
         <tr>
