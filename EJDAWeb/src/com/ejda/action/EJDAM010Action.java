@@ -120,7 +120,7 @@ public class EJDAM010Action extends AbstractAction {
 //		form1.setForm_no(formNo);
 		Form1Model form1 = setValueModel();
 		log.debug("Form1Model >> " + form1);
-		Vector vcDetail1 = new Vector();
+		Vector vcDetail1 = setValueDetail1Model();
 		Vector vcDetail2 = new Vector();
 		try{ 
 			Form1DAO dao = new Form1DAOImpl();
@@ -423,5 +423,82 @@ public class EJDAM010Action extends AbstractAction {
 		form.setUpdate_by(iuser);
 		
 		return form;
+	}
+	
+	private Vector setValueDetail1Model() throws Exception{
+		log.debug("[ Start : setValueModel ]");
+		Vector vc = new Vector();
+		FormDetail1Model detail = new FormDetail1Model();
+		String iuser = (String) getRequest().getSession().getAttribute("iuser");
+		if (null==iuser || "".equals(iuser)){
+			iuser = "system";
+		}
+//		String MARK_NO =  getRequest().getParameter("MARK_NO");//MARK_NO
+//		String ITEM_NO = (String) getRequest().getParameter("ITEM_NO");//ITEM_NO
+//		String PACKAGE_NO = (String) getRequest().getParameter("PACKAGE_NO");//PACKAGE_NO
+//		String GOODS_DESC = (String) getRequest().getParameter("FOB_CUSTOM");//GOODS_DESC
+//		String CODE_NO = (String) getRequest().getParameter("CODE_NO");//CODE_NO
+//		String UNIT = (String) getRequest().getParameter("UNIT");//UNIT
+
+		String [] MARK_NO =  getRequest().getParameterValues("MARK_NO");//MARK_NO
+		String [] ITEM_NO =  getRequest().getParameterValues("ITEM_NO");//ITEM_NO
+		String [] PACKAGE_NO = getRequest().getParameterValues("PACKAGE_NO");//PACKAGE_NO
+		String [] GOODS_DESC = getRequest().getParameterValues("GOODS_DESC");//GOODS_DESC
+		String [] CODE_NO = getRequest().getParameterValues("CODE_NO");//CODE_NO
+		String [] UNIT = getRequest().getParameterValues("UNIT");//UNIT
+		if (MARK_NO.length > 1){
+			for(int i =0; i < MARK_NO.length;i++){
+				detail.setMarks_no(MARK_NO[i]);
+				detail.setItem_no(ITEM_NO[i]);
+				detail.setNo_type_package(PACKAGE_NO[i]);
+				detail.setGood_desc(GOODS_DESC[i]);
+				detail.setCust_code(CODE_NO[i]);
+				detail.setCust_unit(UNIT[i]);
+				detail.setCreate_By(iuser);
+				detail.setUpdate_by(iuser);
+				log.debug("MARK_NO = "+MARK_NO[i]);
+				log.debug("ITEM_NO = "+ITEM_NO[i]);
+				log.debug("PACKAGE_NO = "+PACKAGE_NO[i]);
+				log.debug("GOODS_DESC = "+GOODS_DESC[i]);
+				log.debug("CODE_NO = "+CODE_NO[i]);
+				log.debug("UNIT = "+UNIT[i]);
+				vc.add(detail);
+			}
+			
+		}
+		
+		return vc;
+	}
+	
+	private FormDetail2Model setValueDetail2Model() throws Exception{
+		log.debug("[ Start : setValueModel ]");
+		FormDetail2Model detail = new FormDetail2Model();
+		String iuser = (String) getRequest().getSession().getAttribute("iuser");
+		if (null==iuser || "".equals(iuser)){
+			iuser = "system";
+		}
+		String doc_id = "";//	DOC_ID
+		String country_id = "0";//	COUNTRY_ID
+		String jda_type = "1";//JDA_TYPE
+		String doc_status = "A";//DOC_STATUS
+		String invoice_no = "";//INVOICE_NO
+		String QA_ITEM_NO = (String) getRequest().getParameter("QA_ITEM_NO");//QA_ITEM_NO
+		String QB_UNIT = (String) getRequest().getParameter("QB_UNIT");//QB_UNIT
+		String FOB_ACTUAL = (String) getRequest().getParameter("FOB_ACTUAL");//FOB_ACTUAL
+		String FOB_CUSTOM = (String) getRequest().getParameter("FOB_CUSTOM");//FOB_CUSTOM
+		String TOTAL_VALUE = (String) getRequest().getParameter("TOTAL_VALUE");//TOTAL_VALUE
+		String DUTY_RATE = (String) getRequest().getParameter("DUTY_RATE");//DUTY_RATE
+		String DUTY_AMOUNT = (String) getRequest().getParameter("DUTY_AMOUNT");//DUTY_AMOUNT
+		String TAX_TYPE = (String) getRequest().getParameter("TAX_TYPE");//TAX_TYPE
+		String TAX_RATE = (String) getRequest().getParameter("TAX_RATE");//TAX_RATE
+		String TAX_AMOUNT = (String) getRequest().getParameter("TAX_AMOUNT");//TAX_AMOUNT
+		//CREATE_DATE
+		//ps.setString(parameterIndex++, form.getCreate_By());//CREATE_BY
+		//UPDATE_DATE
+		//ps.setString(parameterIndex++, form.getUpdate_by());//UPDATE_BY
+		detail.setCreate_By(iuser);
+		detail.setUpdate_by(iuser);
+		
+		return detail;
 	}
 }
