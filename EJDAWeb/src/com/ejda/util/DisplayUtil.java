@@ -50,4 +50,13 @@ public class DisplayUtil {
 		textBoxStr.append("<input name=\""+name+"\" value=\""+value+"\" type=\"text\" "+script+" />");
 		return textBoxStr.toString();
 	}
+	public static String displayInputTextAreaTag(String name,String value,String script) {
+		StringBuffer textAreaStr = new StringBuffer();
+		if(null == value || "null".equalsIgnoreCase(value)){
+			value = "";
+		}
+		textAreaStr.append("<textarea name=\""+name+"\" value=\""+value+"\" cols=\"45\" rows=\"5\" "+script+" ></textarea>");
+		
+		return textAreaStr.toString();
+	}
 }
