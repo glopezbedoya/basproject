@@ -9,7 +9,7 @@ function CancelButton(form,action){
 	form.submit();
 }
 function validateSubmitButton(form,action){
-	//alert('validateSubmitButton : ' +action);
+	alert('validateSubmitButton : ' +action);
 	
 	$('input[name=ejdaAction]').val(action);
 	$('input[name=ejdaMethod]').val('doSubmitButton');
