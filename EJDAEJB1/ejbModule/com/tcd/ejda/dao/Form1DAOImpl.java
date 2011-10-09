@@ -285,14 +285,15 @@ public class Form1DAOImpl implements Form1DAO {
 				StringBuffer sql1 = new StringBuffer();
 				sql1.append("insert into JDA_FORM_T_DOC_DETAIL1(ITEM_NO, DOC_ID, MARKS_NO, NO_TYPE_PACKAGE, GOOD_DESC, ");
 				sql1.append("CUST_CODE, CUST_UNIT, CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY) ");
-				sql1.append("values (FORM_T_DOC_DETAIL1_SEQ.NEXTVALUE, ?, ?, ?, ?, ?, ?, SYSDATE, ?, SYSDATE, ?)");
+				sql1.append("values (?, ?, ?, ?, ?, ?, ?, SYSDATE, ?, SYSDATE, ?)");
 				log.debug("sql1 >> " + sql1.toString());
 				
 				ps = conn.prepareStatement(sql1.toString());
-				int parameterIndex1 = 1;
+				log.debug("detail1.size() = " +detail1.size());
 				for(int i =0;i<detail1.size();i++){
+					int parameterIndex1 = 1;
 					FormDetail1Model f1 = (FormDetail1Model)detail1.get(i);
-	//				ps.setString(parameterIndex1++, f1.getItem_no());
+					ps.setString(parameterIndex1++, f1.getItem_no());
 					ps.setString(parameterIndex1++, doc_id);//	DOC_ID
 					ps.setString(parameterIndex1++, f1.getMarks_no());
 					ps.setString(parameterIndex1++, f1.getNo_type_package());
@@ -301,21 +302,24 @@ public class Form1DAOImpl implements Form1DAO {
 					ps.setString(parameterIndex1++, f1.getCust_unit());
 					ps.setString(parameterIndex1++, f1.getCreate_By());
 					ps.setString(parameterIndex1++, f1.getUpdate_by());
+					
+					rs = ps.executeQuery();	
 				}
-				rs = ps.executeQuery();	
+				
 			}
 			if(detail2.size()>0){
 				StringBuffer sql2 = new StringBuffer();
 				sql2.append("insert into JDA_FORM_T_DOC_DETAIL1(ITEM_NO, DOC_ID, QTY_CUST_UNIT, UNIT_VAL_ACTUAL, UNIT_VAL_CUSTOM, TOTAL_VALUE, ");
 				sql2.append("EXPORT_RATE, EXPORT_AMOUNT, OTHER_TAX_TYPE, OTHER_TAX_RATE, OTHER_TAX_AMOUNT, CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY) ");
-				sql2.append("values (FORM_T_DOC_DETAIL2_SEQ.NEXTVALUE, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, ?, SYSDATE, ?)");
+				sql2.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, ?, SYSDATE, ?)");
 				log.debug("sql2 >> " + sql2.toString());
 				
 				ps = conn.prepareStatement(sql2.toString());
-				int parameterIndex2 = 1;
+				
 				for(int i =0;i<detail2.size();i++){
+					int parameterIndex2 = 1;
 					FormDetail2Model f2 = (FormDetail2Model)detail2.get(i);
-	//				ps.setString(parameterIndex2++, f2.getItem_no());
+					ps.setString(parameterIndex2++, f2.getItem_no());
 					ps.setString(parameterIndex2++, doc_id);//	DOC_ID
 					ps.setDouble(parameterIndex2++, f2.getQty_cust_unit());
 					ps.setString(parameterIndex2++, f2.getUnit_val_actual());
@@ -328,8 +332,10 @@ public class Form1DAOImpl implements Form1DAO {
 					ps.setDouble(parameterIndex2++, f2.getOther_tax_amount());
 					ps.setString(parameterIndex2++, f2.getCreate_By());
 					ps.setString(parameterIndex2++, f2.getUpdate_by());
+					
+					rs = ps.executeQuery();
 				}
-				rs = ps.executeQuery();
+				
 			}
 			
 			log.debug("Connection session: ");
