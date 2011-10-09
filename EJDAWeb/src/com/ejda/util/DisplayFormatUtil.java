@@ -2,6 +2,7 @@ package com.ejda.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -112,5 +113,99 @@ public class DisplayFormatUtil {
 		textBoxStr.append("onclick=\"popUpCalendarModify(this,"+fieldName+",'dd/mm/yyyy','','','','bottom',false)\" >");
 		return textBoxStr.toString();
 	}
-	
+	public static String SQLDateToString1(java.sql.Date date,String format) {
+		String returnValue="";
+		try{
+			if (date != null && format != null){
+				//Locale locale = new Locale("th","TH");
+				SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+				returnValue =dateFormat.format(date);
+//				return dateFormat.format(date);
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return returnValue;
+	}
+	public static java.sql.Date stringToDateSql(String dateString,String format) throws Exception {
+		java.sql.Date returnValue = null;
+		if (dateString!=null && dateString.length() == 8) {
+			try{
+				Calendar cal = Calendar.getInstance();
+				if(format.equalsIgnoreCase("ddmmyyyy")){
+					int dd = StringToInt(dateString.substring(0,2));
+					int mm = StringToInt(dateString.substring(2,4))-1;
+					int yyyy = StringToInt(dateString.substring(4,8));
+					cal.set(yyyy, mm, dd);
+				}
+				if(format.equalsIgnoreCase("mmddyyyy")){
+					int dd = StringToInt(dateString.substring(2,4));
+					int mm = StringToInt(dateString.substring(0,2))-1;
+					int yyyy = StringToInt(dateString.substring(4,8));
+					cal.set(yyyy, mm, dd);
+				}
+				if(format.equalsIgnoreCase("yyyymmdd")){
+					int dd = StringToInt(dateString.substring(0,4));
+					int mm = StringToInt(dateString.substring(4,6))-1;
+					int yyyy = StringToInt(dateString.substring(6,8));
+					cal.set(yyyy, mm, dd);
+				}
+				if(format.equalsIgnoreCase("yyyyddmm")){
+					int dd = StringToInt(dateString.substring(0,4));
+					int mm = StringToInt(dateString.substring(6,8))-1;
+					int yyyy = StringToInt(dateString.substring(4,6));
+					cal.set(yyyy, mm, dd);
+				}
+				returnValue = new java.sql.Date(cal.getTime().getTime());
+//				return new java.sql.Date(cal.getTime().getTime());
+			} catch(Exception e){
+				//log.error(e.getMessage());
+				e.printStackTrace();
+			}
+		}else if(dateString!=null && dateString.length() == 10) {
+			try{
+				Calendar cal = Calendar.getInstance();
+				if(format.equalsIgnoreCase("dd/mm/yyyy")||format.equalsIgnoreCase("dd-mm-yyyy")){
+					int dd = StringToInt(dateString.substring(0,2));
+					int mm = StringToInt(dateString.substring(3,5))-1;
+					int yyyy = StringToInt(dateString.substring(6,10));
+					cal.set(yyyy, mm, dd);
+				}
+				if(format.equalsIgnoreCase("mm/dd/yyyy")||format.equalsIgnoreCase("mm-dd-yyyy")){
+					int dd = StringToInt(dateString.substring(3,5));
+					int mm = StringToInt(dateString.substring(0,2))-1;
+					int yyyy = StringToInt(dateString.substring(6,10));
+					cal.set(yyyy, mm, dd);
+				}
+				if(format.equalsIgnoreCase("yyyy/mm/dd")||format.equalsIgnoreCase("yyyy-mm-dd")){
+					int dd = StringToInt(dateString.substring(8,10));
+					int mm = StringToInt(dateString.substring(5,7))-1;
+					int yyyy = StringToInt(dateString.substring(0,4));
+					cal.set(yyyy, mm, dd);
+				}
+				if(format.equalsIgnoreCase("yyyy/dd/mm")||format.equalsIgnoreCase("yyyy-dd-mm")){
+					int dd = StringToInt(dateString.substring(5,7));
+					int mm = StringToInt(dateString.substring(8,10))-1;
+					int yyyy = StringToInt(dateString.substring(0,4));
+					cal.set(yyyy, mm, dd);
+				}
+				returnValue = new java.sql.Date(cal.getTime().getTime());
+//				return new java.sql.Date(cal.getTime().getTime());
+			} catch(Exception e){
+				//log.error(e.getMessage());
+				e.printStackTrace();
+				
+			}
+		}//else return null;
+		return returnValue;
+	}
+	public static int StringToInt(String str) {
+		try{
+//			return (str!=null&&!str.equals(""))?(Integer.valueOf(str)).intValue():0;
+			return Integer.parseInt(str);
+		}catch(Exception e){
+			//log.error(e.getMessage());
+			return 0;
+		}
+	}
 }
