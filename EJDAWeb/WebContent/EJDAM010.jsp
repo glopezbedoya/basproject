@@ -59,7 +59,7 @@
         <tr>
        		
        		<td width="100"></td>
-       		<td width="700"class="text" align="right"><%=DisplayFormatUtil.displayButton("AddForm1","onclick=\"buttonAction(this.form,'doAdd')\"",false) %> </td>
+       		<td width="700"class="text" align="right"><%=DisplayFormatUtil.displayButton("AddForm1","onclick=\"buttonAction(this.form,'EJDAM010','doAdd','ejdaForm1.jsp')\"",false) %> </td>
        		
         </tr>
         <tr>
@@ -70,7 +70,7 @@
         </tr>
         <tr>
        		<td align="left"><span class="text">Form name </span></td>
-       		<td align="left"><%=DisplayFormatUtil.displayInputTextBox("txtFormName",form1ModelSP.getForm_name(),"") %><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'doSearch')\"",false) %></td>
+       		<td align="left"><%=DisplayFormatUtil.displayInputTextBox("txtFormName",form1ModelSP.getForm_name(),"") %><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'EJDAM010','doSearch','ejdaForm1.jsp')\"",false) %></td>
        		          		
         </tr>
         <tr>
@@ -204,7 +204,7 @@
             			bgColor = (i%2 == 0)?bgColor1:bgColor2;
             %>
             
-			            <tr onclick="updateEJDATable2(this.form,'<%=form1M.getForm_no() %>');" style="cursor:hand">
+			            <tr onclick="updateEJDATable2(this.form,'<%=form1M.getForm_no() %>','EJDAM010');" style="cursor:hand">
 			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form1M.getForm_no() %>"/></th>
 			              <td <%=bgColor %> class="text"><%=form1M.getForm_no()%></td>
 			              <td <%=bgColor %> class="text"><%=form1M.getForm_name()%></td>
