@@ -1,4 +1,4 @@
-function buttonAction(form,action){
+/*function buttonAction(form,action){
 	
 	var check = true;
 	if(action == 'doDelete'){
@@ -16,12 +16,18 @@ function buttonAction(form,action){
 	}else{
 		alert('No Data Select');
 	}
+}*/
+function buttonAction(form,action,method,page){
+	
+	$('input[name=ejdaAction]').val(action);
+	$('input[name=ejdaMethod]').val(method);
+	$('input[name=screenName]').val(page);
+	form.submit();
 }
-
-function updateEJDATable2(form,fn_no){
+function updateEJDATable2(form,fn_no,action){
 	//alert('fn_no : ' +fn_no);
 	$('input[name=form_no]').val(fn_no);
-	$('input[name=ejdaAction]').val('EJDAM010');
+	$('input[name=ejdaAction]').val(action);
 	$('input[name=ejdaMethod]').val('doUpdate');
 	$('input[name=screenName]').val('eJdaForm1.jsp');
 	//form.submit();
