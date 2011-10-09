@@ -24,6 +24,20 @@
 	if(null == valueListM) valueListM = new ValueListModel();
 	
 %>
+<%
+ String responseMessage = (String) request.getSession().getAttribute("responseMessage");
+ 	log.debug("responseMessage 1 -> " + responseMessage);
+	if(!"".equalsIgnoreCase(responseMessage) && null != responseMessage){
+%> <script language="javascript">
+			jQuery(document).ready(function(){
+				displayResponseMessage("<%=responseMessage%>");
+				return false;
+			});
+		</script> <%
+			request.getSession().removeAttribute("responseMessage");
+	}
+	/* end responseMessage to user */
+%>
 <form name="ejdaformNo1" method="post" action="/EJDAWeb/EJDAControler">
 	<input type="hidden" name="ejdaAction" value=""> 
 	<input type="hidden" name="ejdaMethod" value=""> 

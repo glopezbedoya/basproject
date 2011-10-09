@@ -45,20 +45,7 @@
 	
 	
 
-<%
- String responseMessage = (String) request.getSession().getAttribute("responseMessage");
- 	log.debug("responseMessage 1 -> " + responseMessage);
-	if(!"".equalsIgnoreCase(responseMessage) && null != responseMessage){
-%> <script language="javascript">
-			jQuery(document).ready(function(){
-				displayResponseMessage("<%=responseMessage%>");
-				return false;
-			});
-		</script> <%
-			request.getSession().removeAttribute("responseMessage");
-	}
-	/* end responseMessage to user */
-%>
+
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
@@ -212,7 +199,135 @@
           </table></td>
       </tr>
       <tr>
-        <td ><table border="0" cellspacing="1" cellpadding="1">
+        <td colspan="2" align="center" ><table border="0" cellspacing="1" cellpadding="1">
+          <tr>
+            <td colspan="2" align="left" >&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="2" align="left" width="400" ><font class="textDescBold">3.Name and Address of Authorized Agent</font></td>
+          </tr>
+          <tr>
+            <td colspan="2" align="left" height="20"></td>
+          </tr>
+          <tr>
+            <td align="right"><font class="textDesc">Agent/Taxpayer   Code</font></td>
+            <td align="left"><input type="text" name="ImporterTaxCode2" id="ImporterTaxCode2" /></td>
+          </tr>
+          <tr>
+            <td align="right"><font class="textDesc">Name </font></td>
+            <td align="left"><input type="text" name="ImporterTaxName2" id="ImporterTaxName2" size="40" /></td>
+          </tr>
+          <tr>
+            <td align="right"><font class="textDesc">Address </font></td>
+            <td align="left"><textarea name="ImporterTaxAddress2" id="ImporterTaxAddress2" cols="45" rows="5"></textarea></td>
+          </tr>
+        </table></td>
+        <td rowspan="4" align="center"><table width="472" border="0" cellpadding="1" cellspacing="1">
+          <tr>
+            <td width="170" colspan="2" align="left"><font class="textDescBold">15.Special Treatment</font></td>
+            <td width="159" align="left"><font class="textDescBold">16.Export Permit No.</font></td>
+            <td align="left"><font class="textDescBold">17.Exchange Control Ref.</font></td>
+            </tr>
+          <tr>
+            <td colspan="2" align="left"><input type="text" name="ImportPermitNo" id="ImportPermitNo" /></td>
+            <td align="left"><input type="text" name="ExchgCtrlRef" id="ExchgCtrlRef" /></td>
+            <td align="left"><input type="text" name="ExchgCtrlRef2" id="ExchgCtrlRef2" /></td>
+            </tr>
+          <tr>
+            <td colspan="2">&nbsp;</td>
+            <td colspan="2">&nbsp;</td>
+            </tr>
+          <tr>
+            <td colspan="2" align="left" ><font class="textDescBold">18. Country of Origin</font></td>
+            <td colspan="2" align="left" ><font class="textDescBold">19. Country of Final Destination.</font></td>
+            </tr>
+          <tr>
+            <td align="left" ><font class="textDesc">Code </font>             </td>
+            <td align="left" ><input type="text" name="SpecialTreatment" id="SpecialTreatment" /></td>
+            <td align="right" ><font class="textDesc">Code</font></td>
+            <td align="left" ><input type="text" name="BillLadingNote" id="BillLadingNote" /></td>
+            </tr>
+          <tr>
+            <td align="left"><font class="textDesc">Desc</font></td>
+            <td align="left"><input type="text" name="SpecialTreatment2" id="SpecialTreatment2" /></td>
+            <td align="right"><font class="textDesc">Desc</font></td>
+            <td align="left"><input type="text" name="BillLadingNote2" id="BillLadingNote2" /></td>
+            </tr>
+          <tr>
+            <td colspan="2" align="left" >&nbsp;</td>
+            <td colspan="2" align="left" >&nbsp;</td>
+            </tr>
+          <tr>
+            <td colspan="2" align="left" ><font class="textDescBold">20.Terms of Delivery and Payment</font></td>
+            <td align="left" ><font class="textDescBold">21.Currency Code</font></td>
+            <td align="left" ><font class="textDescBold">22.Amount Received/to be Received</font></td>
+            </tr>
+          <tr>
+            <td colspan="2" align="left" ><input type="text" name="TermDelivePayment" id="TermDelivePayment" /></td>
+            <td align="left" ><input type="text" name="CountryPayment" id="CountryPayment" /></td>
+            <td align="left" ><input type="text" name="CountryPayment2" id="CountryPayment2" /></td>
+            </tr>
+          <tr>
+            <td colspan="2">&nbsp;</td>
+            <td colspan="2">&nbsp;</td>
+            </tr>
+          <tr>
+            <td colspan="2" align="left" ><font class="textDescBold">23. Exchange Rate</font>
+              </td>
+            <td align="left" ><font class="textDescBold">24.Equivalent
+              
+              </font></td>
+            <td align="left" ><font class="textDescBold">25.Insurance </font></td>
+            </tr>
+          <tr>
+            <td colspan="2" align="left" ><input type="text" name="ExchangeRate" id="ExchangeRate" /></td>
+            <td align="left" ><input type="text" name="FOBValue" id="FOBValue" /></td>
+            <td align="left" ><input type="text" name="FOBValue2" id="FOBValue2" /></td>
+            </tr>
+          <tr>
+            <td colspan="2">&nbsp;</td>
+            <td colspan="2">&nbsp;</td>
+            </tr>
+          <tr>
+            <td colspan="3" align="left" ><font class="textDescBold">26.Payment for Goods Received/to be Received</font></td>
+            <td width="133" align="left" ><font class="textDescBold">27.freight</font></td>
+            </tr>
+          <tr>
+            <td align="left" ><font class="textDesc">Code</font></td>
+            <td align="left" ><input type="text" name="ExchangeRate2" id="ExchangeRate2" /></td>
+            <td align="left" >&nbsp;</td>
+            <td align="left" ><input type="text" name="ExchangeRate4" id="ExchangeRate4" /></td>
+            </tr>
+          <tr>
+            <td align="left" ><font class="textDesc">Descriptiont</font></td>
+            <td align="left" ><input type="text" name="ExchangeRate3" id="ExchangeRate3" /></td>
+            <td align="left" >&nbsp;</td>
+            <td align="left" >&nbsp;</td>
+            </tr>
+          <tr>
+            <td colspan="2">&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            </tr>
+          <tr>
+            <td colspan="2" align="left" ><font class="textDescBold">28.Gross Wt.(kg.)</font></td>
+            <td align="left" ><font class="textDescBold">29.Measurement </font></td>
+            <td align="left" ><font class="textDescBold">30.FOB Value</font></td>
+            </tr>
+          <tr>
+            <td colspan="2" align="left" ><input type="text" name="ExchangeRate3" id="ExchangeRate3" /></td>
+            <td align="left" ><input type="text" name="FOBValue3" id="FOBValue3" /></td>
+            <td align="left" ><input type="text" name="FOBValue3" id="FOBValue4" /></td>
+            </tr>
+          <tr>
+            <td colspan="2">&nbsp;</td>
+            <td colspan="2">&nbsp;</td>
+            </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td align="center" ><p>&nbsp;</p>
+          <table border="0" cellspacing="1" cellpadding="1">
           <tr>
             <td colspan="2"><font class="textDescBold">4.Mode of   Transport </font></td>
             </tr>
@@ -254,110 +369,8 @@
             <td><input type="text" name="ImportDate" id="ImportDate" /></td>
             </tr>
           </table>
-          </td>
-        <td rowspan="3" align="center"><table width="472" border="0" cellpadding="1" cellspacing="1">
-          <tr>
-            <td width="170" colspan="2" align="left"><font class="textDescBold">15.Special Treatment</font></td>
-            <td width="159" align="left"><font class="textDescBold">16.Export Permit No.</font></td>
-            <td align="left"><font class="textDescBold">17.Exchange Control Ref.</font></td>
-            </tr>
-          <tr>
-            <td colspan="2" align="left"><input type="text" name="ImportPermitNo" id="ImportPermitNo" /></td>
-            <td align="left"><input type="text" name="ExchgCtrlRef" id="ExchgCtrlRef" /></td>
-            <td align="left"><input type="text" name="ExchgCtrlRef2" id="ExchgCtrlRef2" /></td>
-            </tr>
-          <tr>
-            <td colspan="2">&nbsp;</td>
-            <td colspan="2">&nbsp;</td>
-            </tr>
-          <tr>
-            <td colspan="2" align="left" ><font class="textDescBold">18.Country of Origin</font></td>
-            <td colspan="2" align="left" ><font class="textDescBold">19. Bill of Lading or comsignment Note No.</font></td>
-            </tr>
-          <tr>
-            <td align="left" ><font class="textDesc">Code </font>             </td>
-            <td align="left" ><input type="text" name="SpecialTreatment" id="SpecialTreatment" /></td>
-            <td align="right" ><font class="textDesc">Code</font></td>
-            <td align="left" ><input type="text" name="BillLadingNote" id="BillLadingNote" /></td>
-            </tr>
-          <tr>
-            <td align="left"><font class="textDesc">Desc</font></td>
-            <td align="left"><input type="text" name="SpecialTreatment2" id="SpecialTreatment2" /></td>
-            <td align="right"><font class="textDesc">Desc</font></td>
-            <td align="left"><input type="text" name="BillLadingNote2" id="BillLadingNote2" /></td>
-            </tr>
-          <tr>
-            <td colspan="2" align="left" >&nbsp;</td>
-            <td colspan="2" align="left" >&nbsp;</td>
-          </tr>
-          <tr>
-            <td colspan="2" align="left" ><font class="textDescBold">20.Terms of Delivery and Payment</font></td>
-            <td align="left" ><font class="textDescBold">21.Currency Code</font></td>
-            <td align="left" ><font class="textDescBold">22.Amount Recrived/to be Received</font></td>
-            </tr>
-          <tr>
-            <td colspan="2" align="left" ><input type="text" name="TermDelivePayment" id="TermDelivePayment" /></td>
-            <td align="left" ><input type="text" name="CountryPayment" id="CountryPayment" /></td>
-            <td align="left" ><input type="text" name="CountryPayment2" id="CountryPayment2" /></td>
-            </tr>
-          <tr>
-            <td colspan="2">&nbsp;</td>
-            <td colspan="2">&nbsp;</td>
-            </tr>
-          <tr>
-            <td colspan="2" align="left" ><font class="textDescBold">23. Exchange Rate</font>
-              </td>
-            <td align="left" ><font class="textDescBold">24.Equivalent
-              
-            </font></td>
-            <td align="left" ><font class="textDescBold">25.Insurance </font></td>
-            </tr>
-          <tr>
-            <td colspan="2" align="left" ><input type="text" name="ExchangeRate" id="ExchangeRate" /></td>
-            <td align="left" ><input type="text" name="FOBValue" id="FOBValue" /></td>
-            <td align="left" ><input type="text" name="FOBValue2" id="FOBValue2" /></td>
-            </tr>
-          <tr>
-            <td colspan="2">&nbsp;</td>
-            <td colspan="2">&nbsp;</td>
-            </tr>
-          <tr>
-            <td colspan="3" align="left" ><font class="textDescBold">26.Payment for Goods Received/to be Received</font></td>
-            <td width="133" align="left" ><font class="textDescBold">27.freight</font></td>
-            </tr>
-          <tr>
-            <td align="left" ><font class="textDesc">Code</font></td>
-            <td align="left" ><input type="text" name="ExchangeRate2" id="ExchangeRate2" /></td>
-            <td align="left" >&nbsp;</td>
-            <td align="left" ><input type="text" name="ExchangeRate4" id="ExchangeRate4" /></td>
-          </tr>
-          <tr>
-            <td align="left" ><font class="textDesc">Descriptiont</font></td>
-            <td align="left" ><input type="text" name="ExchangeRate3" id="ExchangeRate3" /></td>
-            <td align="left" >&nbsp;</td>
-            <td align="left" >&nbsp;</td>
-            </tr>
-          <tr>
-            <td colspan="2">&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            </tr>
-          <tr>
-            <td colspan="2" align="left" ><font class="textDescBold">28.Gross Wt.(kg.)</font></td>
-            <td align="left" ><font class="textDescBold">29.Measurement </font></td>
-            <td align="left" ><font class="textDescBold">30.FOB Value</font></td>
-          </tr>
-          <tr>
-            <td colspan="2" align="left" ><input type="text" name="ExchangeRate3" id="ExchangeRate3" /></td>
-            <td align="left" ><input type="text" name="FOBValue3" id="FOBValue3" /></td>
-            <td align="left" ><input type="text" name="FOBValue3" id="FOBValue4" /></td>
-          </tr>
-          <tr>
-            <td colspan="2">&nbsp;</td>
-            <td colspan="2">&nbsp;</td>
-          </tr>
-        </table></td>
-      </tr>
+        </td>
+        </tr>
       <tr>
         <td><table border="0" cellspacing="1" cellpadding="1">
           <tr>
