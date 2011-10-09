@@ -6,12 +6,14 @@ import org.apache.log4j.Logger;
 
 import com.ejda.constant.EJDAConstant;
 import com.ejda.sessionBean.Form3Bean;
+import com.ejda.util.EJDAUtil;
 import com.tcd.ejda.dao.Form1DAO;
 import com.tcd.ejda.dao.Form1DAOImpl;
 import com.tcd.ejda.dao.Form3DAO;
 import com.tcd.ejda.dao.Form3DAOImpl;
 import com.tcd.ejda.model.Form1Model;
 import com.tcd.ejda.model.Form3Model;
+import com.tcd.ejda.model.TransactionLogModel;
 import com.tcd.ejda.model.ValueListModel;
 
 public class EJDAM024Action extends AbstractAction {
@@ -84,6 +86,7 @@ public class EJDAM024Action extends AbstractAction {
 		boolean result = false;
 		String iuser = (String) getRequest().getSession().getAttribute("iuser");
 		String formNo = (String) getRequest().getSession().getAttribute("form_no");
+		String ipAddress = getRequest().getRemoteAddr();
 		if (null==iuser || "".equals(iuser)){
 			iuser = "system";
 		}
@@ -95,6 +98,17 @@ public class EJDAM024Action extends AbstractAction {
 		try{
 			Form3DAO dao = new Form3DAOImpl();
 			dao.UpdateFrom3Table(form3);
+			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
+			EJDAUtil ejda = new EJDAUtil();
+			transactionLogModel.setMenuId("M024");
+			transactionLogModel.setTranAction("ADD");
+			transactionLogModel.setDescription("Update EJDA Table 4 Form 3");
+			transactionLogModel.setIpAddress(ipAddress);
+			transactionLogModel.setTranBy(iuser);
+			ejda.insertTranLog(transactionLogModel);
+			
+			getRequest().getSession().setAttribute("responseMessage", "Submit Form 3 Successfully.");
+			
 			result = doSearch();
 			
 			log.debug("result = "+result);
