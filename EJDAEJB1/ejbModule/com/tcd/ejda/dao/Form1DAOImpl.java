@@ -290,9 +290,10 @@ public class Form1DAOImpl implements Form1DAO {
 				
 				ps = conn.prepareStatement(sql1.toString());
 				log.debug("detail1.size() = " +detail1.size());
-				for(int i =0;i<detail1.size();i++){
+				for(int i =0; i < detail1.size(); i++){
 					int parameterIndex1 = 1;
 					FormDetail1Model f1 = (FormDetail1Model)detail1.get(i);
+					
 					ps.setString(parameterIndex1++, f1.getItem_no());
 					ps.setString(parameterIndex1++, doc_id);//	DOC_ID
 					ps.setString(parameterIndex1++, f1.getMarks_no());
@@ -302,6 +303,16 @@ public class Form1DAOImpl implements Form1DAO {
 					ps.setString(parameterIndex1++, f1.getCust_unit());
 					ps.setString(parameterIndex1++, f1.getCreate_By());
 					ps.setString(parameterIndex1++, f1.getUpdate_by());
+					
+					log.debug("f1.getItem_no() : "+ i + ":"+f1.getItem_no());
+					log.debug("doc_id : "+ i + ":"+doc_id);//	DOC_ID
+					log.debug("f1.getMarks_no() : "+ i + ":"+ i + ":" +f1.getMarks_no());
+					log.debug("f1.getNo_type_package() : "+ i + ":"+f1.getNo_type_package());
+					log.debug("f1.getGood_desc() : "+ i + ":"+f1.getGood_desc());
+					log.debug("f1.getCust_code() : "+ i + ":" +f1.getGood_desc());
+					log.debug("f1.getCust_unit() : "+ i + ":" +f1.getCust_unit());
+					log.debug("f1.getCreate_By() : "+ i + ":"+f1.getCreate_By());
+					log.debug("f1.getUpdate_by() : "+ i + ":"+f1.getUpdate_by());
 					
 					rs = ps.executeQuery();	
 				}
