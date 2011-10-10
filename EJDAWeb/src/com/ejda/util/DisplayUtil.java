@@ -59,4 +59,57 @@ public class DisplayUtil {
 		
 		return textAreaStr.toString();
 	}
+	public static String displayCheckBox(
+			String value,
+			String name,
+			String compare,
+			String jScript) {
+			String chk = "";
+			if (compare.equals(value)) {
+				chk = "checked";
+			}
+			return "<INPUT TYPE=\"checkbox\""
+				+ chk
+				+ "  NAME=\""
+				+ name
+				+ "\" value=\""
+				+ compare
+				+ "\""
+				+ jScript
+				+ ">";
+		}
+	public static String displayRadioTag(
+			String value,
+			
+			String inputFieldName,
+			String compareValue,
+			String equalStr,
+			String notEqualStr) {
+			String returnStr = null;
+			if (value == null) {
+				value = "";
+			}
+			
+				returnStr =
+					"<INPUT "
+						+ " type="
+						
+						+ "radio"
+						
+						+ " name="
+						
+						+ inputFieldName
+						
+						+ " value="
+						
+						+ compareValue;
+						
+				if (value.equals(compareValue)) {
+					returnStr = returnStr + " checked ";
+				}
+				returnStr = returnStr + ">";
+				//DebugUtil.println("displayInputTag>> " + returnStr);
+				return returnStr;
+			
+		}
 }
