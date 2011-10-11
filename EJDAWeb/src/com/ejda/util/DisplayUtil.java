@@ -80,11 +80,8 @@ public class DisplayUtil {
 		}
 	public static String displayRadioTag(
 			String value,
-			
 			String inputFieldName,
-			String compareValue,
-			String equalStr,
-			String notEqualStr) {
+			String compareValue) {
 			String returnStr = null;
 			if (value == null) {
 				value = "";
@@ -102,7 +99,7 @@ public class DisplayUtil {
 						
 						+ " value="
 						
-						+ compareValue;
+						+ value;
 						
 				if (value.equals(compareValue)) {
 					returnStr = returnStr + " checked ";
