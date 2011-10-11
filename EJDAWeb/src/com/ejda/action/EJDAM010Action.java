@@ -304,7 +304,7 @@ public class EJDAM010Action extends AbstractAction {
 		String AuthorAgent_name = (String) getRequest().getParameter("AuthorAgent_name");//AUTHORAGENT_NAME
 		String AuthorAgent_address = (String) getRequest().getParameter("AuthorAgent_address");//AUTHORAGENT_ADDRESS
 		String mode_trans = (String) getRequest().getParameter("mode_trans");//MODE_TRANS
-		String trans_other = (String) getRequest().getParameter("trans_other");//TRANS_OTHER
+		String trans_other = (String) getRequest().getParameter("trans_other");//TRANS_OTHER Trans detail of mode trans = 6
 		String Date_Import = (String) getRequest().getParameter("Date_Import");//DATE_IMPORT
 		String trans_detail = "";//TRANS_DETAIL
 		String PortImport_Code = (String) getRequest().getParameter("PortImport_Code");//PORTIMPORT_CODE
