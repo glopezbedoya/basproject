@@ -316,30 +316,30 @@
             <td colspan="2"><font class="textDescBold">4.Mode of   Transport </font></td>
             </tr>
           <tr>
-            <td width="100" align="left"><font class="textDesc"><input type="radio" name="radio" id="TransportMode" value="Sea" />
+            <td width="100" align="left"><font class="textDesc"><%=DisplayUtil.displayRadioTag(form1ModelSP.getMode_Trans(),"mode_trans","1") %>
               Sea</font></td>
-            <td width="150" align="left"><font class="textDesc"><input type="radio" name="radio" id="TransportMode2" value="Sea" />
+            <td width="150" align="left"><font class="textDesc"><%=DisplayUtil.displayRadioTag(form1ModelSP.getMode_Trans(),"mode_trans","2") %>
               Rail</font></td>
             
             </tr>
           <tr>
-            <td align="left"><font class="textDesc"><input type="radio" name="radio" id="TransportMode5" value="Sea" />
+            <td align="left"><font class="textDesc"><%=DisplayUtil.displayRadioTag(form1ModelSP.getMode_Trans(),"mode_trans","3") %>
               Road</font></td>
-            <td align="left"><font class="textDesc"><input type="radio" name="radio" id="TransportMode6" value="Sea" />
+            <td align="left"><font class="textDesc"><%=DisplayUtil.displayRadioTag(form1ModelSP.getMode_Trans(),"mode_trans","4") %>
               Air</font></td>
             
             </tr>
           <tr>
-            <td align="left"><font class="textDesc"><input type="radio" name="radio" id="TransportMode3" value="Sea" />
+            <td align="left"><font class="textDesc"><%=DisplayUtil.displayRadioTag(form1ModelSP.getMode_Trans(),"mode_trans","5") %>
               Pipe</font></td>
-            <td align="left"><font class="textDesc"><input type="radio" name="radio" id="TransportMode4" value="Sea" />
+            <td align="left"><font class="textDesc"><%=DisplayUtil.displayRadioTag(form1ModelSP.getMode_Trans(),"mode_trans","6") %>
               Other(specify)
               </td>
             
             </tr>
           <tr>
             <td align="left"></td>
-            <td align="left"><input type="text" name="TMOther" id="TMOther" /></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("trans_other",form1ModelSP.getTrans_Other(),"") %></td>
             
             </tr>
           </table></td>
@@ -415,7 +415,7 @@
         <td colspan="3" align="center"><table id= "packageTab" border="0" cellspacing="1" cellpadding="1">
         	 <tr>
           	<td><input type="button" name = "InsertPackage" value="Insert" onclick="addPackageTabJS();"></td>
-            <td><font class="textHeader"><input type="button" name = "DeletePackage" value="Delete" ></font></td>
+            <td><font class="textHeader"><input type="button" name = "DeletePackage" value="Delete" onclick="removeRowFromTable('packageTab')"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
@@ -435,13 +435,15 @@
             <td width="100"><font class="textHeader">Unit</font></td>
           </tr>
           
-        </table></td>
+        </table>
+       
+        </td>
         </tr>
       <tr>
         <td colspan="3"><table id ="qualityBaseTab" border="0" cellspacing="1" cellpadding="1">
           <tr >
             <td><font class="textHeader"><input type="button" name = "InsertQualityBase" value="Insert" onclick="addQualityBaseTabJS();"></font></td>
-            <td><font class="textHeader"><input type="button" name = "DeleteQualityBase" value="Delete" onclick="deleteQualityBaseTabJS();"></font></td>
+            <td><font class="textHeader"><input type="button" name = "DeleteQualityBase" value="Delete"  onclick="removeRowFromTable('qualityBaseTab')"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
