@@ -202,7 +202,7 @@ public class Form1DAOImpl implements Form1DAO {
 		sql.append("PORTLOAD_CODE, PORTLOAD_DESC, VIA_CODE, VIA_DESC, DATE_RECEIPT, REF_NO, REGIS_NO, CUS_NAME_CODE, CUS_NAME_DESC, ");
 		sql.append("MANIFEST_NO, DUTY_TAX_RECEIPT_DATE, DUTY_TAX_RECEIPT_DESC, IMPORT_PERMIT_NO, EXCHG_CTRL_REF, SPECIAL_TREATMENT, ");
 		sql.append("COUNTRY_ORIGIN_CODE, COUNTRY_ORIGIN_DESC, COUNTRY_FINAL_CODE, COUNTRY_FINAL_DESC, BILL_NO, TERM_PAYMENT, CUR_CODE, ");
-		sql.append("RECEIVED_AMOUNT, EXCHGRATE_ID, EQUIVALENT, GOOD_PAYMENT, COUNTRY_OF_GOOD, FOB_VALUE, INSURANCE, FREIGHT, CIF_VALUE, ");
+		sql.append("RECEIVED_AMOUNT, EXCHGRATE_ID, EQUIVALENT, GOOD_PAYMENT_CODE,GOOD_PAYMENT_DESC, COUNTRY_OF_GOOD, FOB_VALUE, INSURANCE, FREIGHT, CIF_VALUE, ");
 		sql.append("GROSS_WEIGHT, MEASUREMENT, OTHER_CHARG, DECLARANT_NAME, ID_CARD_NO, STATUS, CERIFY, CUS_REMOVAL, TAX_TOTAL, ");
 		sql.append("OTHER_CHARG2, PAYABLE_AMOUNT, MANUALSCRIPT_RECERPT, CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY) ");
 		sql.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ");
@@ -257,7 +257,8 @@ public class Form1DAOImpl implements Form1DAO {
 			ps.setDouble(parameterIndex++, form.getReceived_amount());//RECEIVED_AMOUNT
 			ps.setString(parameterIndex++, form.getExchgRate_ID());//EXCHGRATE_ID
 			ps.setString(parameterIndex++, form.getEquivalent());//EQUIVALENT
-			ps.setString(parameterIndex++, form.getGood_payment());//GOOD_PAYMENT
+			ps.setString(parameterIndex++, form.getGood_payment_code());//GOOD_PAYMENT_CODE
+			ps.setString(parameterIndex++, form.getGood_payment_desc());//GOOD_PAYMENT_DESC
 			ps.setString(parameterIndex++, form.getCountry_of_good());//COUNTRY_OF_GOOD
 			ps.setString(parameterIndex++, form.getFob_value());//FOB_VALUE
 			ps.setString(parameterIndex++, form.getInsurance());//INSURANCE
