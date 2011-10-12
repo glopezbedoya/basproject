@@ -3,7 +3,7 @@
 <%@page import="java.util.Vector"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@page import="com.tcd.ejda.model.Form2Model"%>
+<%@page import="com.tcd.ejda.model.Form1Model"%>
 <%@page import="com.ejda.sessionBean.Form2Bean"%>
 <%@page import="com.ejda.util.DisplayFormatUtil"%>
 <%@page import="com.tcd.ejda.model.ValueListModel"%>
@@ -13,9 +13,9 @@
 	Logger log = Logger.getLogger("JspLog");
 	Form2Bean form2Bean = (Form2Bean)request.getSession().getAttribute("form2Bean");
 	log.debug("form2Bean :: " + form2Bean);
-	Form2Model form2ModelSP = form2Bean.getForm2ModelSP();
+	Form1Model form2ModelSP = form2Bean.getForm2ModelSP();
 	Vector form2Vt = form2Bean.getForm2Vt();
-	Form2Model form2M = new Form2Model();
+	Form1Model form2M = new Form1Model();
 	String form_action = (String)form2Bean.getActionName();
 	
 	String bgColor1 = "bordercolor=\"#F4F4F4\"";
@@ -200,7 +200,7 @@
             <%
             		String bgColor;
             		for(int i=0;i<form2Vt.size();i++){
-            			form2M = (Form2Model)form2Vt.get(i);            	
+            			form2M = (Form1Model)form2Vt.get(i);            	
             			bgColor = (i%2 == 0)?bgColor1:bgColor2;
             %>
             
