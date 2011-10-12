@@ -334,7 +334,8 @@ public class EJDAM010Action extends AbstractAction {
 		String Received_amount = (String) getRequest().getParameter("Received_amount");//RECEIVED_AMOUNT
 		String ExchgRate_ID = (String) getRequest().getParameter("ExchgRate_ID");//EXCHGRATE_ID
 		String Equivalent = (String) getRequest().getParameter("Equivalent");//EQUIVALENT
-		String good_payment = (String) getRequest().getParameter("good_payment");//GOOD_PAYMENT
+		String good_payment_code = (String) getRequest().getParameter("good_payment_code");//GOOD_PAYMENT_CODE
+		String good_payment_desc = (String) getRequest().getParameter("good_payment_desc");//GOOD_PAYMENT_DESC
 		String country_of_good = (String) getRequest().getParameter("country_of_good");//COUNTRY_OF_GOOD
 		String fob_value = (String) getRequest().getParameter("fob_value");//FOB_VALUE
 		String Insurance = (String) getRequest().getParameter("Insurance");//INSURANCE
@@ -401,7 +402,8 @@ public class EJDAM010Action extends AbstractAction {
 //		form.setReceived_amount(Double.parseDouble(Received_amount));//RECEIVED_AMOUNT
 		form.setExchgRate_ID(ExchgRate_ID);//EXCHGRATE_ID
 		form.setEquivalent(Equivalent);//EQUIVALENT
-		form.setGood_payment(good_payment);//GOOD_PAYMENT
+		form.setGood_payment_code(good_payment_code);//GOOD_PAYMENT_CODE
+		form.setGood_payment_desc(good_payment_desc);//GOOD_PAYMENT_DESC
 		form.setCountry_of_good(country_of_good) ;//COUNTRY_OF_GOOD
 		form.setFob_value(fob_value);//FOB_VALUE
 		form.setInsurance(Insurance) ;//INSURANCE
