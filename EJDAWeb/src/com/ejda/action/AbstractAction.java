@@ -15,7 +15,7 @@ public abstract class AbstractAction {
 
 	public abstract void init(); 
 	public abstract boolean validate();
-	public abstract boolean methodAction(String ejdaMethod);
+	public abstract boolean methodAction(String ejdaMethod) throws Exception;
 	public abstract void clearSessionNotUsed();
 	
 	

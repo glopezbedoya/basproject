@@ -11,7 +11,7 @@ import com.tcd.ejda.dao.Form2DAO;
 import com.tcd.ejda.dao.Form2DAOImpl;
 import com.tcd.ejda.dao.TransactionLogDAO;
 import com.tcd.ejda.dao.TransactionLogDAOImpl;
-import com.tcd.ejda.model.Form2Model;
+import com.tcd.ejda.model.Form1Model;
 import com.tcd.ejda.model.TransactionLogModel;
 import com.tcd.ejda.model.ValueListModel;
 
@@ -33,8 +33,8 @@ public class EJDAM023Action extends AbstractAction {
 		
 		
 		form2Bean = getform2Bean();
-		form2Bean.setForm2Vt(new Vector<Form2Model>());
-		form2Bean.setForm2ModelSP(new Form2Model());
+		form2Bean.setForm2Vt(new Vector<Form1Model>());
+		form2Bean.setForm2ModelSP(new Form1Model());
 		ValueListModel valueListM = new ValueListModel();
 		valueListM.setReturnModel("form2Model");
 		form2Bean.setValueListM(valueListM);
@@ -72,7 +72,7 @@ public class EJDAM023Action extends AbstractAction {
 		if (null==iuser || "".equals(iuser)){
 			iuser = "system";
 		}
-		Form2Model form2 = new Form2Model();
+		Form1Model form2 = new Form1Model();
 		form2.setForm_name("FN_" + iuser);
 		form2.setForm_status("D");
 		form2.setUpdate_by(iuser);
@@ -101,14 +101,14 @@ public class EJDAM023Action extends AbstractAction {
 		if (null==iuser || "".equals(iuser)){
 			iuser = "system";
 		}
-		Form2Model form2 = new Form2Model();
+		Form1Model form2 = new Form1Model();
 		form2.setForm_name("FN_" + iuser);
 		form2.setForm_status("C");
 		form2.setUpdate_by(iuser);
 		form2.setForm_no(formNo);
 		try{
 			Form2DAO dao = new Form2DAOImpl();
-			dao.UpdateFrom2Table(form2);
+//			dao.UpdateFrom2Table(form2);
 			
 			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
 			EJDAUtil ejda = new EJDAUtil();
@@ -194,13 +194,13 @@ public class EJDAM023Action extends AbstractAction {
 	
 	private void setCriteriaPameter(){
 		
-		Form2Model form2 = new Form2Model();
+		Form1Model form2 = new Form1Model();
 		form2.setForm_name(getRequest().getParameter("txtFormName"));
 		
 		getform2Bean().setForm2ModelSP(form2);
 	}
 	
-	private String setSQL(Form2Model form2Cri){
+	private String setSQL(Form1Model form2Cri){
 		StringBuffer sql = new StringBuffer();
 		StringBuffer sql1 = new StringBuffer();
 		String sqlCommand ="";
@@ -233,7 +233,7 @@ public class EJDAM023Action extends AbstractAction {
 	
 	private Vector getValueListParameters() {
 		Vector parameters = new Vector();
-		Form2Model form2 = getform2Bean().getForm2ModelSP();
+		Form1Model form2 = getform2Bean().getForm2ModelSP();
 		if (null!= form2.getForm_name() && !"".equals(form2.getForm_name())){
 			log.debug("Form Name = "+form2.getForm_name());
 			parameters.add(form2.getForm_name());
