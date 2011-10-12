@@ -325,7 +325,8 @@ public class ValueListDAOImpl implements ValueListDAO {
 			form.setReceived_amount(rs.getDouble("RECEIVED_AMOUNT"));//RECEIVED_AMOUNT
 			form.setExchgRate_ID(rs.getString("EXCHGRATE_ID"));//EXCHGRATE_ID
 			form.setEquivalent(rs.getString("EQUIVALENT"));//EQUIVALENT
-			form.setGood_payment(rs.getString("GOOD_PAYMENT"));//GOOD_PAYMENT
+			form.setGood_payment_code(rs.getString("GOOD_PAYMENT_CODE"));//GOOD_PAYMENT_CODE
+			form.setGood_payment_desc(rs.getString("GOOD_PAYMENT_DESC"));//GOOD_PAYMENT_DESC
 			form.setCountry_of_good(rs.getString("COUNTRY_OF_GOOD")) ;//COUNTRY_OF_GOOD
 			form.setFob_value(rs.getString("FOB_VALUE"));//FOB_VALUE
 			form.setInsurance(rs.getString("INSURANCE")) ;//INSURANCE
