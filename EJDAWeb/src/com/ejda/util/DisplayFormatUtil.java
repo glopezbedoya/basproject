@@ -208,4 +208,7 @@ public class DisplayFormatUtil {
 			return 0;
 		}
 	}
+	public static double StringToDouble(String str) {
+		return (Double.valueOf(str)).doubleValue();
+	}
 }
