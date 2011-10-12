@@ -57,7 +57,8 @@ public class Form1Model {
 	private double Received_amount;
 	private String ExchgRate_ID;
 	private String Equivalent;
-	private String good_payment;
+	private String good_payment_code;
+	private String good_payment_desc;
 	private String country_of_good;
 	private String fob_value;
 	private String Insurance;
@@ -379,11 +380,18 @@ public class Form1Model {
 	public void setEquivalent(String equivalent) {
 		Equivalent = equivalent;
 	}
-	public String getGood_payment() {
-		return good_payment;
+	
+	public String getGood_payment_code() {
+		return good_payment_code;
 	}
-	public void setGood_payment(String goodPayment) {
-		good_payment = goodPayment;
+	public void setGood_payment_code(String goodPaymentCode) {
+		good_payment_code = goodPaymentCode;
+	}
+	public String getGood_payment_desc() {
+		return good_payment_desc;
+	}
+	public void setGood_payment_desc(String goodPaymentDesc) {
+		good_payment_desc = goodPaymentDesc;
 	}
 	public String getCountry_of_good() {
 		return country_of_good;
