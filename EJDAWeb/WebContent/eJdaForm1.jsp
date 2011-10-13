@@ -361,7 +361,7 @@
             <td><font class="textDescBold">6. No/Name of vessel/Flight/conveyanee</font></td>
           </tr>
           <tr>
-            <td><%=DisplayUtil.displayInputTextBox("trans_other",form1ModelSP.getVessel_value(),"") %></td>
+            <td><%=DisplayUtil.displayInputTextBox("vessel_value",form1ModelSP.getVessel_value(),"") %></td>
           </tr>
         </table></td>
         <td><table border="0" cellspacing="1" cellpadding="1">
@@ -491,7 +491,7 @@
                 <td colspan="2"><font class="textDescBold">49. Identity Card/Passport No.</font></td>
               </tr>
               <tr>
-                <td colspan="2"><input type="text" name="IDCard" id="IDCard" /></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextBox("id_card_no",form1ModelSP.getId_card_no(),"") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -501,9 +501,9 @@
                 <td colspan="2"><font class="textDescBold">50. Status</font></td>
               </tr>
               <tr>
-                <td><font class="textDescBold"><input type="radio" name="radio" id="Status" value="Active" />
+                <td><font class="textDescBold"><%=DisplayUtil.displayRadioTag(form1ModelSP.getStatus(),"Status","A") %>
                   Active</font></td>
-                <td><font class="textDescBold"><input type="radio" name="radio" id="Status" value="Inactive" />
+                <td><font class="textDescBold"><%=DisplayUtil.displayRadioTag(form1ModelSP.getStatus(),"Status","I") %>
                   Inactive</font></td>
               </tr>
               <tr>
@@ -514,7 +514,7 @@
                 <td colspan="2"><font class="textDescBold">51. I cerify that this declaration is true and complete.</font></td>
               </tr>
               <tr>
-                <td colspan="2"><input type="text" name="Cerify" id="Cerify" /></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextBox("cerify",form1ModelSP.getCerify(),"") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -550,7 +550,7 @@
               </tr>
               <tr>
                 <td><font class="textDescBold">53. Total Duty/Tax Payable</font></td>
-                <td><input type="text" name="TotalDutyTax" id="TotalDutyTax" /></td>
+                <td><%=DisplayUtil.displayInputTextBox("tax_total",String.valueOf(form1ModelSP.getTax_total()),"") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -558,7 +558,7 @@
               </tr>
               <tr>
                 <td><font class="textDescBold">54. Other Charges</font></td>
-                <td><input type="text" name="OtherCharges" id="OtherCharges" /></td>
+                <td><%=DisplayUtil.displayInputTextBox("Other_charg2",String.valueOf(form1ModelSP.getOther_charg2()),"") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -566,7 +566,7 @@
               </tr>
               <tr>
                 <td><font class="textDescBold">55. Total Amount Payable</font></td>
-                <td><input type="text" name="TotalAmountPaya" id="TotalAmountPaya" /></td>
+                <td><%=DisplayUtil.displayInputTextBox("payable_amount",String.valueOf(form1ModelSP.getPayable_amount()),"") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -576,7 +576,7 @@
                 <td colspan="2"><font class="textDescBold">56. Manualscript Recerpt No.(If applicable)</font></td>
                 </tr>
               <tr>
-                <td colspan="2"><textarea name="ManualRecerpt" id="ManualRecerpt" cols="45" rows="5"></textarea></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextAreaTag("manualscript_recerpt",form1ModelSP.getManualscript_recerpt(),"") %></td>
                 </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -599,8 +599,8 @@
             <td align="center"><font class="textDescBold">RESULT OF   EXAMINATION</font></td>
           </tr>
           <tr>
-            <td align="center"><textarea name="InstrucExamination" id="InstrucExamination" cols="45" rows="5"></textarea></td>
-            <td align="center"><textarea name="ResultExamnation" id="ResultExamnation" cols="45" rows="5"></textarea></td>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("instruct_exam",form1ModelSP.getInstruct_exam(),"") %></td>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("result_exam",form1ModelSP.getResult_exam(),"") %></td>
           </tr>
           <tr>
             <td align="center">&nbsp;</td>
@@ -617,7 +617,7 @@
             <td align="center"><font class="textDescBold">FOR OTHER USE</font></td>
           </tr>
           <tr>
-            <td align="center"><textarea name="OtherUse" id="OtherUse" cols="100" rows="5"></textarea></td>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("for_other_use",form1ModelSP.getFor_other_use(),"") %></td>
           </tr>
           <tr>
             <td align="center">&nbsp;</td>
