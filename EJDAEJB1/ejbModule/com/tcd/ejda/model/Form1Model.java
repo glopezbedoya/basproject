@@ -80,10 +80,16 @@ public class Form1Model {
 	private String Create_By;
 	private Date update_Date;
 	private String Update_by;
-
+	private String vessel_value;
 	
 	public String getForm_no() {
 		return Form_no;
+	}
+	public String getVessel_value() {
+		return vessel_value;
+	}
+	public void setVessel_value(String vesselValue) {
+		vessel_value = vesselValue;
 	}
 	public void setForm_no(String formNo) {
 		Form_no = formNo;
