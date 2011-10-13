@@ -345,6 +345,9 @@ public class ValueListDAOImpl implements ValueListDAO {
 			form.setPayable_amount(rs.getDouble("PAYABLE_AMOUNT"));//PAYABLE_AMOUNT
 			form.setManualscript_recerpt(rs.getString("MANUALSCRIPT_RECERPT")) ;//MANUALSCRIPT_RECERPT
 			form.setVessel_value(rs.getString("VESSEL_VALUE"));//VESSEL_VALUE
+			form.setInstruct_exam(rs.getString("INSTRUCT_EXAM"));//INSTRUCT_EXAM
+			form.setResult_exam(rs.getString("RESULT_EXAM"));//RESULT_EXAM
+			form.setFor_other_use(rs.getString("FOR_OTHER_USE"));//FOR_OTHER_USE
 			form.setCreate_Date(rs.getDate("CREATE_DATE"));
 			form.setCreate_By(rs.getString("CREATE_BY"));
 			form.setUpdate_Date(rs.getDate("UPDATE_DATE"));

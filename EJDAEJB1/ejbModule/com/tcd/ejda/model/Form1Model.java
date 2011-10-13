@@ -81,9 +81,37 @@ public class Form1Model {
 	private Date update_Date;
 	private String Update_by;
 	private String vessel_value;
+	private String cust_removal;
+	private String instruct_exam;
+	private String result_exam;
+	private String for_other_use;
 	
+	public String getFor_other_use() {
+		return for_other_use;
+	}
+	public void setFor_other_use(String forOtherUse) {
+		for_other_use = forOtherUse;
+	}
 	public String getForm_no() {
 		return Form_no;
+	}
+	public String getCust_removal() {
+		return cust_removal;
+	}
+	public void setCust_removal(String custRemoval) {
+		cust_removal = custRemoval;
+	}
+	public String getInstruct_exam() {
+		return instruct_exam;
+	}
+	public void setInstruct_exam(String instructExam) {
+		instruct_exam = instructExam;
+	}
+	public String getResult_exam() {
+		return result_exam;
+	}
+	public void setResult_exam(String resultExam) {
+		result_exam = resultExam;
 	}
 	public String getVessel_value() {
 		return vessel_value;
