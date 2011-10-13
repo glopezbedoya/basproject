@@ -112,10 +112,11 @@ public class EJDAM011Action extends AbstractAction {
 //		form2.setForm_status("A");
 //		form2.setUpdate_by(iuser);
 //		form2.setForm_no(formNo);
-//		Form1Model form2 = setValueModel();
-//		log.debug("Form1Model >> " + form2);
-//		Vector vcDetail1 = setValueDetail1Model();
-//		Vector vcDetail2 = setValueDetail2Model();
+		EJDAM010Action ejdam010Action = new EJDAM010Action();
+		Form1Model form2 = ejdam010Action.setValueModel();
+		log.debug("Form1Model >> " + form2);
+		Vector vcDetail1 = ejdam010Action.setValueDetail1Model();
+		Vector vcDetail2 = ejdam010Action.setValueDetail2Model();
 		try{
 			Form1DAO dao = new Form1DAOImpl();
 			//dao.UpdateFrom1Table(form2);
