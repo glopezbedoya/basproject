@@ -361,7 +361,7 @@
             <td><font class="textDescBold">6. No/Name of vessel/Flight/conveyanee</font></td>
           </tr>
           <tr>
-            <td><input type="text" name="VesselName" id="VesselName" /></td>
+            <td><%=DisplayUtil.displayInputTextBox("trans_other",form1ModelSP.getVessel_value(),"") %></td>
           </tr>
         </table></td>
         <td><table border="0" cellspacing="1" cellpadding="1">

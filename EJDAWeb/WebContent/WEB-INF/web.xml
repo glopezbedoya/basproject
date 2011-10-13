@@ -49,5 +49,14 @@
     <servlet-name>AjaxUserServlet</servlet-name>
     <url-pattern>/AjaxUserServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LoadResultFormServlet1</display-name>
+    <servlet-name>LoadResultFormServlet1</servlet-name>
+    <servlet-class>com.ejda.servlet.LoadResultFormServlet1</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoadResultFormServlet1</servlet-name>
+    <url-pattern>/LoadResultFormServlet1</url-pattern>
+  </servlet-mapping>
 </web-app>
-

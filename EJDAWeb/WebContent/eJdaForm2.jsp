@@ -320,9 +320,9 @@
             <td align="left" ><font class="textDescBold">30.FOB Value</font></td>
             </tr>
           <tr>
-            <td colspan="2" align="left" ><input type="text" name="ExchangeRate3" id="ExchangeRate3" /></td>
-            <td align="left" ><input type="text" name="FOBValue3" id="FOBValue3" /></td>
-            <td align="left" ><input type="text" name="FOBValue3" id="FOBValue4" /></td>
+            <td colspan="2" align="left" ><%=DisplayUtil.displayInputTextBox("Gross_weight",form2ModelSP.getGross_weight(),"") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Measurement",form2ModelSP.getMeasurement(),"") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("fob_value",form2ModelSP.getFob_value(),"") %></td>
             </tr>
           <tr>
             <td colspan="2">&nbsp;</td>
@@ -337,30 +337,30 @@
             <td colspan="2"><font class="textDescBold">4.Mode of   Transport </font></td>
             </tr>
           <tr>
-            <td width="25%"><font class="textDesc"><input type="radio" name="radio" id="TransportMode" value="Sea" />
+            <td width="25%"><font class="textDesc"><%=DisplayUtil.displayRadioTag(form2ModelSP.getMode_Trans(),"mode_trans","1") %>
               Sea</font></td>
-            <td width="75%"><font class="textDesc"><input type="radio" name="radio" id="TransportMode2" value="Sea" />
+            <td width="75%"><font class="textDesc"><%=DisplayUtil.displayRadioTag(form2ModelSP.getMode_Trans(),"mode_trans","2") %>
               Rail</font></td>
             
             </tr>
           <tr>
-            <td><font class="textDesc"><input type="radio" name="radio" id="TransportMode5" value="Sea" />
+            <td><font class="textDesc"><%=DisplayUtil.displayRadioTag(form2ModelSP.getMode_Trans(),"mode_trans","3") %>
               Road</font></td>
-            <td><font class="textDesc"><input type="radio" name="radio" id="TransportMode6" value="Sea" />
+            <td><font class="textDesc"><%=DisplayUtil.displayRadioTag(form2ModelSP.getMode_Trans(),"mode_trans","4") %>
               Air</font></td>
             
             </tr>
           <tr>
-            <td><font class="textDesc"><input type="radio" name="radio" id="TransportMode3" value="Sea" />
+            <td><font class="textDesc"><%=DisplayUtil.displayRadioTag(form2ModelSP.getMode_Trans(),"mode_trans","5") %>
               Pipe</font></td>
-            <td><font class="textDesc"><input type="radio" name="radio" id="TransportMode4" value="Sea" />
+            <td><font class="textDesc"><%=DisplayUtil.displayRadioTag(form2ModelSP.getMode_Trans(),"mode_trans","6") %>
               Other(specify)
               </td>
             
             </tr>
           <tr>
             <td></td>
-            <td><input type="text" name="TMOther" id="TMOther" /></td>
+            <td><%=DisplayUtil.displayInputTextBox("trans_other",form2ModelSP.getTrans_Other(),"") %></td>
             
             </tr>
           </table></td>
@@ -371,7 +371,7 @@
             </tr>
           <tr>
             
-            <td><input type="text" name="ImportDate" id="ImportDate" /></td>
+            <td><%=DisplayUtil.displayInputTextBox("Date_Import",DisplayFormatUtil.SQLDateToString1(form2ModelSP.getDate_Import(),"DD/MM/YYYY"),"") %></td>
             </tr>
           </table>
         </td>
