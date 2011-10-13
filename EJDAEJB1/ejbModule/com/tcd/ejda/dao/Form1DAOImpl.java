@@ -204,9 +204,9 @@ public class Form1DAOImpl implements Form1DAO {
 		sql.append("COUNTRY_ORIGIN_CODE, COUNTRY_ORIGIN_DESC, COUNTRY_FINAL_CODE, COUNTRY_FINAL_DESC, BILL_NO, TERM_PAYMENT, CUR_CODE, ");
 		sql.append("RECEIVED_AMOUNT, EXCHGRATE_ID, EQUIVALENT, GOOD_PAYMENT_CODE,GOOD_PAYMENT_DESC, COUNTRY_OF_GOOD, FOB_VALUE, INSURANCE, FREIGHT, CIF_VALUE, ");
 		sql.append("GROSS_WEIGHT, MEASUREMENT, OTHER_CHARG, DECLARANT_NAME, ID_CARD_NO, STATUS, CERIFY, CUS_REMOVAL, TAX_TOTAL, ");
-		sql.append("OTHER_CHARG2, PAYABLE_AMOUNT, MANUALSCRIPT_RECERPT, CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY) ");
+		sql.append("OTHER_CHARG2, PAYABLE_AMOUNT, MANUALSCRIPT_RECERPT,VESSEL_VALUE, CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY) ");
 		sql.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ");
-		sql.append(", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, ?, SYSDATE, ?)");
+		sql.append(", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, ?, SYSDATE, ?)");
 		log.debug("sql >> " + sql.toString());
 		try {
 			ps = conn.prepareStatement(sql.toString());
@@ -276,6 +276,7 @@ public class Form1DAOImpl implements Form1DAO {
 			ps.setString(parameterIndex++, form.getOther_charg2());//OTHER_CHARG2
 			ps.setDouble(parameterIndex++, form.getPayable_amount());//PAYABLE_AMOUNT
 			ps.setString(parameterIndex++, form.getManualscript_recerpt());//MANUALSCRIPT_RECERPT
+			ps.setString(parameterIndex++, form.getVessel_value());//VESSEL_VALUE
 			//CREATE_DATE
 			ps.setString(parameterIndex++, form.getCreate_By());//CREATE_BY
 			//UPDATE_DATE
