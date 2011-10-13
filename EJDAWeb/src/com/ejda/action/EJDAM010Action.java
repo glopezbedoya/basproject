@@ -282,7 +282,7 @@ public class EJDAM010Action extends AbstractAction {
 		
 		return result;
 	}
-	private Form1Model setValueModel() throws Exception{
+	public Form1Model setValueModel() throws Exception{
 		log.debug("[ Start : setValueModel ]");
 		Form1Model form = new Form1Model();
 		String iuser = (String) getRequest().getSession().getAttribute("iuser");
@@ -429,7 +429,7 @@ public class EJDAM010Action extends AbstractAction {
 		return form;
 	}
 	
-	private Vector setValueDetail1Model() throws Exception{
+	public Vector setValueDetail1Model() throws Exception{
 		log.debug("[ Start : setValueModel ]");
 		Vector vc = new Vector();
 		
@@ -467,7 +467,7 @@ public class EJDAM010Action extends AbstractAction {
 		return vc;
 	}
 	
-	private Vector setValueDetail2Model() throws Exception{
+	public Vector setValueDetail2Model() throws Exception{
 		log.debug("[ Start : setValueModel ]");
 		
 		Vector vc = new Vector();
