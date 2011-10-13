@@ -353,6 +353,7 @@ public class EJDAM010Action extends AbstractAction {
 		String Other_charg2 = (String) getRequest().getParameter("Other_charg2");//OTHER_CHARG2
 		String payable_amount = (String) getRequest().getParameter("payable_amount");//PAYABLE_AMOUNT
 		String manualscript_recerpt = (String) getRequest().getParameter("manualscript_recerpt");//MANUALSCRIPT_RECERPT
+		String vessel_value = (String) getRequest().getParameter("vessel_value");//VESSEL_VALUE
 		//CREATE_DATE
 		//ps.setString(parameterIndex++, form.getCreate_By());//CREATE_BY
 		//UPDATE_DATE
@@ -421,6 +422,7 @@ public class EJDAM010Action extends AbstractAction {
 		form.setOther_charg2(Other_charg2) ;//OTHER_CHARG2
 //		form.setPayable_amount(Double.parseDouble(payable_amount));//PAYABLE_AMOUNT
 		form.setManualscript_recerpt(manualscript_recerpt) ;//MANUALSCRIPT_RECERPT
+		form.setVessel_value("vessel_value");//VESSEL_VALUE
 		form.setCreate_By(iuser);
 		form.setUpdate_by(iuser);
 		
