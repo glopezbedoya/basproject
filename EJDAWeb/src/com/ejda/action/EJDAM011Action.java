@@ -120,7 +120,7 @@ public class EJDAM011Action extends AbstractAction {
 		try{
 			Form1DAO dao = new Form1DAOImpl();
 			//dao.UpdateFrom1Table(form2);
-//			dao.saveFromEJDA(form2,vcDetail1,vcDetail2);
+			dao.saveFromEJDA(form2,vcDetail1,vcDetail2);
 			
 			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
 			EJDAUtil ejda = new EJDAUtil();
