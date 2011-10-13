@@ -279,3 +279,34 @@ function addPackageTabJS(){
   		showMessageError(e,'addPackageTabJS');
   	}				
 }
+function removeRowFromTable(tablename){
+	
+	var tbl = document.getElementById(tablename);
+	//alert('tbl : ' +tbl);
+	var lastRow = tbl.rows.length;
+	var chkItem;
+	if (null!=tablename && tablename == 'packageTab'){
+		 chkItem = window.document.ejdaformNo2.chkPackage;
+	}else if (null!=tablename && tablename == 'qualityBaseTab'){
+		 chkItem = window.document.ejdaformNo2.chkQuabase;
+	}
+	//alert('chkItem : ' +chkItem);
+	if(chkItem == undefined){
+		alert('undefined');
+	}else if(chkItem.length != undefined){
+		//alert('chkItem.length = '+chkItem.length);
+		for(var i = (chkItem.length-1); i>=0; i--){
+			//alert('at i = '+i+', and check is = '+chkItem[i].checked);
+			if(chkItem[i].checked==true){
+				tbl.deleteRow(i+3);
+				//tbl.deleteRow(i+1);
+			}
+		}
+	}else{
+		//alert('one item : ' + chkItem.checked);
+		if(chkItem.checked==true){
+			//tbl.deleteRow(1);
+			tbl.deleteRow(3);
+		}
+	}	
+}
