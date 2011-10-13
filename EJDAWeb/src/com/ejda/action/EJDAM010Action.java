@@ -354,6 +354,9 @@ public class EJDAM010Action extends AbstractAction {
 		String payable_amount = (String) getRequest().getParameter("payable_amount");//PAYABLE_AMOUNT
 		String manualscript_recerpt = (String) getRequest().getParameter("manualscript_recerpt");//MANUALSCRIPT_RECERPT
 		String vessel_value = (String) getRequest().getParameter("vessel_value");//VESSEL_VALUE
+		String instruct_exam = (String) getRequest().getParameter("instruct_exam");//INSTRUCT_EXAM
+		String result_exam = (String) getRequest().getParameter("result_exam");//RESULT_EXAM
+		String for_other_use = (String) getRequest().getParameter("for_other_use");//FOR_OTHER_USE
 		//CREATE_DATE
 		//ps.setString(parameterIndex++, form.getCreate_By());//CREATE_BY
 		//UPDATE_DATE
@@ -422,7 +425,10 @@ public class EJDAM010Action extends AbstractAction {
 		form.setOther_charg2(Other_charg2) ;//OTHER_CHARG2
 //		form.setPayable_amount(Double.parseDouble(payable_amount));//PAYABLE_AMOUNT
 		form.setManualscript_recerpt(manualscript_recerpt) ;//MANUALSCRIPT_RECERPT
-		form.setVessel_value("vessel_value");//VESSEL_VALUE
+		form.setVessel_value(vessel_value);//VESSEL_VALUE
+		form.setInstruct_exam(instruct_exam);//INSTRUCT_EXAM
+		form.setResult_exam(result_exam);//RESULT_EXAM
+		form.setFor_other_use(for_other_use);//FOR_OTHER_USE
 		form.setCreate_By(iuser);
 		form.setUpdate_by(iuser);
 		
@@ -444,7 +450,8 @@ public class EJDAM010Action extends AbstractAction {
 		String [] GOODS_DESC = getRequest().getParameterValues("GOODS_DESC");//GOODS_DESC
 		String [] CODE_NO = getRequest().getParameterValues("CODE_NO");//CODE_NO
 		String [] UNIT = getRequest().getParameterValues("UNIT");//UNIT
-		if (MARK_NO.length > 1){
+		
+		if (null != MARK_NO && MARK_NO.length > 1){
 			for(int i =0; i < MARK_NO.length;i++){
 				FormDetail1Model detail = new FormDetail1Model();
 				detail.setMarks_no(MARK_NO[i]);
@@ -490,7 +497,7 @@ public class EJDAM010Action extends AbstractAction {
 		String [] TAX_TYPE = getRequest().getParameterValues("TAX_TYPE");//TAX_TYPE
 		String [] TAX_RATE = getRequest().getParameterValues("TAX_RATE");//TAX_RATE
 		String [] TAX_AMOUNT = getRequest().getParameterValues("TAX_AMOUNT");//TAX_AMOUNT
-		if (QA_ITEM_NO.length > 1){
+		if (null != QA_ITEM_NO && QA_ITEM_NO.length > 1){
 			for(int i =0; i < QA_ITEM_NO.length;i++){
 				FormDetail2Model detail = new FormDetail2Model();
 				detail.setItem_no(QA_ITEM_NO[i]);
