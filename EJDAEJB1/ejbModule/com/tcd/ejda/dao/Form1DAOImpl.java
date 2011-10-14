@@ -241,7 +241,7 @@ public class Form1DAOImpl implements Form1DAO {
 			ps.setString(parameterIndex++, form.getRegis_no());//REGIS_NO
 			ps.setString(parameterIndex++, form.getCus_name_code());//CUS_NAME_CODE
 			ps.setString(parameterIndex++, form.getCus_name_desc());//CUS_NAME_DESC
-			ps.setString(parameterIndex++, form.getManifest_no());//MANIFEST_NO
+			ps.setInt(parameterIndex++, form.getManifest_no());//MANIFEST_NO
 			ps.setDate(parameterIndex++, form.getDuty_tax_receipt_date());//DUTY_TAX_RECEIPT_DATE
 			ps.setString(parameterIndex++, form.getDuty_tax_receipt_desc());//DUTY_TAX_RECEIPT_DESC
 			ps.setString(parameterIndex++, form.getImport_permit_no());//IMPORT_PERMIT_NO
@@ -461,5 +461,274 @@ public class Form1DAOImpl implements Form1DAO {
 		
 		return blSuccess;
 		
+	}
+	
+	public Form1Model searchFormModel(String docId) throws SQLException{
+		log.debug("[Start : searchFormModel ]");
+		log.debug("docId = "+docId);
+		Form1Model form1M = new Form1Model();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = db.getConnection();
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		StringBuffer sql = new StringBuffer();
+		
+		try {
+						
+			sql.append(" SELECT * FROM JDA_FORM_T_DOC ");
+			sql.append("WHERE DOC_ID = ? ");
+			log.debug("Search JDA_FORM_T_DOC >>> " + sql.toString());
+			ps = conn.prepareStatement(sql.toString());
+			int seq=1;
+			
+			ps.setString(seq++, docId);
+			
+			rs = ps.executeQuery();
+			if(rs.next()){
+				form1M.setDoc_ID(rs.getString("DOC_ID"));
+				form1M.setCountry_ID(rs.getString("COUNTRY_ID"));
+				form1M.setJDA_Type(rs.getString("JDA_TYPE"));
+				form1M.setDoc_Status(rs.getString("DOC_STATUS"));
+				form1M.setInvoice_No(rs.getString("INVOICE_NO"));
+				form1M.setConsignor_code(rs.getString("CONSIGNOR_CODE"));
+				form1M.setConsignor_name(rs.getString("CONSIGNOR_NAME"));
+				form1M.setConsignor_address(rs.getString("CONSIGNOR_ADDRESS"));
+				form1M.setConsignee_code(rs.getString("CONSIGNEE_CODE"));
+				form1M.setConsignee_name(rs.getString("CONSIGNEE_NAME"));
+				form1M.setConsignee_address(rs.getString("CONSIGNEE_ADDRESS"));
+				form1M.setAuthorAgent_code(rs.getString("AUTHORAGENT_CODE"));
+				form1M.setAuthorAgent_name(rs.getString("AUTHORAGENT_NAME"));
+				form1M.setAuthorAgent_address(rs.getString("AUTHORAGENT_ADDRESS"));
+				form1M.setMode_Trans(rs.getString("MODE_TRANS"));
+				form1M.setTrans_Other(rs.getString("TRANS_OTHER"));
+				form1M.setDate_Import(rs.getDate("DATE_IMPORT"));
+				form1M.setTrans_Detail(rs.getString("TRANS_DETAIL"));
+				form1M.setPortImport_Code(rs.getString("PORTIMPORT_CODE"));
+				form1M.setPortImport_Desc(rs.getString("PORTIMPORT_DESC"));
+				form1M.setPortLoad_Code(rs.getString("PORTLOAD_CODE"));
+				form1M.setPortLoad_Desc(rs.getString("PORTLOAD_DESC"));
+				form1M.setVia_Code(rs.getString("VIA_CODE"));
+				form1M.setVia_Desc(rs.getString("VIA_DESC"));
+				form1M.setDate_Receipt(rs.getDate("DATE_RECEIPT"));
+				form1M.setRef_no(rs.getString("REF_NO"));
+				form1M.setRegis_no(rs.getString("REGIS_NO"));
+				form1M.setCus_name_code(rs.getString("CUS_NAME_CODE"));
+				form1M.setCus_name_desc(rs.getString("CUS_NAME_DESC"));
+				form1M.setManifest_no(rs.getInt("MANIFEST_NO"));
+				form1M.setDuty_tax_receipt_date(rs.getDate("DUTY_TAX_RECEIPT_DATE"));
+				form1M.setDuty_tax_receipt_desc(rs.getString("DUTY_TAX_RECEIPT_DESC"));
+				form1M.setImport_permit_no(rs.getString("IMPORT_PERMIT_NO"));
+				form1M.setExchg_ctrl_ref(rs.getString("EXCHG_CTRL_REF"));
+				form1M.setSpecial_treatment(rs.getString("SPECIAL_TREATMENT"));
+				form1M.setCountry_origin_code(rs.getString("COUNTRY_ORIGIN_CODE"));
+				form1M.setCountry_origin_desc(rs.getString("COUNTRY_ORIGIN_DESC"));
+				form1M.setCountry_final_code(rs.getString("COUNTRY_FINAL_CODE"));
+				form1M.setCountry_final_desc(rs.getString("COUNTRY_FINAL_DESC"));
+				form1M.setBill_no(rs.getString("BILL_NO"));
+				form1M.setTerm_payment(rs.getString("TERM_PAYMENT"));
+				form1M.setCur_code(rs.getString("CUR_CODE"));
+				form1M.setReceived_amount(rs.getDouble("RECEIVED_AMOUNT"));
+				form1M.setExchgRate_ID(rs.getString("EXCHGRATE_ID"));
+				form1M.setEquivalent(rs.getString("EQUIVALENT"));
+				form1M.setGood_payment_code(rs.getString("GOOD_PAYMENT_CODE"));
+				form1M.setGood_payment_desc(rs.getString("GOOD_PAYMENT_DESC"));
+				form1M.setCountry_of_good(rs.getString("COUNTRY_OF_GOOD"));
+				form1M.setFob_value(rs.getString("FOB_VALUE"));
+				form1M.setInsurance(rs.getString("INSURANCE"));
+				form1M.setFreight(rs.getString("FREIGHT"));
+				form1M.setCif_value(rs.getString("CIF_VALUE"));
+				form1M.setGross_weight(rs.getString("GROSS_WEIGHT"));
+				form1M.setMeasurement(rs.getString("MEASUREMENT"));
+				form1M.setOther_charg(rs.getString("OTHER_CHARG"));
+				form1M.setDeclarant_name(rs.getString("DECLARANT_NAME"));
+				form1M.setId_card_no(rs.getString("ID_CARD_NO"));
+				form1M.setStatus(rs.getString("STATUS"));
+				form1M.setCerify(rs.getString("CERIFY"));
+				form1M.setCus_removal(rs.getString("CUS_REMOVAL"));
+				form1M.setTax_total(rs.getDouble("TAX_TOTAL"));
+				form1M.setOther_charg2(rs.getString("OTHER_CHARG2"));
+				form1M.setPayable_amount(rs.getDouble("PAYABLE_AMOUNT"));
+				form1M.setManualscript_recerpt(rs.getString("MANUALSCRIPT_RECERPT"));
+				form1M.setVessel_value(rs.getString("VESSEL_VALUE"));
+				form1M.setInstruct_exam(rs.getString("INSTRUCT_EXAM"));
+				form1M.setResult_exam(rs.getString("RESULT_EXAM"));
+				form1M.setFor_other_use(rs.getString("FOR_OTHER_USE"));
+				form1M.setCreate_Date(rs.getDate("CREATE_DATE"));
+				form1M.setCreate_By(rs.getString("CREATE_BY"));
+				form1M.setUpdate_Date(rs.getDate("UPDATE_DATE"));
+				form1M.setUpdate_by(rs.getString("UPDATE_BY"));
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			log.equals(e.getMessage());
+		}finally{
+			try {
+				if (conn != null)
+					conn.commit();
+			} catch (Exception e) {
+			}
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		return form1M;
+	}
+	
+	public Vector<FormDetail1Model> searchFormDetail1Model(String docId) throws SQLException{
+		log.debug("[Start : searchFormModel ]");
+		log.debug("docId = "+docId);
+		FormDetail1Model formDetailM = new FormDetail1Model();
+		Vector<FormDetail1Model> vc = new  Vector<FormDetail1Model>();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = db.getConnection();
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		StringBuffer sql = new StringBuffer();
+		
+		try {
+						
+			sql.append(" SELECT * FROM JDA_FORM_T_DOC_DETAIL1 ");
+			sql.append("WHERE DOC_ID = ? ");
+			log.debug("Search JDA_FORM_T_DOC >>> " + sql.toString());
+			ps = conn.prepareStatement(sql.toString());
+			int seq=1;
+			
+			ps.setString(seq++, docId);
+			
+			rs = ps.executeQuery();
+			while(rs.next()){
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			log.equals(e.getMessage());
+		}finally{
+			try {
+				if (conn != null)
+					conn.commit();
+			} catch (Exception e) {
+			}
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		return vc;
+	}
+	
+	public Vector<FormDetail2Model> searchFormDetail2Model(String docId) throws SQLException{
+		log.debug("[Start : searchFormModel ]");
+		log.debug("docId = "+docId);
+		FormDetail2Model formDetai2M = new FormDetail2Model();
+		Vector<FormDetail2Model> vc = new  Vector<FormDetail2Model>();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = db.getConnection();
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		StringBuffer sql = new StringBuffer();
+		
+		try {
+						
+			sql.append(" SELECT * FROM JDA_FORM_T_DOC_DETAIL2 ");
+			sql.append("WHERE DOC_ID = ? ");
+			log.debug("Search JDA_FORM_T_DOC >>> " + sql.toString());
+			ps = conn.prepareStatement(sql.toString());
+			int seq=1;
+			
+			ps.setString(seq++, docId);
+			
+			rs = ps.executeQuery();
+			while(rs.next()){
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			log.equals(e.getMessage());
+		}finally{
+			try {
+				if (conn != null)
+					conn.commit();
+			} catch (Exception e) {
+			}
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		return vc;
 	}
 }
