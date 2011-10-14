@@ -24,9 +24,9 @@ function buttonAction(form,action,method,page){
 	$('input[name=screenName]').val(page);
 	form.submit();
 }
-function updateEJDATable2(form,fn_no,action){
+function updateEJDATable2(form,doc_id,action){
 	//alert('fn_no : ' +fn_no);
-	$('input[name=form_no]').val(fn_no);
+	$('input[name=doc_id]').val(doc_id);
 	$('input[name=ejdaAction]').val(action);
 	$('input[name=ejdaMethod]').val('doUpdate');
 	$('input[name=screenName]').val('eJdaForm1.jsp');
