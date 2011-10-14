@@ -51,8 +51,8 @@ public class MenuDAOImpl implements MenuDAO {
 			menuModel.setMenu_sort(rs.getInt("MENU_SORT"));
 			menuModel.setMenu_linked(rs.getString("MENU_LINKED"));
 			searchMenu.add(menuModel);
-			log.debug("ID >>> " + rs.getString("MENU_ID") + ":"
-					+ rs.getString("MENU_NAME") + ":" + rs.getString("MENU_OWNER"));
+//			log.debug("ID >>> " + rs.getString("MENU_ID") + ":"
+//					+ rs.getString("MENU_NAME") + ":" + rs.getString("MENU_OWNER"));
 		}	
 //		
 		log.debug("Connection session: ");

@@ -309,7 +309,7 @@ public class ValueListDAOImpl implements ValueListDAO {
 			form.setRegis_no(rs.getString("REGIS_NO"));//REGIS_NO
 			form.setCus_name_code(rs.getString("CUS_NAME_CODE"));//CUS_NAME_CODE
 			form.setCus_name_desc(rs.getString("CUS_NAME_DESC"));//CUS_NAME_DESC
-			form.setManifest_no(rs.getString("MANIFEST_NO"));//MANIFEST_NO
+			form.setManifest_no(rs.getInt("MANIFEST_NO"));//MANIFEST_NO
 			form.setDuty_tax_receipt_date(rs.getDate("DUTY_TAX_RECEIPT_DATE"));//DUTY_TAX_RECEIPT_DATE
 			form.setDuty_tax_receipt_desc(rs.getString("DUTY_TAX_RECEIPT_DESC"));//DUTY_TAX_RECEIPT_DESC
 			form.setImport_permit_no(rs.getString("IMPORT_PERMIT_NO"));//IMPORT_PERMIT_NO
