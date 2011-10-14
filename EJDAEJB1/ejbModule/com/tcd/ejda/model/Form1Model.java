@@ -41,7 +41,7 @@ public class Form1Model {
 	private String Regis_no;
 	private String cus_name_code;
 	private String cus_name_desc;
-	private String Manifest_no;
+	private Integer Manifest_no;
 	private Date duty_tax_receipt_date;
 	private String duty_tax_receipt_desc;
 	private String import_permit_no;
@@ -85,6 +85,14 @@ public class Form1Model {
 	private String instruct_exam;
 	private String result_exam;
 	private String for_other_use;
+	
+	/* Field EJDA From 3*/
+	private String moveMentPemitNo;
+	private String expiryDate;
+	private String securityRefNo;
+	private double securityAmt;
+	private double receiveAmt;
+	private String billOfLading;
 	
 	public String getFor_other_use() {
 		return for_other_use;
@@ -318,10 +326,10 @@ public class Form1Model {
 	public void setCus_name_desc(String cusNameDesc) {
 		cus_name_desc = cusNameDesc;
 	}
-	public String getManifest_no() {
+	public Integer getManifest_no() {
 		return Manifest_no;
 	}
-	public void setManifest_no(String manifestNo) {
+	public void setManifest_no(Integer manifestNo) {
 		Manifest_no = manifestNo;
 	}
 	public Date getDuty_tax_receipt_date() {
@@ -546,6 +554,42 @@ public class Form1Model {
 	}
 	public void setUpdate_Date(Date updateDate) {
 		update_Date = updateDate;
+	}
+	public String getMoveMentPemitNo() {
+		return moveMentPemitNo;
+	}
+	public void setMoveMentPemitNo(String moveMentPemitNo) {
+		this.moveMentPemitNo = moveMentPemitNo;
+	}
+	public String getExpiryDate() {
+		return expiryDate;
+	}
+	public void setExpiryDate(String expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+	public String getSecurityRefNo() {
+		return securityRefNo;
+	}
+	public void setSecurityRefNo(String securityRefNo) {
+		this.securityRefNo = securityRefNo;
+	}
+	public String getBillOfLading() {
+		return billOfLading;
+	}
+	public void setBillOfLading(String billOfLading) {
+		this.billOfLading = billOfLading;
+	}
+	public Double getSecurityAmt() {
+		return securityAmt;
+	}
+	public void setSecurityAmt(double securityAmt) {
+		this.securityAmt = securityAmt;
+	}
+	public Double getReceiveAmt() {
+		return receiveAmt;
+	}
+	public void setReceiveAmt(double receiveAmt) {
+		this.receiveAmt = receiveAmt;
 	}
 	
 	
