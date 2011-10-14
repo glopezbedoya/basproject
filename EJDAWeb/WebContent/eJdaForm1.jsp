@@ -158,7 +158,7 @@
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("ManifestNo",form1ModelSP.getManifest_no(),"") %></td>
+            <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("ManifestNo",(form1ModelSP.getManifest_no() != null)?form1ModelSP.getManifest_no().toString():"","") %></td>
             <td>&nbsp;</td>
           </tr>
           <tr>

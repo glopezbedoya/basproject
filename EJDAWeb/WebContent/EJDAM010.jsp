@@ -44,6 +44,7 @@
 	<input type="hidden" name="screenName" value="">
 	<input type="hidden" name="actionName" value="">
 	<input type="hidden" name="form_no" value="">
+	<input type="hidden" name="doc_id" value="">
 	<input type="hidden" name="page" value="<%=valueListM.getAtPage() %>" />
 	<input type="hidden" name="volumePerPage" value="<%=valueListM.getItemsPerPage() %>" />
 	<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
@@ -202,9 +203,10 @@
             		for(int i=0;i<form1Vt.size();i++){
             			form1M = (Form1Model)form1Vt.get(i);            	
             			bgColor = (i%2 == 0)?bgColor1:bgColor2;
+            			log.debug("form1M.getDoc_ID() = "+form1M.getDoc_ID());
             %>
             
-			            <tr onclick="updateEJDATable2(this.form,'<%=form1M.getForm_no() %>','EJDAM010');" style="cursor:hand">
+			            <tr onclick="updateEJDATable2(this.form,'<%=form1M.getDoc_ID() %>','EJDAM010');" style="cursor:hand">
 			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form1M.getForm_no() %>"/></th>
 			              <td <%=bgColor %> class="text"><%=form1M.getForm_no()%></td>
 			              <td <%=bgColor %> class="text"><%=form1M.getForm_name()%></td>
