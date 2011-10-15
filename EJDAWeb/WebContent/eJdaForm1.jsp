@@ -3,6 +3,7 @@
 <%@page import="com.tcd.ejda.model.FormDetail2Model"%>
 <%@page import="com.ejda.sessionBean.Form1Bean"%>
 <%@page import="com.ejda.util.DisplayFormatUtil"%>
+<%@page import="com.ejda.util.LoadCacheData"%>
 <%@page import="com.ejda.util.DisplayUtil"%>
 <%@page import="com.tcd.ejda.model.ValueListModel"%>
 <%@page import="org.apache.log4j.Logger"%>
@@ -370,7 +371,7 @@
             </tr>
           <tr>
             <td><font class="textDesc">Code </font></td>
-            <td><%=DisplayUtil.displayInputTextBox("PortImport_Code",form1ModelSP.getPortImport_Code(),"") %></td>
+            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form1ModelSP.getPortLoad_Code(),"PortImport_Code","EDIT","") %></td>
             </tr>
           <tr>
             <td><font class="textDesc">Descriptiont </font></td>
@@ -385,7 +386,7 @@
           </tr>
           <tr>
             <td><font class="textDesc">Code </font></td>
-            <td><%=DisplayUtil.displayInputTextBox("PortLoad_Code",form1ModelSP.getPortLoad_Code(),"") %></td>
+            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form1ModelSP.getPortLoad_Code(),"PortLoad_Code","EDIT","") %></td>
           </tr>
           <tr>
             <td><font class="textDesc">Descriptiont </font></td>
@@ -398,7 +399,7 @@
             </tr>
           <tr>
             <td><font class="textDesc">Code </font></td>
-            <td><%=DisplayUtil.displayInputTextBox("Via_Code",form1ModelSP.getVia_Code(),"") %></td>
+            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form1ModelSP.getPortLoad_Code(),"Via_Code","EDIT","") %></td>
             </tr>
           <tr>
             <td><font class="textDesc">Descriptiont </font></td>
