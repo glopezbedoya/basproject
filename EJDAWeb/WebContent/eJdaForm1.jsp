@@ -99,34 +99,34 @@
             <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("Date_Receipt",DisplayFormatUtil.SQLDateToString1(form1ModelSP.getDate_Receipt(),"DD/MM/YYYY"),"") %>
              
            </td>
-            <td align="left"><font class="textDesc"><%=DisplayUtil.displayCheckBox(form1ModelSP.getAttr_Invoice(),"doc_attach","INVOICE","") %> 
+            <td align="left"><font class="textDesc"><%=DisplayUtil.displayCheckBox("","doc_attach","INVOICE","") %> 
               Invoice</font></td>
           </tr>
           <tr>
             <td colspan="2">&nbsp;</td>
             <td align="left"><font class="textDesc">
-              <%=DisplayUtil.displayCheckBox(form1ModelSP.getAttr_BillofLading(),"doc_attach","BILL OF LADING","") %>
+              <%=DisplayUtil.displayCheckBox("","doc_attach","BILL OF LADING","") %>
               Bill of Lading
             </font></td>
           </tr>
           <tr>
             <td colspan="2" align="left"><font class="textDescBold">12.Registration   Number</font></td>
             <td align="left"><font class="textDesc">
-             <%=DisplayUtil.displayCheckBox(form1ModelSP.getAttr_InsuranceCert(),"doc_attach","INSURANCE CERT","") %>
+             <%=DisplayUtil.displayCheckBox("","doc_attach","INSURANCE CERT","") %>
               Insurance Certificate
             </font></td>
           </tr>
           <tr>
             <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("Regis_no",form1ModelSP.getRegis_no(),"") %></td>
             <td align="left"><font class="textDesc">
-              <%=DisplayUtil.displayCheckBox(form1ModelSP.getAttr_LetterofCredit(),"doc_attach","LETTER OF CREDIT","") %>
+              <%=DisplayUtil.displayCheckBox("","doc_attach","LETTER OF CREDIT","") %>
               Letter of Credit
             </font></td>
           </tr>
           <tr>
             <td colspan="2">&nbsp;</td>
             <td align="left"><font class="textDesc">
-             	<%=DisplayUtil.displayCheckBox(form1ModelSP.getAttr_other(),"doc_attach","OTHER","") %>
+             	<%=DisplayUtil.displayCheckBox("","doc_attach","OTHER","") %>
               Other
             </font></td>
           </tr>
