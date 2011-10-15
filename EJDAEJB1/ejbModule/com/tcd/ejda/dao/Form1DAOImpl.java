@@ -9,10 +9,10 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import com.tcd.ejda.connection.JDBCServiceLocator;
-import com.tcd.ejda.model.CacheDataM;
 import com.tcd.ejda.model.Form1Model;
 import com.tcd.ejda.model.FormDetail1Model;
 import com.tcd.ejda.model.FormDetail2Model;
+import com.tcd.ejda.model.FormDocAttachModel;
 import com.tcd.ejda.utilities.DisplayFormatUtil;
 
 public class Form1DAOImpl implements Form1DAO {
@@ -167,7 +167,7 @@ public class Form1DAOImpl implements Form1DAO {
 		return blSuccess;
 		
 	}
-	public void saveFromEJDA(Form1Model form, Vector detail1, Vector detail2) throws SQLException {
+	public void saveFromEJDA(Form1Model form, Vector detail1, Vector detail2, Vector doc) throws SQLException {
 		log.debug("[ Start : submitFrom1Table1 ]");
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -204,9 +204,11 @@ public class Form1DAOImpl implements Form1DAO {
 		sql.append("COUNTRY_ORIGIN_CODE, COUNTRY_ORIGIN_DESC, COUNTRY_FINAL_CODE, COUNTRY_FINAL_DESC, BILL_NO, TERM_PAYMENT, CUR_CODE, ");
 		sql.append("RECEIVED_AMOUNT, EXCHGRATE_ID, EQUIVALENT, GOOD_PAYMENT_CODE,GOOD_PAYMENT_DESC, COUNTRY_OF_GOOD, FOB_VALUE, INSURANCE, FREIGHT, CIF_VALUE, ");
 		sql.append("GROSS_WEIGHT, MEASUREMENT, OTHER_CHARG, DECLARANT_NAME, ID_CARD_NO, STATUS, CERIFY, CUS_REMOVAL, TAX_TOTAL, ");
-		sql.append("OTHER_CHARG2, PAYABLE_AMOUNT, MANUALSCRIPT_RECERPT,VESSEL_VALUE, INSTRUCT_EXAM, RESULT_EXAM, FOR_OTHER_USE, CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY) ");
+		sql.append("OTHER_CHARG2, PAYABLE_AMOUNT, MANUALSCRIPT_RECERPT,VESSEL_VALUE, INSTRUCT_EXAM, RESULT_EXAM, FOR_OTHER_USE, ");
+		sql.append("CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY) ");
 		sql.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ");
-		sql.append(", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, ?, SYSDATE, ?)");
+		sql.append(", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ");
+		sql.append(", ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, ?, SYSDATE, ?)");
 		log.debug("sql >> " + sql.toString());
 		try {
 			ps = conn.prepareStatement(sql.toString());
@@ -354,6 +356,31 @@ public class Form1DAOImpl implements Form1DAO {
 				
 			}
 			
+			if(doc.size()>0){
+				StringBuffer sql3 = new StringBuffer();
+				sql3.append("insert into JDA_FORM_T_DOC_ATTACH(REF_NO, DOC_ID, DOC_NAME, DOC_PATH, DOC_JDA_TYPE, DOC_STATUS, ");
+				sql3.append("CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY) ");
+				sql3.append("values (FORM_T_DOC_ATTACH_SEQ.nextval, ?, ?, ?, ?, ?, SYSDATE, ?, SYSDATE, ?)");
+				log.debug("sql3 >> " + sql3.toString());
+				
+				ps = conn.prepareStatement(sql3.toString());
+				
+				for(int i =0;i<doc.size();i++){
+					int parameterIndex2 = 1;
+					FormDocAttachModel d1 = (FormDocAttachModel)doc.get(i);
+//					ps.setString(parameterIndex2++, d1.getRef_no());
+					ps.setString(parameterIndex2++, doc_id);//	DOC_ID
+					ps.setString(parameterIndex2++, d1.getDoc_name());
+					ps.setString(parameterIndex2++, "");
+					ps.setString(parameterIndex2++, d1.getDoc_jda_type());
+					ps.setString(parameterIndex2++, d1.getDoc_status());
+					ps.setString(parameterIndex2++, d1.getCreate_By());
+					ps.setString(parameterIndex2++, d1.getUpdate_by());
+					
+					rs = ps.executeQuery();
+				}
+				
+			}
 			log.debug("Connection session: ");
 		
 		} catch (SQLException e) {
