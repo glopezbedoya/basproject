@@ -45,6 +45,7 @@
 	<input type="hidden" name="screenName" value="">
 	<input type="hidden" name="actionName" value="">
 	<input type="hidden" name="form_no" value="">
+	<input type="hidden" name="doc_id" value="">
 	<input type="hidden" name="page" value="<%=valueListM.getAtPage() %>" />
 	<input type="hidden" name="volumePerPage" value="<%=valueListM.getItemsPerPage() %>" />
 	<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
