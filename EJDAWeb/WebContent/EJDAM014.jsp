@@ -189,9 +189,9 @@
                   <input type="checkbox" name="checkAllBox" id="checkAllBox" onclick="checkBoxAll()"/>
                 </label>
               </th>
-              <th bgcolor="#0099CC" class="textHeader" scope="row">Form No.</th>
-              <td bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">Doc id</div></td>
-              <td bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">Form Status</div></td>
+              <th bgcolor="#0099CC" class="textHeader" scope="row">Doc ID</th>
+              <td bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">Consignor Name.</div></td>
+              <td bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">Doc Status</div></td>
             </tr>
             
             <%
@@ -204,7 +204,7 @@
 			            <tr onclick="updateEJDATable2(this.form,'<%=form1M.getDoc_ID() %>','EJDAM014');" style="cursor:hand">
 			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form1M.getDoc_ID() %>"/></th>
 			              <td <%=bgColor %> class="text"><%=form1M.getDoc_ID()%></td>
-			              <td <%=bgColor %> class="text"><%=form1M.getForm_name()%></td>
+			              <td <%=bgColor %> class="text"><%=form1M.getConsignor_name()%></td>
 			              <td <%=bgColor %> class="text"><%=form1M.getDoc_Status()%></td>
 			            </tr>
             <%		}
