@@ -4,6 +4,8 @@ import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
+import com.tcd.ejda.model.CacheDataM;
+
 public class DisplayUtil {
 	
 	private Logger log = Logger.getLogger(DisplayUtil.class);
@@ -109,4 +111,81 @@ public class DisplayUtil {
 				return returnStr;
 			
 		}
+	public static String displaySelectTag(Vector v, String selectedValue, String listName, String mode, String style) {
+		
+		CacheDataM obj = null;
+		String value = "";
+		String name = "";
+	
+	if (mode == null || !mode.equals("VIEW")) {
+		String str = "<select name=\"" + listName + "\" class=\""+style+"\" ><option value=\"\">Please select</option>";
+		if(v != null ){
+			try{
+			for (int i=0; i<v.size(); i++) {
+				obj = (CacheDataM) v.get(i);
+				value = displayHTML(obj.getCode()).trim();
+				name = displayHTML(obj.getShortDesc()).trim();
+				
+				if (value != null && selectedValue != null &&  !selectedValue.equals("")  && value.trim().equals(selectedValue.trim()) ) {
+					str = str + "<option value = \"" + value + "\" selected>" +value + " - " + name + "</option>";
+				} else {
+					str = str + "<option value = \"" + value + "\">" +value + " - " + name + "</option>";
+				}
+			}
+			}catch(Exception e){
+//				log.debug(e.getMessage());
+				
+			}
+		}	
+		return str + "</select>";
+	} else {
+		if ( selectedValue == null || selectedValue.equals("null") ||  selectedValue.equals("")  ){
+			return "";
+		}else{
+			for (int i=0; i<v.size(); i++) {
+				obj = (CacheDataM) v.get(i);
+				if (obj.getCode() !=null && selectedValue!=null && obj.getCode().trim().equals(selectedValue.trim())){
+					name = obj.getShortDesc();
+					break;
+				}
+			}
+			return name;
+		}	
+		
+	}
+}	
+	public static String displayHTML(Object obj) {
+		if(obj==null || ((String)obj).trim().equals("null")){
+			return "";
+		}
+		else{
+			String result = obj.toString();
+			result = result.replaceAll("&", "&amp;");
+			result = result.replaceAll("<", "&lt;");
+			result = result.replaceAll(">", "&gt;");
+			result = result.replaceAll("'", "&#39;");
+			result = result.replaceAll("\"", "&quot;");
+			
+			return result;
+			//return obj.toString().trim();
+		}
+	}
+	
+
+	public static String displayHTMLNoTrim(Object obj) {
+		if(obj==null || ((String)obj).trim().equals("null")){
+			return "";
+		}
+		else{
+			String result = obj.toString();
+			result = result.replaceAll("&", "&amp;");
+			result = result.replaceAll("<", "&lt;");
+			result = result.replaceAll(">", "&gt;");
+			result = result.replaceAll("\'", "&#39;");
+			result = result.replaceAll("\"", "&quot;");
+		
+			return result;
+			//return obj.toString();}
+		}
+	}
 }
