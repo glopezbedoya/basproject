@@ -347,7 +347,7 @@ private void setCriteriaPameter(){
 		form.setRegis_no(Regis_no);//REGIS_NO
 		form.setCus_name_code(cus_name_code);//CUS_NAME_CODE
 		form.setCus_name_desc(cus_name_desc);//CUS_NAME_DESC
-		form.setManifest_no(ManifestNo);//MANIFEST_NO
+		form.setManifest_no(Integer.parseInt(ManifestNo));//MANIFEST_NO
 		form.setDuty_tax_receipt_date(DisplayFormatUtil.stringToDateSql(duty_tax_receipt_date, "YYYY-MM-DD"));//DUTY_TAX_RECEIPT_DATE
 		form.setDuty_tax_receipt_desc(duty_tax_receipt_desc);//DUTY_TAX_RECEIPT_DESC
 		form.setImport_permit_no(import_permit_no);//IMPORT_PERMIT_NO
