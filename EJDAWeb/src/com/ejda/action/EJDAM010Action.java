@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 import com.ejda.constant.EJDAConstant;
 import com.ejda.sessionBean.Form1Bean;
 import com.ejda.util.DisplayFormatUtil;
-import com.ejda.util.EJDAUtil;
 import com.tcd.ejda.dao.Form1DAO;
 import com.tcd.ejda.dao.Form1DAOImpl;
 import com.tcd.ejda.dao.TransactionLogDAO;
@@ -15,6 +14,7 @@ import com.tcd.ejda.dao.TransactionLogDAOImpl;
 import com.tcd.ejda.model.Form1Model;
 import com.tcd.ejda.model.FormDetail1Model;
 import com.tcd.ejda.model.FormDetail2Model;
+import com.tcd.ejda.model.FormDocAttachModel;
 import com.tcd.ejda.model.TransactionLogModel;
 import com.tcd.ejda.model.ValueListModel;
 
@@ -47,7 +47,7 @@ public class EJDAM010Action extends AbstractAction {
 	}
 
 	@Override
-	public boolean methodAction(String ejdaMethod) {
+	public boolean methodAction(String ejdaMethod) throws Exception {
 		// TODO Auto-generated method stub
 		if(ejdaMethod.equalsIgnoreCase("doSearch")){
 			return doSearch();
@@ -56,12 +56,7 @@ public class EJDAM010Action extends AbstractAction {
 		}else if (ejdaMethod.equalsIgnoreCase("doAdd")){
 			return doAdd();
 		}else if (ejdaMethod.equalsIgnoreCase("doSubmitButton")){
-			try {
-				return doSubmitButton();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			return doSubmitButton();
 		}else if (ejdaMethod.equalsIgnoreCase("doSaveButton")){
 			return doSaveButton();
 		}else if (ejdaMethod.equalsIgnoreCase("doUpdate")){
@@ -128,14 +123,15 @@ public class EJDAM010Action extends AbstractAction {
 //		form1.setForm_status("A");
 //		form1.setUpdate_by(iuser);
 //		form1.setForm_no(formNo);
-		Form1Model form1 = setValueModel();
+		Form1Model form1 = setValueModel("1","A",iuser);
 		log.debug("Form1Model >> " + form1);
 		Vector vcDetail1 = setValueDetail1Model();
 		Vector vcDetail2 = setValueDetail2Model();
+		Vector vcDocAttach = setValueDocumentAttach("1","");
 		try{ 
 			Form1DAO dao = new Form1DAOImpl();
 			//dao.UpdateFrom1Table(form1);
-			dao.saveFromEJDA(form1,vcDetail1,vcDetail2);
+			dao.saveFromEJDA(form1,vcDetail1,vcDetail2,vcDocAttach);
 //			
 //			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
 //			EJDAUtil ejda = new EJDAUtil();
@@ -234,7 +230,7 @@ public class EJDAM010Action extends AbstractAction {
 		String sqlCommand ="";
 		String sqlWhere="";
 		try{
-			sql.append(EJDAConstant.SQL.FORM_T_DOC_2);
+			sql.append(EJDAConstant.SQL.FORM_T_DOC_1);
 //			if (sql.indexOf("WHERE") != -1){
 //				sqlWhere = sql.substring(sql.indexOf("WHERE"),sql.length());
 //				sqlCommand = sql.substring(0, sql.lastIndexOf("WHERE"));
@@ -292,17 +288,19 @@ public class EJDAM010Action extends AbstractAction {
 		
 		return result;
 	}
-	public Form1Model setValueModel() throws Exception{
+	public Form1Model setValueModel(String jda_type, String doc_status, String iuser) throws Exception{
 		log.debug("[ Start : setValueModel ]");
 		Form1Model form = new Form1Model();
-		String iuser = (String) getRequest().getSession().getAttribute("iuser");
-		if (null==iuser || "".equals(iuser)){
-			iuser = "system";
-		}
+		log.debug("jda_type = " + jda_type);
+		log.debug("doc_status = " + doc_status);
+//		String iuser = (String) getRequest().getSession().getAttribute("iuser");
+//		if (null==iuser || "".equals(iuser)){
+//			iuser = "system";
+//		}
 		String doc_id = "";//	DOC_ID
 		String country_id = "0";//	COUNTRY_ID
-		String jda_type = "1";//JDA_TYPE
-		String doc_status = "A";//DOC_STATUS
+//		String jda_type = "1";//JDA_TYPE
+//		String doc_status = "A";//DOC_STATUS
 		String invoice_no = "";//INVOICE_NO
 		String consignorExportCode = (String) getRequest().getParameter("consignorExportCode");//CONSIGNOR_CODE
 		String consignorExportName = (String) getRequest().getParameter("consignorExportName");//CONSIGNOR_NAME
@@ -400,7 +398,7 @@ public class EJDAM010Action extends AbstractAction {
 		form.setRegis_no(Regis_no);//REGIS_NO
 		form.setCus_name_code(cus_name_code);//CUS_NAME_CODE
 		form.setCus_name_desc(cus_name_desc);//CUS_NAME_DESC
-		form.setManifest_no(Integer.parseInt(ManifestNo));//MANIFEST_NO
+		form.setManifest_no(DisplayFormatUtil.StringToInt(ManifestNo));//MANIFEST_NO
 		form.setDuty_tax_receipt_date(DisplayFormatUtil.stringToDateSql(duty_tax_receipt_date, "YYYY-MM-DD"));//DUTY_TAX_RECEIPT_DATE
 		form.setDuty_tax_receipt_desc(duty_tax_receipt_desc);//DUTY_TAX_RECEIPT_DESC
 		form.setImport_permit_no(import_permit_no);//IMPORT_PERMIT_NO
@@ -431,9 +429,9 @@ public class EJDAM010Action extends AbstractAction {
 		form.setStatus(status);//STATUS
 		form.setCerify(cerify) ;//CERIFY
 		form.setCus_removal(cus_removal);//CUS_REMOVAL
-//		form.setTax_total(Double.parseDouble(tax_total));//TAX_TOTAL
+		form.setTax_total(DisplayFormatUtil.StringToDouble(tax_total));//TAX_TOTAL
 		form.setOther_charg2(Other_charg2) ;//OTHER_CHARG2
-//		form.setPayable_amount(Double.parseDouble(payable_amount));//PAYABLE_AMOUNT
+		form.setPayable_amount(DisplayFormatUtil.StringToDouble(payable_amount));//PAYABLE_AMOUNT
 		form.setManualscript_recerpt(manualscript_recerpt) ;//MANUALSCRIPT_RECERPT
 		form.setVessel_value(vessel_value);//VESSEL_VALUE
 		form.setInstruct_exam(instruct_exam);//INSTRUCT_EXAM
@@ -492,11 +490,6 @@ public class EJDAM010Action extends AbstractAction {
 		if (null==iuser || "".equals(iuser)){
 			iuser = "system";
 		}
-		String doc_id = "";//	DOC_ID
-		String country_id = "0";//	COUNTRY_ID
-		String jda_type = "1";//JDA_TYPE
-		String doc_status = "A";//DOC_STATUS
-		String invoice_no = "";//INVOICE_NO
 		String [] QA_ITEM_NO = getRequest().getParameterValues("QA_ITEM_NO");//QA_ITEM_NO
 		String [] QB_UNIT = getRequest().getParameterValues("QB_UNIT");//QB_UNIT
 		String [] FOB_ACTUAL = getRequest().getParameterValues("FOB_ACTUAL");//FOB_ACTUAL
@@ -511,41 +504,16 @@ public class EJDAM010Action extends AbstractAction {
 			for(int i =0; i < QA_ITEM_NO.length;i++){
 				FormDetail2Model detail = new FormDetail2Model();
 				detail.setItem_no(QA_ITEM_NO[i]);
-				if (null!=QB_UNIT[i] && !"".equals(QB_UNIT[i])){
-					detail.setQty_cust_unit(Double.parseDouble(QB_UNIT[i]));
-				}else{
-					detail.setQty_cust_unit(0);
-				}
+				detail.setQty_cust_unit(DisplayFormatUtil.StringToDouble(QB_UNIT[i]));
 				
 				detail.setUnit_val_actual(FOB_ACTUAL[i]);
 				detail.setUnit_val_custom(FOB_CUSTOM[i]);
-				if (null!=TOTAL_VALUE[i] && !"".equals(TOTAL_VALUE[i])){
-					detail.setTotal_value(Double.parseDouble(TOTAL_VALUE[i]));
-				}else{
-					detail.setTotal_value(0);
-				}
-				if (null!=DUTY_AMOUNT[i] && !"".equals(DUTY_AMOUNT[i])){
-					detail.setExport_amount(Double.parseDouble(DUTY_AMOUNT[i]));
-				}else{
-					detail.setTotal_value(0);
-				}
-				
+				detail.setTotal_value(DisplayFormatUtil.StringToDouble(TOTAL_VALUE[i]));
+				detail.setExport_amount(DisplayFormatUtil.StringToDouble(DUTY_AMOUNT[i]));
 				detail.setOther_tax_type(TAX_TYPE[i]);
-				if (null!=DUTY_RATE[i] && !"".equals(DUTY_RATE[i])){
-					detail.setExport_rate(Double.parseDouble(DUTY_RATE[i]));
-				}else{
-					detail.setExport_rate(0);
-				}
-				if (null!=TAX_RATE[i] && !"".equals(TAX_RATE[i])){
-					detail.setOther_tax_rate(Double.parseDouble(TAX_RATE[i]));
-				}else{
-					detail.setOther_tax_rate(0);
-				}
-				if (null!=TAX_AMOUNT[i] && !"".equals(TAX_AMOUNT[i])){
-					detail.setOther_tax_amount(Double.parseDouble(TAX_AMOUNT[i]));
-				}else{
-					detail.setOther_tax_amount(0);
-				}
+				detail.setExport_rate(DisplayFormatUtil.StringToDouble(DUTY_RATE[i]));
+				detail.setOther_tax_rate(DisplayFormatUtil.StringToDouble(TAX_RATE[i]));
+				detail.setOther_tax_amount(DisplayFormatUtil.StringToDouble(TAX_AMOUNT[i]));
 				detail.setCreate_By(iuser);
 				detail.setUpdate_by(iuser);
 			
@@ -555,5 +523,29 @@ public class EJDAM010Action extends AbstractAction {
 		return vc;
 		
 		
+	}
+	public Vector setValueDocumentAttach(String doc_jda_type, String docStatus){
+		Vector vc = new Vector();
+		
+		String iuser = (String) getRequest().getSession().getAttribute("iuser");
+		if (null==iuser || "".equals(iuser)){
+			iuser = "system";
+		}
+		String [] doc_attach = getRequest().getParameterValues("doc_attach");
+
+		if (null != doc_attach && doc_attach.length > 1){
+			for(int i =0; i < doc_attach.length;i++){
+				FormDocAttachModel doc = new FormDocAttachModel();
+				doc.setDoc_name(doc_attach[i]);
+				doc.setDoc_jda_type(doc_jda_type);
+				doc.setDoc_status(docStatus);
+				doc.setCreate_By(iuser);
+				doc.setUpdate_by(iuser);
+				vc.add(doc);
+			}
+			
+		}
+		
+		return vc;
 	}
 }
