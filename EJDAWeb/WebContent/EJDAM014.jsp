@@ -47,7 +47,7 @@
 	<input type="hidden" name="volumePerPage" value="<%=valueListM.getItemsPerPage() %>" />
 	
 	<input type="hidden" id="form_no" name="form_no"value="">
-	
+	<input type="hidden" name="doc_id" value="">
 	<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
 		
         <tr align="left">
