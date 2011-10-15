@@ -15,4 +15,6 @@ public interface Form1DAO {
 	public Form1Model searchFormModel(String docId) throws SQLException;
 	public Vector<FormDetail1Model> searchFormDetail1Model(String docId) throws SQLException;
 	public Vector<FormDetail2Model> searchFormDetail2Model(String docId) throws SQLException;
+	
+	public Vector LoadCountry()throws SQLException;
 }

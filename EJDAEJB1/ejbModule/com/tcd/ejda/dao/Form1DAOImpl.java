@@ -9,10 +9,10 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import com.tcd.ejda.connection.JDBCServiceLocator;
+import com.tcd.ejda.model.CacheDataM;
 import com.tcd.ejda.model.Form1Model;
 import com.tcd.ejda.model.FormDetail1Model;
 import com.tcd.ejda.model.FormDetail2Model;
-import com.tcd.ejda.model.RoleFunctionModel;
 import com.tcd.ejda.utilities.DisplayFormatUtil;
 
 public class Form1DAOImpl implements Form1DAO {
@@ -695,6 +695,75 @@ public class Form1DAOImpl implements Form1DAO {
 			while(rs.next()){
 
 			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			log.equals(e.getMessage());
+		}finally{
+			try {
+				if (conn != null)
+					conn.commit();
+			} catch (Exception e) {
+			}
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		return vc;
+	}
+	@Override
+	public Vector LoadCountry() throws SQLException {
+		log.debug("[Start : LoadCountry ]");
+		Vector vc = new Vector();
+		
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = db.getConnection();
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		StringBuffer sql = new StringBuffer();
+		
+		try {
+						
+			sql.append(" SELECT COUNTRYID, COUNTRYCODE, COUNTRYNAME, COUNTRYNAMEFULL, COUNTRYSTATUS FROM JDA_M_COUNTRY ");
+			log.debug("Search JDA_M_COUNTRY >>> " + sql.toString());
+			ps = conn.prepareStatement(sql.toString());
+			int seq=1;
+			
+			
+			rs = ps.executeQuery();
+			while(rs.next()){
+				CacheDataM cache = new CacheDataM();
+				cache.setCode(rs.getString("COUNTRYCODE"));
+				cache.setShortDesc(rs.getString("COUNTRYNAME"));
+				cache.setLongDesc(rs.getString("COUNTRYNAMEFULL"));
+				cache.setStatus(rs.getString("COUNTRYSTATUS"));
+				vc.add(cache);
+			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			try {
