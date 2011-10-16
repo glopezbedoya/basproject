@@ -9,13 +9,36 @@ function CancelButton(form,action){
 	form.submit();
 }
 function validateSubmitButton(form,action){
-	alert('validateSubmitButton : ' +action);
-	
+	//alert('validateSubmitButton : ' +action);
+	$('input[name=Status]').val(setStatus());
+	$('input[name=mode_trans]').val(setModeTrans());
 	$('input[name=ejdaAction]').val(action);
 	$('input[name=ejdaMethod]').val('doSubmitButton');
 	$('input[name=screenName]').val(action+'.jsp');
 	form.submit();
 	
+}
+function setStatus(){
+	var stat;
+	$('input[name=Status]').each(function(){			
+		
+		if ($(this).attr('checked')){
+			stat = $(this).val();
+		}	
+	});
+	//alert('stat : ' +stat);
+	return stat;
+}
+function setModeTrans(){
+	var trans;
+	$('input[name=mode_trans]').each(function(){			
+		
+		if ($(this).attr('checked')){
+			trans = $(this).val();
+		}	
+	});
+	//alert('stat : ' +stat);
+	return trans;
 }
 function validateSaveButton(form,action){
 	
