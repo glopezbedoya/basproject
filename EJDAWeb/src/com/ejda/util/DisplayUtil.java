@@ -81,9 +81,10 @@ public class DisplayUtil {
 				+ ">";
 		}
 	public static String displayRadioTag(
-			String value,
+			String compareValue,
 			String inputFieldName,
-			String compareValue) {
+			String value
+			) {
 			String returnStr = null;
 			if (value == null) {
 				value = "";
