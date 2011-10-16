@@ -13,6 +13,7 @@ public class Form3Bean extends AbstractBean {
 	public String actionName;
 	public Vector detail1MVt;
 	public Vector detail2MVt;
+	public Vector docAttachMVt;
 	
 	
 	public String getActionName() {
@@ -44,6 +45,12 @@ public class Form3Bean extends AbstractBean {
 	}
 	public void setDetail2MVt(Vector detail2mVt) {
 		detail2MVt = detail2mVt;
+	}
+	public Vector getDocAttachMVt() {
+		return docAttachMVt;
+	}
+	public void setDocAttachMVt(Vector docAttachMVt) {
+		this.docAttachMVt = docAttachMVt;
 	}
 	
 	

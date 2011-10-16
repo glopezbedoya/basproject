@@ -94,36 +94,36 @@
           </tr>
           <tr>
             <td  align="left">
-              <input type="text" name="ReceiptDate" id="ReceiptDate" />
+              <%=DisplayUtil.displayInputTextBox("Date_Receipt",DisplayFormatUtil.SQLDateToString1(form3ModelSP.getDate_Receipt(),"DD/MM/YYYY"),"") %>
            </td>
-            <td align="left"><font class="textDesc"><%=DisplayUtil.displayInputTextBox("Date_Receipt",DisplayFormatUtil.SQLDateToString1(form3ModelSP.getDate_Receipt(),"DD/MM/YYYY"),"") %> 
+            <td align="left"><font class="textDesc"><%=DisplayUtil.displayCheckBoxForDocAttach(form3Bean.docAttachMVt,"doc_attach","INVOICE","") %> 
               Invoice</font></td>
           </tr>
           <tr>
             <td >&nbsp;</td>
             <td align="left"><font class="textDesc">
-              <input type="checkbox" name="DocumentAttached" id="DocumentAttached" />
+              <%=DisplayUtil.displayCheckBoxForDocAttach(form3Bean.docAttachMVt,"doc_attach","BILL OF LADING","") %>
               Bill of Lading
             </font></td>
           </tr>
           <tr>
             <td  align="left"><font class="textDescBold">12.Registration   Number</font></td>
             <td align="left"><font class="textDesc">
-              <input type="checkbox" name="DocumentAttached" id="DocumentAttached" />
+              <%=DisplayUtil.displayCheckBoxForDocAttach(form3Bean.docAttachMVt,"doc_attach","INSURANCE CERT","") %>
               Insurance Certificate
             </font></td>
           </tr>
           <tr>
             <td  align="left"><input type="text" name="RegisterNo" id="RegisterNo" /></td>
             <td align="left"><font class="textDesc">
-              <input type="checkbox" name="DocumentAttached" id="DocumentAttached" />
+              <%=DisplayUtil.displayCheckBoxForDocAttach(form3Bean.docAttachMVt,"doc_attach","LETTER OF CREDIT","") %>
               Letter of Credit
             </font></td>
           </tr>
           <tr>
             <td >&nbsp;</td>
             <td align="left"><font class="textDesc">
-              <input type="checkbox" name="DocumentAttached" id="DocumentAttached" />
+              <%=DisplayUtil.displayCheckBoxForDocAttach(form3Bean.docAttachMVt,"doc_attach","OTHER","") %>
               Other
             </font></td>
           </tr>
