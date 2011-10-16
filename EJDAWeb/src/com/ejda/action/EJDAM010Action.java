@@ -40,6 +40,8 @@ public class EJDAM010Action extends AbstractAction {
 		form1Bean.setForm1ModelSP(new Form1Model());
 		form1Bean.setDetail1ModelSP(new FormDetail1Model());
 		form1Bean.setDetail2ModelSP(new FormDetail2Model());
+		form1Bean.setDocAttachModelSP(new FormDocAttachModel());
+		
 		ValueListModel valueListM = new ValueListModel();
 		valueListM.setReturnModel("Form1Model");
 		form1Bean.setValueListM(valueListM);
@@ -231,16 +233,7 @@ public class EJDAM010Action extends AbstractAction {
 		String sqlWhere="";
 		try{
 			sql.append(EJDAConstant.SQL.FORM_T_DOC_1);
-//			if (sql.indexOf("WHERE") != -1){
-//				sqlWhere = sql.substring(sql.indexOf("WHERE"),sql.length());
-//				sqlCommand = sql.substring(0, sql.lastIndexOf("WHERE"));
-//			}
-//			if (!"".equals(form1Cri.getForm_name())){
-//				//sql.append(" WHERE ");
-//				sqlWhere = " FORM_NAME = ? AND ";
-//				
-//			}
-			
+			sql.append("  WHERE JDA_TYPE = '1' AND DOC_STATUS = 'D' ");
 			
 			
 			//sql.append(sql.toString());
@@ -297,7 +290,11 @@ public class EJDAM010Action extends AbstractAction {
 //		if (null==iuser || "".equals(iuser)){
 //			iuser = "system";
 //		}
-		String doc_id = "";//	DOC_ID
+		String doc_id = "";
+		if (null!=(String) getRequest().getParameter("doc_id")){
+			doc_id = (String) getRequest().getParameter("doc_id");//	DOC_ID
+		}
+		log.debug("doc_id = " + doc_id);
 		String country_id = "0";//	COUNTRY_ID
 //		String jda_type = "1";//JDA_TYPE
 //		String doc_status = "A";//DOC_STATUS
@@ -366,7 +363,7 @@ public class EJDAM010Action extends AbstractAction {
 		String result_exam = (String) getRequest().getParameter("result_exam");//RESULT_EXAM
 		String for_other_use = (String) getRequest().getParameter("for_other_use");//FOR_OTHER_USE
 
-		form.setDoc_ID("");
+		form.setDoc_ID(doc_id);
 		form.setCountry_ID(country_id);//	COUNTRY_ID
 		form.setJDA_Type(jda_type);//JDA_TYPE
 		form.setDoc_Status(doc_status);//DOC_STATUS
