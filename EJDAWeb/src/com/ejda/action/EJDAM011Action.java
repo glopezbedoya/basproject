@@ -16,6 +16,7 @@ import com.tcd.ejda.model.Form1Model;
 import com.tcd.ejda.model.Form2Model;
 import com.tcd.ejda.model.FormDetail1Model;
 import com.tcd.ejda.model.FormDetail2Model;
+import com.tcd.ejda.model.FormDocAttachModel;
 import com.tcd.ejda.model.TransactionLogModel;
 import com.tcd.ejda.model.ValueListModel;
 
@@ -39,6 +40,10 @@ public class EJDAM011Action extends AbstractAction {
 		form2Bean = getform2Bean();
 		form2Bean.setForm2Vt(new Vector<Form1Model>());
 		form2Bean.setForm2ModelSP(new Form1Model());
+		form2Bean.setDetail1ModelSP(new FormDetail1Model());
+		form2Bean.setDetail2ModelSP(new FormDetail2Model());
+		form2Bean.setDocAttachModelSP(new FormDocAttachModel());
+		
 		ValueListModel valueListM = new ValueListModel();
 		valueListM.setReturnModel("form2Model");
 		form2Bean.setValueListM(valueListM);
@@ -107,18 +112,13 @@ public class EJDAM011Action extends AbstractAction {
 		if (null==iuser || "".equals(iuser)){
 			iuser = "system";
 		}
-//		Form2Model form2 = new Form2Model();
-//		form2.setForm_name("FN_" + iuser);
-//		form2.setForm_status("A");
-//		form2.setUpdate_by(iuser);
-//		form2.setForm_no(formNo);
 		EJDAM010Action ejdam010Action = new EJDAM010Action();
 		ejdam010Action.setRequest(getRequest()); 
 		Form1Model form2 = ejdam010Action.setValueModel("2","A",iuser);
-		log.debug("Form1Model >> " + form2);
+		log.debug("Form2Model >> " + form2);
 		Vector vcDetail1 = ejdam010Action.setValueDetail1Model();
 		Vector vcDetail2 = ejdam010Action.setValueDetail2Model();
-		Vector vcDocAttach = ejdam010Action.setValueDocumentAttach("1", "A");
+		Vector vcDocAttach = ejdam010Action.setValueDocumentAttach("2", "A");
 		try{
 			Form1DAO dao = new Form1DAOImpl();
 			//dao.UpdateFrom1Table(form2);
@@ -220,23 +220,8 @@ public class EJDAM011Action extends AbstractAction {
 		String sqlCommand ="";
 		String sqlWhere="";
 		try{
-			sql.append(EJDAConstant.SQL.FORM2_TABLE1_SQL);
-//			if (sql.indexOf("WHERE") != -1){
-//				sqlWhere = sql.substring(sql.indexOf("WHERE"),sql.length());
-//				sqlCommand = sql.substring(0, sql.lastIndexOf("WHERE"));
-//			}
-//			if (!"".equals(form2Cri.getForm_name())){
-//				//sql.append(" WHERE ");
-//				sqlWhere = " FORM_NAME = ? AND ";
-//				
-//			}
-//			
-//			log.debug("sqlWhere >> " + sqlWhere);
-//			log.debug("sqlCommand >> " + sqlCommand);
-//			
-//			sql1.append(sqlCommand + " " + sqlWhere);
-//			//sql.append(sql.toString());
-//			log.debug("sql >> " + sql1.toString());
+			sql.append(EJDAConstant.SQL.FORM_T_DOC_1);
+			sql.append("  WHERE JDA_TYPE = '2' AND DOC_STATUS = 'D' ");
 		}catch(Exception e){
 			e.printStackTrace();
 		}

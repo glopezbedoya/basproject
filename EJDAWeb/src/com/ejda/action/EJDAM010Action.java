@@ -454,7 +454,7 @@ public class EJDAM010Action extends AbstractAction {
 		String [] CODE_NO = getRequest().getParameterValues("CODE_NO");//CODE_NO
 		String [] UNIT = getRequest().getParameterValues("UNIT");//UNIT
 		
-		if (null != MARK_NO && MARK_NO.length > 1){
+		if (null != MARK_NO && MARK_NO.length > 0){
 			for(int i =0; i < MARK_NO.length;i++){
 				FormDetail1Model detail = new FormDetail1Model();
 				detail.setMarks_no(MARK_NO[i]);
@@ -495,7 +495,7 @@ public class EJDAM010Action extends AbstractAction {
 		String [] TAX_TYPE = getRequest().getParameterValues("TAX_TYPE");//TAX_TYPE
 		String [] TAX_RATE = getRequest().getParameterValues("TAX_RATE");//TAX_RATE
 		String [] TAX_AMOUNT = getRequest().getParameterValues("TAX_AMOUNT");//TAX_AMOUNT
-		if (null != QA_ITEM_NO && QA_ITEM_NO.length > 1){
+		if (null != QA_ITEM_NO && QA_ITEM_NO.length > 0){
 			for(int i =0; i < QA_ITEM_NO.length;i++){
 				FormDetail2Model detail = new FormDetail2Model();
 				detail.setItem_no(QA_ITEM_NO[i]);
@@ -528,7 +528,7 @@ public class EJDAM010Action extends AbstractAction {
 		}
 		String [] doc_attach = getRequest().getParameterValues("doc_attach");
 
-		if (null != doc_attach && doc_attach.length > 1){
+		if (null != doc_attach && doc_attach.length > 0){
 			for(int i =0; i < doc_attach.length;i++){
 				FormDocAttachModel doc = new FormDocAttachModel();
 				doc.setDoc_name(doc_attach[i]);
