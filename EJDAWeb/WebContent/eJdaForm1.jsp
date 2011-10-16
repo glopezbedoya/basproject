@@ -72,7 +72,7 @@
            </tr>
           <tr>
             <td align="right"><font class="textDesc">Exporter/Taxpayer Code </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportCode",form1ModelSP.getConsignor_code(),"maxlength=20") %>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportCode",form1ModelSP.getConsignor_code(),"maxlength=20 onkeypress=\"keyPressInteger()\"") %>
             </td>
           </tr>
           <tr>
@@ -97,7 +97,7 @@
             <td align="left"><font class="textDescBold">11.Documents   Attached</font></td>
           </tr>
           <tr>
-            <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("Date_Receipt",DisplayFormatUtil.SQLDateToString1(form1ModelSP.getDate_Receipt(),"DD/MM/YYYY"),"maxlength=10 onkeypress=\"addSlashFormat(event,this)\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"")%>
+            <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("Date_Receipt",DisplayFormatUtil.SQLDateToString1(form1ModelSP.getDate_Receipt(),"DD/MM/YYYY"),"maxlength=10 onkeypress=\"addSlashFormat(event,this);keyPressInteger();\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"")%>
              
            </td>
             <td align="left"><font class="textDesc"><%=DisplayUtil.displayCheckBox("","doc_attach","INVOICE","") %> 
@@ -171,7 +171,7 @@
             <td colspan="3" align="left"><font class="textDescBold">15. Receipt of Duty/Tax as Levied Authorized by :</font></td>
             </tr>
           <tr>
-            <td align="center" colspan="2"><%=DisplayUtil.displayInputTextBox("duty_tax_receipt_date",DisplayFormatUtil.SQLDateToString1(form1ModelSP.getDuty_tax_receipt_date(),"DD/MM/YYYY"),"maxlength=10 onkeypress=\"addSlashFormat(event,this)\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"") %></td>
+            <td align="center" colspan="2"><%=DisplayUtil.displayInputTextBox("duty_tax_receipt_date",DisplayFormatUtil.SQLDateToString1(form1ModelSP.getDuty_tax_receipt_date(),"DD/MM/YYYY"),"maxlength=10 onkeypress=\"addSlashFormat(event,this);keyPressInteger();\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"") %></td>
             <td align="center"><%=DisplayUtil.displayInputTextBox("duty_tax_receipt_desc",form1ModelSP.getDuty_tax_receipt_desc(),"maxlength=50") %></td>
           </tr>
           <tr>
@@ -352,7 +352,7 @@
             </tr>
           <tr>
             
-            <td><%=DisplayUtil.displayInputTextBox("Date_Import",DisplayFormatUtil.SQLDateToString1(form1ModelSP.getDate_Import(),"DD/MM/YYYY"),"maxlength=10 onkeypress=\"addSlashFormat(event,this)\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"") %></td>
+            <td><%=DisplayUtil.displayInputTextBox("Date_Import",DisplayFormatUtil.SQLDateToString1(form1ModelSP.getDate_Import(),"DD/MM/YYYY"),"maxlength=10 onkeypress=\"addSlashFormat(event,this);keyPressInteger();\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"") %></td>
             </tr>
           </table>
         </td>
@@ -483,7 +483,7 @@
                 <td colspan="2"><font class="textDescBold">48. Name of Declarant</font></td>
               </tr>
               <tr>
-                <td colspan="2"><input type="text" name="DeclarantName" id="DeclarantName" /></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextBox("declarant_name",form1ModelSP.getDeclarant_name(),"maxlength=20") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -493,7 +493,7 @@
                 <td colspan="2"><font class="textDescBold">49. Identity Card/Passport No.</font></td>
               </tr>
               <tr>
-                <td colspan="2"><%=DisplayUtil.displayInputTextBox("id_card_no",form1ModelSP.getId_card_no(),"") %></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextBox("id_card_no",form1ModelSP.getId_card_no(),"maxlength=20") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -516,7 +516,7 @@
                 <td colspan="2"><font class="textDescBold">51. I cerify that this declaration is true and complete.</font></td>
               </tr>
               <tr>
-                <td colspan="2"><%=DisplayUtil.displayInputTextBox("cerify",form1ModelSP.getCerify(),"") %></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextBox("cerify",form1ModelSP.getCerify(),"maxlength=20") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -538,7 +538,7 @@
                 <td colspan="2"><font class="textDescBold">52. Removal from Customs Control authorized by</font></td>
                 </tr>
               <tr>
-                <td colspan="2"><textarea name="RemoveFromCus" id="RemoveFromCus" cols="45" rows="5"></textarea></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextAreaTag("cus_removal",form1ModelSP.getCus_removal(),"maxlength=255") %></td>
                 </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -578,7 +578,7 @@
                 <td colspan="2"><font class="textDescBold">56. Manualscript Recerpt No.(If applicable)</font></td>
                 </tr>
               <tr>
-                <td colspan="2"><%=DisplayUtil.displayInputTextAreaTag("manualscript_recerpt",form1ModelSP.getManualscript_recerpt(),"") %></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextAreaTag("manualscript_recerpt",form1ModelSP.getManualscript_recerpt(),"maxlength=255") %></td>
                 </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -601,8 +601,8 @@
             <td align="center"><font class="textDescBold">RESULT OF   EXAMINATION</font></td>
           </tr>
           <tr>
-            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("instruct_exam",form1ModelSP.getInstruct_exam(),"") %></td>
-            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("result_exam",form1ModelSP.getResult_exam(),"") %></td>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("instruct_exam",form1ModelSP.getInstruct_exam(),"maxlength=255") %></td>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("result_exam",form1ModelSP.getResult_exam(),"maxlength=255") %></td>
           </tr>
           <tr>
             <td align="center">&nbsp;</td>
@@ -619,7 +619,7 @@
             <td align="center"><font class="textDescBold">FOR OTHER USE</font></td>
           </tr>
           <tr>
-            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("for_other_use",form1ModelSP.getFor_other_use(),"") %></td>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("for_other_use",form1ModelSP.getFor_other_use(),"maxlength=255") %></td>
           </tr>
           <tr>
             <td align="center">&nbsp;</td>
@@ -638,7 +638,7 @@
       		}
       		log.debug("-------------- " + form1ModelSP.getDoc_ID());
       	%>
-        <td colspan="3" align="center"><!-- <input type="button" name="Save" id="Save" <%//=disable %>value="  Save  " onclick="validateSaveButton(this.form,'<%=form_action %>')"/>-->
+        <td colspan="3" align="center"><!-- <input type="button" name="Save" id="Save" <%//=disable %>value="  Save  " onclick="validateSaveButton(this.form,'<%=form_action%>')"/>-->
           <input type="button" name="Submit" id="Submit" value="  Submit  "  onclick="validateSubmitButton(this.form,'<%=form_action %>')"/>
           <input type="button" name="Cancel" id="Cancel" value="  Cancel  " onclick="CancelButton(this.form,'<%=form_action %>')"/></td>
         </tr>

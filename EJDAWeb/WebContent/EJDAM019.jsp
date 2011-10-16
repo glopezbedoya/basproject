@@ -7,7 +7,7 @@
 <%@page import="com.ejda.sessionBean.Form2Bean"%>
 <%@page import="com.ejda.util.DisplayFormatUtil"%>
 <%@page import="com.tcd.ejda.model.ValueListModel"%>
-<script language="javascript" src="js/EJDAM019.js"></script>
+<script language="javascript" src="js/EJDAM011.js"></script>
 <%
 	/**  EJDA Form 2 *******/
 	Logger log = Logger.getLogger("JspLog");
@@ -67,7 +67,7 @@
         </tr>
         <tr>
        		<td align="left"><span class="text">Form name </span></td>
-       		<td align="left"><%=DisplayFormatUtil.displayInputTextBox("txtFormName",form2ModelSP.getForm_name(),"") %><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'doSearch')\"",false) %></td>
+       		<td align="left"><%=DisplayFormatUtil.displayInputTextBox("txtFormName",form2ModelSP.getForm_name(),"") %><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'EJDAM019','doSearch','EJDAM019.jsp')\"",false) %></td>
        		          		
         </tr>
         <tr>
@@ -189,9 +189,9 @@
                   <input type="checkbox" name="checkAllBox" id="checkAllBox" onclick="checkBoxAll()"/>
                 </label>
               </th>
-              <th bgcolor="#0099CC" class="textHeader" scope="row">Form No.</th>
-              <td bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">Form Name</div></td>
-              <td bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">Form Status</div></td>
+              <th bgcolor="#0099CC" class="textHeader" scope="row">Doc ID.</th>
+              <td bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">Consignor Name.</div></td>
+              <td bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">Doc Status</div></td>
             </tr>
             <%
             		String bgColor;
@@ -200,11 +200,11 @@
             			bgColor = (i%2 == 0)?bgColor1:bgColor2;
             %>
             
-			            <tr onclick="updateEJDATable3(this.form,'<%=form2M.getForm_no() %>');" style="cursor:hand">
-			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form2M.getForm_no() %>"/></th>
-			              <td <%=bgColor %> class="text"><%=form2M.getForm_no()%></td>
-			              <td <%=bgColor %> class="text"><%=form2M.getForm_name()%></td>
-			              <td <%=bgColor %> class="text"><%=form2M.getForm_status()%></td>
+			            <tr onclick="updateEJDATable2(this.form,'<%=form2M.getDoc_ID() %>','EJDAM019');" style="cursor:hand">
+			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form2M.getDoc_ID() %>"/></th>
+			              <td <%=bgColor %> class="text"><%=form2M.getDoc_ID()%></td>
+			              <td <%=bgColor %> class="text"><%=form2M.getConsignor_name()%></td>
+			              <td <%=bgColor %> class="text"><%=form2M.getDoc_Status()%></td>
 			              
 			            </tr>
             <%		}

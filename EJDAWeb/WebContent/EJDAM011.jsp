@@ -60,7 +60,7 @@
         <tr>
        		
        		<td width="100"></td>
-       		<td width="700"class="text" align="right"><%=DisplayFormatUtil.displayButton("AddForm2","onclick=\"buttonAction(this.form,'doAdd')\"",false) %> </td>
+       		<td width="700"class="text" align="right"><%=DisplayFormatUtil.displayButton("AddForm2","onclick=\"buttonAction(this.form,'EJDAM011','doAdd','eJdaForm2.jsp')\"",false) %> </td>
        		
         </tr>
         <tr>
@@ -71,7 +71,7 @@
         </tr>
         <tr>
        		<td align="left"><span class="text">Form name </span></td>
-       		<td align="left"><%=DisplayFormatUtil.displayInputTextBox("txtFormName",form2ModelSP.getForm_name(),"") %><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'doSearch')\"",false) %></td>
+       		<td align="left"><%=DisplayFormatUtil.displayInputTextBox("txtFormName",form2ModelSP.getForm_name(),"") %><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'EJDAM011','doSearch','EJDAM011.jsp')\"",false) %></td>
        		          		
         </tr>
         <tr>

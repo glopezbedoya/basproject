@@ -7,7 +7,7 @@
 <%@page import="com.ejda.sessionBean.Form2Bean"%>
 <%@page import="com.ejda.util.DisplayFormatUtil"%>
 <%@page import="com.tcd.ejda.model.ValueListModel"%>
-<script language="javascript" src="js/EJDAM010.js"></script>
+<script language="javascript" src="js/EJDAM011.js"></script>
 <%
 	/**  EJDA Form 2 *******/
 	Logger log = Logger.getLogger("JspLog");
@@ -67,7 +67,7 @@
         </tr>
         <tr>
        		<td align="left"><span class="text">Form name </span></td>
-       		<td align="left"><%=DisplayFormatUtil.displayInputTextBox("txtFormName",form2ModelSP.getForm_name(),"") %><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'doSearch')\"",false) %></td>
+       		<td align="left"><%=DisplayFormatUtil.displayInputTextBox("txtFormName",form2ModelSP.getForm_name(),"") %><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'EJDAM015','doSearch','EJDAM015.jsp')\"",false) %></td>
        		          		
         </tr>
         <tr>
