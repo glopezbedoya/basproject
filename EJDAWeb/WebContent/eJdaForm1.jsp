@@ -71,16 +71,16 @@
            </tr>
           <tr>
             <td align="right"><font class="textDesc">Exporter/Taxpayer Code </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportCode",form1ModelSP.getConsignor_code(),"") %>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportCode",form1ModelSP.getConsignor_code(),"maxlength=20") %>
             </td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Name </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportName",form1ModelSP.getConsignor_name(),"") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportName",form1ModelSP.getConsignor_name(),"maxlength=20") %></td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Address </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("consignorExportAddress",form1ModelSP.getConsignor_address(),"") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("consignorExportAddress",form1ModelSP.getConsignor_address(),"maxlength=255") %></td>
           </tr>
         </table></td>
         <td rowspan="2" align="center"><table width="466" border="0" cellpadding="0" cellspacing="1">
@@ -96,7 +96,7 @@
             <td align="left"><font class="textDescBold">11.Documents   Attached</font></td>
           </tr>
           <tr>
-            <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("Date_Receipt",DisplayFormatUtil.SQLDateToString1(form1ModelSP.getDate_Receipt(),"DD/MM/YYYY"),"") %>
+            <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("Date_Receipt",DisplayFormatUtil.SQLDateToString1(form1ModelSP.getDate_Receipt(),"DD/MM/YYYY"),"maxlength=10 onkeypress=\"addSlashFormat(event,this)\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"")%>
              
            </td>
             <td align="left"><font class="textDesc"><%=DisplayUtil.displayCheckBox("","doc_attach","INVOICE","") %> 
@@ -117,7 +117,7 @@
             </font></td>
           </tr>
           <tr>
-            <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("Regis_no",form1ModelSP.getRegis_no(),"") %></td>
+            <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("Regis_no",form1ModelSP.getRegis_no(),"maxlength=50") %></td>
             <td align="left"><font class="textDesc">
               <%=DisplayUtil.displayCheckBox("","doc_attach","LETTER OF CREDIT","") %>
               Letter of Credit
@@ -137,7 +137,7 @@
           <tr>
             <td align="left"><font class="textDesc">Code
               </font></td>
-            <td align="left"><font class="textDesc"><%=DisplayUtil.displayInputTextBox("cus_name_code",form1ModelSP.getCus_name_code(),"") %>
+            <td align="left"><font class="textDesc"><%=DisplayUtil.displayInputTextBox("cus_name_code",form1ModelSP.getCus_name_code(),"maxlength=4 onkeypress=\"keyPressInteger()\"") %>
              
             </font></td>
             <td>&nbsp;</td>
@@ -145,7 +145,7 @@
           <tr>
             <td align="left"><font class="textDesc">Description 
               </font></td>
-            <td align="left"><font class="textDesc"><%=DisplayUtil.displayInputTextBox("cus_name_desc",form1ModelSP.getCus_name_desc(),"") %>
+            <td align="left"><font class="textDesc"><%=DisplayUtil.displayInputTextBox("cus_name_desc",form1ModelSP.getCus_name_desc(),"maxlength=50") %>
               
             </font></td>
             <td>&nbsp;</td>
@@ -159,7 +159,7 @@
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("ManifestNo",(form1ModelSP.getManifest_no() != null)?form1ModelSP.getManifest_no().toString():"","") %></td>
+            <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("ManifestNo",(form1ModelSP.getManifest_no() != null)?form1ModelSP.getManifest_no().toString():"","maxlength=4 onkeypress=\"keyPressInteger()\"") %></td>
             <td>&nbsp;</td>
           </tr>
           <tr>
@@ -170,8 +170,8 @@
             <td colspan="3" align="left"><font class="textDescBold">15. Receipt of Duty/Tax as Levied Authorized by :</font></td>
             </tr>
           <tr>
-            <td align="center" colspan="2"><%=DisplayUtil.displayInputTextBox("duty_tax_receipt_date",DisplayFormatUtil.SQLDateToString1(form1ModelSP.getDuty_tax_receipt_date(),"DD/MM/YYYY"),"") %></td>
-            <td align="center"><%=DisplayUtil.displayInputTextBox("duty_tax_receipt_desc",form1ModelSP.getDuty_tax_receipt_desc(),"") %></td>
+            <td align="center" colspan="2"><%=DisplayUtil.displayInputTextBox("duty_tax_receipt_date",DisplayFormatUtil.SQLDateToString1(form1ModelSP.getDuty_tax_receipt_date(),"DD/MM/YYYY"),"maxlength=10 onkeypress=\"addSlashFormat(event,this)\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"") %></td>
+            <td align="center"><%=DisplayUtil.displayInputTextBox("duty_tax_receipt_desc",form1ModelSP.getDuty_tax_receipt_desc(),"maxlength=50") %></td>
           </tr>
           <tr>
             <td colspan="2" align="center"><font class="textDesc">Date</font></td>
@@ -192,15 +192,15 @@
             </tr>
           <tr>
             <td align="right"><font class="textDesc">Importer/Taxpayer Code </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("Consignee_code",form1ModelSP.getConsignee_code(),"") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("Consignee_code",form1ModelSP.getConsignee_code(),"maxlength=20 onkeypress=\"keyPressInteger()\"") %></td>
             </tr>
           <tr>
             <td align="right"><font class="textDesc">Name </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("Consignee_name",form1ModelSP.getConsignee_name(),"") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("Consignee_name",form1ModelSP.getConsignee_name(),"maxlength=20") %></td>
             </tr>
           <tr>
             <td align="right"><font class="textDesc">Address </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("Consignee_address",form1ModelSP.getConsignee_address(),"") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("Consignee_address",form1ModelSP.getConsignee_address(),"maxlength=255") %></td>
             </tr>
           </table></td>
       </tr>
@@ -217,15 +217,15 @@
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Agent/Taxpayer Code</font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("AuthorAgent_code",form1ModelSP.getAuthorAgent_code(),"") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("AuthorAgent_code",form1ModelSP.getAuthorAgent_code(),"maxlength=20") %></td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Name </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("AuthorAgent_name",form1ModelSP.getAuthorAgent_name(),"") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("AuthorAgent_name",form1ModelSP.getAuthorAgent_name(),"maxlength=20") %></td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Address </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("AuthorAgent_address",form1ModelSP.getAuthorAgent_address(),"") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("AuthorAgent_address",form1ModelSP.getAuthorAgent_address(),"maxlength=25") %></td>
           </tr>
         </table></td>
         <td rowspan="4" align="center"><table width="472" border="0" cellpadding="1" cellspacing="1">
@@ -234,8 +234,8 @@
             <td colspan="2" align="left"><font class="textDescBold">17. Exchange Control Ref.</font></td>
             </tr>
           <tr>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("import_permit_no",form1ModelSP.getImport_permit_no(),"") %></td>
-            <td align="left" colspan="2"><%=DisplayUtil.displayInputTextBox("exchg_ctrl_ref",form1ModelSP.getExchg_ctrl_ref(),"") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("import_permit_no",form1ModelSP.getImport_permit_no(),"maxlength=20") %></td>
+            <td align="left" colspan="2"><%=DisplayUtil.displayInputTextBox("exchg_ctrl_ref",form1ModelSP.getExchg_ctrl_ref(),"maxlength=20") %></td>
             </tr>
           <tr>
             <td>&nbsp;</td>
@@ -246,8 +246,8 @@
             <td colspan="2" align="left" ><font class="textDescBold">19. Bill of Lading or comsignment Note No.</font></td>
             </tr>
           <tr>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("special_treatment",form1ModelSP.getSpecial_treatment(),"") %></td>
-            <td colspan="2" align="left" ><%=DisplayUtil.displayInputTextBox("bill_no",form1ModelSP.getBill_no(),"") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("special_treatment",form1ModelSP.getSpecial_treatment(),"maxlength=20") %></td>
+            <td colspan="2" align="left" ><%=DisplayUtil.displayInputTextBox("bill_no",form1ModelSP.getBill_no(),"maxlength=20") %></td>
             </tr>
           <tr>
             <td>&nbsp;</td>
@@ -258,8 +258,8 @@
             <td colspan="2" align="left" ><font class="textDescBold">21. County to Which payment of Goods to be made</font></td>
             </tr>
           <tr>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("term_payment",form1ModelSP.getTerm_payment(),"") %></td>
-            <td colspan="2" align="left" ><%=DisplayUtil.displayInputTextBox("country_of_good",form1ModelSP.getCountry_of_good(),"") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("term_payment",form1ModelSP.getTerm_payment(),"maxlength=20") %></td>
+            <td colspan="2" align="left" ><%=DisplayUtil.displayInputTextBox("country_of_good",form1ModelSP.getCountry_of_good(),"maxlength=20") %></td>
             </tr>
           <tr>
             <td>&nbsp;</td>
@@ -273,8 +273,8 @@
               </font></td>
             </tr>
           <tr>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("exchange_rate",form1ModelSP.getExchgRate_ID(),"") %></td>
-            <td colspan="2" align="left" ><%=DisplayUtil.displayInputTextBox("fob_value",form1ModelSP.getFob_value(),"") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("exchange_rate",form1ModelSP.getExchgRate_ID(),"maxlength=4") %></td>
+            <td colspan="2" align="left" ><%=DisplayUtil.displayInputTextBox("fob_value",form1ModelSP.getFob_value(),"maxlength=20") %></td>
             </tr>
           <tr>
             <td>&nbsp;</td>
@@ -286,9 +286,9 @@
             <td width="133" align="left" ><font class="textDescBold">22. CIF Value</font></td>
             </tr>
           <tr>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("Insurance",form1ModelSP.getInsurance(),"") %></td>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("Freight",form1ModelSP.getFreight(),"") %></td>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("Cif_value",form1ModelSP.getCif_value(),"") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Insurance",form1ModelSP.getInsurance(),"maxlength=20") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Freight",form1ModelSP.getFreight(),"maxlength=20") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Cif_value",form1ModelSP.getCif_value(),"maxlength=20") %></td>
             </tr>
           <tr>
             <td>&nbsp;</td>
@@ -301,9 +301,9 @@
             <td align="left" ><font class="textDescBold">26. Other Charges</font></td>
             </tr>
           <tr>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("Gross_weight",form1ModelSP.getGross_weight(),"") %></td>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("Measurement",form1ModelSP.getMeasurement(),"") %></td>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("Other_charg",form1ModelSP.getOther_charg(),"") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Gross_weight",form1ModelSP.getGross_weight(),"maxlength=20") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Measurement",form1ModelSP.getMeasurement(),"maxlength=20") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Other_charg",form1ModelSP.getOther_charg(),"maxlength=20") %></td>
             </tr>
           <tr>
             <td>&nbsp;</td>
@@ -340,7 +340,7 @@
             </tr>
           <tr>
             <td align="left"></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("trans_other",form1ModelSP.getTrans_Other(),"") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("trans_other",form1ModelSP.getTrans_Other(),"maxlength=20") %></td>
             
             </tr>
           </table></td>
@@ -351,7 +351,7 @@
             </tr>
           <tr>
             
-            <td><%=DisplayUtil.displayInputTextBox("Date_Import",DisplayFormatUtil.SQLDateToString1(form1ModelSP.getDate_Import(),"DD/MM/YYYY"),"") %></td>
+            <td><%=DisplayUtil.displayInputTextBox("Date_Import",DisplayFormatUtil.SQLDateToString1(form1ModelSP.getDate_Import(),"DD/MM/YYYY"),"maxlength=10 onkeypress=\"addSlashFormat(event,this)\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"") %></td>
             </tr>
           </table>
         </td>
@@ -362,7 +362,7 @@
             <td><font class="textDescBold">6. No/Name of vessel/Flight/conveyanee</font></td>
           </tr>
           <tr>
-            <td><%=DisplayUtil.displayInputTextBox("vessel_value",form1ModelSP.getVessel_value(),"") %></td>
+            <td><%=DisplayUtil.displayInputTextBox("vessel_value",form1ModelSP.getVessel_value(),"maxlength=50") %></td>
           </tr>
         </table></td>
         <td><table border="0" cellspacing="1" cellpadding="1">
@@ -370,12 +370,12 @@
             <td colspan="2"><font class="textDescBold">7. Port/Place of Import</font></td>
             </tr>
           <tr>
-            <td><font class="textDesc">Code </font></td>
+            <td><font class="textDesc"></font></td>
             <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form1ModelSP.getPortLoad_Code(),"PortImport_Code","EDIT","") %></td>
             </tr>
           <tr>
-            <td><font class="textDesc">Descriptiont </font></td>
-            <td><%=DisplayUtil.displayInputTextBox("PortImport_Desc",form1ModelSP.getPortImport_Desc(),"") %></td>
+            <td></td>
+            <td></td>
             </tr>
         </table></td>
         </tr>
@@ -385,12 +385,12 @@
             <td colspan="2"><font class="textDescBold">8.Port/Place of   Loading</font></td>
           </tr>
           <tr>
-            <td><font class="textDesc">Code </font></td>
+            <td><font class="textDesc"></font></td>
             <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form1ModelSP.getPortLoad_Code(),"PortLoad_Code","EDIT","") %></td>
           </tr>
           <tr>
-            <td><font class="textDesc">Descriptiont </font></td>
-            <td><%=DisplayUtil.displayInputTextBox("PortLoad_Desc",form1ModelSP.getPortLoad_Desc(),"") %></td>
+            <td></td>
+            <td></td>
           </tr>
         </table></td>
         <td><table border="0" cellspacing="1" cellpadding="1">
@@ -398,12 +398,12 @@
             <td colspan="2"><font class="textDescBold">9. Via (Transhipment Cargo Only)</font></td>
             </tr>
           <tr>
-            <td><font class="textDesc">Code </font></td>
+            <td><font class="textDesc"></font></td>
             <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form1ModelSP.getPortLoad_Code(),"Via_Code","EDIT","") %></td>
             </tr>
           <tr>
-            <td><font class="textDesc">Descriptiont </font></td>
-            <td><%=DisplayUtil.displayInputTextBox("Via_Desc",form1ModelSP.getVia_Desc(),"") %></td>
+            <td></td>
+            <td></td>
             </tr>
         </table></td>
         </tr>
@@ -551,7 +551,7 @@
               </tr>
               <tr>
                 <td><font class="textDescBold">53. Total Duty/Tax Payable</font></td>
-                <td><%=DisplayUtil.displayInputTextBox("tax_total",String.valueOf(form1ModelSP.getTax_total()),"") %></td>
+                <td><%=DisplayUtil.displayInputTextBox("tax_total",String.valueOf(form1ModelSP.getTax_total()),"maxlength=\"15\" onkeypress = \"keypressWithDegit(this,'15')\" onblur=\"formatCurrency(this)\"") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -559,7 +559,7 @@
               </tr>
               <tr>
                 <td><font class="textDescBold">54. Other Charges</font></td>
-                <td><%=DisplayUtil.displayInputTextBox("Other_charg2",String.valueOf(form1ModelSP.getOther_charg2()),"") %></td>
+                <td><%=DisplayUtil.displayInputTextBox("Other_charg2",String.valueOf(form1ModelSP.getOther_charg2()),"maxlength=\"15\" onkeypress = \"keypressWithDegit(this,'15')\"onblur=\"formatCurrency(this)\"") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -567,7 +567,7 @@
               </tr>
               <tr>
                 <td><font class="textDescBold">55. Total Amount Payable</font></td>
-                <td><%=DisplayUtil.displayInputTextBox("payable_amount",String.valueOf(form1ModelSP.getPayable_amount()),"") %></td>
+                <td><%=DisplayUtil.displayInputTextBox("payable_amount",String.valueOf(form1ModelSP.getPayable_amount()),"maxlength=\"15\" onkeypress = \"keypressWithDegit(this,'15')\"onblur=\"formatCurrency(this)\"") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
