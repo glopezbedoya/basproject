@@ -12,6 +12,9 @@ import com.tcd.ejda.dao.Form1DAOImpl;
 import com.tcd.ejda.dao.TransactionLogDAO;
 import com.tcd.ejda.dao.TransactionLogDAOImpl;
 import com.tcd.ejda.model.Form1Model;
+import com.tcd.ejda.model.FormDetail1Model;
+import com.tcd.ejda.model.FormDetail2Model;
+import com.tcd.ejda.model.FormDocAttachModel;
 import com.tcd.ejda.model.TransactionLogModel;
 import com.tcd.ejda.model.ValueListModel;
 
@@ -34,6 +37,9 @@ public class EJDAM014Action extends AbstractAction {
 		form1Bean = getForm1Bean();
 		form1Bean.setForm1Vt(new Vector<Form1Model>());
 		form1Bean.setForm1ModelSP(new Form1Model());
+		form1Bean.setDetail1ModelSP(new FormDetail1Model());
+		form1Bean.setDetail2ModelSP(new FormDetail2Model());
+		form1Bean.setDocAttachModelSP(new FormDocAttachModel());
 		ValueListModel valueListM = new ValueListModel();
 		valueListM.setReturnModel("Form1Model");
 		form1Bean.setValueListM(valueListM);
@@ -179,23 +185,9 @@ private void setCriteriaPameter(){
 		String sqlCommand ="";
 		String sqlWhere="";
 		try{
-			sql.append(EJDAConstant.SQL.FORM_T_DOC_2);
-//			if (sql.indexOf("WHERE") != -1){
-//				sqlWhere = sql.substring(sql.indexOf("WHERE"),sql.length());
-//				sqlCommand = sql.substring(0, sql.lastIndexOf("WHERE"));
-//			}
-//			if (!"".equals(form1Cri.getForm_name())){
-//				//sql.append(" WHERE ");
-//				sqlWhere = " FORM_NAME = ? AND ";
-//				
-//			}
-//			
-//			log.debug("sqlWhere >> " + sqlWhere);
-//			log.debug("sqlCommand >> " + sqlCommand);
-//			
-//			sql1.append(sqlCommand + " " + sqlWhere);
-//			
-//			log.debug("sql >> " + sql1.toString());
+			sql.append(EJDAConstant.SQL.FORM_T_DOC_1);
+			sql.append(" WHERE JDA_TYPE = '1' AND DOC_STATUS = 'A' ");
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}

@@ -5,6 +5,7 @@ import java.util.Vector;
 import com.tcd.ejda.model.Form1Model;
 import com.tcd.ejda.model.FormDetail1Model;
 import com.tcd.ejda.model.FormDetail2Model;
+import com.tcd.ejda.model.FormDocAttachModel;
 
 public class Form1Bean extends AbstractBean {
 	
@@ -13,7 +14,14 @@ public class Form1Bean extends AbstractBean {
 	public String actionName;
 	public FormDetail1Model detail1ModelSP;
 	public FormDetail2Model detail2ModelSP;
+	public FormDocAttachModel docAttachModelSP;
 	
+	public FormDocAttachModel getDocAttachModelSP() {
+		return docAttachModelSP;
+	}
+	public void setDocAttachModelSP(FormDocAttachModel docAttachModelSP) {
+		this.docAttachModelSP = docAttachModelSP;
+	}
 	public String getActionName() {
 		return actionName;
 	}
