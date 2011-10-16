@@ -9,7 +9,6 @@ function CancelButton(form,action){
 	form.submit();
 }
 function validateSubmitButton(form,action){
-	//alert('validateSubmitButton : ' +action);
 	$('input[name=Status]').val(setStatus());
 	$('input[name=mode_trans]').val(setModeTrans());
 	$('input[name=ejdaAction]').val(action);
