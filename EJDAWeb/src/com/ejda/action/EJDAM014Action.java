@@ -66,6 +66,7 @@ public class EJDAM014Action extends AbstractAction {
 			iuser = "system";
 		}
 		EJDAM010Action ejdam010Action = new EJDAM010Action();
+		ejdam010Action.setRequest(getRequest()); 
 		Form1Model form1 = ejdam010Action.setValueModel("1","S",iuser);
 		
 		try{
