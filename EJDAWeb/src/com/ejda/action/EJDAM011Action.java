@@ -113,6 +113,7 @@ public class EJDAM011Action extends AbstractAction {
 //		form2.setUpdate_by(iuser);
 //		form2.setForm_no(formNo);
 		EJDAM010Action ejdam010Action = new EJDAM010Action();
+		ejdam010Action.setRequest(getRequest()); 
 		Form1Model form2 = ejdam010Action.setValueModel("2","A",iuser);
 		log.debug("Form1Model >> " + form2);
 		Vector vcDetail1 = ejdam010Action.setValueDetail1Model();
