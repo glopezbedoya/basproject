@@ -52,6 +52,16 @@ public class DisplayUtil {
 		textBoxStr.append("<input name=\""+name+"\" value=\""+value+"\" type=\"text\" "+script+" />");
 		return textBoxStr.toString();
 	}
+	
+	public static String displayInputTextBox(String name,String value,String script,String size){
+		StringBuffer textBoxStr = new StringBuffer();
+		if(null == value || "null".equalsIgnoreCase(value)){
+			value = "";
+		}
+		textBoxStr.append("<input name=\""+name+"\" value=\""+value+"\" size=\""+size+"\" type=\"text\" "+script+" />");
+		return textBoxStr.toString();
+	}
+	
 	public static String displayInputTextAreaTag(String name,String value,String script) {
 		StringBuffer textAreaStr = new StringBuffer();
 		if(null == value || "null".equalsIgnoreCase(value)){
