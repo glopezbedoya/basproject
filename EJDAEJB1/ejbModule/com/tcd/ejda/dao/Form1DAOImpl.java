@@ -205,10 +205,15 @@ public class Form1DAOImpl implements Form1DAO {
 		sql.append("RECEIVED_AMOUNT, EXCHGRATE_ID, EQUIVALENT, GOOD_PAYMENT_CODE,GOOD_PAYMENT_DESC, COUNTRY_OF_GOOD, FOB_VALUE, INSURANCE, FREIGHT, CIF_VALUE, ");
 		sql.append("GROSS_WEIGHT, MEASUREMENT, OTHER_CHARG, DECLARANT_NAME, ID_CARD_NO, STATUS, CERIFY, CUS_REMOVAL, TAX_TOTAL, ");
 		sql.append("OTHER_CHARG2, PAYABLE_AMOUNT, MANUALSCRIPT_RECERPT,VESSEL_VALUE, INSTRUCT_EXAM, RESULT_EXAM, FOR_OTHER_USE, ");
-		sql.append("CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY) ");
+		sql.append("CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY ");
+		sql.append(" ,MOVEMENT_PEMIT_NO, EXPIRE_DATE, SECURITY_REF_NO, SECURITY_AMT, RECEIVE_AMT ");
+		sql.append(" ,BILL_OF_LADING, PROPER_OFFICE, REQUEST_APPROVED, CERTIFIED )");
+
 		sql.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ");
 		sql.append(", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ");
-		sql.append(", ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, ?, SYSDATE, ?)");
+		sql.append(", ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, ?, SYSDATE, ?");
+		sql.append(" , ?, ?, ?, ?, ? ");
+		sql.append(" , ?, ?, ?, ? )");
 		log.debug("sql >> " + sql.toString());
 		try {
 			ps = conn.prepareStatement(sql.toString());
@@ -286,8 +291,19 @@ public class Form1DAOImpl implements Form1DAO {
 			ps.setString(parameterIndex++, form.getCreate_By());//CREATE_BY
 			//UPDATE_DATE
 			ps.setString(parameterIndex++, form.getUpdate_by());//UPDATE_BY
+			
+			ps.setString(parameterIndex++, form.getMovementPemitNo());//MOVEMENT_PEMIT_NO
+			ps.setDate(parameterIndex++, form.getExpiryDate());//EXPIRE_DATE
+			ps.setString(parameterIndex++, form.getSecurityRefNo());//SECURITY_REF_NO
+			ps.setDouble(parameterIndex++, form.getSecurityAmt());//SECURITY_AMT
+			ps.setDouble(parameterIndex++, form.getReceiveAmt());//RECEIVE_AMT
+			ps.setString(parameterIndex++, form.getBillOfLading());//BILL_OF_LADING
+			ps.setString(parameterIndex++, form.getProperOffice());//PROPER_OFFICE
+			ps.setString(parameterIndex++, form.getRequestApproved());//REQUEST_APPROVED
+			ps.setString(parameterIndex++, form.getCertified());//CERTIFIED
+			
 			rs = ps.executeQuery();
-			log.debug("detail1.size() : " +detail1.size());
+		
 			if(detail1.size()>0){
 				StringBuffer sql1 = new StringBuffer();
 				sql1.append("insert into JDA_FORM_T_DOC_DETAIL1(ITEM_NO, DOC_ID, MARKS_NO, NO_TYPE_PACKAGE, GOOD_DESC, ");
@@ -325,12 +341,13 @@ public class Form1DAOImpl implements Form1DAO {
 				}
 				
 			}
-			log.debug("detail2.size() : " +detail2.size());
 			if(detail2.size()>0){
 				StringBuffer sql2 = new StringBuffer();
-				sql2.append("insert into JDA_FORM_T_DOC_DETAIL2(ITEM_NO, DOC_ID, QTY_CUST_UNIT, UNIT_VAL_ACTUAL, UNIT_VAL_CUSTOM, TOTAL_VALUE, ");
-				sql2.append("EXPORT_RATE, EXPORT_AMOUNT, OTHER_TAX_TYPE, OTHER_TAX_RATE, OTHER_TAX_AMOUNT, CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY) ");
-				sql2.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, ?, SYSDATE, ?)");
+				sql2.append(" insert into JDA_FORM_T_DOC_DETAIL2(ITEM_NO, DOC_ID, QTY_CUST_UNIT, UNIT_VAL_ACTUAL, UNIT_VAL_CUSTOM, TOTAL_VALUE, ");
+				sql2.append(" EXPORT_RATE, EXPORT_AMOUNT, OTHER_TAX_TYPE, OTHER_TAX_RATE, OTHER_TAX_AMOUNT, CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY ");
+				sql2.append(" , ORIGIN_CODE, VALUE_PER_UNIT ) ");
+				sql2.append(" values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, ?, SYSDATE, ?");
+				sql2.append(" , ?, ?)");
 				log.debug("sql2 >> " + sql2.toString());
 				
 				ps = conn.prepareStatement(sql2.toString());
@@ -351,6 +368,8 @@ public class Form1DAOImpl implements Form1DAO {
 					ps.setDouble(parameterIndex2++, f2.getOther_tax_amount());
 					ps.setString(parameterIndex2++, f2.getCreate_By());
 					ps.setString(parameterIndex2++, f2.getUpdate_by());
+					ps.setString(parameterIndex2++, f2.getOriginCode());
+					ps.setDouble(parameterIndex2++, f2.getValuePerUnit());
 					
 					rs = ps.executeQuery();
 				}
@@ -589,6 +608,17 @@ public class Form1DAOImpl implements Form1DAO {
 				form1M.setCreate_By(rs.getString("CREATE_BY"));
 				form1M.setUpdate_Date(rs.getDate("UPDATE_DATE"));
 				form1M.setUpdate_by(rs.getString("UPDATE_BY"));
+				
+				//Form 3
+				form1M.setMoveMentPemitNo(rs.getString("MOVEMENT_PEMIT_NO"));
+				form1M.setExpiryDate(rs.getDate("EXPIRE_DATE"));
+				form1M.setSecurityRefNo(rs.getString("SECURITY_REF_NO"));
+				form1M.setSecurityAmt(rs.getDouble("SECURITY_AMT"));
+				form1M.setReceiveAmt(rs.getDouble("RECEIVE_AMT"));
+				form1M.setBillOfLading(rs.getString("BILL_OF_LADING"));
+				form1M.setProperOffice(rs.getString("PROPER_OFFICE"));
+				form1M.setRequestApproved(rs.getString("REQUEST_APPROVED"));
+				form1M.setCertified(rs.getString("CERTIFIED"));
 
 			}
 		} catch (SQLException e) {
@@ -655,7 +685,15 @@ public class Form1DAOImpl implements Form1DAO {
 			
 			rs = ps.executeQuery();
 			while(rs.next()){
-
+				formDetailM = new FormDetail1Model();		
+				formDetailM.setItem_no(rs.getString("ITEM_NO"));
+				formDetailM.setDoc_id(rs.getString("DOC_ID"));
+				formDetailM.setMarks_no(rs.getString("MARKS_NO"));
+				formDetailM.setNo_type_package(rs.getString("NO_TYPE_PACKAGE"));
+				formDetailM.setGood_desc(rs.getString("GOOD_DESC"));
+				formDetailM.setCust_code(rs.getString("CUST_CODE"));
+				formDetailM.setCust_unit(rs.getString("CUST_UNIT"));
+				vc.add(formDetailM);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -721,7 +759,22 @@ public class Form1DAOImpl implements Form1DAO {
 			
 			rs = ps.executeQuery();
 			while(rs.next()){
-
+				formDetai2M = new FormDetail2Model();
+				log.debug("ITEM_NO = "+rs.getString("ITEM_NO"));
+				formDetai2M.setItem_no(rs.getString("ITEM_NO"));
+				formDetai2M.setDoc_id(rs.getString("DOC_ID"));
+				formDetai2M.setQty_cust_unit(rs.getDouble("QTY_CUST_UNIT"));
+				formDetai2M.setUnit_val_actual(rs.getString("UNIT_VAL_ACTUAL"));
+				formDetai2M.setUnit_val_custom(rs.getString("UNIT_VAL_CUSTOM"));
+				formDetai2M.setTotal_value(rs.getDouble("TOTAL_VALUE"));
+				formDetai2M.setExport_rate(rs.getDouble("EXPORT_RATE"));
+				formDetai2M.setExport_amount(rs.getDouble("EXPORT_AMOUNT"));
+				formDetai2M.setOther_tax_type(rs.getString("OTHER_TAX_TYPE"));
+				formDetai2M.setOther_tax_rate(rs.getDouble("OTHER_TAX_RATE"));
+				formDetai2M.setOther_tax_amount(rs.getDouble("OTHER_TAX_AMOUNT"));
+				formDetai2M.setOriginCode(rs.getString("ORIGIN_CODE"));
+				formDetai2M.setValuePerUnit(rs.getDouble("VALUE_PER_UNIT"));
+				vc.add(formDetai2M);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
