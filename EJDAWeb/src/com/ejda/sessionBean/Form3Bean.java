@@ -8,9 +8,11 @@ import com.tcd.ejda.model.TransactionLogModel;
 
 public class Form3Bean extends AbstractBean {
 	
-	public Form3Model form3ModelSP;
+	public Form1Model form3ModelSP;
 	public Vector form3Vt;
 	public String actionName;
+	public Vector detail1MVt;
+	public Vector detail2MVt;
 	
 	
 	public String getActionName() {
@@ -19,10 +21,10 @@ public class Form3Bean extends AbstractBean {
 	public void setActionName(String actionName) {
 		this.actionName = actionName;
 	}
-	public Form3Model getForm3ModelSP() {
+	public Form1Model getForm3ModelSP() {
 		return form3ModelSP;
 	}
-	public void setForm3ModelSP(Form3Model form3ModelSP) {
+	public void setForm3ModelSP(Form1Model form3ModelSP) {
 		this.form3ModelSP = form3ModelSP;
 	}
 	public Vector getForm3Vt() {
@@ -30,6 +32,18 @@ public class Form3Bean extends AbstractBean {
 	}
 	public void setForm3Vt(Vector form3Vt) {
 		this.form3Vt = form3Vt;
+	}
+	public Vector getDetail1MVt() {
+		return detail1MVt;
+	}
+	public void setDetail1MVt(Vector detail1mVt) {
+		detail1MVt = detail1mVt;
+	}
+	public Vector getDetail2MVt() {
+		return detail2MVt;
+	}
+	public void setDetail2MVt(Vector detail2mVt) {
+		detail2MVt = detail2mVt;
 	}
 	
 	
