@@ -354,7 +354,7 @@ public class EJDAM010Action extends AbstractAction {
 		String Other_charg = (String) getRequest().getParameter("Other_charg");//OTHER_CHARG
 		String declarant_name = (String) getRequest().getParameter("declarant_name");//DECLARANT_NAME
 		String id_card_no = (String) getRequest().getParameter("id_card_no");//ID_CARD_NO
-		String status = (String) getRequest().getParameter("status");//STATUS
+		String status = (String) getRequest().getParameter("Status");//STATUS
 		String cerify = (String) getRequest().getParameter("cerify");//CERIFY
 		String cus_removal = (String) getRequest().getParameter("cus_removal");//CUS_REMOVAL
 		String tax_total = (String) getRequest().getParameter("tax_total");//TAX_TOTAL
@@ -365,10 +365,7 @@ public class EJDAM010Action extends AbstractAction {
 		String instruct_exam = (String) getRequest().getParameter("instruct_exam");//INSTRUCT_EXAM
 		String result_exam = (String) getRequest().getParameter("result_exam");//RESULT_EXAM
 		String for_other_use = (String) getRequest().getParameter("for_other_use");//FOR_OTHER_USE
-		//CREATE_DATE
-		//ps.setString(parameterIndex++, form.getCreate_By());//CREATE_BY
-		//UPDATE_DATE
-		//ps.setString(parameterIndex++, form.getUpdate_by());//UPDATE_BY
+
 		form.setDoc_ID("");
 		form.setCountry_ID(country_id);//	COUNTRY_ID
 		form.setJDA_Type(jda_type);//JDA_TYPE
@@ -426,6 +423,7 @@ public class EJDAM010Action extends AbstractAction {
 		form.setOther_charg(Other_charg);//OTHER_CHARG
 		form.setDeclarant_name(declarant_name);//DECLARANT_NAME
 		form.setId_card_no(id_card_no);//ID_CARD_NO
+		log.debug("status = " +status);
 		form.setStatus(status);//STATUS
 		form.setCerify(cerify) ;//CERIFY
 		form.setCus_removal(cus_removal);//CUS_REMOVAL
