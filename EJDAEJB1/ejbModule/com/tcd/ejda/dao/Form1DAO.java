@@ -6,6 +6,7 @@ import java.util.Vector;
 import com.tcd.ejda.model.Form1Model;
 import com.tcd.ejda.model.FormDetail1Model;
 import com.tcd.ejda.model.FormDetail2Model;
+import com.tcd.ejda.model.FormDocAttachModel;
 
 public interface Form1DAO {
 	public void saveFrom1Table1(Form1Model form1) throws SQLException;
@@ -15,6 +16,6 @@ public interface Form1DAO {
 	public Form1Model searchFormModel(String docId) throws SQLException;
 	public Vector<FormDetail1Model> searchFormDetail1Model(String docId) throws SQLException;
 	public Vector<FormDetail2Model> searchFormDetail2Model(String docId) throws SQLException;
-	
+	public Vector<FormDocAttachModel> searchFormDocAttachModel(String docId) throws SQLException;
 	
 }

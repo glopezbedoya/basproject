@@ -813,4 +813,77 @@ public class Form1DAOImpl implements Form1DAO {
 		return vc;
 	}
 	
+	public Vector<FormDocAttachModel> searchFormDocAttachModel(String docId) throws SQLException{
+		log.debug("[Start : searchFormModel ]");
+		log.debug("docId = "+docId);
+		FormDocAttachModel formDocAttachM = new FormDocAttachModel();
+		Vector<FormDocAttachModel> vc = new  Vector<FormDocAttachModel>();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = db.getConnection();
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		StringBuffer sql = new StringBuffer();
+		
+		try {
+						
+			sql.append(" SELECT REF_NO ,DOC_ID ,DOC_NAME ,DOC_PATH ,DOC_JDA_TYPE ,DOC_STATUS FROM JDA_FORM_T_DOC_ATTACH ");
+			sql.append("WHERE DOC_ID = ? ");
+			log.debug("Search JDA_FORM_T_DOC >>> " + sql.toString());
+			ps = conn.prepareStatement(sql.toString());
+			int seq=1;
+			
+			ps.setString(seq++, docId);
+			
+			rs = ps.executeQuery();
+			while(rs.next()){
+				formDocAttachM = new FormDocAttachModel();
+				formDocAttachM.setRef_no(rs.getString("REF_NO"));
+				formDocAttachM.setDoc_id(rs.getString("DOC_ID"));
+				formDocAttachM.setDoc_name(rs.getString("DOC_NAME"));
+				formDocAttachM.setDoc_path(rs.getString("DOC_PATH"));
+				formDocAttachM.setDoc_jda_type(rs.getString("DOC_JDA_TYPE"));
+				formDocAttachM.setDoc_status(rs.getString("DOC_STATUS"));
+				vc.add(formDocAttachM);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			log.equals(e.getMessage());
+		}finally{
+			try {
+				if (conn != null)
+					conn.commit();
+			} catch (Exception e) {
+			}
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		return vc;
+	}
+	
 }

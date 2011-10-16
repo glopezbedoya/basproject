@@ -106,7 +106,7 @@ public class EJDAM012Action extends AbstractAction {
 			log.debug("Form1Model >> " + form1);
 			Vector vcDetail1 = ejdam010Action.setValueDetail1Model();
 			Vector vcDetail2 = setValueDetail2Model();
-			Vector vcDocAttach = ejdam010Action.setValueDocumentAttach("1","");
+			Vector vcDocAttach = ejdam010Action.setValueDocumentAttach("3","");
 		
 			Form1DAO dao = new Form1DAOImpl();
 			dao.saveFromEJDA(form1,vcDetail1,vcDetail2,vcDocAttach);
@@ -250,13 +250,11 @@ public class EJDAM012Action extends AbstractAction {
 			form3Bean.setForm3ModelSP(dao.searchFormModel(docId));
 			form3Bean.setDetail1MVt(dao.searchFormDetail1Model(docId));
 			form3Bean.setDetail2MVt(dao.searchFormDetail2Model(docId));
+			form3Bean.setDocAttachMVt(dao.searchFormDocAttachModel(docId));
 			log.debug("form3Bean = "+form3Bean.getForm3ModelSP().getMovementPemitNo());
 			log.debug("form3Bean.getDetail1MVt().size() = "+form3Bean.getDetail1MVt().size());
 			log.debug("form3Bean.getDetail2MVt().size() = "+form3Bean.getDetail2MVt().size());
-			for(int i=0;i<form3Bean.getDetail2MVt().size();i++){
-				FormDetail2Model tmp = (FormDetail2Model)form3Bean.getDetail2MVt().get(i);
-				log.debug("*********tmp = "+tmp.getItem_no());
-			}
+			log.debug("form3Bean.getDocAttachMVt().size() = "+form3Bean.getDocAttachMVt().size());
 			
 		}catch (Exception e) {
 			e.printStackTrace();
