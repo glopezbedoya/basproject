@@ -1,31 +1,18 @@
-function buttonAction(form,action){
+function buttonAction(form,action,method,page){
 	
-	var check = true;
-	if(action == 'doDelete'){
-		check = haveCheckBox();
-	}else if(action == 'doSearch'){
-		$('input[name=ejdaAction]').val('EJDAM011');
-		$('input[name=ejdaMethod]').val(action);
-		$('input[name=screenName]').val('EJDAM011.jsp');
-		form.submit();
-	}else if(action == 'doAdd'){
-		$('input[name=ejdaAction]').val('EJDAM011');
-		$('input[name=ejdaMethod]').val('doSearch');
-		$('input[name=screenName]').val('eJdaForm2.jsp');
-		form.submit();
-	}else{
-		alert('No Data Select');
-	}
+	$('input[name=ejdaAction]').val(action);
+	$('input[name=ejdaMethod]').val(method);
+	$('input[name=screenName]').val(page);
+	form.submit();
 }
-
-function updateEJDATable2(form,fn_no){
+function updateEJDATable2(form,doc_id,action){
 	//alert('fn_no : ' +fn_no);
-	$('input[name=form_no]').val(fn_no);
-	$('input[name=ejdaAction]').val('EJDAM011');
+	$('input[name=doc_id]').val(doc_id);
+	$('input[name=ejdaAction]').val(action);
 	$('input[name=ejdaMethod]').val('doUpdate');
 	$('input[name=screenName]').val('eJdaForm2.jsp');
 	//form.submit();
-	document.ejdaformNo1.submit();
+	document.ejdaformNo2.submit();
 }
 
 function changeSelectPage(form){
