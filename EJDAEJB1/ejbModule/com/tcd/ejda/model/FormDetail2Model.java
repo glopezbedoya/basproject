@@ -18,6 +18,11 @@ public class FormDetail2Model {
 	private String Create_By;
 	private Date update_Date;
 	private String Update_by;
+	
+	//Form 3
+	private String originCode;
+	private double valuePerUnit;
+	
 	public String getItem_no() {
 		return Item_no;
 	}
@@ -107,6 +112,18 @@ public class FormDetail2Model {
 	}
 	public void setUpdate_by(String updateBy) {
 		Update_by = updateBy;
+	}
+	public String getOriginCode() {
+		return originCode;
+	}
+	public void setOriginCode(String originCode) {
+		this.originCode = originCode;
+	}
+	public double getValuePerUnit() {
+		return valuePerUnit;
+	}
+	public void setValuePerUnit(double valuePerUnit) {
+		this.valuePerUnit = valuePerUnit;
 	}
 
 	

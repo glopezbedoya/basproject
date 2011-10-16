@@ -86,13 +86,16 @@ public class Form1Model {
 	private String result_exam;
 	private String for_other_use;
 	
-	/* Field EJDA From 3*/
-	private String moveMentPemitNo;
-	private String expiryDate;
+	/* Field EJDA Form 3*/
+	private String movementPemitNo;
+	private Date expiryDate;
 	private String securityRefNo;
 	private double securityAmt;
 	private double receiveAmt;
 	private String billOfLading;
+	private String properOffice;
+	private String requestApproved;
+	private String certified;
 	
 	public String getFor_other_use() {
 		return for_other_use;
@@ -555,16 +558,16 @@ public class Form1Model {
 	public void setUpdate_Date(Date updateDate) {
 		update_Date = updateDate;
 	}
-	public String getMoveMentPemitNo() {
-		return moveMentPemitNo;
+	public String getMovementPemitNo() {
+		return movementPemitNo;
 	}
-	public void setMoveMentPemitNo(String moveMentPemitNo) {
-		this.moveMentPemitNo = moveMentPemitNo;
+	public void setMoveMentPemitNo(String movementPemitNo) {
+		this.movementPemitNo = movementPemitNo;
 	}
-	public String getExpiryDate() {
+	public Date getExpiryDate() {
 		return expiryDate;
 	}
-	public void setExpiryDate(String expiryDate) {
+	public void setExpiryDate(Date expiryDate) {
 		this.expiryDate = expiryDate;
 	}
 	public String getSecurityRefNo() {
@@ -591,7 +594,23 @@ public class Form1Model {
 	public void setReceiveAmt(double receiveAmt) {
 		this.receiveAmt = receiveAmt;
 	}
-	
-	
+	public String getProperOffice() {
+		return properOffice;
+	}
+	public void setProperOffice(String properOffice) {
+		this.properOffice = properOffice;
+	}
+	public String getRequestApproved() {
+		return requestApproved;
+	}
+	public void setRequestApproved(String requestApproved) {
+		this.requestApproved = requestApproved;
+	}
+	public String getCertified() {
+		return certified;
+	}
+	public void setCertified(String certified) {
+		this.certified = certified;
+	}
 	
 }
