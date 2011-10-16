@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import com.ejda.constant.EJDAConstant;
 import com.ejda.sessionBean.Form3Bean;
+import com.ejda.util.DisplayFormatUtil;
 import com.ejda.util.EJDAUtil;
 import com.tcd.ejda.dao.Form1DAO;
 import com.tcd.ejda.dao.Form1DAOImpl;
@@ -13,6 +14,9 @@ import com.tcd.ejda.dao.Form3DAO;
 import com.tcd.ejda.dao.Form3DAOImpl;
 import com.tcd.ejda.model.Form1Model;
 import com.tcd.ejda.model.Form3Model;
+import com.tcd.ejda.model.FormDetail1Model;
+import com.tcd.ejda.model.FormDetail2Model;
+import com.tcd.ejda.model.FormDocAttachModel;
 import com.tcd.ejda.model.TransactionLogModel;
 import com.tcd.ejda.model.ValueListModel;
 
@@ -46,10 +50,10 @@ public class EJDAM012Action extends AbstractAction {
 		
 		
 		form3Bean = getForm3Bean();
-		form3Bean.setForm3Vt(new Vector<Form3Model>());
-		form3Bean.setForm3ModelSP(new Form3Model());
+		form3Bean.setForm3Vt(new Vector<Form1Model>());
+		form3Bean.setForm3ModelSP(new Form1Model());
 		ValueListModel valueListM = new ValueListModel();
-		valueListM.setReturnModel("Form3Model");
+		valueListM.setReturnModel("Form1Model");
 		form3Bean.setValueListM(valueListM);
 		setForm3Bean(form3Bean);
 	}
@@ -90,23 +94,32 @@ public class EJDAM012Action extends AbstractAction {
 		if (null==iuser || "".equals(iuser)){
 			iuser = "system";
 		}
-		Form3Model form3 = new Form3Model();
-		form3.setForm_name("FN_" + iuser);
-		form3.setForm_status("A");
-		form3.setUpdate_by(iuser);
-		form3.setForm_no(formNo);
+//		Form3Model form3 = new Form3Model();
+//		form3.setForm_name("FN_" + iuser);
+//		form3.setForm_status("A");
+//		form3.setUpdate_by(iuser);
+//		form3.setForm_no(formNo);
 		try{
-			Form3DAO dao = new Form3DAOImpl();
+			EJDAM010Action ejdam010Action = new EJDAM010Action();
+			ejdam010Action.setRequest(getRequest());
+			Form1Model form1 = ejdam010Action.setValueModel("3","A",iuser);
+			log.debug("Form1Model >> " + form1);
+			Vector vcDetail1 = ejdam010Action.setValueDetail1Model();
+			Vector vcDetail2 = setValueDetail2Model();
+			Vector vcDocAttach = ejdam010Action.setValueDocumentAttach("1","");
+		
+			Form1DAO dao = new Form1DAOImpl();
+			dao.saveFromEJDA(form1,vcDetail1,vcDetail2,vcDocAttach);
 //			dao.UpdateFrom3Table(form3);
-			dao.saveFrom3Table1(form3);
-			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
-			EJDAUtil ejda = new EJDAUtil();
-			transactionLogModel.setMenuId("M012");
-			transactionLogModel.setTranAction("ADD");
-			transactionLogModel.setDescription("Save and submit EJDA Table 1 Form 3");
-			transactionLogModel.setIpAddress(ipAddress);
-			transactionLogModel.setTranBy(iuser);
-			ejda.insertTranLog(transactionLogModel);
+//			dao.saveFrom3Table1(form3);
+//			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
+//			EJDAUtil ejda = new EJDAUtil();
+//			transactionLogModel.setMenuId("M012");
+//			transactionLogModel.setTranAction("ADD");
+//			transactionLogModel.setDescription("Save and submit EJDA Table 1 Form 3");
+//			transactionLogModel.setIpAddress(ipAddress);
+//			transactionLogModel.setTranBy(iuser);
+//			ejda.insertTranLog(transactionLogModel);
 			
 			getRequest().getSession().setAttribute("responseMessage", "Submit Form 3 Successfully.");
 			
@@ -156,7 +169,7 @@ public class EJDAM012Action extends AbstractAction {
 	
 	private Vector getValueListParameters() {
 		Vector parameters = new Vector();
-		Form3Model form3 = getForm3Bean().getForm3ModelSP();
+		Form1Model form3 = getForm3Bean().getForm3ModelSP();
 		if (!"".equals(form3.getForm_name())){
 			log.debug("Form Name = "+form3.getForm_name());
 			parameters.add(form3.getForm_name());
@@ -167,28 +180,28 @@ public class EJDAM012Action extends AbstractAction {
 	
 	private void setCriteriaPameter(){
 		
-		Form3Model form3 = new Form3Model();
+		Form1Model form3 = new Form1Model();
 		form3.setForm_name(getRequest().getParameter("txtFormName"));
 		
 		getForm3Bean().setForm3ModelSP(form3);
 	}
 	
-	private String setSQL(Form3Model form3Cri){
+	private String setSQL(Form1Model form3Cri){
 		StringBuffer sql = new StringBuffer();
 		StringBuffer sql1 = new StringBuffer();
 		String sqlCommand ="";
 		String sqlWhere="";
 		try{
-			sql.append(EJDAConstant.SQL.FORM3_TABLE1_SQL);
-			if (sql.indexOf("WHERE") != -1){
-				sqlWhere = sql.substring(sql.indexOf("WHERE"),sql.length());
-				sqlCommand = sql.substring(0, sql.lastIndexOf("WHERE"));
-			}
-			if (!"".equals(form3Cri.getForm_name())){
-				//sql.append(" WHERE ");
-				sqlWhere += " FORM_NAME = ? AND ";
-				
-			}
+			sql.append(EJDAConstant.SQL.FORM_T_DOC_3);
+//			if (sql.indexOf("WHERE") != -1){
+//				sqlWhere = sql.substring(sql.indexOf("WHERE"),sql.length());
+//				sqlCommand = sql.substring(0, sql.lastIndexOf("WHERE"));
+//			}
+//			if (!"".equals(form3Cri.getForm_name())){
+//				//sql.append(" WHERE ");
+//				sqlWhere += " FORM_NAME = ? AND ";
+//				
+//			}
 			
 			log.debug("sqlWhere >> " + sqlWhere);
 			log.debug("sqlCommand >> " + sqlCommand);
@@ -201,7 +214,7 @@ public class EJDAM012Action extends AbstractAction {
 		}
 		
 		sql1 = removeWasteSQL(sql1);
-		return sql1.toString();
+		return sql.toString();
 	}
 	
 	private boolean doSaveButton() {
@@ -228,8 +241,60 @@ public class EJDAM012Action extends AbstractAction {
 	}
 	
 	private boolean doUpdate() {
-		String form_no = getRequest().getParameter("form_no");
-		getRequest().getSession().setAttribute("form_no", form_no);
+		form3Bean = getForm3Bean();
+		String docId = (String)getRequest().getParameter("doc_id");
+		log.debug("docId = "+docId);
+//		getRequest().getSession().setAttribute("form_no", form_no);
+		try{
+			Form1DAO dao = new Form1DAOImpl();
+			form3Bean.setForm3ModelSP(dao.searchFormModel(docId));
+			form3Bean.setDetail1MVt(dao.searchFormDetail1Model(docId));
+			form3Bean.setDetail2MVt(dao.searchFormDetail2Model(docId));
+			log.debug("form3Bean = "+form3Bean.getForm3ModelSP().getMovementPemitNo());
+			log.debug("form3Bean.getDetail1MVt().size() = "+form3Bean.getDetail1MVt().size());
+			log.debug("form3Bean.getDetail2MVt().size() = "+form3Bean.getDetail2MVt().size());
+			for(int i=0;i<form3Bean.getDetail2MVt().size();i++){
+				FormDetail2Model tmp = (FormDetail2Model)form3Bean.getDetail2MVt().get(i);
+				log.debug("*********tmp = "+tmp.getItem_no());
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		setForm3Bean(form3Bean);
 		return true;
 	}
+	
+	public Vector setValueDetail2Model() throws Exception{
+		log.debug("[ Start : setValueModel ]");
+		
+		Vector vc = new Vector();
+		String iuser = (String) getRequest().getSession().getAttribute("iuser");
+		if (null==iuser || "".equals(iuser)){
+			iuser = "system";
+		}
+		String [] QA_ITEM_NO = getRequest().getParameterValues("QA_ITEM_NO");//QA_ITEM_NO
+		String [] ORIGIN_CODE = getRequest().getParameterValues("ORIGIN_CODE");//ORIGIN_CODE
+		String [] QB_UNIT = getRequest().getParameterValues("QB_UNIT");//QB_UNIT
+		String [] VALUE_PER_UNIT = getRequest().getParameterValues("VALUE_PER_UNIT");//VALUE_PER_UNIT
+		String [] VALUE_TOTAL = getRequest().getParameterValues("VALUE_TOTAL");//VALUE_TOTAL
+		if (null != QA_ITEM_NO && QA_ITEM_NO.length > 1){
+			for(int i =0; i < QA_ITEM_NO.length;i++){
+				FormDetail2Model detail = new FormDetail2Model();
+				detail.setItem_no(QA_ITEM_NO[i]);
+				detail.setOriginCode(ORIGIN_CODE[i]);
+				detail.setQty_cust_unit(DisplayFormatUtil.StringToDouble(QB_UNIT[i]));
+				detail.setValuePerUnit(DisplayFormatUtil.StringToDouble(VALUE_PER_UNIT[i]));
+				detail.setTotal_value(DisplayFormatUtil.StringToDouble(VALUE_TOTAL[i]));
+				detail.setCreate_By(iuser);
+				detail.setUpdate_by(iuser);
+			
+				vc.add(detail);
+			}
+		}
+		return vc;
+		
+		
+	}
+	
 }

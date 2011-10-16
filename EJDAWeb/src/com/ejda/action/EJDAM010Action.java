@@ -362,8 +362,23 @@ public class EJDAM010Action extends AbstractAction {
 		String instruct_exam = (String) getRequest().getParameter("instruct_exam");//INSTRUCT_EXAM
 		String result_exam = (String) getRequest().getParameter("result_exam");//RESULT_EXAM
 		String for_other_use = (String) getRequest().getParameter("for_other_use");//FOR_OTHER_USE
-
-		form.setDoc_ID(doc_id);
+		//CREATE_DATE
+		//ps.setString(parameterIndex++, form.getCreate_By());//CREATE_BY
+		//UPDATE_DATE
+		//ps.setString(parameterIndex++, form.getUpdate_by());//UPDATE_BY
+		
+		//Form 3
+		String moveMentPemit = (String) getRequest().getParameter("moveMentPemit");//MOVEMENT_PEMIT_NO
+		String dateOfExpiry = (String) getRequest().getParameter("dateOfExpiry");//EXPIRE_DATE
+		String securityRefNo = (String) getRequest().getParameter("securityRefNo");//SECURITY_REF_NO
+		String amtOfSecurity = (String) getRequest().getParameter("amtOfSecurity");//SECURITY_AMT
+		String amtRecrived = (String) getRequest().getParameter("amtRecrived");//RECEIVE_AMT
+		String billOfLading = (String) getRequest().getParameter("billOfLading");//BILL_OF_LADING
+		String properOffice = (String) getRequest().getParameter("properOffice");//PROPER_OFFICE
+		String requestApproved = (String) getRequest().getParameter("requestApproved");//REQUEST_APPROVED
+		String certified = (String) getRequest().getParameter("certified");//CERTIFIED
+		
+		form.setDoc_ID("");
 		form.setCountry_ID(country_id);//	COUNTRY_ID
 		form.setJDA_Type(jda_type);//JDA_TYPE
 		form.setDoc_Status(doc_status);//DOC_STATUS
@@ -434,6 +449,17 @@ public class EJDAM010Action extends AbstractAction {
 		form.setFor_other_use(for_other_use);//FOR_OTHER_USE
 		form.setCreate_By(iuser);
 		form.setUpdate_by(iuser);
+		
+		//Form 3
+		form.setMoveMentPemitNo(moveMentPemit);//MOVEMENT_PEMIT_NO
+		form.setExpiryDate(DisplayFormatUtil.stringToDateSql(dateOfExpiry, "YYYY-MM-DD"));//EXPIRE_DATE
+		form.setSecurityRefNo(securityRefNo);//SECURITY_REF_NO
+		form.setSecurityAmt(DisplayFormatUtil.StringToDouble(amtOfSecurity));//SECURITY_AMT
+		form.setReceiveAmt(DisplayFormatUtil.StringToDouble(amtRecrived));//RECEIVE_AMT
+		form.setBillOfLading(billOfLading);//BILL_OF_LADING
+		form.setProperOffice(properOffice);//PROPER_OFFICE
+		form.setRequestApproved(requestApproved);//REQUEST_APPROVED
+		form.setCertified(certified);//CERTIFIED
 		
 		return form;
 	}
