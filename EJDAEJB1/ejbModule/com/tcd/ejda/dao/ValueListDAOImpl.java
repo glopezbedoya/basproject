@@ -353,6 +353,18 @@ public class ValueListDAOImpl implements ValueListDAO {
 			form.setUpdate_Date(rs.getDate("UPDATE_DATE"));
 			form.setUpdate_by(rs.getString("UPDATE_BY"));
 			
+			//Form 3
+			form.setMoveMentPemitNo(rs.getString("MOVEMENT_PEMIT_NO"));
+			form.setExpiryDate(rs.getDate("EXPIRE_DATE"));
+			form.setSecurityRefNo(rs.getString("SECURITY_REF_NO"));
+			form.setSecurityAmt(rs.getDouble("SECURITY_AMT"));
+			form.setReceiveAmt(rs.getDouble("RECEIVE_AMT"));
+			form.setBillOfLading(rs.getString("BILL_OF_LADING"));
+			form.setProperOffice(rs.getString("PROPER_OFFICE"));
+			form.setRequestApproved(rs.getString("REQUEST_APPROVED"));
+			form.setCertified(rs.getString("CERTIFIED"));
+			
+			
 		} catch (SQLException e) {
 			log.error("mapToForm1Model Error : SQLException ",e);
 		} catch (Exception e){
