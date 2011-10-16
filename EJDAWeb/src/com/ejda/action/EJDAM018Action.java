@@ -100,8 +100,18 @@ public class EJDAM018Action extends AbstractAction {
 		return result;
 	}
 	private boolean doUpdate() {
-		String form_no = getRequest().getParameter("form_no");
-		getRequest().getSession().setAttribute("form_no", form_no);
+		form1Bean = getForm1Bean();
+		String docId = (String)getRequest().getParameter("doc_id");
+		log.debug("docId = "+docId);
+//		getRequest().getSession().setAttribute("form_no", form_no);
+		try{
+			Form1DAO dao = new Form1DAOImpl();
+			form1Bean.setForm1ModelSP(dao.searchFormModel(docId));
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		setForm1Bean(form1Bean);
 		return true;
 	}
 

@@ -13,6 +13,9 @@ import com.tcd.ejda.dao.Form1DAOImpl;
 import com.tcd.ejda.dao.TransactionLogDAO;
 import com.tcd.ejda.dao.TransactionLogDAOImpl;
 import com.tcd.ejda.model.Form1Model;
+import com.tcd.ejda.model.FormDetail1Model;
+import com.tcd.ejda.model.FormDetail2Model;
+import com.tcd.ejda.model.FormDocAttachModel;
 import com.tcd.ejda.model.TransactionLogModel;
 import com.tcd.ejda.model.ValueListModel;
 
@@ -35,6 +38,10 @@ public class EJDAM022Action extends AbstractAction {
 		form1Bean = getForm1Bean();
 		form1Bean.setForm1Vt(new Vector<Form1Model>());
 		form1Bean.setForm1ModelSP(new Form1Model());
+		form1Bean.setDetail1ModelSP(new FormDetail1Model());
+		form1Bean.setDetail2ModelSP(new FormDetail2Model());
+		form1Bean.setDocAttachModelSP(new FormDocAttachModel());
+		
 		ValueListModel valueListM = new ValueListModel();
 		valueListM.setReturnModel("Form1Model");
 		form1Bean.setValueListM(valueListM);
@@ -42,7 +49,7 @@ public class EJDAM022Action extends AbstractAction {
 	}
 
 	@Override
-	public boolean methodAction(String ejdaMethod) {
+	public boolean methodAction(String ejdaMethod) throws Exception {
 		// TODO Auto-generated method stub
 		if(ejdaMethod.equalsIgnoreCase("doSearch")){
 			return doSearch();
@@ -57,7 +64,7 @@ public class EJDAM022Action extends AbstractAction {
 		
 		return false;
 	}
-	private boolean doSubmitButton() {
+	private boolean doSubmitButton() throws Exception {
 		boolean result = false;
 		String iuser = (String) getRequest().getSession().getAttribute("iuser");
 		String formNo = (String) getRequest().getSession().getAttribute("form_no");
@@ -66,14 +73,12 @@ public class EJDAM022Action extends AbstractAction {
 		if (null==iuser || "".equals(iuser)){
 			iuser = "system";
 		}
-		Form1Model form1 = new Form1Model();
-		form1.setForm_name("FN_" + iuser);
-		form1.setForm_status("C");
-		form1.setUpdate_by(iuser);
-		form1.setForm_no(formNo);
+		EJDAM010Action ejdam010Action = new EJDAM010Action();
+		ejdam010Action.setRequest(getRequest()); 
+		Form1Model form1 = ejdam010Action.setValueModel("1","C",iuser);
 		try{
 			Form1DAO dao = new Form1DAOImpl();
-			dao.UpdateFrom1Table(form1);
+			dao.UpdateFromTable(form1);
 			
 			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
 			EJDAUtil ejda = new EJDAUtil();
@@ -95,8 +100,18 @@ public class EJDAM022Action extends AbstractAction {
 		return result;
 	}
 	private boolean doUpdate() {
-		String form_no = getRequest().getParameter("form_no");
-		getRequest().getSession().setAttribute("form_no", form_no);
+		form1Bean = getForm1Bean();
+		String docId = (String)getRequest().getParameter("doc_id");
+		log.debug("docId = "+docId);
+//		getRequest().getSession().setAttribute("form_no", form_no);
+		try{
+			Form1DAO dao = new Form1DAOImpl();
+			form1Bean.setForm1ModelSP(dao.searchFormModel(docId));
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		setForm1Bean(form1Bean);
 		return true;
 	}
 
@@ -170,23 +185,8 @@ private void setCriteriaPameter(){
 		String sqlCommand ="";
 		String sqlWhere="";
 		try{
-			sql.append(EJDAConstant.SQL.FORM1_TABLE4_SQL);
-//			if (sql.indexOf("WHERE") != -1){
-//				sqlWhere = sql.substring(sql.indexOf("WHERE"),sql.length());
-//				sqlCommand = sql.substring(0, sql.lastIndexOf("WHERE"));
-//			}
-//			if (!"".equals(form1Cri.getForm_name())){
-//				//sql.append(" WHERE ");
-//				sqlWhere = " FORM_NAME = ? AND ";
-//				
-//			}
-//			
-//			log.debug("sqlWhere >> " + sqlWhere);
-//			log.debug("sqlCommand >> " + sqlCommand);
-//			
-//			sql1.append(sqlCommand + " " + sqlWhere);
-//			
-//			log.debug("sql >> " + sql1.toString());
+			sql.append(EJDAConstant.SQL.FORM_T_DOC_1);
+			sql.append(" WHERE JDA_TYPE = '1' AND DOC_STATUS = 'P' ");
 		}catch(Exception e){
 			e.printStackTrace();
 		}
