@@ -94,6 +94,7 @@ function addQualityBaseTabJS(){
 		eQB_UNIT.maxLength = 10;
 		eQB_UNIT.className ='text';
 		eQB_UNIT.value = '';
+		eQB_UNIT.onkeypress = function(){return keyPressInteger(); }; 
 		cell3.appendChild(eQB_UNIT);
 		
 		var cell4 = row.insertCell(3);
@@ -130,6 +131,8 @@ function addQualityBaseTabJS(){
 		eTOTAL_VALUE.maxLength = 10;
 		eTOTAL_VALUE.className ='text';
 		eTOTAL_VALUE.value = '';
+		eTOTAL_VALUE.onblur = new Function("formatCurrency(this);");
+		eTOTAL_VALUE.onkeypress = function(){return keypressWithDegit(this,'15'); };
 		cell6.appendChild(eTOTAL_VALUE);
 		
 		var cell7 = row.insertCell(6);
@@ -142,6 +145,8 @@ function addQualityBaseTabJS(){
 		eDUTY_RATE.maxLength = 10;
 		eDUTY_RATE.className ='text';
 		eDUTY_RATE.value = '';
+		eDUTY_RATE.onblur = new Function("formatCurrency(this);");
+		eDUTY_RATE.onkeypress = function(){return keypressWithDegit(this,'15'); };
 		cell7.appendChild(eDUTY_RATE);
 		
 		var cell8 = row.insertCell(7);
@@ -151,9 +156,11 @@ function addQualityBaseTabJS(){
 		eDUTY_AMOUNT.name = 'DUTY_AMOUNT';
 		eDUTY_AMOUNT.id = 'DUTY_AMOUNT';
 		eDUTY_AMOUNT.size = 10;
-		eDUTY_AMOUNT.maxLength = 10;
+		eDUTY_AMOUNT.maxLength = 15;
 		eDUTY_AMOUNT.className ='text';
 		eDUTY_AMOUNT.value = '';
+		eDUTY_AMOUNT.onblur = new Function("formatCurrency(this);");
+		eDUTY_AMOUNT.onkeypress = function(){return keypressWithDegit(this,'15'); }; 
 		cell8.appendChild(eDUTY_AMOUNT);
 		
 		var cell9 = row.insertCell(8);
@@ -163,7 +170,7 @@ function addQualityBaseTabJS(){
 		eTAX_TYPE.name = 'TAX_TYPE';
 		eTAX_TYPE.id = 'TAX_TYPE';
 		eTAX_TYPE.size = 10;
-		eTAX_TYPE.maxLength = 10;
+		eTAX_TYPE.maxLength = 15;
 		eTAX_TYPE.className ='text';
 		eTAX_TYPE.value = '';
 		cell9.appendChild(eTAX_TYPE);
@@ -175,9 +182,11 @@ function addQualityBaseTabJS(){
 		eTAX_RATE.name = 'TAX_RATE';
 		eTAX_RATE.id = 'TAX_RATE';
 		eTAX_RATE.size = 10;
-		eTAX_RATE.maxLength = 10;
+		eTAX_RATE.maxLength = 15;
 		eTAX_RATE.className ='text';
 		eTAX_RATE.value = '';
+		eTAX_RATE.onblur = new Function("formatCurrency(this);");
+		eTAX_RATE.onkeypress = function(){return keypressWithDegit(this,'15'); }; 
 		cell10.appendChild(eTAX_RATE);
 		
 		var cell11 = row.insertCell(10);
@@ -187,9 +196,11 @@ function addQualityBaseTabJS(){
 		eTAX_AMOUNT.name = 'TAX_AMOUNT';
 		eTAX_AMOUNT.id = 'TAX_AMOUNT';
 		eTAX_AMOUNT.size = 10;
-		eTAX_AMOUNT.maxLength = 10;
+		eTAX_AMOUNT.maxLength = 15;
 		eTAX_AMOUNT.className ='text';
 		eTAX_AMOUNT.value = '';
+		eTAX_AMOUNT.onblur = new Function("formatCurrency(this);");
+		eTAX_AMOUNT.onkeypress = function(){return keypressWithDegit(this,'15'); }; 
 		cell11.appendChild(eTAX_AMOUNT);
 		
 		//rowRefKeyPayee = (rowRefKeyPayee*1)+1;
