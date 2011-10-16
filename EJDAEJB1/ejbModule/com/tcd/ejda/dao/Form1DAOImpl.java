@@ -287,7 +287,7 @@ public class Form1DAOImpl implements Form1DAO {
 			//UPDATE_DATE
 			ps.setString(parameterIndex++, form.getUpdate_by());//UPDATE_BY
 			rs = ps.executeQuery();
-		
+			log.debug("detail1.size() : " +detail1.size());
 			if(detail1.size()>0){
 				StringBuffer sql1 = new StringBuffer();
 				sql1.append("insert into JDA_FORM_T_DOC_DETAIL1(ITEM_NO, DOC_ID, MARKS_NO, NO_TYPE_PACKAGE, GOOD_DESC, ");
@@ -325,11 +325,12 @@ public class Form1DAOImpl implements Form1DAO {
 				}
 				
 			}
+			log.debug("detail2.size() : " +detail2.size());
 			if(detail2.size()>0){
 				StringBuffer sql2 = new StringBuffer();
-				sql2.append("insert into JDA_FORM_T_DOC_DETAIL1(ITEM_NO, DOC_ID, QTY_CUST_UNIT, UNIT_VAL_ACTUAL, UNIT_VAL_CUSTOM, TOTAL_VALUE, ");
+				sql2.append("insert into JDA_FORM_T_DOC_DETAIL2(ITEM_NO, DOC_ID, QTY_CUST_UNIT, UNIT_VAL_ACTUAL, UNIT_VAL_CUSTOM, TOTAL_VALUE, ");
 				sql2.append("EXPORT_RATE, EXPORT_AMOUNT, OTHER_TAX_TYPE, OTHER_TAX_RATE, OTHER_TAX_AMOUNT, CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY) ");
-				sql2.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, ?, SYSDATE, ?)");
+				sql2.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, ?, SYSDATE, ?)");
 				log.debug("sql2 >> " + sql2.toString());
 				
 				ps = conn.prepareStatement(sql2.toString());
