@@ -12,7 +12,7 @@ import com.ejda.action.EJDAM006Action;
 import com.sun.xml.wss.impl.filter.TeeFilter;
 public class DisplayFormatUtil {
 	
-	private Logger log = Logger.getLogger(DisplayFormatUtil.class);
+	private static Logger log = Logger.getLogger(DisplayFormatUtil.class);
 	
 	public static String DateFormat(String dt){
 		SimpleDateFormat inFmt = new SimpleDateFormat("dd/MM/yyyy");
@@ -209,13 +209,22 @@ public class DisplayFormatUtil {
 		}
 	}
 	public static double StringToDouble(String str) {
-		
+		double returnValue=0;
 		try{
 //			return (str!=null&&!str.equals(""))?(Integer.valueOf(str)).intValue():0;
-			return (Double.valueOf(str)).doubleValue();
+//			if (){}
+			if (null!=str && !"".equals(str)){
+				log.debug("StringToDouble 0 : " + str.indexOf(","));
+				if (str.indexOf(",") != -1){
+					str = str.replace(",", "");
+				}
+				log.debug("StringToDouble 1 : " + str);
+				returnValue = (Double.valueOf(str)).doubleValue();
+			}
+			return returnValue;
 		}catch(Exception e){
 			//log.error(e.getMessage());
-			return 0;
+			return returnValue;
 		}
 	}
 }
