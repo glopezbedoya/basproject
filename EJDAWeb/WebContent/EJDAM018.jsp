@@ -65,7 +65,7 @@
         </tr>
         <tr>
        		<td align="left"><span class="text">Form name </span></td>
-       		<td align="left"><%=DisplayFormatUtil.displayInputTextBox("txtFormName",form1ModelSP.getForm_name(),"") %><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'doSearch')\"",false) %></td>
+       		<td align="left"><%=DisplayFormatUtil.displayInputTextBox("txtFormName",form1ModelSP.getForm_name(),"") %><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'EJDAM018','doSearch','EJDAM018.jsp')\"",false) %></td>
        		          		
         </tr>
         <tr>
@@ -200,7 +200,7 @@
             			form1M = (Form1Model)form1Vt.get(i);            	
             			bgColor = (i%2 == 0)?bgColor1:bgColor2;
             %>
-			            <tr onclick="updateEJDATable3(this.form,'<%=form1M.getDoc_ID() %>','EJDAM018');" style="cursor:hand">
+			            <tr onclick="updateEJDATable2(this.form,'<%=form1M.getDoc_ID() %>','EJDAM018');" style="cursor:hand">
 			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form1M.getDoc_ID() %>"/></th>
 			              <td <%=bgColor %> class="text"><%=form1M.getDoc_ID()%></td>
 			              <td <%=bgColor %> class="text"><%=form1M.getConsignor_name()%></td>
