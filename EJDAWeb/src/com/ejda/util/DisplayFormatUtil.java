@@ -209,6 +209,13 @@ public class DisplayFormatUtil {
 		}
 	}
 	public static double StringToDouble(String str) {
-		return (Double.valueOf(str)).doubleValue();
+		
+		try{
+//			return (str!=null&&!str.equals(""))?(Integer.valueOf(str)).intValue():0;
+			return (Double.valueOf(str)).doubleValue();
+		}catch(Exception e){
+			//log.error(e.getMessage());
+			return 0;
+		}
 	}
 }
