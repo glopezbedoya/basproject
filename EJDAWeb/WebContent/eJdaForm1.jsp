@@ -48,6 +48,7 @@
 	<input type="hidden" name="screenName" value="">
 	<input type="hidden" name="actionName" value="">
 	<input type="hidden" name="form_no" value="<%=form_no %>">
+	<input type="hidden" name="doc_id" value="<%=form1ModelSP.getDoc_ID() %>">
 	<input type="hidden" name="page" value="<%=valueListM.getAtPage() %>" />
 	<input type="hidden" name="volumePerPage" value="<%=valueListM.getItemsPerPage() %>" />
 	
@@ -635,6 +636,7 @@
       		if (null!=form_action && !"EJDAM010".equals(form_action)){
       			disable = "disabled = \"disabled\"";
       		}
+      		log.debug("-------------- " + form1ModelSP.getDoc_ID());
       	%>
         <td colspan="3" align="center"><!-- <input type="button" name="Save" id="Save" <%//=disable %>value="  Save  " onclick="validateSaveButton(this.form,'<%=form_action %>')"/>-->
           <input type="button" name="Submit" id="Submit" value="  Submit  "  onclick="validateSubmitButton(this.form,'<%=form_action %>')"/>
