@@ -65,8 +65,8 @@ function addQualityBaseTabJS(){
 		cell3.align='center';
 		var eQB_UNIT = document.createElement('input');
 		eQB_UNIT.type = 'text';
-		eQB_UNIT.name = 'QB_UNIT';
-		eQB_UNIT.id = 'QB_UNIT';
+		eQB_UNIT.name = 'ORIGIN_CODE';
+		eQB_UNIT.id = 'ORIGIN_CODE';
 		eQB_UNIT.size = 10;
 		eQB_UNIT.maxLength = 10;
 		eQB_UNIT.className ='text';
@@ -77,8 +77,8 @@ function addQualityBaseTabJS(){
 		cell4.align='center';
 		var eFOB_ACTUAL = document.createElement('input');
 		eFOB_ACTUAL.type = 'text';
-		eFOB_ACTUAL.name = 'FOB_ACTUAL';
-		eFOB_ACTUAL.id = 'FOB_ACTUAL';
+		eFOB_ACTUAL.name = 'QB_UNIT';
+		eFOB_ACTUAL.id = 'QB_UNIT';
 		eFOB_ACTUAL.size = 10;
 		eFOB_ACTUAL.maxLength = 10;
 		eFOB_ACTUAL.className ='text';
@@ -89,8 +89,8 @@ function addQualityBaseTabJS(){
 		cell5.align='center';
 		var eFOB_CUSTOM = document.createElement('input');
 		eFOB_CUSTOM.type = 'text';
-		eFOB_CUSTOM.name = 'FOB_CUSTOM';
-		eFOB_CUSTOM.id = 'FOB_CUSTOM';
+		eFOB_CUSTOM.name = 'VALUE_PER_UNIT';
+		eFOB_CUSTOM.id = 'VALUE_PER_UNIT';
 		eFOB_CUSTOM.size = 10;
 		eFOB_CUSTOM.maxLength = 10;
 		eFOB_CUSTOM.className ='text';
@@ -101,8 +101,8 @@ function addQualityBaseTabJS(){
 		cell6.align='center';
 		var eTOTAL_VALUE = document.createElement('input');
 		eTOTAL_VALUE.type = 'text';
-		eTOTAL_VALUE.name = 'TOTAL_VALUE';
-		eTOTAL_VALUE.id = 'TOTAL_VALUE';
+		eTOTAL_VALUE.name = 'VALUE_TOTAL';
+		eTOTAL_VALUE.id = 'VALUE_TOTAL';
 		eTOTAL_VALUE.size = 10;
 		eTOTAL_VALUE.maxLength = 10;
 		eTOTAL_VALUE.className ='text';
@@ -215,8 +215,40 @@ function addPackageTabJS(){
 		
 		
 		//rowRefKeyPayee = (rowRefKeyPayee*1)+1;
-		eMARK_NO.focus();
+		//eMARK_NO.focus();
   	}catch(e){
   		showMessageError(e,'addPackageTabJS');
   	}				
+}
+
+function removeRowFromTable(tablename){
+	
+	var tbl = document.getElementById(tablename);
+	//alert('tbl : ' +tbl);
+	var lastRow = tbl.rows.length;
+	var chkItem;
+	if (null!=tablename && tablename == 'packageTab'){
+		 chkItem = window.document.ejdaformNo1.chkPackage;
+	}else if (null!=tablename && tablename == 'qualityBaseTab'){
+		 chkItem = window.document.ejdaformNo1.chkQuabase;
+	}
+	//alert('chkItem : ' +chkItem);
+	if(chkItem == undefined){
+		alert('undefined');
+	}else if(chkItem.length != undefined){
+		//alert('chkItem.length = '+chkItem.length);
+		for(var i = (chkItem.length-1); i>=0; i--){
+			//alert('at i = '+i+', and check is = '+chkItem[i].checked);
+			if(chkItem[i].checked==true){
+				tbl.deleteRow(i+3);
+				//tbl.deleteRow(i+1);
+			}
+		}
+	}else{
+		//alert('one item : ' + chkItem.checked);
+		if(chkItem.checked==true){
+			//tbl.deleteRow(1);
+			tbl.deleteRow(3);
+		}
+	}	
 }
