@@ -1,20 +1,36 @@
-<%@page import="com.tcd.ejda.model.Form3Model"%>
+<%@page import="com.tcd.ejda.model.Form1Model"%>
 <%@page import="com.ejda.sessionBean.Form3Bean"%>
 <%@page import="com.ejda.util.DisplayFormatUtil"%>
 <%@page import="com.tcd.ejda.model.ValueListModel"%>
 <%@page import="org.apache.log4j.Logger"%>
 <%@page import="java.util.Vector"%>
-<script language="javascript" src="js/ejdaform3.js"></script>
+
+<%@page import="com.ejda.util.DisplayUtil"%>
+<%@page import="com.tcd.ejda.model.Form1Model"%>
+<%@page import="com.tcd.ejda.model.FormDetail1Model"%>
+<%@page import="com.tcd.ejda.model.FormDetail2Model"%><script language="javascript" src="js/ejdaform3.js"></script>
 <form name="ejdaformNo1" method="post" action="/EJDAWeb/EJDAControler">
 <%
 	Logger log = Logger.getLogger("JspLog");
 	Form3Bean form3Bean = (Form3Bean)request.getSession().getAttribute("form3Bean");
 	log.debug("form3Bean :: " + form3Bean);
-	Form3Model form3ModelSP = form3Bean.getForm3ModelSP();
+	Form1Model form3ModelSP = form3Bean.getForm3ModelSP();
 	Vector form3Vt = form3Bean.getForm3Vt();
-	Form3Model form3M = new Form3Model();
+	Form1Model form3M = new Form1Model();
 	String form_action = (String)form3Bean.getActionName();
 	String form_no = (String)request.getSession().getAttribute("form_no");
+	String showName = "";
+	
+	if (null!=form_action && "EJDAM010".equals(form_action)){
+		showName ="Table 1 : Form no. 1";
+	
+	}else if (null!=form_action && "EJDAM014".equals(form_action)){
+		showName ="Table 2 : Form no. 1";
+	}else if (null!=form_action && "EJDAM018".equals(form_action)){
+		showName ="Table 3 : Form no. 1";
+	}else if (null!=form_action && "EJDAM022".equals(form_action)){
+		showName ="Table 4 : Form no. 1";
+	}
 	
 	String bgColor1 = "bordercolor=\"#F4F4F4\"";
 	String bgColor2 = "bgcolor=\"#DFEFFF\"";
@@ -38,6 +54,9 @@
     <td align="center"><table width="800" border="0" cellspacing="1" cellpadding="1" bgcolor="#F8F8F8">
       <tr>
         <td width="50%" colspan="2" align="center"><table border="0" cellspacing="1" cellpadding="1">
+        <tr>
+            <td colspan="2" align="left" class="textDesc" >>> <%=showName %></td>
+          </tr>
           <tr>
             <td colspan="2" align="left" class="textDesc" ><%=form_no %> : <%=form_action %></td>
           </tr>
@@ -49,16 +68,16 @@
            </tr>
           <tr>
             <td align="right"><font class="textDesc">Exporter/Taxpayer Code </font></td>
-            <td align="left"><input type="text" name="ExportTaxCode" id="ExportTaxCode" />
+            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportCode",form3ModelSP.getConsignor_code(),"") %>
             </td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Name </font></td>
-            <td align="left"><input type="text" name="ExportTaxName" id="ExportTaxName" size="40" /></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportName",form3ModelSP.getConsignor_name(),"") %></td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Address </font></td>
-            <td align="left"><textarea name="ExportAddress" id="ExportAddress" cols="45" rows="5"></textarea></td>
+            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("consignorExportAddress",form3ModelSP.getConsignor_address(),"") %></td>
           </tr>
         </table></td>
         <td rowspan="2" align="center"><table width="466" border="0" cellpadding="0" cellspacing="1">
@@ -77,7 +96,7 @@
             <td  align="left">
               <input type="text" name="ReceiptDate" id="ReceiptDate" />
            </td>
-            <td align="left"><font class="textDesc"><input type="checkbox" name="DocumentAttached" id="DocumentAttached" /> 
+            <td align="left"><font class="textDesc"><%=DisplayUtil.displayInputTextBox("Date_Receipt",DisplayFormatUtil.SQLDateToString1(form3ModelSP.getDate_Receipt(),"DD/MM/YYYY"),"") %> 
               Invoice</font></td>
           </tr>
           <tr>
@@ -116,7 +135,7 @@
             <td align="left"><font class="textDesc">Code
               </font></td>
             <td align="left"><font class="textDesc">
-              <input type="text" name="CusNameCode" id="CusNameCode" />
+              <%=DisplayUtil.displayInputTextBox("cus_name_code",form3ModelSP.getCus_name_code(),"") %>
             </font></td>
             <td>&nbsp;</td>
           </tr>
@@ -124,7 +143,7 @@
             <td align="left"><font class="textDesc">Description 
               </font></td>
             <td align="left"><font class="textDesc">
-              <input type="text" name="CusNameDesc" id="CusNameDesc" />
+              <%=DisplayUtil.displayInputTextBox("cus_name_desc",form3ModelSP.getCus_name_desc(),"") %>
             </font></td>
             <td>&nbsp;</td>
           </tr>
@@ -137,24 +156,24 @@
             <td align="left"><font class="textDescBold">15.Date of Expiry</font></td>
           </tr>
           <tr>
-            <td align="left"><input type="text" name="moveMentPrmit" id="moveMentPrmit" /></td>
-            <td  align="left"><input type="text" name="dateOfExpiry" id="DateOfExpiry" /></td>
+          	<td><%=DisplayUtil.displayInputTextBox("moveMentPemit",form3ModelSP.getMovementPemitNo(),"") %></td>
+          	<td><%=DisplayUtil.displayInputTextBox("dateOfExpiry",DisplayFormatUtil.SQLDateToString1(form3ModelSP.getExpiryDate(),"DD/MM/YYYY"),"") %></td>
           </tr>
           <tr>
             <td align="left"><font class="textDescBold">16.Security Ref. No(if applicable)</font></td>
             <td align="left"><font class="textDescBold">17.Amount of Security</font></td>
           </tr>
           <tr>
-            <td align="left"><input type="text" name="securityRefNo" id="securityRefNo" /></td>
-            <td  align="left"><input type="text" name="amtOfSecurity" id="amtOfSecurity" /></td>
+          	<td><%=DisplayUtil.displayInputTextBox("securityRefNo",form3ModelSP.getSecurityRefNo(),"") %></td>
+          	<td><%=DisplayUtil.displayInputTextBox("amtOfSecurity",String.valueOf(form3ModelSP.getSecurityAmt()),"") %></td>
           </tr>
           <tr>
            	<td align="left"><font class="textDescBold">18.Amount Received/To Be Received</font></td>
             <td align="left"><font class="textDescBold">19.Bill of Lading/Consignment Note No.</font></td>
           </tr>
           <tr>
-            <td align="left"><input type="text" name="amtRecrived" id="amtRecrived" /></td>
-            <td  align="left"><input type="text" name="billOfLading" id="billOfLading" /></td>
+          	<td><%=DisplayUtil.displayInputTextBox("amtRecrived",String.valueOf(form3ModelSP.getReceiveAmt()),"") %></td>
+          	<td><%=DisplayUtil.displayInputTextBox("billOfLading",form3ModelSP.getBillOfLading(),"") %></td>
           </tr>
         </table></td>
       </tr>
@@ -171,72 +190,52 @@
             </tr>
           <tr>
             <td align="right"><font class="textDesc">Importer/Taxpayer Code </font></td>
-            <td align="left"><input type="text" name="ImporterTaxCode" id="ImporterTaxCode" /></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("Consignee_code",form3ModelSP.getConsignee_code(),"") %></td>
             </tr>
           <tr>
             <td align="right"><font class="textDesc">Name </font></td>
-            <td align="left"><input type="text" name="ImporterTaxName" id="ImporterTaxName" size="40" /></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("Consignee_name",form3ModelSP.getConsignee_name(),"") %></td>
             </tr>
           <tr>
             <td align="right"><font class="textDesc">Address </font></td>
-            <td align="left"><textarea name="ImporterTaxAddress" id="ImporterTaxAddress" cols="45" rows="5"></textarea></td>
+            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("Consignee_address",form3ModelSP.getConsignee_address(),"") %></td>
             </tr>
           </table></td>
       </tr>
       <tr>
-        <td ><table border="0" cellspacing="1" cellpadding="1">
+        <td colspan="2" align="center" ><table border="0" cellspacing="1" cellpadding="1">
           <tr>
-            <td colspan="2"><font class="textDescBold">4.Mode of   Transport </font></td>
-            </tr>
+            <td colspan="2" align="left" >&nbsp;</td>
+          </tr>
           <tr>
-            <td width="17%"><font class="textDesc"><input type="radio" name="radio" id="TransportMode" value="Sea" />
-              Sea</font></td>
-            <td width="83%"><font class="textDesc"><input type="radio" name="radio" id="TransportMode2" value="Sea" />
-              Rail</font></td>
-            
-            </tr>
+            <td colspan="2" align="left" width="400" ><font class="textDescBold">3.Name and Address of Authorized Agent</font></td>
+          </tr>
           <tr>
-            <td><font class="textDesc"><input type="radio" name="radio" id="TransportMode5" value="Sea" />
-              Road</font></td>
-            <td><font class="textDesc"><input type="radio" name="radio" id="TransportMode6" value="Sea" />
-              Air</font></td>
-            
-            </tr>
+            <td colspan="2" align="left" height="20"></td>
+          </tr>
           <tr>
-            <td><font class="textDesc"><input type="radio" name="radio" id="TransportMode3" value="Sea" />
-              Pipe</font></td>
-            <td><font class="textDesc"><input type="radio" name="radio" id="TransportMode4" value="Sea" />
-              Other(specify)
-              </td>
-            
-            </tr>
+            <td align="right"><font class="textDesc">Agent/Taxpayer Code</font></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("AuthorAgent_code",form3ModelSP.getAuthorAgent_code(),"") %></td>
+          </tr>
           <tr>
-            <td></td>
-            <td><input type="text" name="TMOther" id="TMOther" /></td>
-            
-            </tr>
-          </table></td>
-        <td ><table border="0" cellspacing="1" cellpadding="1">
+            <td align="right"><font class="textDesc">Name </font></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("AuthorAgent_name",form3ModelSP.getAuthorAgent_name(),"") %></td>
+          </tr>
           <tr>
-            <td><font class="textDescBold">5. Date of Import</font></td>
-            
-            </tr>
-          <tr>
-            
-            <td><input type="text" name="ImportDate" id="ImportDate" /></td>
-            </tr>
-          </table>
-          </td>
-        <td rowspan="3" align="center"><table width="472" border="0" cellpadding="1" cellspacing="1">
+            <td align="right"><font class="textDesc">Address </font></td>
+            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("AuthorAgent_address",form3ModelSP.getAuthorAgent_address(),"") %></td>
+          </tr>
+        </table></td>
+        <td rowspan="3" valign="top" align="center"><table width="472" border="0" cellpadding="1" cellspacing="1">
           <tr>
             <td align="left" ><font class="textDescBold">20.FOB Value</font></td>
             <td width="159" align="left" ><font class="textDescBold">21.Insueance</font></td>
             <td width="133" align="left" ><font class="textDescBold">22.Freight</font></td>
             </tr>
           <tr>
-            <td align="left" ><input type="text" name="FOBValue" id="FOBValue" /></td>
-            <td align="left" ><input type="text" name="insurance" id="insurance" /></td>
-            <td align="left" ><input type="text" name="freight" id="freight" /></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("fob_value",form3ModelSP.getFob_value(),"") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Insurance",form3ModelSP.getInsurance(),"") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Freight",form3ModelSP.getFreight(),"") %></td>
             </tr>
           <tr>
             <td>&nbsp;</td>
@@ -249,9 +248,9 @@
             <td align="left" ><font class="textDescBold">25.CIF Value</font></td>
             </tr>
           <tr>
-            <td align="left" ><input type="text" name="geossWt" id="geossWt" /></td>
-            <td align="left" ><input type="text" name="measurement" id="measurement" /></td>
-            <td align="left" ><input type="text" name="CIFValue" id="CIFValue" /></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Gross_weight",form3ModelSP.getGross_weight(),"") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Measurement",form3ModelSP.getMeasurement(),"") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Cif_value",form3ModelSP.getCif_value(),"") %></td>
             </tr>
           
           <tr>
@@ -261,12 +260,57 @@
         </table></td>
       </tr>
       <tr>
+        <td align="center" ><table border="0" cellspacing="1" cellpadding="1">
+          <tr>
+            <td colspan="2"><font class="textDescBold">4.Mode of   Transport </font></td>
+            </tr>
+          <tr>
+            <td width="100" align="left"><font class="textDesc"><%=DisplayUtil.displayRadioTag(form3ModelSP.getMode_Trans(),"mode_trans","1") %>
+              Sea</font></td>
+            <td width="150" align="left"><font class="textDesc"><%=DisplayUtil.displayRadioTag(form3ModelSP.getMode_Trans(),"mode_trans","2") %>
+              Rail</font></td>
+            
+            </tr>
+          <tr>
+            <td align="left"><font class="textDesc"><%=DisplayUtil.displayRadioTag(form3ModelSP.getMode_Trans(),"mode_trans","3") %>
+              Road</font></td>
+            <td align="left"><font class="textDesc"><%=DisplayUtil.displayRadioTag(form3ModelSP.getMode_Trans(),"mode_trans","4") %>
+              Air</font></td>
+            
+            </tr>
+          <tr>
+            <td align="left"><font class="textDesc"><%=DisplayUtil.displayRadioTag(form3ModelSP.getMode_Trans(),"mode_trans","5") %>
+              Pipe</font></td>
+            <td align="left"><font class="textDesc"><%=DisplayUtil.displayRadioTag(form3ModelSP.getMode_Trans(),"mode_trans","6") %>
+              Other(specify)
+              </td>
+            
+            </tr>
+          <tr>
+            <td align="left"></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("trans_other",form3ModelSP.getTrans_Other(),"") %></td>
+            
+            </tr>
+          </table></td>
+        <td ><table border="0" cellspacing="1" cellpadding="1">
+          <tr>
+            <td><font class="textDescBold">5. Date of Import</font></td>
+            
+            </tr>
+          <tr>
+            
+            <td><%=DisplayUtil.displayInputTextBox("Date_Import",DisplayFormatUtil.SQLDateToString1(form3ModelSP.getDate_Import(),"DD/MM/YYYY"),"") %></td>
+            </tr>
+          </table>
+        </td>
+        </tr>
+      <tr>
         <td><table border="0" cellspacing="1" cellpadding="1">
           <tr>
             <td><font class="textDescBold">6. No/Name of vessel/Flight/conveyanee</font></td>
           </tr>
           <tr>
-            <td><input type="text" name="VesselName" id="VesselName" /></td>
+            <td><%=DisplayUtil.displayInputTextBox("vessel_value",form3ModelSP.getVessel_value(),"") %></td>
           </tr>
         </table></td>
         <td><table border="0" cellspacing="1" cellpadding="1">
@@ -275,11 +319,11 @@
             </tr>
           <tr>
             <td><font class="textDesc">Code </font></td>
-            <td><input type="text" name="PortImportCode" id="PortImportCode" /></td>
+            <td><%//=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form3ModelSP.getPortLoad_Code(),"PortImport_Code","EDIT","") %></td>
             </tr>
           <tr>
             <td><font class="textDesc">Descriptiont </font></td>
-            <td><input type="text" name="PortImportDesc" id="PortImportDesc" /></td>
+            <td><%=DisplayUtil.displayInputTextBox("PortImport_Desc",form3ModelSP.getPortImport_Desc(),"") %></td>
             </tr>
         </table></td>
         </tr>
@@ -290,11 +334,11 @@
           </tr>
           <tr>
             <td><font class="textDesc">Code </font></td>
-            <td><input type="text" name="PortLoadCode" id="PortLoadCode" /></td>
+            <td><%//=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form3ModelSP.getPortLoad_Code(),"PortLoad_Code","EDIT","") %></td>
           </tr>
           <tr>
             <td><font class="textDesc">Descriptiont </font></td>
-            <td><input type="text" name="PortLoadDesc" id="PortLoadDesc" /></td>
+            <td><%=DisplayUtil.displayInputTextBox("PortLoad_Desc",form3ModelSP.getPortLoad_Desc(),"") %></td>
           </tr>
         </table></td>
         <td><table border="0" cellspacing="1" cellpadding="1">
@@ -303,11 +347,11 @@
             </tr>
           <tr>
             <td><font class="textDesc">Code </font></td>
-            <td><input type="text" name="ViaCode" id="ViaCode" /></td>
+            <td><%//=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form3ModelSP.getPortLoad_Code(),"Via_Code","EDIT","") %></td>
             </tr>
           <tr>
             <td><font class="textDesc">Descriptiont </font></td>
-            <td><input type="text" name="ViaDesc" id="ViaDesc" /></td>
+            <td><%=DisplayUtil.displayInputTextBox("Via_Desc",form3ModelSP.getVia_Desc(),"") %></td>
             </tr>
         </table></td>
         </tr>
@@ -320,7 +364,7 @@
         <td colspan="3" align="center"><table id= "packageTab" border="0" cellspacing="1" cellpadding="1">
         	 <tr>
           	<td><input type="button" name = "InsertPackage" value="Insert" onclick="addPackageTabJS();"></td>
-            <td><font class="textHeader"><input type="button" name = "DeletePackage" value="Delete" onclick="deletePackageTabJS();"></font></td>
+            <td><font class="textHeader"><input type="button" name = "DeletePackage" value="Delete" onclick="removeRowFromTable('packageTab')"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
@@ -339,14 +383,31 @@
             <td width="100"><font class="textHeader">Code No.</font></td>
             <td width="100"><font class="textHeader">Unit</font></td>
           </tr>
+           <% Vector vtDetail1 = form3Bean.getDetail1MVt();
+	        if(vtDetail1 != null && vtDetail1.size() > 0){
+	        	for(int i=0;i<vtDetail1.size();i++){
+	        		FormDetail1Model formDetail1M = (FormDetail1Model)vtDetail1.get(i); 
+	        %>
+          <tr bgcolor="#FFFFFF">
+          	<td width="50"><input type="checkbox" name="checkall1" id="checkall1" /></td>
+            <td width="100"><%=DisplayUtil.displayInputTextBox("MARK_NO",formDetail1M.getMarks_no(),"","10") %></td>
+            <td width="150"><%=DisplayUtil.displayInputTextBox("ITEM_NO",formDetail1M.getItem_no(),"","10") %></td>
+            <td width="200"><%=DisplayUtil.displayInputTextBox("PACKAGE_NO",formDetail1M.getNo_type_package(),"","10") %></td>
+            <td width="200"><%=DisplayUtil.displayInputTextBox("GOODS_DESC",formDetail1M.getGood_desc(),"","10") %></td>
+            <td width="100"><%=DisplayUtil.displayInputTextBox("CODE_NO",formDetail1M.getCust_code(),"","10") %></td>
+          	<td width="100"><%=DisplayUtil.displayInputTextBox("CODE_NO",formDetail1M.getCust_unit(),"","10") %></td>
+           </tr>
+           <%	}
+       		 }%>
           
         </table></td>
         </tr>
+        
       <tr>
         <td colspan="3"><table id ="qualityBaseTab" border="0" cellspacing="1" cellpadding="1" align="center">
           <tr >
             <td><font class="textHeader"><input type="button" name = "InsertQualityBase" value="Insert" onclick="addQualityBaseTabJS();"></font></td>
-            <td><font class="textHeader"><input type="button" name = "DeleteQualityBase" value="Delete" onclick="deleteQualityBaseTabJS();"></font></td>
+            <td><font class="textHeader"><input type="button" name = "DeleteQualityBase" value="Delete" onclick="removeRowFromTable('qualityBaseTab')"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
@@ -364,6 +425,21 @@
             <td><font class="textHeader">Per Unit</font></td>
             <td><font class="textHeader">Total</font></td>
           </tr>
+          <% Vector vtDetail2 = form3Bean.getDetail2MVt();
+	        if(vtDetail2 != null && vtDetail2.size() > 0){
+	        	for(int i=0;i<vtDetail2.size();i++){
+	        		FormDetail2Model formDetail2M = (FormDetail2Model)vtDetail2.get(i); 
+	        %>
+          <tr bgcolor="#FFFFFF">
+          	<td width="50"><input type="checkbox" name="checkall1" id="checkall1" /></td>
+            <td width="100"><%=DisplayUtil.displayInputTextBox("QA_ITEM_NO",formDetail2M.getItem_no(),"","10") %></td>
+            <td width="100"><%=DisplayUtil.displayInputTextBox("ORIGIN_CODE",formDetail2M.getOriginCode(),"","10") %></td>
+            <td width="100"><%=DisplayUtil.displayInputTextBox("QB_UNIT",Double.toString(formDetail2M.getQty_cust_unit()),"","10") %></td>
+            <td width="100"><%=DisplayUtil.displayInputTextBox("VALUE_PER_UNIT",Double.toString(formDetail2M.getValuePerUnit()),"","10") %></td>
+            <td width="100"><%=DisplayUtil.displayInputTextBox("VALUE_TOTAL",Double.toString(formDetail2M.getTotal_value()),"","10") %></td>
+          </tr>
+          <%	}
+       		 }%>
         </table></td>
         </tr>
       <tr>
@@ -377,7 +453,7 @@
                 <td colspan="2"><font class="textDescBold">36. Name of Declarant</font></td>
               </tr>
               <tr>
-                <td colspan="2"><input type="text" name="DeclarantName" id="DeclarantName" /></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextBox("DeclarantName",form3ModelSP.getDeclarant_name(),"") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -387,7 +463,7 @@
                 <td colspan="2"><font class="textDescBold">37. Identity Card/Passport No.</font></td>
               </tr>
               <tr>
-                <td colspan="2"><input type="text" name="IDCard" id="IDCard" /></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextBox("id_card_no",form3ModelSP.getId_card_no(),"") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -397,9 +473,9 @@
                 <td colspan="2"><font class="textDescBold">38. Status</font></td>
               </tr>
               <tr>
-                <td><font class="textDescBold"><input type="radio" name="radio" id="Status" value="Active" />
+                <td><font class="textDescBold"><%=DisplayUtil.displayRadioTag(form3ModelSP.getStatus(),"Status","A") %>
                   Active</font></td>
-                <td><font class="textDescBold"><input type="radio" name="radio" id="Status" value="Inactive" />
+                <td><font class="textDescBold"><%=DisplayUtil.displayRadioTag(form3ModelSP.getStatus(),"Status","I") %>
                   Inactive</font></td>
               </tr>
               <tr>
@@ -410,7 +486,7 @@
                 <td colspan="2"><font class="textDescBold">51. I cerify that this declaration is true and complete.</font></td>
               </tr>
               <tr>
-                <td colspan="2"><input type="text" name="Cerify" id="Cerify" /></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextBox("cerify",form3ModelSP.getCerify(),"") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -422,7 +498,7 @@
                 <td colspan="2"><font class="textDescBold">39.To Proper Office of Customs at:</font></td>
                 </tr>
               <tr>
-                <td colspan="2"><textarea name="ProperOff" id="Proper" cols="45" rows="5"></textarea></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextAreaTag("properOffice",form3ModelSP.getProperOffice(),"") %></td>
                 </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -441,7 +517,7 @@
                 <td colspan="2"><font class="textDescBold">40. Request Approved:</font></td>
               </tr>
               <tr>
-              	<td colspan="2"><textarea name="ReqApproved" id="ReqApproved" cols="45" rows="5"></textarea></td>
+              	<td colspan="2"><%=DisplayUtil.displayInputTextAreaTag("requestApproved",form3ModelSP.getRequestApproved(),"") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -451,7 +527,7 @@
                 <td colspan="2"><font class="textDescBold">41. Certified that the above goods have been duty moved Removal from customs control is aulhoried</font></td>
               </tr>
               <tr>
-              	<td colspan="2"><textarea name="Certified" id="Certified" cols="45" rows="5"></textarea></td>
+              	<td colspan="2"><%=DisplayUtil.displayInputTextAreaTag("certified",form3ModelSP.getCertified(),"") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -474,8 +550,8 @@
             <td align="center"><font class="textDescBold">RESULT OF   EXAMINATION</font></td>
           </tr>
           <tr>
-            <td align="center"><textarea name="InstrucExamination" id="InstrucExamination" cols="45" rows="5"></textarea></td>
-            <td align="center"><textarea name="ResultExamnation" id="ResultExamnation" cols="45" rows="5"></textarea></td>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("instruct_exam",form3ModelSP.getInstruct_exam(),"") %></td>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("result_exam",form3ModelSP.getResult_exam(),"") %></td>
           </tr>
           <tr>
             <td align="center">&nbsp;</td>
@@ -492,7 +568,7 @@
             <td align="center"><font class="textDescBold">FOR OTHER USE</font></td>
           </tr>
           <tr>
-            <td align="center"><textarea name="OtherUse" id="OtherUse" cols="100" rows="5"></textarea></td>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("for_other_use",form3ModelSP.getFor_other_use(),"") %></td>
           </tr>
           <tr>
             <td align="center">&nbsp;</td>
