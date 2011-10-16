@@ -7,11 +7,16 @@ import org.apache.log4j.Logger;
 import com.ejda.constant.EJDAConstant;
 import com.ejda.sessionBean.Form2Bean;
 import com.ejda.util.EJDAUtil;
+import com.tcd.ejda.dao.Form1DAO;
+import com.tcd.ejda.dao.Form1DAOImpl;
 import com.tcd.ejda.dao.Form2DAO;
 import com.tcd.ejda.dao.Form2DAOImpl;
 import com.tcd.ejda.dao.TransactionLogDAO;
 import com.tcd.ejda.dao.TransactionLogDAOImpl;
 import com.tcd.ejda.model.Form1Model;
+import com.tcd.ejda.model.FormDetail1Model;
+import com.tcd.ejda.model.FormDetail2Model;
+import com.tcd.ejda.model.FormDocAttachModel;
 import com.tcd.ejda.model.TransactionLogModel;
 import com.tcd.ejda.model.ValueListModel;
 
@@ -35,14 +40,17 @@ public class EJDAM019Action extends AbstractAction {
 		form2Bean = getform2Bean();
 		form2Bean.setForm2Vt(new Vector<Form1Model>());
 		form2Bean.setForm2ModelSP(new Form1Model());
+		form2Bean.setDetail1ModelSP(new FormDetail1Model());
+		form2Bean.setDetail2ModelSP(new FormDetail2Model());
+		form2Bean.setDocAttachModelSP(new FormDocAttachModel());
 		ValueListModel valueListM = new ValueListModel();
-		valueListM.setReturnModel("form2Model");
+		valueListM.setReturnModel("form1Model");
 		form2Bean.setValueListM(valueListM);
 		setform2Bean(form2Bean);
 	}
 
 	@Override
-	public boolean methodAction(String ejdaMethod) {
+	public boolean methodAction(String ejdaMethod) throws Exception{
 		// TODO Auto-generated method stub
 		if(ejdaMethod.equalsIgnoreCase("doSearch")){
 			return doSearch();
@@ -61,8 +69,18 @@ public class EJDAM019Action extends AbstractAction {
 	}
 	
 	private boolean doUpdate() {
-		String form_no = getRequest().getParameter("form_no");
-		getRequest().getSession().setAttribute("form_no", form_no);
+		form2Bean = getform2Bean();
+		String docId = (String)getRequest().getParameter("doc_id");
+		log.debug("docId = "+docId);
+//		getRequest().getSession().setAttribute("form_no", form_no);
+		try{
+			Form1DAO dao = new Form1DAOImpl();
+			form2Bean.setForm2ModelSP(dao.searchFormModel(docId));
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		setform2Bean(form2Bean);
 		return true;
 	}
 	
@@ -89,7 +107,7 @@ public class EJDAM019Action extends AbstractAction {
 		return result;
 	}
 
-	private boolean doSubmitButton() {
+	private boolean doSubmitButton() throws Exception {
 		log.debug("---Start : doSubmitButton---");
 		boolean result = false;
 		String iuser = (String) getRequest().getSession().getAttribute("iuser");
@@ -101,14 +119,16 @@ public class EJDAM019Action extends AbstractAction {
 		if (null==iuser || "".equals(iuser)){
 			iuser = "system";
 		}
-		Form1Model form2 = new Form1Model();
-		form2.setForm_name("FN_" + iuser);
-		form2.setForm_status("P");
-		form2.setUpdate_by(iuser);
-		form2.setForm_no(formNo);
+		EJDAM010Action ejdam010Action = new EJDAM010Action();
+		ejdam010Action.setRequest(getRequest()); 
+		Form1Model form2 = ejdam010Action.setValueModel("2","P",iuser);
+		log.debug("Form2Model >> " + form2);
+		Vector vcDetail1 = ejdam010Action.setValueDetail1Model();
+		Vector vcDetail2 = ejdam010Action.setValueDetail2Model();
+		Vector vcDocAttach = ejdam010Action.setValueDocumentAttach("2", "P");
 		try{
-			Form2DAO dao = new Form2DAOImpl();
-//			dao.UpdateFrom2Table(form2);
+			Form1DAO dao = new Form1DAOImpl();
+			dao.UpdateFromTable(form2);
 			
 			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
 			EJDAUtil ejda = new EJDAUtil();
@@ -206,23 +226,8 @@ public class EJDAM019Action extends AbstractAction {
 		String sqlCommand ="";
 		String sqlWhere="";
 		try{
-			sql.append(EJDAConstant.SQL.FORM2_TABLE3_SQL);
-//			if (sql.indexOf("WHERE") != -1){
-//				sqlWhere = sql.substring(sql.indexOf("WHERE"),sql.length());
-//				sqlCommand = sql.substring(0, sql.lastIndexOf("WHERE"));
-//			}
-//			if (!"".equals(form2Cri.getForm_name())){
-//				//sql.append(" WHERE ");
-//				sqlWhere = " FORM_NAME = ? AND ";
-//				
-//			}
-//			
-//			log.debug("sqlWhere >> " + sqlWhere);
-//			log.debug("sqlCommand >> " + sqlCommand);
-//			
-//			sql1.append(sqlCommand + " " + sqlWhere);
-//			//sql.append(sql.toString());
-//			log.debug("sql >> " + sql1.toString());
+			sql.append(EJDAConstant.SQL.FORM_T_DOC_1);
+			sql.append(" WHERE JDA_TYPE = '2' AND DOC_STATUS = 'S' ");
 		}catch(Exception e){
 			e.printStackTrace();
 		}
