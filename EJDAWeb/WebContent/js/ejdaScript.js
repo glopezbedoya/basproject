@@ -95,3 +95,108 @@ function checkNumberDateFormat(myfield, e, dec){
     }
     else return false;
 }
+function validateInteger( strValue , check ) {
+	/************************************************
+	DESCRIPTION: Validates that a string contains only
+	    valid integer number.
+
+	PARAMETERS:
+	   strValue - String to be tested for validity
+
+	RETURNS:
+	   True if valid, otherwise false.
+	******************************************************************************/
+	//  var objRegExp  = /(^-?\d\d*$)/;
+	  var objRegExp  = /(^\d\d*$)/;
+	  var objRegExp2  = /(^[a-zA-Z\s\.\0-9]*$)/;
+	//  var objRegExp3 = /(^[\.\-0-9]*$)/ ;
+	  var objRegExp3 = /(^[\.\d\d]*$)/ ;
+	  //check for integer characters
+	  if(check == 'integer'){
+	  	return objRegExp.test(strValue);
+	  }else if(check == 'id'){
+	  	return objRegExp2.test(strValue);
+	  }if(check == 'decimal'){
+	  	return objRegExp3.test(strValue);
+	  }
+	}
+function keypressWithDegit(obj,length){
+	var strChar=String.fromCharCode(event.keyCode);	
+	if(strChar == '.'){
+		if(obj.value.indexOf('.') == -1){					
+			if(!validateInteger(strChar,'decimal')){			
+				window.event.returnValue = false;
+			}		
+		}else{					
+			window.event.returnValue = false;
+		}
+	}else{
+		if(obj.value.indexOf('.') == -1){
+			if(obj.value.length >length-3){
+				window.event.returnValue = false;
+			}else if(!validateInteger(strChar,'decimal')){			
+				window.event.returnValue = false;
+			}
+		}else if(!validateInteger(strChar,'decimal')){			
+				window.event.returnValue = false;
+		}
+	}
+}
+function formatCurrency(obj){
+	//alert('formatCurrency : ' + obj.value);
+	if(obj.value != '.' && obj.value != '-'){
+		obj.value = ReplaceAll(obj.value,',','');
+		var num = new Number(obj.value);
+		obj.value = num.toFixed(2);
+		addCommas(obj);
+	}else{
+		obj.value = '0.00';
+	}
+}
+
+function formatCurrencyValue(value){	
+	if(value != '.' && value != '-'){
+		value = ReplaceAll(value,',','');
+		var num = new Number(value);
+		value = num.toFixed(2);
+		return addCommasValue(value);		
+	}else{
+		return value;
+	}
+}
+function addCommas(obj){
+	nStr = obj.value;
+	nStr += '';
+	x = nStr.split('.');
+	x1 = x[0];
+	x2 = x.length > 1 ? '.' + x[1] : '';
+	var rgx = /(\d+)(\d{3})/;
+	while (rgx.test(x1)) {
+		x1 = x1.replace(rgx, '$1' + ',' + '$2');
+	}
+	obj.value = x1 + x2;
+	//return x1 + x2;
+}
+function addCommasValue(value){
+	nStr = value;
+	nStr += '';
+	x = nStr.split('.');
+	x1 = x[0];
+	x2 = x.length > 1 ? '.' + x[1] : '';
+	var rgx = /(\d+)(\d{3})/;
+	while (rgx.test(x1)) {
+		x1 = x1.replace(rgx, '$1' + ',' + '$2');
+	}
+	//obj.value = x1 + x2;
+	return x1 + x2;
+}
+//Function Replace All
+function ReplaceAll(Source,stringToFind,stringToReplace){
+  var temp = Source;
+   var index = temp.indexOf(stringToFind);
+    while(index != -1){
+        temp = temp.replace(stringToFind,stringToReplace);
+        index = temp.indexOf(stringToFind);
+    }
+    return temp;
+}
