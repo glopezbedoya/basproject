@@ -39,6 +39,9 @@ public class EJDAM019Action extends AbstractAction {
 		
 		form2Bean = getform2Bean();
 		form2Bean.setForm2Vt(new Vector<Form1Model>());
+		form2Bean.setDetail1MVt(new Vector<FormDetail1Model>());
+		form2Bean.setDetail2MVt(new Vector<FormDetail2Model>());
+		
 		form2Bean.setForm2ModelSP(new Form1Model());
 		form2Bean.setDetail1ModelSP(new FormDetail1Model());
 		form2Bean.setDetail2ModelSP(new FormDetail2Model());
@@ -123,9 +126,6 @@ public class EJDAM019Action extends AbstractAction {
 		ejdam010Action.setRequest(getRequest()); 
 		Form1Model form2 = ejdam010Action.setValueModel("2","P",iuser);
 		log.debug("Form2Model >> " + form2);
-		Vector vcDetail1 = ejdam010Action.setValueDetail1Model();
-		Vector vcDetail2 = ejdam010Action.setValueDetail2Model();
-		Vector vcDocAttach = ejdam010Action.setValueDocumentAttach("2", "P");
 		try{
 			Form1DAO dao = new Form1DAOImpl();
 			dao.UpdateFromTable(form2);

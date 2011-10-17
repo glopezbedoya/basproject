@@ -39,6 +39,9 @@ public class EJDAM011Action extends AbstractAction {
 		
 		form2Bean = getform2Bean();
 		form2Bean.setForm2Vt(new Vector<Form1Model>());
+		form2Bean.setDetail1MVt(new Vector<FormDetail1Model>());
+		form2Bean.setDetail2MVt(new Vector<FormDetail2Model>());
+		
 		form2Bean.setForm2ModelSP(new Form1Model());
 		form2Bean.setDetail1ModelSP(new FormDetail1Model());
 		form2Bean.setDetail2ModelSP(new FormDetail2Model());
@@ -72,8 +75,20 @@ public class EJDAM011Action extends AbstractAction {
 	}
 	
 	private boolean doUpdate() {
-		String form_no = getRequest().getParameter("form_no");
-		getRequest().getSession().setAttribute("form_no", form_no);
+		form2Bean = getform2Bean();
+		String docId = (String)getRequest().getParameter("doc_id");
+		log.debug("docId = "+docId);
+//		getRequest().getSession().setAttribute("form_no", form_no);
+		try{
+			Form1DAO dao = new Form1DAOImpl();
+			form2Bean.setForm2ModelSP(dao.searchFormModel(docId));
+			form2Bean.setDetail1MVt(dao.searchFormDetail1Model(docId));
+			form2Bean.setDetail2MVt(dao.searchFormDetail2Model(docId));
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		setform2Bean(form2Bean);
 		return true;
 	}
 	

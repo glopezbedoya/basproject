@@ -37,6 +37,9 @@ public class EJDAM010Action extends AbstractAction {
 		
 		form1Bean = getForm1Bean();
 		form1Bean.setForm1Vt(new Vector<Form1Model>());
+		form1Bean.setDetail1MVt(new Vector<FormDetail1Model>());
+		form1Bean.setDetail2MVt(new Vector<FormDetail2Model>());
+		
 		form1Bean.setForm1ModelSP(new Form1Model());
 		form1Bean.setDetail1ModelSP(new FormDetail1Model());
 		form1Bean.setDetail2ModelSP(new FormDetail2Model());
@@ -77,7 +80,12 @@ public class EJDAM010Action extends AbstractAction {
 		try{
 			Form1DAO dao = new Form1DAOImpl();
 			form1Bean.setForm1ModelSP(dao.searchFormModel(docId));
-			
+			form1Bean.setDetail1MVt(dao.searchFormDetail1Model(docId));
+			form1Bean.setDetail2MVt(dao.searchFormDetail2Model(docId));
+//			for(int i=0;i<form1Bean.getDetail2MVt().size();i++){
+//				FormDetail2Model tmp = (FormDetail2Model)form1Bean.getDetail2MVt().get(i);
+//				log.debug("*********tmp = "+tmp.getItem_no());
+//			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -378,7 +386,7 @@ public class EJDAM010Action extends AbstractAction {
 		String requestApproved = (String) getRequest().getParameter("requestApproved");//REQUEST_APPROVED
 		String certified = (String) getRequest().getParameter("certified");//CERTIFIED
 		
-		form.setDoc_ID("");
+		form.setDoc_ID(doc_id);
 		form.setCountry_ID(country_id);//	COUNTRY_ID
 		form.setJDA_Type(jda_type);//JDA_TYPE
 		form.setDoc_Status(doc_status);//DOC_STATUS
@@ -479,7 +487,6 @@ public class EJDAM010Action extends AbstractAction {
 		String [] GOODS_DESC = getRequest().getParameterValues("GOODS_DESC");//GOODS_DESC
 		String [] CODE_NO = getRequest().getParameterValues("CODE_NO");//CODE_NO
 		String [] UNIT = getRequest().getParameterValues("UNIT");//UNIT
-		
 		if (null != MARK_NO && MARK_NO.length > 0){
 			for(int i =0; i < MARK_NO.length;i++){
 				FormDetail1Model detail = new FormDetail1Model();
@@ -491,6 +498,7 @@ public class EJDAM010Action extends AbstractAction {
 				detail.setCust_unit(UNIT[i]);
 				detail.setCreate_By(iuser);
 				detail.setUpdate_by(iuser);
+				
 				log.debug("MARK_NO = "+ i + ":"+MARK_NO[i]);
 				log.debug("ITEM_NO = "+ i + ":"+ITEM_NO[i]);
 				log.debug("PACKAGE_NO = "+ i + ":"+PACKAGE_NO[i]);
