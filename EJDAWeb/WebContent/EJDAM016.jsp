@@ -7,14 +7,15 @@
 <%@page import="com.ejda.sessionBean.Form3Bean"%>
 <%@page import="com.ejda.util.DisplayFormatUtil"%>
 <%@page import="com.tcd.ejda.model.ValueListModel"%>
-<script language="javascript" src="js/EJDAM012.js"></script>
+
+<%@page import="com.tcd.ejda.model.Form1Model"%><script language="javascript" src="js/EJDAM012.js"></script>
 <%
 	Logger log = Logger.getLogger("JspLog");
 	Form3Bean form3Bean = (Form3Bean)request.getSession().getAttribute("form3Bean");
 	log.debug("form3Bean :: " + form3Bean);
-	Form3Model form3ModelSP = form3Bean.getForm3ModelSP();
+	Form1Model form3ModelSP = form3Bean.getForm3ModelSP();
 	Vector form3Vt = form3Bean.getForm3Vt();
-	Form3Model form3M = new Form3Model();
+	Form1Model form3M = new Form1Model();
 	String form_action = (String)form3Bean.getActionName();
 	
 	String bgColor1 = "bordercolor=\"#F4F4F4\"";
@@ -44,6 +45,7 @@
 	<input type="hidden" name="screenName" value="">
 	<input type="hidden" name="actionName" value="">
 	<input type="hidden" name="form_no" value="">
+	<input type="hidden" name="doc_id" value="">
 	<input type="hidden" name="page" value="<%=valueListM.getAtPage() %>" />
 	<input type="hidden" name="volumePerPage" value="<%=valueListM.getItemsPerPage() %>" />
 	<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
@@ -194,11 +196,11 @@
             	log.debug("bgColor fom3Vt.size() : " + form3Vt.size());
             		String bgColor;
             		for(int i=0;i<form3Vt.size();i++){
-            			form3M = (Form3Model)form3Vt.get(i);            	
+            			form3M = (Form1Model)form3Vt.get(i);            	
             			bgColor = (i%2 == 0)?bgColor1:bgColor2;
             %>
             
-			            <tr onclick="updateEJDATable2(this.form,'<%=form3M.getForm_no() %>');"  style="cursor:hand">
+			            <tr onclick="updateEJDATable2(this.form,'<%=form3M.getDoc_ID() %>');"  style="cursor:hand">
 			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form3M.getForm_no() %>"/></th>
 			              <td <%=bgColor %> class="text"><%=form3M.getForm_no()%></td>
 			              <td <%=bgColor %> class="text"><%=form3M.getForm_name()%></td>
