@@ -202,6 +202,7 @@ function addQualityBaseTabJS(){
 		eTAX_AMOUNT.onkeypress = function(){return keypressWithDegit(this,'15'); };
 		cell11.appendChild(eTAX_AMOUNT);
 		
+		
 		//rowRefKeyPayee = (rowRefKeyPayee*1)+1;
 		eQA_ITEM_NO.focus();
   	}catch(e){
@@ -213,6 +214,7 @@ function addPackageTabJS(){
 		var tbl = document.getElementById('packageTab');
 		
 		var lastRow = tbl.rows.length;
+		alert('lastRow : ' +lastRow);
 		var deletedRowCnt = 0;
 		var iteration = lastRow;
 		var row = tbl.insertRow(lastRow);
@@ -255,7 +257,7 @@ function addPackageTabJS(){
 		eITEM_NO.size = 10;
 		eITEM_NO.maxLength = 10;
 		eITEM_NO.className ='text';
-		eITEM_NO.value = '';
+		eITEM_NO.value = lastRow - 2;
 		eITEM_NO.onkeypress = function(){return keyPressInteger(); }; 
 		cell3.appendChild(eITEM_NO);
 		
@@ -297,17 +299,20 @@ function addPackageTabJS(){
 		
 		var cell7 = row.insertCell(6);
 		cell7.align='center';
-		var eUNIT = document.createElement('input');
-		eUNIT.type = 'text';
+		/*var eUNIT = document.createElement('input');
+		eUNIT.type = 'hidden';
 		eUNIT.name = 'UNIT';
 		eUNIT.id = 'UNIT';
-		eUNIT.size = 10;
-		eUNIT.maxLength = 10;
-		eUNIT.className ='text';
 		eUNIT.value = '';
-		cell7.appendChild(eUNIT);
+		cell7.appendChild(eUNIT);*/
 		
+		var eUNIT_show = document.createElement('div');
+		eUNIT_show.innerHtml = '';
+		eUNIT_show.name = 'UNIT_show_'+lastRow;
+		eUNIT_show.id = 'UNIT_show_'+lastRow;
+		cell7.appendChild(eUNIT_show);
 		
+		getUnit(lastRow);
 		//rowRefKeyPayee = (rowRefKeyPayee*1)+1;
 		//eMARK_NO.focus();
   	}catch(e){
@@ -347,3 +352,34 @@ function removeRowFromTable(tablename){
 		}
 	}	
 }
+function getUnit(rowIndex){
+try{
+	$.get(
+	    "/EJDAWeb/AjaxLoadCacheData?mode=",
+	    {load_name : 'UNIT'},
+	    function(data) { 
+	    	alert(data);
+	    	document.getElementById('UNIT_show_'+rowIndex).innerHTML = data;
+		    }
+		    ,  "text"
+			);
+	}catch(err){
+		alert("error"  + err.message);
+	}
+}
+
+function getExchgRate(rowIndex){
+	try{
+		$.get(
+		    "/EJDAWeb/AjaxLoadCacheData?mode=",
+		    {load_name : 'RATE'},
+		    function(data) { 
+		    	alert(data);
+		    	document.getElementById('DUTY_RATE_show_'+rowIndex).innerHTML = data;
+			    }
+			    ,  "text"
+				);
+		}catch(err){
+			alert("error"  + err.message);
+		}
+	}
