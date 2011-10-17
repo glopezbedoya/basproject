@@ -457,8 +457,8 @@ public class Form1DAOImpl implements Form1DAO {
 			log.debug("updateRole JDA_FORM_T_DOC >>> " + sql.toString());
 			ps = conn.prepareStatement(sql.toString());
 			int seq=1;
-			log.debug("form1.getForm_no() >> "+form1.getDoc_ID());
-			log.debug("form1.getForm_no() >> "+form1.getJDA_Type());
+			log.debug("form1.getDoc_ID() >> "+form1.getDoc_ID());
+			log.debug("form1.getJDA_Type() >> "+form1.getJDA_Type());
 			
 			ps.setString(seq++, form1.getDoc_Status());
 			ps.setString(seq++, form1.getUpdate_by());
