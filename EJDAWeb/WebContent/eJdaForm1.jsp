@@ -100,34 +100,34 @@
             <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("Date_Receipt",DisplayFormatUtil.SQLDateToString1(form1ModelSP.getDate_Receipt(),"DD/MM/YYYY"),"maxlength=10 onkeypress=\"addSlashFormat(event,this);keyPressInteger();\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"")%>
              
            </td>
-            <td align="left"><font class="textDesc"><%=DisplayUtil.displayCheckBox("","doc_attach","INVOICE","") %> 
+            <td align="left"><font class="textDesc"><%=DisplayUtil.displayCheckBoxForDocAttach(form1Bean.docAttachMVt,"doc_attach","INVOICE","") %> 
               Invoice</font></td>
           </tr>
           <tr>
             <td colspan="2">&nbsp;</td>
             <td align="left"><font class="textDesc">
-              <%=DisplayUtil.displayCheckBox("","doc_attach","BILL OF LADING","") %>
+              <%=DisplayUtil.displayCheckBoxForDocAttach(form1Bean.docAttachMVt,"doc_attach","BILL OF LADING","") %>
               Bill of Lading
             </font></td>
           </tr>
           <tr>
             <td colspan="2" align="left"><font class="textDescBold">12.Registration   Number</font></td>
             <td align="left"><font class="textDesc">
-             <%=DisplayUtil.displayCheckBox("","doc_attach","INSURANCE CERT","") %>
+             <%=DisplayUtil.displayCheckBoxForDocAttach(form1Bean.docAttachMVt,"doc_attach","INSURANCE CERT","") %>
               Insurance Certificate
             </font></td>
           </tr>
           <tr>
             <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("Regis_no",form1ModelSP.getRegis_no(),"maxlength=50") %></td>
             <td align="left"><font class="textDesc">
-              <%=DisplayUtil.displayCheckBox("","doc_attach","LETTER OF CREDIT","") %>
+              <%=DisplayUtil.displayCheckBoxForDocAttach(form1Bean.docAttachMVt,"doc_attach","LETTER OF CREDIT","") %>
               Letter of Credit
             </font></td>
           </tr>
           <tr>
             <td colspan="2">&nbsp;</td>
             <td align="left"><font class="textDesc">
-             	<%=DisplayUtil.displayCheckBox("","doc_attach","OTHER","") %>
+             	<%=DisplayUtil.displayCheckBoxForDocAttach(form1Bean.docAttachMVt,"doc_attach","OTHER","") %>
               Other
             </font></td>
           </tr>
