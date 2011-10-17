@@ -112,14 +112,14 @@ public class EJDAM012Action extends AbstractAction {
 			dao.saveFromEJDA(form1,vcDetail1,vcDetail2,vcDocAttach);
 //			dao.UpdateFrom3Table(form3);
 //			dao.saveFrom3Table1(form3);
-//			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
-//			EJDAUtil ejda = new EJDAUtil();
-//			transactionLogModel.setMenuId("M012");
-//			transactionLogModel.setTranAction("ADD");
-//			transactionLogModel.setDescription("Save and submit EJDA Table 1 Form 3");
-//			transactionLogModel.setIpAddress(ipAddress);
-//			transactionLogModel.setTranBy(iuser);
-//			ejda.insertTranLog(transactionLogModel);
+			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
+			EJDAUtil ejda = new EJDAUtil();
+			transactionLogModel.setMenuId("M012");
+			transactionLogModel.setTranAction("ADD");
+			transactionLogModel.setDescription("Save and submit EJDA Table 1 Form 3");
+			transactionLogModel.setIpAddress(ipAddress);
+			transactionLogModel.setTranBy(iuser);
+			ejda.insertTranLog(transactionLogModel);
 			
 			getRequest().getSession().setAttribute("responseMessage", "Submit Form 3 Successfully.");
 			
@@ -192,7 +192,8 @@ public class EJDAM012Action extends AbstractAction {
 		String sqlCommand ="";
 		String sqlWhere="";
 		try{
-			sql.append(EJDAConstant.SQL.FORM_T_DOC_3);
+			sql.append(EJDAConstant.SQL.FORM_T_DOC_1);
+			sql.append(" WHERE JDA_TYPE = '3' AND DOC_STATUS = 'D' ");
 //			if (sql.indexOf("WHERE") != -1){
 //				sqlWhere = sql.substring(sql.indexOf("WHERE"),sql.length());
 //				sqlCommand = sql.substring(0, sql.lastIndexOf("WHERE"));
