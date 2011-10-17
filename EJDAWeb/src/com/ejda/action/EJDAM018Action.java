@@ -36,6 +36,9 @@ public class EJDAM018Action extends AbstractAction {
 		
 		form1Bean = getForm1Bean();
 		form1Bean.setForm1Vt(new Vector<Form1Model>());
+		form1Bean.setDetail1MVt(new Vector<FormDetail1Model>());
+		form1Bean.setDetail2MVt(new Vector<FormDetail2Model>());
+		
 		form1Bean.setForm1ModelSP(new Form1Model());
 		form1Bean.setDetail1ModelSP(new FormDetail1Model());
 		form1Bean.setDetail2ModelSP(new FormDetail2Model());
@@ -107,7 +110,8 @@ public class EJDAM018Action extends AbstractAction {
 		try{
 			Form1DAO dao = new Form1DAOImpl();
 			form1Bean.setForm1ModelSP(dao.searchFormModel(docId));
-			
+			form1Bean.setDetail1MVt(dao.searchFormDetail1Model(docId));
+			form1Bean.setDetail2MVt(dao.searchFormDetail2Model(docId));
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
