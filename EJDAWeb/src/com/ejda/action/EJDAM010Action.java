@@ -82,6 +82,7 @@ public class EJDAM010Action extends AbstractAction {
 			form1Bean.setForm1ModelSP(dao.searchFormModel(docId));
 			form1Bean.setDetail1MVt(dao.searchFormDetail1Model(docId));
 			form1Bean.setDetail2MVt(dao.searchFormDetail2Model(docId));
+			form1Bean.setDocAttachMVt(dao.searchFormDocAttachModel(docId));
 //			for(int i=0;i<form1Bean.getDetail2MVt().size();i++){
 //				FormDetail2Model tmp = (FormDetail2Model)form1Bean.getDetail2MVt().get(i);
 //				log.debug("*********tmp = "+tmp.getItem_no());
