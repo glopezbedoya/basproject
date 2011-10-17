@@ -103,7 +103,7 @@ public class CacheDataDAOImpl implements CacheDataDAO {
 		try {
 						
 			sql.append(" SELECT UNIT_ID, UNIT_CODE, UNIT_NAME, UNIT_STATUS FROM JDA_M_UNIT ");
-			log.debug("Search JDA_M_COUNTRY >>> " + sql.toString());
+			log.debug("Search JDA_M_UNIT >>> " + sql.toString());
 			ps = conn.prepareStatement(sql.toString());
 			int seq=1;
 			
@@ -114,6 +114,74 @@ public class CacheDataDAOImpl implements CacheDataDAO {
 				cache.setCode(rs.getString("UNIT_CODE"));
 				cache.setShortDesc(rs.getString("UNIT_NAME"));
 				cache.setStatus(rs.getString("UNIT_STATUS"));
+				vc.add(cache);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			log.equals(e.getMessage());
+		}finally{
+			try {
+				if (conn != null)
+					conn.commit();
+			} catch (Exception e) {
+			}
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		return vc;
+	}
+	@Override
+	public Vector LoadExchangeRAte() {
+		log.debug("[Start : LoadExchangeRAte ]");
+		Vector vc = new Vector();
+		
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = db.getConnection();
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		StringBuffer sql = new StringBuffer();
+		
+		try {
+						
+			sql.append(" SELECT EXCHGRATEID, EXCHANGERATTYPE, RATNAME, RATSTATUS FROM JDA_M_EXCHANGERATE ");
+			log.debug("Search JDA_M_EXCHANGERATE >>> " + sql.toString());
+			ps = conn.prepareStatement(sql.toString());
+			int seq=1;
+			
+			
+			rs = ps.executeQuery();
+			while(rs.next()){
+				CacheDataM cache = new CacheDataM();
+				cache.setCode(rs.getString("EXCHANGERATTYPE"));
+				cache.setShortDesc(rs.getString("RATNAME"));
+				cache.setStatus(rs.getString("RATSTATUS"));
 				vc.add(cache);
 			}
 			
