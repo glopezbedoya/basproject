@@ -457,7 +457,22 @@
             <td width="100"><font class="textHeader">Code No.</font></td>
             <td width="100"><font class="textHeader">Unit</font></td>
           </tr>
-          
+          <% Vector vtDetail1 = form2Bean.getDetail1MVt();
+	        if(vtDetail1 != null && vtDetail1.size() > 0){
+	        	for(int i=0;i<vtDetail1.size();i++){
+	        		FormDetail1Model formDetail1M = (FormDetail1Model)vtDetail1.get(i); 
+	        %>
+          <tr bgcolor="#FFFFFF">
+          	<td width="50"><input type="checkbox" name="checkall1" id="checkall1" /></td>
+            <td width="100"><%=DisplayUtil.displayInputTextBox("MARK_NO",formDetail1M.getMarks_no(),"","10") %></td>
+            <td width="150"><%=DisplayUtil.displayInputTextBox("ITEM_NO",formDetail1M.getItem_no(),"","10") %></td>
+            <td width="200"><%=DisplayUtil.displayInputTextBox("PACKAGE_NO",formDetail1M.getNo_type_package(),"","10") %></td>
+            <td width="200"><%=DisplayUtil.displayInputTextBox("GOODS_DESC",formDetail1M.getGood_desc(),"","10") %></td>
+            <td width="100"><%=DisplayUtil.displayInputTextBox("CODE_NO",formDetail1M.getCust_code(),"","10") %></td>
+          	<td width="100"><%=DisplayUtil.displayInputTextBox("CODE_NO",formDetail1M.getCust_unit(),"","10") %></td>
+           </tr>
+           <%	}
+       		 }%>
         </table></td>
         </tr>
       <tr>
@@ -489,6 +504,27 @@
             <td><font class="textHeader">Rate</font></td>
             <td><font class="textHeader">Amount</font></td>
           </tr>
+           <% Vector vtDetail2 = form2Bean.getDetail2MVt();
+	        if(vtDetail2 != null && vtDetail2.size() > 0){
+	        	for(int i=0;i<vtDetail2.size();i++){
+	        		FormDetail2Model formDetail2M = (FormDetail2Model)vtDetail2.get(i); 
+	        %>
+          <tr bgcolor="#FFFFFF">
+          	<td width="50"><input type="checkbox" name="checkall1" id="checkall1" /></td>
+            <td width="100"><%=DisplayUtil.displayInputTextBox("QA_ITEM_NO",formDetail2M.getItem_no(),"","10") %></td>
+            <td width="100"><%=DisplayUtil.displayInputTextBox("QB_UNIT",Double.toString(formDetail2M.getQty_cust_unit()),"","10") %></td>
+            <td width="100"><%=DisplayUtil.displayInputTextBox("FOB_ACTUAL",formDetail2M.getUnit_val_actual(),"","10") %></td>
+            <td width="100"><%=DisplayUtil.displayInputTextBox("FOB_CUSTOM",formDetail2M.getUnit_val_custom(),"","20") %></td>
+            <td width="100"><%=DisplayUtil.displayInputTextBox("TOTAL_VALUE",Double.toString(formDetail2M.getTotal_value()),"","10") %></td>
+            <td width="100"><%=DisplayUtil.displayInputTextBox("DUTY_RATE",Double.toString(formDetail2M.getExport_rate()),"","10") %></td>
+            <td width="100"><%=DisplayUtil.displayInputTextBox("DUTY_AMOUNT",Double.toString(formDetail2M.getExport_amount()),"","10") %></td>
+            <td width="100"><%=DisplayUtil.displayInputTextBox("TAX_TYPE",formDetail2M.getOther_tax_type(),"","10") %></td>
+            <td width="100"><%=DisplayUtil.displayInputTextBox("TAX_RATE",Double.toString(formDetail2M.getOther_tax_rate()),"","10") %></td>
+            <td width="100"><%=DisplayUtil.displayInputTextBox("TAX_AMOUNT",Double.toString(formDetail2M.getOther_tax_amount()),"","10") %></td>
+            
+          </tr>
+          <%	}
+       		 }%>
         </table></td>
         </tr>
       <tr>
