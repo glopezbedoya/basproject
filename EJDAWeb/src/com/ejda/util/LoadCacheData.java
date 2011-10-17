@@ -27,4 +27,14 @@ public class LoadCacheData {
 		return vc;
 		
 	}
+	
+	
+	public static Vector GetExchangeRate() throws SQLException{
+		Vector vc = new Vector();
+		
+		CacheDataDAO dao = new CacheDataDAOImpl();
+		vc = dao.LoadExchangeRAte();
+		return vc;
+		
+	}
 }
