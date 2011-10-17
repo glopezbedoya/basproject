@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.ejda.action.EJDAM006Action;
@@ -209,11 +210,12 @@ public class DisplayFormatUtil {
 		}
 	}
 	public static double StringToDouble(String str) {
+		
 		double returnValue=0;
 		try{
 //			return (str!=null&&!str.equals(""))?(Integer.valueOf(str)).intValue():0;
 //			if (){}
-			if (null!=str && !"".equals(str)){
+			if (StringUtils.isNotEmpty(str)){
 				log.debug("StringToDouble 0 : " + str.indexOf(","));
 				if (str.indexOf(",") != -1){
 					str = str.replace(",", "");
@@ -221,10 +223,9 @@ public class DisplayFormatUtil {
 				log.debug("StringToDouble 1 : " + str);
 				returnValue = (Double.valueOf(str)).doubleValue();
 			}
-			return returnValue;
 		}catch(Exception e){
-			//log.error(e.getMessage());
-			return returnValue;
+			log.error(e.getMessage());
 		}
+		return returnValue;
 	}
 }
