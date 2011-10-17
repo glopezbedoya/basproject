@@ -17,6 +17,22 @@ public class Form2Bean extends AbstractBean {
 	public FormDetail2Model detail2ModelSP;
 	public FormDocAttachModel docAttachModelSP;
 	
+	public Vector detail1MVt;
+	public Vector detail2MVt;
+	
+	
+	public Vector getDetail1MVt() {
+		return detail1MVt;
+	}
+	public void setDetail1MVt(Vector detail1mVt) {
+		detail1MVt = detail1mVt;
+	}
+	public Vector getDetail2MVt() {
+		return detail2MVt;
+	}
+	public void setDetail2MVt(Vector detail2mVt) {
+		detail2MVt = detail2mVt;
+	}
 	public FormDocAttachModel getDocAttachModelSP() {
 		return docAttachModelSP;
 	}
