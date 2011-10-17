@@ -80,7 +80,7 @@ public class EJDAM015Action extends AbstractAction {
 			form2Bean.setForm2ModelSP(dao.searchFormModel(docId));
 			form2Bean.setDetail1MVt(dao.searchFormDetail1Model(docId));
 			form2Bean.setDetail2MVt(dao.searchFormDetail2Model(docId));
-			
+			form2Bean.setDocAttachMVt(dao.searchFormDocAttachModel(docId));
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
