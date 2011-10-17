@@ -9,7 +9,7 @@ import com.tcd.ejda.model.FormDocAttachModel;
 
 public class DisplayUtil {
 	
-	private Logger log = Logger.getLogger(DisplayUtil.class);
+	private static Logger log = Logger.getLogger(DisplayUtil.class);
 	
 	public static String displaySelectPaging(String name,int allPage,int atPage,String script){
 		StringBuffer selectTag = new StringBuffer();
@@ -165,7 +165,8 @@ public class DisplayUtil {
 				obj = (CacheDataM) v.get(i);
 				value = displayHTML(obj.getCode()).trim();
 				name = displayHTML(obj.getShortDesc()).trim();
-				
+				log.debug("displaySelectTag value : " + value);
+				log.debug("displaySelectTag name : " + name);
 				if (value != null && selectedValue != null &&  !selectedValue.equals("")  && value.trim().equals(selectedValue.trim()) ) {
 					str = str + "<option value = \"" + value + "\" selected>" +value + " - " + name + "</option>";
 				} else {
