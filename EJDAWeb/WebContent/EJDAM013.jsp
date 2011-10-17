@@ -7,14 +7,17 @@
 <%@page import="com.ejda.sessionBean.Form4Bean"%>
 <%@page import="com.ejda.util.DisplayFormatUtil"%>
 <%@page import="com.tcd.ejda.model.ValueListModel"%>
+
+<%@page import="com.tcd.ejda.model.Form1Model"%>
+
 <script language="javascript" src="js/EJDAM013.js"></script>
 <%
 	Logger log = Logger.getLogger("JspLog");
 	Form4Bean form4Bean = (Form4Bean)request.getSession().getAttribute("form4Bean");
 	log.debug("form4Bean :: " + form4Bean);
-	Form4Model form4ModelSP = form4Bean.getForm4ModelSP();
+	Form1Model form4ModelSP = form4Bean.getForm4ModelSP();
 	Vector form4Vt = form4Bean.getForm4Vt();
-	Form4Model form4M = new Form4Model();
+	Form1Model form4M = new Form1Model();
 	String form_action = (String)form4Bean.getActionName();
 	
 	String bgColor1 = "bordercolor=\"#F4F4F4\"";
@@ -44,6 +47,7 @@
 	<input type="hidden" name="screenName" value="">
 	<input type="hidden" name="actionName" value="">
 	<input type="hidden" name="form_no" value="">
+	<input type="hidden" name="doc_id" value="">
 	<input type="hidden" name="page" value="<%=valueListM.getAtPage() %>" />
 	<input type="hidden" name="volumePerPage" value="<%=valueListM.getItemsPerPage() %>" />
 	<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
@@ -200,11 +204,11 @@
             	log.debug("bgColor fom3Vt.size() : " + form4Vt.size());
             		String bgColor;
             		for(int i=0;i<form4Vt.size();i++){
-            			form4M = (Form4Model)form4Vt.get(i);            	
+            			form4M = (Form1Model)form4Vt.get(i);            	
             			bgColor = (i%2 == 0)?bgColor1:bgColor2;
             %>
             
-			            <tr onclick="updateEJDATable2(this.form,'<%=form4M.getForm_no() %>');" style="cursor:hand">
+			            <tr onclick="updateEJDATable2(this.form,'<%=form4M.getDoc_ID() %>');" style="cursor:hand">
 			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form4M.getForm_no() %>"/></th>
 			              <td <%=bgColor %> class="text"><%=form4M.getForm_no()%></td>
 			              <td <%=bgColor %> class="text"><%=form4M.getForm_name()%></td>
