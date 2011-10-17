@@ -9,9 +9,12 @@ import com.tcd.ejda.model.TransactionLogModel;
 
 public class Form4Bean extends AbstractBean {
 	
-	public Form4Model form4ModelSP;
+	public Form1Model form4ModelSP;
 	public Vector form4Vt;
 	public String actionName;
+	public Vector detail1MVt;
+	public Vector detail2MVt;
+	public Vector docAttachMVt;
 	
 	
 	public String getActionName() {
@@ -20,10 +23,10 @@ public class Form4Bean extends AbstractBean {
 	public void setActionName(String actionName) {
 		this.actionName = actionName;
 	}
-	public Form4Model getForm4ModelSP() {
+	public Form1Model getForm4ModelSP() {
 		return form4ModelSP;
 	}
-	public void setForm4ModelSP(Form4Model form4ModelSP) {
+	public void setForm4ModelSP(Form1Model form4ModelSP) {
 		this.form4ModelSP = form4ModelSP;
 	}
 	public Vector getForm4Vt() {
@@ -31,6 +34,24 @@ public class Form4Bean extends AbstractBean {
 	}
 	public void setForm4Vt(Vector form4Vt) {
 		this.form4Vt = form4Vt;
+	}
+	public Vector getDetail1MVt() {
+		return detail1MVt;
+	}
+	public void setDetail1MVt(Vector detail1mVt) {
+		detail1MVt = detail1mVt;
+	}
+	public Vector getDetail2MVt() {
+		return detail2MVt;
+	}
+	public void setDetail2MVt(Vector detail2mVt) {
+		detail2MVt = detail2mVt;
+	}
+	public Vector getDocAttachMVt() {
+		return docAttachMVt;
+	}
+	public void setDocAttachMVt(Vector docAttachMVt) {
+		this.docAttachMVt = docAttachMVt;
 	}
 	
 	
