@@ -122,6 +122,11 @@ public class EJDAM013Action extends AbstractAction {
 //			ejda.insertTranLog(transactionLogModel);
 			
 			getRequest().getSession().setAttribute("responseMessage", "Submit Form 4 Successfully.");
+			
+			ValueListModel valueListM = new ValueListModel();
+			valueListM.setReturnModel("Form1Model");
+			getForm4Bean().setValueListM(valueListM);
+			
 			result = doSearch();
 			
 			log.debug("result = "+result);
@@ -192,7 +197,7 @@ public class EJDAM013Action extends AbstractAction {
 		String sqlWhere="";
 		try{
 			sql.append(EJDAConstant.SQL.FORM_T_DOC_1);
-			sql.append("  WHERE JDA_TYPE = '4' AND DOC_STATUS = 'A' ");
+			sql.append("  WHERE JDA_TYPE = '4' AND DOC_STATUS = 'D' ");
 //			if (sql.indexOf("WHERE") != -1){
 //				sqlWhere = sql.substring(sql.indexOf("WHERE"),sql.length());
 //				sqlCommand = sql.substring(0, sql.lastIndexOf("WHERE"));

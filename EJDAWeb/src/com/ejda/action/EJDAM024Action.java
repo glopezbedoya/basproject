@@ -116,7 +116,9 @@ public class EJDAM024Action extends AbstractAction {
 			ejda.insertTranLog(transactionLogModel);
 			
 			getRequest().getSession().setAttribute("responseMessage", "Submit Form 3 Successfully.");
-			
+			ValueListModel valueListM = new ValueListModel();
+			valueListM.setReturnModel("Form1Model");
+			getForm3Bean().setValueListM(valueListM);
 			result = doSearch();
 			
 			log.debug("result = "+result);

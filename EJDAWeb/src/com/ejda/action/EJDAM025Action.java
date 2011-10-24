@@ -48,10 +48,10 @@ public class EJDAM025Action extends AbstractAction {
 		
 		
 		form4Bean = getForm4Bean();
-		form4Bean.setForm4Vt(new Vector<Form4Model>());
-		form4Bean.setForm4ModelSP(new Form4Model());
+		form4Bean.setForm4Vt(new Vector<Form1Model>());
+		form4Bean.setForm4ModelSP(new Form1Model());
 		ValueListModel valueListM = new ValueListModel();
-		valueListM.setReturnModel("Form4Model");
+		valueListM.setReturnModel("Form1Model");
 		form4Bean.setValueListM(valueListM);
 		setForm4Bean(form4Bean);
 	}
@@ -92,14 +92,23 @@ public class EJDAM025Action extends AbstractAction {
 		if (null==iuser || "".equals(iuser)){
 			iuser = "system";
 		}
-		Form4Model form4 = new Form4Model();
-		form4.setForm_name("FN_" + iuser);
-		form4.setForm_status("C");
-		form4.setUpdate_by(iuser);
-		form4.setForm_no(formNo);
+//		Form4Model form4 = new Form4Model();
+//		form4.setForm_name("FN_" + iuser);
+//		form4.setForm_status("C");
+//		form4.setUpdate_by(iuser);
+//		form4.setForm_no(formNo);
 		try{
-			Form4DAO dao = new Form4DAOImpl();
-			dao.UpdateFrom4Table(form4);
+			EJDAM010Action ejdam010Action = new EJDAM010Action();
+			ejdam010Action.setRequest(getRequest()); 
+			Form1Model form1 = ejdam010Action.setValueModel("4","C",iuser);
+			log.debug("Form1Model >> " + form1);
+			log.debug("form1.getdocId = "+form1.getDoc_ID());
+			
+			Form1DAO dao = new Form1DAOImpl();
+			dao.UpdateFromTable(form1);
+			
+//			Form4DAO dao = new Form4DAOImpl();
+//			dao.UpdateFrom4Table(form4);
 			
 			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
 			EJDAUtil ejda = new EJDAUtil();
@@ -112,6 +121,10 @@ public class EJDAM025Action extends AbstractAction {
 			
 			getRequest().getSession().setAttribute("responseMessage", "Submit Form 4 Successfully.");
 			
+			
+			ValueListModel valueListM = new ValueListModel();
+			valueListM.setReturnModel("Form1Model");
+			getForm4Bean().setValueListM(valueListM);
 			result = doSearch();
 			
 			log.debug("result = "+result);
@@ -158,7 +171,7 @@ public class EJDAM025Action extends AbstractAction {
 	
 	private Vector getValueListParameters() {
 		Vector parameters = new Vector();
-		Form4Model form4 = getForm4Bean().getForm4ModelSP();
+		Form1Model form4 = getForm4Bean().getForm4ModelSP();
 		if (!"".equals(form4.getForm_name())){
 			log.debug("Form Name = "+form4.getForm_name());
 			parameters.add(form4.getForm_name());
@@ -169,41 +182,42 @@ public class EJDAM025Action extends AbstractAction {
 	
 	private void setCriteriaPameter(){
 		
-		Form4Model form4 = new Form4Model();
+		Form1Model form4 = new Form1Model();
 		form4.setForm_name(getRequest().getParameter("txtFormName"));
 		
 		getForm4Bean().setForm4ModelSP(form4);
 	}
 	
-	private String setSQL(Form4Model form4Cri){
+	private String setSQL(Form1Model form4Cri){
 		StringBuffer sql = new StringBuffer();
 		StringBuffer sql1 = new StringBuffer();
 		String sqlCommand ="";
 		String sqlWhere="";
 		try{
-			sql.append(EJDAConstant.SQL.FORM4_TABLE4_SQL);
-			if (sql.indexOf("WHERE") != -1){
-				sqlWhere = sql.substring(sql.indexOf("WHERE"),sql.length());
-				sqlCommand = sql.substring(0, sql.lastIndexOf("WHERE"));
-			}
-			if (!"".equals(form4Cri.getForm_name())){
-				//sql.append(" WHERE ");
-				sqlWhere += " FORM_NAME = ? AND ";
-				
-			}
+			sql.append(EJDAConstant.SQL.FORM_T_DOC_1);
+			sql.append("  WHERE JDA_TYPE = '4' AND DOC_STATUS = 'P' ");
+//			if (sql.indexOf("WHERE") != -1){
+//				sqlWhere = sql.substring(sql.indexOf("WHERE"),sql.length());
+//				sqlCommand = sql.substring(0, sql.lastIndexOf("WHERE"));
+//			}
+//			if (!"".equals(form4Cri.getForm_name())){
+//				//sql.append(" WHERE ");
+//				sqlWhere += " FORM_NAME = ? AND ";
+//				
+//			}
 			
-			log.debug("sqlWhere >> " + sqlWhere);
-			log.debug("sqlCommand >> " + sqlCommand);
+//			log.debug("sqlWhere >> " + sqlWhere);
+//			log.debug("sqlCommand >> " + sqlCommand);
 			
-			sql1.append(sqlCommand + " " + sqlWhere);
-			
-			log.debug("sql >> " + sql1.toString());
+//			sql1.append(sqlCommand + " " + sqlWhere);
+//			
+//			log.debug("sql >> " + sql1.toString());
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
 		sql1 = removeWasteSQL(sql1);
-		return sql1.toString();
+		return sql.toString();
 	}
 	
 	private boolean doSaveButton() {
