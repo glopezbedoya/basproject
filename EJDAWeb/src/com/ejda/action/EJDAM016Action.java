@@ -101,7 +101,7 @@ public class EJDAM016Action extends AbstractAction {
 			ejdam010Action.setRequest(getRequest()); 
 			Form1Model form1 = ejdam010Action.setValueModel("3","S",iuser);
 			log.debug("Form1Model >> " + form1);
-		
+			log.debug("form1.getdocId = "+form1.getDoc_ID());
 			Form1DAO dao = new Form1DAOImpl();
 			dao.UpdateFromTable(form1);
 			
@@ -117,7 +117,9 @@ public class EJDAM016Action extends AbstractAction {
 			ejda.insertTranLog(transactionLogModel);
 			
 			getRequest().getSession().setAttribute("responseMessage", "Submit Form 3 Successfully.");
-			
+			ValueListModel valueListM = new ValueListModel();
+			valueListM.setReturnModel("Form1Model");
+			getForm3Bean().setValueListM(valueListM);
 			result = doSearch();
 			
 			log.debug("result = "+result);
