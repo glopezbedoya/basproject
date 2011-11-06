@@ -191,8 +191,8 @@ private void setCriteriaPameter(){
 		String sqlWhere="";
 		try{
 			sql.append(EJDAConstant.SQL.FORM_T_DOC_1);
-			sql.append(" WHERE JDA_TYPE = '1' AND DOC_STATUS = 'A' ");
-			
+			//sql.append(" WHERE JDA_TYPE = '1' AND DOC_STATUS = 'A' ");
+			sql.append(" WHERE DOC_STATUS = 'A' ");
 		}catch(Exception e){
 			e.printStackTrace();
 		}
