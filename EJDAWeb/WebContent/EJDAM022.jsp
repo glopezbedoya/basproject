@@ -192,6 +192,7 @@
               <th bgcolor="#0099CC" class="textHeader" scope="row">Doc ID.</th>
               <td bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">Consignor Name.</div></td>
               <td bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">Doc Status</div></td>
+              <td bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">eJDA</div></td>
             </tr>
             <%
             	log.debug("bgColor fom1Vt.size() : " + form1Vt.size());
@@ -199,12 +200,14 @@
             		for(int i=0;i<form1Vt.size();i++){
             			form1M = (Form1Model)form1Vt.get(i);            	
             			bgColor = (i%2 == 0)?bgColor1:bgColor2;
+            			String showType = "eJDA " + form1M.getJDA_Type();
             %>
 			            <tr onclick="updateEJDATable2(this.form,'<%=form1M.getDoc_ID() %>','EJDAM022');" style="cursor:hand">
 			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form1M.getDoc_ID() %>"/></th>
 			              <td <%=bgColor %> class="text"><%=form1M.getDoc_ID()%></td>
 			              <td <%=bgColor %> class="text"><%=form1M.getConsignor_name()%></td>
 			              <td <%=bgColor %> class="text"><%=form1M.getDoc_Status()%></td>
+			              <td <%=bgColor %> class="text"><%=showType%></td>
 			            </tr>
             <%		}
             	}
