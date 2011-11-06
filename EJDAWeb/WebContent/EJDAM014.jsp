@@ -51,35 +51,80 @@
 	<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
 		
         <tr align="left">
-          <td align="left" class="style1" scope="row"><font class="textTop">TABLE 2 >> FORM No. 1</font></td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
+          <td align="left" class="style1" scope="row" colspan="4"><font class="textTop">Assessment >> </font></td>
+          
+        </tr>
+         <tr align="left">
+          <td align="left" class="style1" scope="row" colspan="4" height="20"></td>
+          
         </tr>
         <tr>
         	<td><table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
-        	
-       
+        
+       <tr>
+       		<td align="left" class="style1" scope="row" width="200">
+       			<span class="text">DOC ID </span>
+       		
+       		</td>
+       		<td width="250" align="left"><%=DisplayFormatUtil.displayInputTextBox("txtDocID",form1ModelSP.getForm_name(),"") %>
+       		<td width="200" align="left" class="style1" scope="row" width="200">
+       			<span class="text">eJDA </span>
+       		
+       		</td>
+       		<td align="left"><select ><option value="">ALL</option>
+       		<option value="1">EJDA NO. 1</option>
+       		<option value="2">EJDA NO. 2</option>
+       		<option value="3">EJDA NO. 3</option>
+       		<option value="4">EJDA NO. 4</option>
+       		</select></td>
+         </tr>
+          
         <tr>
-       		<td align="left" class="style1" scope="row" width="100">
-       			<span class="text">Form name </span>
+       		<td align="left" class="style1" scope="row" width="200">
+       			<span class="text">Exporter/Taxpayer Code </span>
        		
        		</td>
-       		<td width="700" align="left"><%=DisplayFormatUtil.displayInputTextBox("txtFormName",form1ModelSP.getForm_name(),"") %>
-       		<%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'EJDAM014','doSearch','EJDAM014.jsp')\"",false) %>
-       		</td>
-       		<td align="left" class="style1" scope="row">	          		
-       		
-       			<span class="text"></span>
+       		<td width="250" align="left"><%=DisplayFormatUtil.displayInputTextBox("txtConsignorCode",form1ModelSP.getConsignor_code(),"") %>
        		
        		</td>
-       		<td >
+       		<td width="200" align="left" class="style1" scope="row">	          		
+       		
+       			<span class="text"> Exporter/Taxpayer  name </span>
+       		
+       		<td align="left"><%=DisplayFormatUtil.displayInputTextBox("txtConsignorName",form1ModelSP.getConsignor_name(),"") %>
+       		
+       		</td>	          		
+        </tr>
+         <tr>
+       		<td align="left" class="style1" scope="row" width="200">
+       			<span class="text"> Consignee/Taxpayer Code </span>
+       		
+       		</td>
+       		<td width="250" align="left"><%=DisplayFormatUtil.displayInputTextBox("txtConsigneeCode",form1ModelSP.getConsignee_code(),"") %>
+       		
+       		</td>
+       		<td width="200" align="left" class="style1" scope="row">	          		
+       		
+       			<span class="text"> Consignee/Taxpayer Name </span>
+       		
+       		<td align="left"><%=DisplayFormatUtil.displayInputTextBox("txtConsigneeName",form1ModelSP.getConsignee_name(),"") %>
+       		
        		</td>	          		
         </tr>
         <tr>
-       		<th colspan="4" align="center" class="style1" scope="row">
-       			
-       		</th>
+          	<td>
+       		<span class="text">Date DOC </span>
+       		
+       		</td>
+       		<td align="left" colspan="3"><%=DisplayFormatUtil.displayTextBoxCalendar("txtDocDateFrom",form1ModelSP.getDate_Receipt()+"") %> - 
+       		<%=DisplayFormatUtil.displayTextBoxCalendar("txtDocDateTo",form1ModelSP.getDate_Receipt()+"") %> </td>
+         </tr>
+         <tr>
+       		<td colspan="4" align="center" height="20"></td>	
+         </tr>
+        <tr>
+       		<td colspan="4" align="center"><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'EJDAM014','doSearch','EJDAM014.jsp')\"",false) %>
+       		</td>	
          </tr>
         
         <tr>
@@ -192,6 +237,7 @@
               <th bgcolor="#0099CC" class="textHeader" scope="row">Doc ID</th>
               <td bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">Consignor Name.</div></td>
               <td bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">Doc Status</div></td>
+              <td bgcolor="#0099CC" class="textHeader"><div align="center" class="textHeader">eJDA</div></td>
             </tr>
             
             <%
@@ -200,12 +246,15 @@
             		for(int i=0;i<form1Vt.size();i++){
             			form1M = (Form1Model)form1Vt.get(i);            	
             			bgColor = (i%2 == 0)?bgColor1:bgColor2;
+            			
+            			String showType = "eJDA " + form1M.getJDA_Type();
             %>
 			            <tr onclick="updateEJDATable2(this.form,'<%=form1M.getDoc_ID() %>','EJDAM014');" style="cursor:hand">
 			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form1M.getDoc_ID() %>"/></th>
 			              <td <%=bgColor %> class="text"><%=form1M.getDoc_ID()%></td>
 			              <td <%=bgColor %> class="text"><%=form1M.getConsignor_name()%></td>
 			              <td <%=bgColor %> class="text"><%=form1M.getDoc_Status()%></td>
+			              <td <%=bgColor %> class="text"><%=showType%></td>
 			            </tr>
             <%		}
             	}
