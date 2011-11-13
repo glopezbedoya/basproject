@@ -19,6 +19,7 @@ public class Form1Bean extends AbstractBean {
 	public Vector detail1MVt;
 	public Vector detail2MVt;
 	public Vector docAttachMVt;
+	public Vector unitVt;
 	
 	
 	public Vector getDocAttachMVt() {
@@ -76,6 +77,12 @@ public class Form1Bean extends AbstractBean {
 	}
 	public void setDetail2ModelSP(FormDetail2Model detail2ModelSP) {
 		this.detail2ModelSP = detail2ModelSP;
+	}
+	public Vector getUnitVt() {
+		return unitVt;
+	}
+	public void setUnitVt(Vector unitVt) {
+		this.unitVt = unitVt;
 	}
 	
 	
