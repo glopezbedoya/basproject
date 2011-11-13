@@ -1,5 +1,6 @@
 package com.tcd.ejda.dao;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Vector;
 
@@ -17,5 +18,7 @@ public interface Form1DAO {
 	public Vector<FormDetail1Model> searchFormDetail1Model(String docId) throws SQLException;
 	public Vector<FormDetail2Model> searchFormDetail2Model(String docId) throws SQLException;
 	public Vector<FormDocAttachModel> searchFormDocAttachModel(String docId) throws SQLException;
+	
+	public boolean UpdateFromTable(Form1Model form1, Vector detail1, Vector detail2, Vector doc) throws SQLException;
 	
 }

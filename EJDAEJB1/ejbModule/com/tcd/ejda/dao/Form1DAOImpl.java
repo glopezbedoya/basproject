@@ -452,24 +452,121 @@ public class Form1DAOImpl implements Form1DAO {
 		
 		try {
 						
-			sql.append("UPDATE JDA_FORM_T_DOC SET DOC_STATUS = ?, UPDATE_BY = ? ");
+//			sql.append("UPDATE JDA_FORM_T_DOC SET DOC_STATUS = ?, UPDATE_BY = ? ");
+//			sql.append("WHERE DOC_ID = ? AND JDA_TYPE = ? ");
+			sql.append("UPDATE JDA_FORM_T_DOC SET COUNTRY_ID = ?, DOC_STATUS = ?, INVOICE_NO = ?, CONSIGNOR_CODE = ?, CONSIGNOR_NAME = ?, ");
+			sql.append("CONSIGNOR_ADDRESS = ?, CONSIGNEE_CODE = ?, CONSIGNEE_NAME = ?, CONSIGNEE_ADDRESS = ?, AUTHORAGENT_CODE = ?, ");
+			sql.append("AUTHORAGENT_NAME = ?, AUTHORAGENT_ADDRESS = ?, MODE_TRANS = ?, TRANS_OTHER = ?, DATE_IMPORT = ?, TRANS_DETAIL = ?, ");
+			sql.append("PORTIMPORT_CODE = ?, PORTIMPORT_DESC = ?, PORTLOAD_CODE = ?, PORTLOAD_DESC = ?, VIA_CODE = ?, VIA_DESC = ?, ");
+			sql.append("DATE_RECEIPT = ?, REF_NO = ?, REGIS_NO = ?, CUS_NAME_CODE = ?, CUS_NAME_DESC = ?, MANIFEST_NO = ?, DUTY_TAX_RECEIPT_DATE = ?, ");
+			sql.append("DUTY_TAX_RECEIPT_DESC = ?, IMPORT_PERMIT_NO = ?, EXCHG_CTRL_REF = ?, SPECIAL_TREATMENT = ?, ");
+			sql.append("COUNTRY_ORIGIN_CODE = ?, COUNTRY_ORIGIN_DESC = ?, COUNTRY_FINAL_CODE = ?, COUNTRY_FINAL_DESC = ?, BILL_NO = ?, ");
+			sql.append("TERM_PAYMENT = ?, CUR_CODE = ?, RECEIVED_AMOUNT = ?, EXCHGRATE_ID = ?, EQUIVALENT = ?, GOOD_PAYMENT_CODE = ?, ");
+			sql.append("GOOD_PAYMENT_DESC = ?, COUNTRY_OF_GOOD = ?, FOB_VALUE = ?, INSURANCE = ?, FREIGHT = ?, CIF_VALUE = ?, ");
+			sql.append("GROSS_WEIGHT = ?, MEASUREMENT = ?, OTHER_CHARG = ?, DECLARANT_NAME = ?, ID_CARD_NO = ?, STATUS = ?, CERIFY = ?, ");
+			sql.append("CUS_REMOVAL = ?, TAX_TOTAL = ?, OTHER_CHARG2 = ?, PAYABLE_AMOUNT = ?, MANUALSCRIPT_RECERPT = ?, VESSEL_VALUE = ?, ");
+			sql.append("INSTRUCT_EXAM = ?, RESULT_EXAM = ?, FOR_OTHER_USE = ?, UPDATE_DATE = SYSDATE, UPDATE_BY = ?, ");
+			sql.append("MOVEMENT_PEMIT_NO = ?, EXPIRE_DATE = ?, SECURITY_REF_NO = ?, SECURITY_AMT = ?, RECEIVE_AMT = ?, ");
+			sql.append("BILL_OF_LADING = ?, PROPER_OFFICE = ?, REQUEST_APPROVED = ?, CERTIFIED = ? ");
 			sql.append("WHERE DOC_ID = ? AND JDA_TYPE = ? ");
 			log.debug("updateRole JDA_FORM_T_DOC >>> " + sql.toString());
 			ps = conn.prepareStatement(sql.toString());
-			int seq=1;
+			int parameterIndex=1;
 			log.debug("form1.getDoc_ID() >> "+form1.getDoc_ID());
 			log.debug("form1.getJDA_Type() >> "+form1.getJDA_Type());
+			log.debug("form1.getCountry_ID() >> "+form1.getCountry_ID());
+			log.debug("form1.getDoc_Status() >> "+form1.getDoc_Status());
+			log.debug("form1.getConsignor_code() >> "+form1.getConsignor_code());
 			
-			ps.setString(seq++, form1.getDoc_Status());
-			ps.setString(seq++, form1.getUpdate_by());
-			ps.setString(seq++, form1.getDoc_ID());
-			ps.setString(seq++, form1.getJDA_Type());
+//			ps.setString(seq++, form1.getDoc_Status());
+//			ps.setString(seq++, form1.getUpdate_by());
+//			ps.setString(seq++, form1.getDoc_ID());
+//			ps.setString(seq++, form1.getJDA_Type());
+			ps.setString(parameterIndex++, form1.getCountry_ID());//	COUNTRY_ID /1
+//			ps.setString(parameterIndex++, form1.getJDA_Type());//JDA_TYPE /2
+			ps.setString(parameterIndex++, form1.getDoc_Status());//DOC_STATUS /3
+			ps.setString(parameterIndex++, form1.getInvoice_No());//INVOICE_NO /4
+			ps.setString(parameterIndex++, form1.getConsignor_code());//CONSIGNOR_CODE 5
+			ps.setString(parameterIndex++, form1.getConsignor_name());//CONSIGNOR_NAME 6
+			ps.setString(parameterIndex++, form1.getConsignor_address());//CONSIGNOR_ADDRESS 7
+			ps.setString(parameterIndex++, form1.getConsignee_code());//CONSIGNEE_CODE 8
+			ps.setString(parameterIndex++, form1.getConsignee_name());//CONSIGNEE_NAME 9
+			ps.setString(parameterIndex++, form1.getConsignee_address());//CONSIGNEE_ADDRESS 10
+			ps.setString(parameterIndex++, form1.getAuthorAgent_code());//AUTHORAGENT_CODE 11
+			ps.setString(parameterIndex++, form1.getAuthorAgent_name());//AUTHORAGENT_NAME 12
+			ps.setString(parameterIndex++, form1.getAuthorAgent_address());//AUTHORAGENT_ADDRESS 13
+			ps.setString(parameterIndex++, form1.getMode_Trans());//MODE_TRANS 14
+			ps.setString(parameterIndex++, form1.getTrans_Other());//TRANS_OTHER 15
+			ps.setDate(parameterIndex++, form1.getDate_Import());//DATE_IMPORT 16
+			ps.setString(parameterIndex++, form1.getTrans_Detail());//TRANS_DETAIL 17
+			ps.setString(parameterIndex++, form1.getPortImport_Code());//PORTIMPORT_CODE 18
+			ps.setString(parameterIndex++, form1.getPortImport_Desc());//PORTIMPORT_DESC 19
+			ps.setString(parameterIndex++, form1.getPortLoad_Code());//PORTLOAD_CODE 20
+			ps.setString(parameterIndex++, form1.getPortLoad_Desc());//PORTLOAD_DESC 21
+			ps.setString(parameterIndex++, form1.getVia_Code());//VIA_CODE 22
+			ps.setString(parameterIndex++, form1.getVia_Desc());//VIA_DESC 23
+			ps.setDate(parameterIndex++, form1.getDate_Receipt());//DATE_RECEIPT 24
+			ps.setString(parameterIndex++, form1.getRef_no());//REF_NO 25
+			ps.setString(parameterIndex++, form1.getRegis_no());//REGIS_NO 26
+			ps.setString(parameterIndex++, form1.getCus_name_code());//CUS_NAME_CODE 27
+			ps.setString(parameterIndex++, form1.getCus_name_desc());//CUS_NAME_DESC 28
+			ps.setInt(parameterIndex++, form1.getManifest_no());//MANIFEST_NO 29
+			ps.setDate(parameterIndex++, form1.getDuty_tax_receipt_date());//DUTY_TAX_RECEIPT_DATE 30
+			ps.setString(parameterIndex++, form1.getDuty_tax_receipt_desc());//DUTY_TAX_RECEIPT_DESC 31
+			ps.setString(parameterIndex++, form1.getImport_permit_no());//IMPORT_PERMIT_NO 32
+			ps.setString(parameterIndex++, form1.getExchg_ctrl_ref());//EXCHG_CTRL_REF 33
+			ps.setString(parameterIndex++, form1.getSpecial_treatment());//SPECIAL_TREATMENT 34
+			ps.setString(parameterIndex++, form1.getCountry_origin_code());//COUNTRY_ORIGIN_CODE 35
+			ps.setString(parameterIndex++, form1.getCountry_origin_desc());//COUNTRY_ORIGIN_DESC 36
+			ps.setString(parameterIndex++, form1.getCountry_final_code());//COUNTRY_FINAL_CODE 37
+			ps.setString(parameterIndex++, form1.getCountry_final_desc());//COUNTRY_FINAL_DESC 38
+			ps.setString(parameterIndex++, form1.getBill_no());//BILL_NO 39
+			ps.setString(parameterIndex++, form1.getTerm_payment());//TERM_PAYMENT 40
+			ps.setString(parameterIndex++, form1.getCur_code());//CUR_CODE 41
+			ps.setDouble(parameterIndex++, form1.getReceived_amount());//RECEIVED_AMOUNT 42
+			ps.setString(parameterIndex++, form1.getExchgRate_ID());//EXCHGRATE_ID 43
+			ps.setString(parameterIndex++, form1.getEquivalent());//EQUIVALENT 44
+			ps.setString(parameterIndex++, form1.getGood_payment_code());//GOOD_PAYMENT_CODE 45
+			ps.setString(parameterIndex++, form1.getGood_payment_desc());//GOOD_PAYMENT_DESC 46
+			ps.setString(parameterIndex++, form1.getCountry_of_good());//COUNTRY_OF_GOOD 47
+			ps.setString(parameterIndex++, form1.getFob_value());//FOB_VALUE 48
+			ps.setString(parameterIndex++, form1.getInsurance());//INSURANCE 49
+			ps.setString(parameterIndex++, form1.getFreight());//FREIGHT 50
+			ps.setString(parameterIndex++, form1.getCif_value());//CIF_VALUE 51
+			ps.setString(parameterIndex++, form1.getGross_weight());//GROSS_WEIGHT 52
+			ps.setString(parameterIndex++, form1.getMeasurement());//MEASUREMENT 53
+			ps.setString(parameterIndex++, form1.getOther_charg());//OTHER_CHARG 54
+			ps.setString(parameterIndex++, form1.getDeclarant_name());//DECLARANT_NAME 55
+			ps.setString(parameterIndex++, form1.getId_card_no());//ID_CARD_NO 56
+			ps.setString(parameterIndex++, form1.getStatus());//STATUS 57
+			ps.setString(parameterIndex++, form1.getCerify());//CERIFY 58
+			ps.setString(parameterIndex++, form1.getCus_removal());//CUS_REMOVAL 59
+			ps.setDouble(parameterIndex++, form1.getTax_total());//TAX_TOTAL 60
+			ps.setString(parameterIndex++, form1.getOther_charg2());//OTHER_CHARG2 61
+			ps.setDouble(parameterIndex++, form1.getPayable_amount());//PAYABLE_AMOUNT 62
+			ps.setString(parameterIndex++, form1.getManualscript_recerpt());//MANUALSCRIPT_RECERPT 63
+			ps.setString(parameterIndex++, form1.getVessel_value());//VESSEL_VALUE 64
+			ps.setString(parameterIndex++, form1.getInstruct_exam());//INSTRUCT_EXAM 65
+			ps.setString(parameterIndex++, form1.getResult_exam());//RESULT_EXAM 66
+			ps.setString(parameterIndex++, form1.getFor_other_use());//FOR_OTHER_USE 67
+			ps.setString(parameterIndex++, form1.getUpdate_by());//UPDATE_BY 68
+			ps.setString(parameterIndex++, form1.getMovementPemitNo());//MOVEMENT_PEMIT_NO 69
+			ps.setDate(parameterIndex++, form1.getExpiryDate());//EXPIRE_DATE 70
+			ps.setString(parameterIndex++, form1.getSecurityRefNo());//SECURITY_REF_NO 71
+			ps.setDouble(parameterIndex++, form1.getSecurityAmt());//SECURITY_AMT 72
+			ps.setDouble(parameterIndex++, form1.getReceiveAmt());//RECEIVE_AMT 73
+			ps.setString(parameterIndex++, form1.getBillOfLading());//BILL_OF_LADING 74
+			ps.setString(parameterIndex++, form1.getProperOffice());//PROPER_OFFICE 75
+			ps.setString(parameterIndex++, form1.getRequestApproved());//REQUEST_APPROVED 76
+			ps.setString(parameterIndex++, form1.getCertified());//CERTIFIED 77
+			ps.setString(parameterIndex++, form1.getDoc_ID()); //78
+			ps.setString(parameterIndex++, form1.getJDA_Type());//79
 			
 			int rsInt = ps.executeUpdate();
 			if (rsInt > 0) {
 				blSuccess = true;
 			}
-			
+//			this.deleteInsertDetail(form1.getDoc_ID(), conn);
 			log.debug("blSuccess >> " + blSuccess );
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -477,13 +574,16 @@ public class Form1DAOImpl implements Form1DAO {
 				conn.rollback();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
+				log.debug("error >> ", e1);
 			}
 			log.equals(e.getMessage());
 		}finally{
 			try {
 				if (conn != null)
+					log.debug("finally commit : ");
 					conn.commit();
 			} catch (Exception e) {
+				log.debug("error finally >> ", e);
 			}
 			try {
 				if (rs != null)
@@ -509,7 +609,181 @@ public class Form1DAOImpl implements Form1DAO {
 		return blSuccess;
 		
 	}
-	
+	public boolean UpdateFromTable(Form1Model form1, Vector detail1, Vector detail2, Vector doc) throws SQLException {
+		log.debug("[Start : UpdateFromTable ]");
+		// TODO Auto-generated method stub
+		boolean blSuccess=false;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = db.getConnection();
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		StringBuffer sql = new StringBuffer();
+		conn.setAutoCommit(false); 
+		
+		try {
+						
+//			sql.append("UPDATE JDA_FORM_T_DOC SET DOC_STATUS = ?, UPDATE_BY = ? ");
+//			sql.append("WHERE DOC_ID = ? AND JDA_TYPE = ? ");
+			sql.append("UPDATE JDA_FORM_T_DOC SET COUNTRY_ID = ?, DOC_STATUS = ?, INVOICE_NO = ?, CONSIGNOR_CODE = ?, CONSIGNOR_NAME = ?, ");
+			sql.append("CONSIGNOR_ADDRESS = ?, CONSIGNEE_CODE = ?, CONSIGNEE_NAME = ?, CONSIGNEE_ADDRESS = ?, AUTHORAGENT_CODE = ?, ");
+			sql.append("AUTHORAGENT_NAME = ?, AUTHORAGENT_ADDRESS = ?, MODE_TRANS = ?, TRANS_OTHER = ?, DATE_IMPORT = ?, TRANS_DETAIL = ?, ");
+			sql.append("PORTIMPORT_CODE = ?, PORTIMPORT_DESC = ?, PORTLOAD_CODE = ?, PORTLOAD_DESC = ?, VIA_CODE = ?, VIA_DESC = ?, ");
+			sql.append("DATE_RECEIPT = ?, REF_NO = ?, REGIS_NO = ?, CUS_NAME_CODE = ?, CUS_NAME_DESC = ?, MANIFEST_NO = ?, DUTY_TAX_RECEIPT_DATE = ?, ");
+			sql.append("DUTY_TAX_RECEIPT_DESC = ?, IMPORT_PERMIT_NO = ?, EXCHG_CTRL_REF = ?, SPECIAL_TREATMENT = ?, ");
+			sql.append("COUNTRY_ORIGIN_CODE = ?, COUNTRY_ORIGIN_DESC = ?, COUNTRY_FINAL_CODE = ?, COUNTRY_FINAL_DESC = ?, BILL_NO = ?, ");
+			sql.append("TERM_PAYMENT = ?, CUR_CODE = ?, RECEIVED_AMOUNT = ?, EXCHGRATE_ID = ?, EQUIVALENT = ?, GOOD_PAYMENT_CODE = ?, ");
+			sql.append("GOOD_PAYMENT_DESC = ?, COUNTRY_OF_GOOD = ?, FOB_VALUE = ?, INSURANCE = ?, FREIGHT = ?, CIF_VALUE = ?, ");
+			sql.append("GROSS_WEIGHT = ?, MEASUREMENT = ?, OTHER_CHARG = ?, DECLARANT_NAME = ?, ID_CARD_NO = ?, STATUS = ?, CERIFY = ?, ");
+			sql.append("CUS_REMOVAL = ?, TAX_TOTAL = ?, OTHER_CHARG2 = ?, PAYABLE_AMOUNT = ?, MANUALSCRIPT_RECERPT = ?, VESSEL_VALUE = ?, ");
+			sql.append("INSTRUCT_EXAM = ?, RESULT_EXAM = ?, FOR_OTHER_USE = ?, UPDATE_DATE = SYSDATE, UPDATE_BY = ?, ");
+			sql.append("MOVEMENT_PEMIT_NO = ?, EXPIRE_DATE = ?, SECURITY_REF_NO = ?, SECURITY_AMT = ?, RECEIVE_AMT = ?, ");
+			sql.append("BILL_OF_LADING = ?, PROPER_OFFICE = ?, REQUEST_APPROVED = ?, CERTIFIED = ? ");
+			sql.append("WHERE DOC_ID = ? AND JDA_TYPE = ? ");
+			log.debug("updateRole JDA_FORM_T_DOC >>> " + sql.toString());
+			ps = conn.prepareStatement(sql.toString());
+			int parameterIndex=1;
+			log.debug("form1.getDoc_ID() >> "+form1.getDoc_ID());
+			log.debug("form1.getJDA_Type() >> "+form1.getJDA_Type());
+			log.debug("form1.getCountry_ID() >> "+form1.getCountry_ID());
+			log.debug("form1.getDoc_Status() >> "+form1.getDoc_Status());
+			log.debug("form1.getConsignor_code() >> "+form1.getConsignor_code());
+			
+//			ps.setString(seq++, form1.getDoc_Status());
+//			ps.setString(seq++, form1.getUpdate_by());
+//			ps.setString(seq++, form1.getDoc_ID());
+//			ps.setString(seq++, form1.getJDA_Type());
+			ps.setString(parameterIndex++, form1.getCountry_ID());//	COUNTRY_ID /1
+//			ps.setString(parameterIndex++, form1.getJDA_Type());//JDA_TYPE /2
+			ps.setString(parameterIndex++, form1.getDoc_Status());//DOC_STATUS /3
+			ps.setString(parameterIndex++, form1.getInvoice_No());//INVOICE_NO /4
+			ps.setString(parameterIndex++, form1.getConsignor_code());//CONSIGNOR_CODE 5
+			ps.setString(parameterIndex++, form1.getConsignor_name());//CONSIGNOR_NAME 6
+			ps.setString(parameterIndex++, form1.getConsignor_address());//CONSIGNOR_ADDRESS 7
+			ps.setString(parameterIndex++, form1.getConsignee_code());//CONSIGNEE_CODE 8
+			ps.setString(parameterIndex++, form1.getConsignee_name());//CONSIGNEE_NAME 9
+			ps.setString(parameterIndex++, form1.getConsignee_address());//CONSIGNEE_ADDRESS 10
+			ps.setString(parameterIndex++, form1.getAuthorAgent_code());//AUTHORAGENT_CODE 11
+			ps.setString(parameterIndex++, form1.getAuthorAgent_name());//AUTHORAGENT_NAME 12
+			ps.setString(parameterIndex++, form1.getAuthorAgent_address());//AUTHORAGENT_ADDRESS 13
+			ps.setString(parameterIndex++, form1.getMode_Trans());//MODE_TRANS 14
+			ps.setString(parameterIndex++, form1.getTrans_Other());//TRANS_OTHER 15
+			ps.setDate(parameterIndex++, form1.getDate_Import());//DATE_IMPORT 16
+			ps.setString(parameterIndex++, form1.getTrans_Detail());//TRANS_DETAIL 17
+			ps.setString(parameterIndex++, form1.getPortImport_Code());//PORTIMPORT_CODE 18
+			ps.setString(parameterIndex++, form1.getPortImport_Desc());//PORTIMPORT_DESC 19
+			ps.setString(parameterIndex++, form1.getPortLoad_Code());//PORTLOAD_CODE 20
+			ps.setString(parameterIndex++, form1.getPortLoad_Desc());//PORTLOAD_DESC 21
+			ps.setString(parameterIndex++, form1.getVia_Code());//VIA_CODE 22
+			ps.setString(parameterIndex++, form1.getVia_Desc());//VIA_DESC 23
+			ps.setDate(parameterIndex++, form1.getDate_Receipt());//DATE_RECEIPT 24
+			ps.setString(parameterIndex++, form1.getRef_no());//REF_NO 25
+			ps.setString(parameterIndex++, form1.getRegis_no());//REGIS_NO 26
+			ps.setString(parameterIndex++, form1.getCus_name_code());//CUS_NAME_CODE 27
+			ps.setString(parameterIndex++, form1.getCus_name_desc());//CUS_NAME_DESC 28
+			ps.setInt(parameterIndex++, form1.getManifest_no());//MANIFEST_NO 29
+			ps.setDate(parameterIndex++, form1.getDuty_tax_receipt_date());//DUTY_TAX_RECEIPT_DATE 30
+			ps.setString(parameterIndex++, form1.getDuty_tax_receipt_desc());//DUTY_TAX_RECEIPT_DESC 31
+			ps.setString(parameterIndex++, form1.getImport_permit_no());//IMPORT_PERMIT_NO 32
+			ps.setString(parameterIndex++, form1.getExchg_ctrl_ref());//EXCHG_CTRL_REF 33
+			ps.setString(parameterIndex++, form1.getSpecial_treatment());//SPECIAL_TREATMENT 34
+			ps.setString(parameterIndex++, form1.getCountry_origin_code());//COUNTRY_ORIGIN_CODE 35
+			ps.setString(parameterIndex++, form1.getCountry_origin_desc());//COUNTRY_ORIGIN_DESC 36
+			ps.setString(parameterIndex++, form1.getCountry_final_code());//COUNTRY_FINAL_CODE 37
+			ps.setString(parameterIndex++, form1.getCountry_final_desc());//COUNTRY_FINAL_DESC 38
+			ps.setString(parameterIndex++, form1.getBill_no());//BILL_NO 39
+			ps.setString(parameterIndex++, form1.getTerm_payment());//TERM_PAYMENT 40
+			ps.setString(parameterIndex++, form1.getCur_code());//CUR_CODE 41
+			ps.setDouble(parameterIndex++, form1.getReceived_amount());//RECEIVED_AMOUNT 42
+			ps.setString(parameterIndex++, form1.getExchgRate_ID());//EXCHGRATE_ID 43
+			ps.setString(parameterIndex++, form1.getEquivalent());//EQUIVALENT 44
+			ps.setString(parameterIndex++, form1.getGood_payment_code());//GOOD_PAYMENT_CODE 45
+			ps.setString(parameterIndex++, form1.getGood_payment_desc());//GOOD_PAYMENT_DESC 46
+			ps.setString(parameterIndex++, form1.getCountry_of_good());//COUNTRY_OF_GOOD 47
+			ps.setString(parameterIndex++, form1.getFob_value());//FOB_VALUE 48
+			ps.setString(parameterIndex++, form1.getInsurance());//INSURANCE 49
+			ps.setString(parameterIndex++, form1.getFreight());//FREIGHT 50
+			ps.setString(parameterIndex++, form1.getCif_value());//CIF_VALUE 51
+			ps.setString(parameterIndex++, form1.getGross_weight());//GROSS_WEIGHT 52
+			ps.setString(parameterIndex++, form1.getMeasurement());//MEASUREMENT 53
+			ps.setString(parameterIndex++, form1.getOther_charg());//OTHER_CHARG 54
+			ps.setString(parameterIndex++, form1.getDeclarant_name());//DECLARANT_NAME 55
+			ps.setString(parameterIndex++, form1.getId_card_no());//ID_CARD_NO 56
+			ps.setString(parameterIndex++, form1.getStatus());//STATUS 57
+			ps.setString(parameterIndex++, form1.getCerify());//CERIFY 58
+			ps.setString(parameterIndex++, form1.getCus_removal());//CUS_REMOVAL 59
+			ps.setDouble(parameterIndex++, form1.getTax_total());//TAX_TOTAL 60
+			ps.setString(parameterIndex++, form1.getOther_charg2());//OTHER_CHARG2 61
+			ps.setDouble(parameterIndex++, form1.getPayable_amount());//PAYABLE_AMOUNT 62
+			ps.setString(parameterIndex++, form1.getManualscript_recerpt());//MANUALSCRIPT_RECERPT 63
+			ps.setString(parameterIndex++, form1.getVessel_value());//VESSEL_VALUE 64
+			ps.setString(parameterIndex++, form1.getInstruct_exam());//INSTRUCT_EXAM 65
+			ps.setString(parameterIndex++, form1.getResult_exam());//RESULT_EXAM 66
+			ps.setString(parameterIndex++, form1.getFor_other_use());//FOR_OTHER_USE 67
+			ps.setString(parameterIndex++, form1.getUpdate_by());//UPDATE_BY 68
+			ps.setString(parameterIndex++, form1.getMovementPemitNo());//MOVEMENT_PEMIT_NO 69
+			ps.setDate(parameterIndex++, form1.getExpiryDate());//EXPIRE_DATE 70
+			ps.setString(parameterIndex++, form1.getSecurityRefNo());//SECURITY_REF_NO 71
+			ps.setDouble(parameterIndex++, form1.getSecurityAmt());//SECURITY_AMT 72
+			ps.setDouble(parameterIndex++, form1.getReceiveAmt());//RECEIVE_AMT 73
+			ps.setString(parameterIndex++, form1.getBillOfLading());//BILL_OF_LADING 74
+			ps.setString(parameterIndex++, form1.getProperOffice());//PROPER_OFFICE 75
+			ps.setString(parameterIndex++, form1.getRequestApproved());//REQUEST_APPROVED 76
+			ps.setString(parameterIndex++, form1.getCertified());//CERTIFIED 77
+			ps.setString(parameterIndex++, form1.getDoc_ID()); //78
+			ps.setString(parameterIndex++, form1.getJDA_Type());//79
+			
+			int rsInt = ps.executeUpdate();
+			if (rsInt > 0) {
+				blSuccess = true;
+			}
+			this.deleteInsertDetail(form1.getDoc_ID(), conn, detail1,  detail2,  doc);
+			log.debug("blSuccess >> " + blSuccess );
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				log.debug("error >> ", e1);
+			}
+			log.equals(e.getMessage());
+		}finally{
+			try {
+				if (conn != null)
+					log.debug("finally commit : ");
+					conn.commit();
+			} catch (Exception e) {
+				log.debug("error finally >> ", e);
+			}
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		
+		return blSuccess;
+		
+	}
 	public Form1Model searchFormModel(String docId) throws SQLException{
 		log.debug("[Start : searchFormModel ]");
 		log.debug("docId = "+docId);
@@ -675,7 +949,8 @@ public class Form1DAOImpl implements Form1DAO {
 		
 		try {
 						
-			sql.append(" SELECT * FROM JDA_FORM_T_DOC_DETAIL1 ");
+			sql.append(" SELECT ITEM_NO, DOC_ID, MARKS_NO, NO_TYPE_PACKAGE, GOOD_DESC, CUST_CODE, CUST_UNIT, CREATE_DATE, ");
+			sql.append("CREATE_BY, UPDATE_DATE UPDATE_BY FROM JDA_FORM_T_DOC_DETAIL1 ");
 			sql.append("WHERE DOC_ID = ? ");
 			log.debug("Search JDA_FORM_T_DOC >>> " + sql.toString());
 			ps = conn.prepareStatement(sql.toString());
@@ -885,5 +1160,247 @@ public class Form1DAOImpl implements Form1DAO {
 		}
 		return vc;
 	}
-	
+	private boolean deleteInsertDetail(String docID, Connection conn,Vector detail1, Vector detail2, Vector doc) throws SQLException {
+		log.debug("[Start : deleteInsertDetail ]");
+		log.debug("docId = "+docID);
+		boolean isSuccess=false;
+//		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = db.getConnection();
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		StringBuffer sql = new StringBuffer();
+		
+		try {
+			if (detail1.size()>0){
+				sql.append(" SELECT COUNT(ITEM_NO) AS RECORDS");
+				sql.append(" FROM JDA_FORM_T_DOC_DETAIL1 ");
+				sql.append(" WHERE DOC_ID = ? ");
+				log.debug("JDA_FORM_T_DOC_DETAIL1 >>> " + sql.toString());
+				ps = conn.prepareStatement(sql.toString());
+				int seq=1;
+				
+				ps.setString(seq++, docID);
+				
+				rs = ps.executeQuery();
+				//log.debug("RECORDS : " + rs.getInt("RECORDS"));
+				while (rs.next()){
+					StringBuffer sqldel = new StringBuffer();
+					if (rs.getInt("RECORDS") > 0){
+						log.debug("[ deleteInsertDetail 1 ] " + rs.getInt("RECORDS"));
+						
+						sqldel.append("DELETE FROM JDA_FORM_T_DOC_DETAIL1 ");
+						sqldel.append(" WHERE DOC_ID = ? ");
+						log.debug("deleteInsertDetail JDA_FORM_T_DOC_DETAIL1 >>> " + sqldel.toString());
+						
+						ps = conn.prepareStatement(sqldel.toString());
+						int seqdel=1;
+						
+						ps.setString(seqdel++, docID);
+						
+						int rsInt = ps.executeUpdate();
+						if (rsInt > 0) {
+							isSuccess = true;
+						}
+					}
+				}
+//				if (isSuccess){
+					if(detail1.size()>0){
+						StringBuffer sql1 = new StringBuffer();
+						sql1.append("insert into JDA_FORM_T_DOC_DETAIL1(ITEM_NO, DOC_ID, MARKS_NO, NO_TYPE_PACKAGE, GOOD_DESC, ");
+						sql1.append("CUST_CODE, CUST_UNIT, CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY) ");
+						sql1.append("values (?, ?, ?, ?, ?, ?, ?, SYSDATE, ?, SYSDATE, ?)");
+						log.debug("sql1 >> " + sql1.toString());
+						
+						ps = conn.prepareStatement(sql1.toString());
+						log.debug("detail1.size() = " +detail1.size());
+						for(int i =0; i < detail1.size(); i++){
+							int parameterIndex1 = 1;
+							FormDetail1Model f1 = (FormDetail1Model)detail1.get(i);
+							
+							ps.setString(parameterIndex1++, f1.getItem_no());
+							ps.setString(parameterIndex1++, docID);//	DOC_ID
+							ps.setString(parameterIndex1++, f1.getMarks_no());
+							ps.setString(parameterIndex1++, f1.getNo_type_package());
+							ps.setString(parameterIndex1++, f1.getGood_desc());
+							ps.setString(parameterIndex1++, f1.getCust_code());
+							ps.setString(parameterIndex1++, f1.getCust_unit());
+							ps.setString(parameterIndex1++, f1.getCreate_By());
+							ps.setString(parameterIndex1++, f1.getUpdate_by());
+							
+							rs = ps.executeQuery();	
+						}
+						
+					}
+//				}
+			}			
+			if (detail2.size()>0){
+				StringBuffer sql2 = new StringBuffer();
+				
+				sql2.append(" SELECT COUNT(ITEM_NO) AS RECORDS");
+				sql2.append(" FROM JDA_FORM_T_DOC_DETAIL2 ");
+				sql2.append(" WHERE DOC_ID = ? ");
+				log.debug("JDA_FORM_T_DOC_DETAIL2 >>> " + sql2.toString());
+				ps = conn.prepareStatement(sql2.toString());
+				int seq=1;
+				
+				ps.setString(seq++, docID);
+				
+				rs = ps.executeQuery();
+				//log.debug("RECORDS : " + rs.getInt("RECORDS"));
+				while (rs.next()){
+					StringBuffer sqldel2 = new StringBuffer();
+					if (rs.getInt("RECORDS") > 0){
+						log.debug("[ deleteInsertDetail 1 ] " + rs.getInt("RECORDS"));
+						
+						sqldel2.append("DELETE FROM JDA_FORM_T_DOC_DETAIL2 ");
+						sqldel2.append(" WHERE DOC_ID = ? ");
+						log.debug("deleteInsertDetail JDA_FORM_T_DOC_DETAIL2 >>> " + sqldel2.toString());
+						
+						ps = conn.prepareStatement(sqldel2.toString());
+						int seqdel=1;
+						
+						ps.setString(seqdel++, docID);
+						
+						int rsInt = ps.executeUpdate();
+						if (rsInt > 0) {
+							isSuccess = true;
+						}
+					}
+				}
+				if(detail2.size()>0){
+					StringBuffer sqld2 = new StringBuffer();
+					sqld2.append(" insert into JDA_FORM_T_DOC_DETAIL2(ITEM_NO, DOC_ID, QTY_CUST_UNIT, UNIT_VAL_ACTUAL, UNIT_VAL_CUSTOM, TOTAL_VALUE, ");
+					sqld2.append(" EXPORT_RATE, EXPORT_AMOUNT, OTHER_TAX_TYPE, OTHER_TAX_RATE, OTHER_TAX_AMOUNT, CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY ");
+					sqld2.append(" , ORIGIN_CODE, VALUE_PER_UNIT ) ");
+					sqld2.append(" values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, ?, SYSDATE, ?");
+					sqld2.append(" , ?, ?)");
+					log.debug("sqld2 >> " + sqld2.toString());
+					
+					ps = conn.prepareStatement(sqld2.toString());
+					
+					for(int i =0;i<detail2.size();i++){
+						int parameterIndex2 = 1;
+						FormDetail2Model f2 = (FormDetail2Model)detail2.get(i);
+						ps.setString(parameterIndex2++, f2.getItem_no());
+						ps.setString(parameterIndex2++, docID);//	DOC_ID
+						ps.setDouble(parameterIndex2++, f2.getQty_cust_unit());
+						ps.setString(parameterIndex2++, f2.getUnit_val_actual());
+						ps.setString(parameterIndex2++, f2.getUnit_val_custom());
+						ps.setDouble(parameterIndex2++, f2.getTotal_value());
+						ps.setDouble(parameterIndex2++, f2.getExport_rate());
+						ps.setDouble(parameterIndex2++, f2.getExport_amount());
+						ps.setString(parameterIndex2++, f2.getOther_tax_type());
+						ps.setDouble(parameterIndex2++, f2.getOther_tax_rate());
+						ps.setDouble(parameterIndex2++, f2.getOther_tax_amount());
+						ps.setString(parameterIndex2++, f2.getCreate_By());
+						ps.setString(parameterIndex2++, f2.getUpdate_by());
+						ps.setString(parameterIndex2++, f2.getOriginCode());
+						ps.setDouble(parameterIndex2++, f2.getValuePerUnit());
+						
+						rs = ps.executeQuery();
+					}
+					
+				}
+			}
+			if (doc.size()>0){
+				StringBuffer sql3 = new StringBuffer();
+				sql3.append(" SELECT COUNT(DOC_ID) AS RECORDS");
+				sql3.append(" FROM JDA_FORM_T_DOC_ATTACH ");
+				sql3.append(" WHERE DOC_ID = ? ");
+				log.debug("JDA_FORM_T_DOC_ATTACH >>> " + sql3.toString());
+				ps = conn.prepareStatement(sql3.toString());
+				int seq=1;
+				
+				ps.setString(seq++, docID);
+				
+				rs = ps.executeQuery();
+				//log.debug("RECORDS : " + rs.getInt("RECORDS"));
+				while (rs.next()){
+					StringBuffer sqldel = new StringBuffer();
+					if (rs.getInt("RECORDS") > 0){
+						log.debug("[ deleteInsertDetail 1 ] " + rs.getInt("RECORDS"));
+						
+						sqldel.append("DELETE FROM JDA_FORM_T_DOC_ATTACH ");
+						sqldel.append(" WHERE DOC_ID = ? ");
+						log.debug("deleteInsertDetail JDA_FORM_T_DOC_ATTACH >>> " + sqldel.toString());
+						
+						ps = conn.prepareStatement(sqldel.toString());
+						int seqdel=1;
+						
+						ps.setString(seqdel++, docID);
+						
+						int rsInt = ps.executeUpdate();
+						if (rsInt > 0) {
+							isSuccess = true;
+						}
+					}
+				}
+				if(doc.size()>0){
+					StringBuffer sql4 = new StringBuffer();
+					sql4.append("insert into JDA_FORM_T_DOC_ATTACH(REF_NO, DOC_ID, DOC_NAME, DOC_PATH, DOC_JDA_TYPE, DOC_STATUS, ");
+					sql4.append("CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY) ");
+					sql4.append("values (FORM_T_DOC_ATTACH_SEQ.nextval, ?, ?, ?, ?, ?, SYSDATE, ?, SYSDATE, ?)");
+					log.debug("sql4 >> " + sql4.toString());
+					
+					ps = conn.prepareStatement(sql4.toString());
+					
+					for(int i =0;i<doc.size();i++){
+						int parameterIndex2 = 1;
+						FormDocAttachModel d1 = (FormDocAttachModel)doc.get(i);
+//						ps.setString(parameterIndex2++, d1.getRef_no());
+						ps.setString(parameterIndex2++, docID);//	DOC_ID
+						ps.setString(parameterIndex2++, d1.getDoc_name());
+						ps.setString(parameterIndex2++, "");
+						ps.setString(parameterIndex2++, d1.getDoc_jda_type());
+						ps.setString(parameterIndex2++, d1.getDoc_status());
+						ps.setString(parameterIndex2++, d1.getCreate_By());
+						ps.setString(parameterIndex2++, d1.getUpdate_by());
+						
+						rs = ps.executeQuery();
+					}
+					
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			log.equals(e.getMessage());
+		}finally{
+			try {
+				if (conn != null)
+					conn.commit();
+			} catch (Exception e) {
+			}
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+//				if (conn != null)
+//					conn.close();
+//				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		return isSuccess;
+	}
+
+
 }
