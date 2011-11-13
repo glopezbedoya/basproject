@@ -87,12 +87,15 @@ public class EJDAM014Action extends AbstractAction {
 		EJDAM010Action ejdam010Action = new EJDAM010Action();
 		ejdam010Action.setRequest(getRequest()); 
 		Form1Model form1 = ejdam010Action.setValueModel("1","S",iuser);
-		
+		Vector vcDetail1 = ejdam010Action.setValueDetail1Model();
+		Vector vcDetail2 = ejdam010Action.setValueDetail2Model();
+		Vector vcDocAttach = ejdam010Action.setValueDocumentAttach("1","");
 		try{
 			Form1DAO dao = new Form1DAOImpl();
-			dao.UpdateFromTable(form1);
-//			dao.UpdateFrom1Table(form1);
 			
+			dao.UpdateFromTable(form1,vcDetail1,vcDetail2,vcDocAttach);
+//			dao.UpdateFrom1Table(form1);
+		
 			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
 			EJDAUtil ejda = new EJDAUtil();
 			transactionLogModel.setMenuId("M014");
