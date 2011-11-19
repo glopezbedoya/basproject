@@ -469,7 +469,7 @@
             <td width="200"><%=DisplayUtil.displayInputTextBox("PACKAGE_NO",formDetail1M.getNo_type_package(),"","10") %></td>
             <td width="200"><%=DisplayUtil.displayInputTextBox("GOODS_DESC",formDetail1M.getGood_desc(),"","10") %></td>
             <td width="100"><%=DisplayUtil.displayInputTextBox("CODE_NO",formDetail1M.getCust_code(),"","10") %></td>
-          	<td width="100"><%=DisplayUtil.displayInputTextBox("CODE_NO",formDetail1M.getCust_unit(),"","10") %></td>
+          	<td width="100"><%=DisplayUtil.displaySelectTag(form2Bean.getUnitVt(), formDetail1M.getCust_unit(), "UNIT", "EDIT", "") %></td>
            </tr>
            <%	}
        		 }%>
