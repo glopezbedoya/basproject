@@ -75,6 +75,7 @@ public class EJDAM014Action extends AbstractAction {
 		
 		return false;
 	}
+	
 	private boolean doSubmitButton()  throws Exception{
 		log.debug("[ Start : doSubmitButton M014]");
 		boolean result = false;
@@ -115,6 +116,7 @@ public class EJDAM014Action extends AbstractAction {
 		}
 		return result;
 	}
+	
 	private boolean doUpdate() {
 		form1Bean = getForm1Bean();
 		String docId = (String)getRequest().getParameter("doc_id");

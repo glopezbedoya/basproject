@@ -7,6 +7,8 @@ import org.apache.log4j.Logger;
 import com.ejda.constant.EJDAConstant;
 import com.ejda.sessionBean.Form3Bean;
 import com.ejda.util.EJDAUtil;
+import com.tcd.ejda.dao.CacheDataDAO;
+import com.tcd.ejda.dao.CacheDataDAOImpl;
 import com.tcd.ejda.dao.Form1DAO;
 import com.tcd.ejda.dao.Form1DAOImpl;
 import com.tcd.ejda.dao.Form3DAO;
@@ -42,6 +44,7 @@ public class EJDAM016Action extends AbstractAction {
 	@Override
 	public void init() {
 		/** EJDA Form no 3****/
+		Vector unitVt = new Vector();
 		log.debug("*********** EJDAM012Action ***********");
 		
 		
@@ -51,6 +54,13 @@ public class EJDAM016Action extends AbstractAction {
 		ValueListModel valueListM = new ValueListModel();
 		valueListM.setReturnModel("Form1Model");
 		form3Bean.setValueListM(valueListM);
+		try{
+			CacheDataDAO dao = new CacheDataDAOImpl();
+			unitVt = dao.LoadUnit();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		form3Bean.setUnitVt(unitVt);
 		setForm3Bean(form3Bean);
 	}
 

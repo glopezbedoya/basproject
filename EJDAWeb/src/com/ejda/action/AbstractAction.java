@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 
 import com.ejda.sessionBean.TransactionLogBean;
+import com.tcd.ejda.dao.CacheDataDAO;
+import com.tcd.ejda.dao.CacheDataDAOImpl;
 import com.tcd.ejda.model.ValueListModel;
 
 public abstract class AbstractAction {
@@ -65,6 +67,18 @@ public abstract class AbstractAction {
 			return null;
 		}
 	}
+	
+	public Vector getUnitSelect(){
+		Vector unitVt = new Vector();
+		try{
+			CacheDataDAO dao = new CacheDataDAOImpl();
+			unitVt = dao.LoadUnit();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return unitVt;
+	}
+		
 	
 	
 	StringBuffer removeWasteSQL( StringBuffer dSqlBuffer ){

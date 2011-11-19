@@ -7,6 +7,8 @@ import org.apache.log4j.Logger;
 import com.ejda.constant.EJDAConstant;
 import com.ejda.sessionBean.Form1Bean;
 import com.ejda.util.EJDAUtil;
+import com.tcd.ejda.dao.CacheDataDAO;
+import com.tcd.ejda.dao.CacheDataDAOImpl;
 import com.tcd.ejda.dao.Form1DAO;
 import com.tcd.ejda.dao.Form1DAOImpl;
 import com.tcd.ejda.dao.TransactionLogDAO;
@@ -32,6 +34,7 @@ public class EJDAM018Action extends AbstractAction {
 	@Override
 	public void init() {
 		/** EJDA Form no 1****/
+		Vector unitVt = new Vector();
 		log.debug("*********** EJDAM018Action ***********");
 		
 		form1Bean = getForm1Bean();
@@ -47,6 +50,13 @@ public class EJDAM018Action extends AbstractAction {
 		ValueListModel valueListM = new ValueListModel();
 		valueListM.setReturnModel("Form1Model");
 		form1Bean.setValueListM(valueListM);
+		try{
+			CacheDataDAO dao = new CacheDataDAOImpl();
+			unitVt = dao.LoadUnit();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		form1Bean.setUnitVt(unitVt);
 		setForm1Bean(form1Bean);
 	}
 
@@ -78,10 +88,14 @@ public class EJDAM018Action extends AbstractAction {
 		EJDAM010Action ejdam010Action = new EJDAM010Action();
 		ejdam010Action.setRequest(getRequest()); 
 		Form1Model form1 = ejdam010Action.setValueModel("1","P",iuser);
+		Vector vcDetail1 = ejdam010Action.setValueDetail1Model();
+		Vector vcDetail2 = ejdam010Action.setValueDetail2Model();
+		Vector vcDocAttach = ejdam010Action.setValueDocumentAttach("1","");
 		
 		try{
 			Form1DAO dao = new Form1DAOImpl();
-			dao.UpdateFromTable(form1);
+			dao.UpdateFromTable(form1,vcDetail1,vcDetail2,vcDocAttach);
+//			dao.UpdateFromTable(form1);
 			
 			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
 			EJDAUtil ejda = new EJDAUtil();
@@ -191,7 +205,8 @@ private void setCriteriaPameter(){
 		String sqlWhere="";
 		try{
 			sql.append(EJDAConstant.SQL.FORM_T_DOC_1);
-			sql.append(" WHERE JDA_TYPE = '1' AND DOC_STATUS = 'S' ");
+//			sql.append(" WHERE JDA_TYPE = '1' AND DOC_STATUS = 'S' ");
+			sql.append(" WHERE DOC_STATUS = 'S' ");
 		}catch(Exception e){
 			e.printStackTrace();
 		}
