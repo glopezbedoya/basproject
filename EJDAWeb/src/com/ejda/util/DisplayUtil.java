@@ -165,8 +165,8 @@ public class DisplayUtil {
 				obj = (CacheDataM) v.get(i);
 				value = displayHTML(obj.getCode()).trim();
 				name = displayHTML(obj.getShortDesc()).trim();
-				log.debug("displaySelectTag value : " + value);
-				log.debug("displaySelectTag name : " + name);
+//				log.debug("displaySelectTag value : " + value);
+//				log.debug("displaySelectTag name : " + name);
 				if (value != null && selectedValue != null &&  !selectedValue.equals("")  && value.trim().equals(selectedValue.trim()) ) {
 					str = str + "<option value = \"" + value + "\" selected>" +value + " - " + name + "</option>";
 				} else {
