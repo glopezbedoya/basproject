@@ -12,7 +12,7 @@
 	Logger log = Logger.getLogger("JspLog");
 	Form1Bean form1Bean = (Form1Bean)request.getSession().getAttribute("Form1Bean");
 	log.debug("form1Bean :: " + form1Bean);
-	Form1Model form1ModelSP = form1Bean.getForm1ModelSP();
+	Form1Model form1ModelSP = form1Bean.getForm1ModelCri();
 	Vector form1Vt = form1Bean.getForm1Vt();
 	Form1Model form1M = new Form1Model();
 	String form_action = (String)form1Bean.getActionName();

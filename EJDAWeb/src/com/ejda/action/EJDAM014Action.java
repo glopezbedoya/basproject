@@ -45,6 +45,7 @@ public class EJDAM014Action extends AbstractAction {
 		form1Bean.setDetail2MVt(new Vector<FormDetail2Model>());
 		
 		form1Bean.setForm1ModelSP(new Form1Model());
+		form1Bean.setForm1ModelCri(new Form1Model());
 		form1Bean.setDetail1ModelSP(new FormDetail1Model());
 		form1Bean.setDetail2ModelSP(new FormDetail2Model());
 		form1Bean.setDocAttachModelSP(new FormDocAttachModel());
@@ -65,6 +66,7 @@ public class EJDAM014Action extends AbstractAction {
 	public boolean methodAction(String ejdaMethod) throws Exception{
 		// TODO Auto-generated method stub
 		if(ejdaMethod.equalsIgnoreCase("doSearch")){
+			setCriteriaPameter();
 			return doSearch();
 		}else if(ejdaMethod.equalsIgnoreCase("doDelete")){
 			return doDelete();
@@ -72,7 +74,10 @@ public class EJDAM014Action extends AbstractAction {
 			return doUpdate();
 		}else if (ejdaMethod.equalsIgnoreCase("doSubmitButton")){
 			return doSubmitButton();
+		}else if (ejdaMethod.equalsIgnoreCase("doBack")){
+			return true;
 		}
+		
 		
 		
 		return false;
@@ -152,7 +157,6 @@ public class EJDAM014Action extends AbstractAction {
 	public boolean doSearch(){
 		log.debug("*********** doSearch ***********");
 		boolean result = false;
-		setCriteriaPameter();
 		form1Bean = getForm1Bean();
 		ValueListModel valueListM = new ValueListModel();
 		ValueListAction valueListA = new ValueListAction();
@@ -160,7 +164,7 @@ public class EJDAM014Action extends AbstractAction {
 		try{
 			Vector tranLogVt = new Vector();
 			valueListM = form1Bean.getValueListM();
-			valueListM.setSQL(this.setSQL(form1Bean.form1ModelSP));
+			valueListM.setSQL(this.setSQL(form1Bean.form1ModelCri));
 			valueListM.setParameters(getValueListParameters());
 			valueListM.setPage(getRequest().getParameter("page"));
 			valueListM.setItemsPerPage(Integer.parseInt(getRequest().getParameter("volumePerPage")));
@@ -209,7 +213,7 @@ public class EJDAM014Action extends AbstractAction {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		getForm1Bean().setForm1ModelSP(form1);
+		getForm1Bean().setForm1ModelCri(form1);
 	}
 	
 	private String setSQL(Form1Model form1Cri){
@@ -253,7 +257,7 @@ public class EJDAM014Action extends AbstractAction {
 	
 	private Vector getValueListParameters() {
 		Vector parameters = new Vector();
-		Form1Model form1 = getForm1Bean().getForm1ModelSP();
+		Form1Model form1 = getForm1Bean().getForm1ModelCri();
 		if (StringUtils.isNotEmpty(form1.getForm_name())){
 			log.debug("Form Name = "+form1.getForm_name());
 			parameters.add(form1.getForm_name());
