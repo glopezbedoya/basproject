@@ -34,7 +34,6 @@ public class EJDAM015Action extends AbstractAction {
 	@Override
 	public void init() {
 		/** EJDA Form no 2****/
-		Vector unitVt = new Vector();
 		log.debug("*********** EJDAM015Action ***********");
 		
 		
@@ -51,13 +50,7 @@ public class EJDAM015Action extends AbstractAction {
 		ValueListModel valueListM = new ValueListModel();
 		valueListM.setReturnModel("form1Model");
 		form2Bean.setValueListM(valueListM);
-		try{
-			CacheDataDAO dao = new CacheDataDAOImpl();
-			unitVt = dao.LoadUnit();
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		form2Bean.setUnitVt(unitVt);
+		form2Bean.setUnitVt(getUnitSelect());
 		setform2Bean(form2Bean);
 	}
 
@@ -83,7 +76,9 @@ public class EJDAM015Action extends AbstractAction {
 	private boolean doUpdate() {
 		form2Bean = getform2Bean();
 		String docId = (String)getRequest().getParameter("doc_id");
+		String action = (String)getRequest().getParameter("ejdaAction");
 		log.debug("docId = "+docId);
+		log.debug("action = "+action);
 //		getRequest().getSession().setAttribute("form_no", form_no);
 		try{
 			Form1DAO dao = new Form1DAOImpl();
@@ -91,6 +86,8 @@ public class EJDAM015Action extends AbstractAction {
 			form2Bean.setDetail1MVt(dao.searchFormDetail1Model(docId));
 			form2Bean.setDetail2MVt(dao.searchFormDetail2Model(docId));
 			form2Bean.setDocAttachMVt(dao.searchFormDocAttachModel(docId));
+			form2Bean.setUnitVt(getUnitSelect());
+			form2Bean.setActionName(action);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -182,36 +179,38 @@ public class EJDAM015Action extends AbstractAction {
 	
 	public boolean doSearch(){
 		log.debug("*********** doSearch ***********");
+		EJDAM014Action ejdam014Action = new EJDAM014Action();
+//		ejdam014Action.doSearch();
 //		log.debug("ejdaMethod = "+getRequest().getParameter("ejdaMethod"));
-		boolean result = false;
-		setCriteriaPameter();
-		form2Bean = getform2Bean();
-		ValueListModel valueListM = new ValueListModel();
-		ValueListAction valueListA = new ValueListAction();
-		log.debug("getRequest().getParameter(Page)"+getRequest().getParameter("Page"));
-		try{
-			Vector tranLogVt = new Vector();
-			valueListM = form2Bean.getValueListM();
-			valueListM.setSQL(this.setSQL(form2Bean.form2ModelSP));
-			valueListM.setParameters(getValueListParameters());
-			valueListM.setPage(getRequest().getParameter("page"));
-			valueListM.setItemsPerPage(Integer.parseInt(getRequest().getParameter("volumePerPage")));
-			
-			form2Bean.setValueListM(valueListA.doSearch(valueListM));
-			form2Bean.setForm2Vt(form2Bean.getValueListM().getResult());
-			form2Bean.setActionName("EJDAM015");
-			log.debug("form2Bean = " + form2Bean.getForm2Vt().size());
-			log.debug("form2Bean.getValueListM().getCount() = "+form2Bean.getValueListM().getCount());
-			log.debug("form2Bean setActionName = " + form2Bean.getActionName());
-			getRequest().getSession().removeAttribute("VALUE_LIST");
-			setform2Bean(form2Bean);
-			result = true;
-		}catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
+//		boolean result = false;
+//		setCriteriaPameter();
+//		form2Bean = getform2Bean();
+//		ValueListModel valueListM = new ValueListModel();
+//		ValueListAction valueListA = new ValueListAction();
+//		log.debug("getRequest().getParameter(Page)"+getRequest().getParameter("Page"));
+//		try{
+//			Vector tranLogVt = new Vector();
+//			valueListM = form2Bean.getValueListM();
+//			valueListM.setSQL(this.setSQL(form2Bean.form2ModelSP));
+//			valueListM.setParameters(getValueListParameters());
+//			valueListM.setPage(getRequest().getParameter("page"));
+//			valueListM.setItemsPerPage(Integer.parseInt(getRequest().getParameter("volumePerPage")));
+//			
+//			form2Bean.setValueListM(valueListA.doSearch(valueListM));
+//			form2Bean.setForm2Vt(form2Bean.getValueListM().getResult());
+//			form2Bean.setActionName("EJDAM015");
+//			log.debug("form2Bean = " + form2Bean.getForm2Vt().size());
+//			log.debug("form2Bean.getValueListM().getCount() = "+form2Bean.getValueListM().getCount());
+//			log.debug("form2Bean setActionName = " + form2Bean.getActionName());
+//			getRequest().getSession().removeAttribute("VALUE_LIST");
+//			setform2Bean(form2Bean);
+//			result = true;
+//		}catch (Exception e) {
+//			// TODO: handle exception
+//			e.printStackTrace();
+//		}
 		
-		return result;
+		return ejdam014Action.doSearch();
 	}
 	
 	public Form2Bean getform2Bean() {

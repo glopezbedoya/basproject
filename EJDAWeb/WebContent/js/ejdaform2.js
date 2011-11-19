@@ -14,7 +14,9 @@ function validateSubmitButton(form,action){
 	$('input[name=mode_trans]').val(setModeTrans());
 	$('input[name=ejdaAction]').val(action);
 	$('input[name=ejdaMethod]').val('doSubmitButton');
-	$('input[name=screenName]').val(action+'.jsp');
+	//$('input[name=screenName]').val(action+'.jsp');
+	$('input[name=screenName]').val('EJDAM018.jsp');
+	
 	form.submit();
 	
 }

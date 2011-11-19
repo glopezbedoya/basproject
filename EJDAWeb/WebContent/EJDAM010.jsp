@@ -60,7 +60,7 @@
         <tr>
        		<td ></td>
        		<td width="100"></td>
-       		<td width="700"class="text" align="right"colspan="2"><select ><option value="1">EJDA NO. 1</option>
+       		<td width="700"class="text" align="right"colspan="2"><select id="DdlAddForm" name="DdlAddForm"><option value="1">EJDA NO. 1</option>
        		<option value="2">EJDA NO. 2</option>
        		<option value="3">EJDA NO. 3</option>
        		<option value="4">EJDA NO. 4</option>

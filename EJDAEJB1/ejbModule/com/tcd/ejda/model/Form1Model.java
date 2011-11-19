@@ -85,6 +85,8 @@ public class Form1Model {
 	private String instruct_exam;
 	private String result_exam;
 	private String for_other_use;
+	private Date date_Receipt_From;
+	private Date date_Receipt_To;
 	
 	/* Field EJDA Form 3*/
 	private String movementPemitNo;
@@ -611,6 +613,18 @@ public class Form1Model {
 	}
 	public void setCertified(String certified) {
 		this.certified = certified;
+	}
+	public Date getDate_Receipt_From() {
+		return date_Receipt_From;
+	}
+	public void setDate_Receipt_From(Date dateReceiptFrom) {
+		date_Receipt_From = dateReceiptFrom;
+	}
+	public Date getDate_Receipt_To() {
+		return date_Receipt_To;
+	}
+	public void setDate_Receipt_To(Date dateReceiptTo) {
+		date_Receipt_To = dateReceiptTo;
 	}
 	
 }

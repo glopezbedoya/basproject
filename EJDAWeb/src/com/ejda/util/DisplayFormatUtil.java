@@ -24,7 +24,6 @@ public class DisplayFormatUtil {
 		try {
 			rdt = inFmt.parse(dt);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String dateOut = outFmt.format(rdt);
@@ -56,10 +55,10 @@ public class DisplayFormatUtil {
 		return dateOut;
 	}
 
-	public static String SQLDateToString(java.sql.Date date, String format){
+	public static String SQLDateToString(java.sql.Date date){
 //		String returnDate = "";
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy",Locale.ENGLISH);
-		if(null==date)return null;
+		if(null==date)return "";
 		return dateFormat.format(date);
 	}
 	
@@ -132,7 +131,7 @@ public class DisplayFormatUtil {
 		java.sql.Date returnValue = null;
 		if (dateString!=null && dateString.length() == 8) {
 			try{
-				Calendar cal = Calendar.getInstance();
+				Calendar cal = Calendar.getInstance(Locale.ENGLISH);
 				if(format.equalsIgnoreCase("ddmmyyyy")){
 					int dd = StringToInt(dateString.substring(0,2));
 					int mm = StringToInt(dateString.substring(2,4))-1;
@@ -165,7 +164,7 @@ public class DisplayFormatUtil {
 			}
 		}else if(dateString!=null && dateString.length() == 10) {
 			try{
-				Calendar cal = Calendar.getInstance();
+				Calendar cal = Calendar.getInstance(Locale.ENGLISH);
 				if(format.equalsIgnoreCase("dd/mm/yyyy")||format.equalsIgnoreCase("dd-mm-yyyy")){
 					int dd = StringToInt(dateString.substring(0,2));
 					int mm = StringToInt(dateString.substring(3,5))-1;

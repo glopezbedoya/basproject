@@ -66,12 +66,12 @@
        			<span class="text">DOC ID </span>
        		
        		</td>
-       		<td width="250" align="left"><%=DisplayFormatUtil.displayInputTextBox("txtDocID",form1ModelSP.getForm_name(),"") %>
+       		<td width="250" align="left"><%=DisplayFormatUtil.displayInputTextBox("txtDocID",form1ModelSP.getDoc_ID(),"") %>
        		<td width="200" align="left" class="style1" scope="row" width="200">
        			<span class="text">eJDA </span>
        		
        		</td>
-       		<td align="left"><select ><option value="">ALL</option>
+       		<td align="left"><select id="jdaType" name="jdaType"><option value="">ALL</option>
        		<option value="1">EJDA NO. 1</option>
        		<option value="2">EJDA NO. 2</option>
        		<option value="3">EJDA NO. 3</option>
@@ -116,8 +116,8 @@
        		<span class="text">Date DOC </span>
        		
        		</td>
-       		<td align="left" colspan="3"><%=DisplayFormatUtil.displayTextBoxCalendar("txtDocDateFrom",form1ModelSP.getDate_Receipt()+"") %> - 
-       		<%=DisplayFormatUtil.displayTextBoxCalendar("txtDocDateTo",form1ModelSP.getDate_Receipt()+"") %> </td>
+       		<td align="left" colspan="3"><%=DisplayFormatUtil.displayTextBoxCalendar("txtDocDateFrom",DisplayFormatUtil.SQLDateToString(form1ModelSP.getDate_Receipt_From())) %> - 
+       		<%=DisplayFormatUtil.displayTextBoxCalendar("txtDocDateTo",DisplayFormatUtil.SQLDateToString(form1ModelSP.getDate_Receipt_To())) %> </td>
          </tr>
          <tr>
        		<td colspan="4" align="center" height="20"></td>	
