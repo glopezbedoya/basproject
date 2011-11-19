@@ -7,6 +7,8 @@ import org.apache.log4j.Logger;
 import com.ejda.constant.EJDAConstant;
 import com.ejda.sessionBean.Form2Bean;
 import com.ejda.util.EJDAUtil;
+import com.tcd.ejda.dao.CacheDataDAO;
+import com.tcd.ejda.dao.CacheDataDAOImpl;
 import com.tcd.ejda.dao.Form1DAO;
 import com.tcd.ejda.dao.Form1DAOImpl;
 import com.tcd.ejda.dao.TransactionLogDAO;
@@ -32,6 +34,7 @@ public class EJDAM015Action extends AbstractAction {
 	@Override
 	public void init() {
 		/** EJDA Form no 2****/
+		Vector unitVt = new Vector();
 		log.debug("*********** EJDAM015Action ***********");
 		
 		
@@ -48,6 +51,13 @@ public class EJDAM015Action extends AbstractAction {
 		ValueListModel valueListM = new ValueListModel();
 		valueListM.setReturnModel("form1Model");
 		form2Bean.setValueListM(valueListM);
+		try{
+			CacheDataDAO dao = new CacheDataDAOImpl();
+			unitVt = dao.LoadUnit();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		form2Bean.setUnitVt(unitVt);
 		setform2Bean(form2Bean);
 	}
 
@@ -127,10 +137,13 @@ public class EJDAM015Action extends AbstractAction {
 		ejdam010Action.setRequest(getRequest()); 
 		Form1Model form2 = ejdam010Action.setValueModel("2","S",iuser);
 		log.debug("Form2Model >> " + form2);
-		
+		Vector vcDetail1 = ejdam010Action.setValueDetail1Model();
+		Vector vcDetail2 = ejdam010Action.setValueDetail2Model();
+		Vector vcDocAttach = ejdam010Action.setValueDocumentAttach("2", "");
 		try{
 			Form1DAO dao = new Form1DAOImpl();
-			dao.UpdateFromTable(form2);
+			dao.UpdateFromTable(form2,vcDetail1,vcDetail2,vcDocAttach);
+//			dao.UpdateFromTable(form2);
 			
 			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
 			EJDAUtil ejda = new EJDAUtil();
