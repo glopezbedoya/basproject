@@ -214,7 +214,6 @@ function addPackageTabJS(){
 		var tbl = document.getElementById('packageTab');
 		
 		var lastRow = tbl.rows.length;
-		alert('lastRow : ' +lastRow);
 		var deletedRowCnt = 0;
 		var iteration = lastRow;
 		var row = tbl.insertRow(lastRow);
@@ -358,7 +357,6 @@ try{
 	    "/EJDAWeb/AjaxLoadCacheData?mode=",
 	    {load_name : 'UNIT'},
 	    function(data) { 
-	    	alert(data);
 	    	document.getElementById('UNIT_show_'+rowIndex).innerHTML = data;
 		    }
 		    ,  "text"
