@@ -744,7 +744,7 @@ public class Form1DAOImpl implements Form1DAO {
 			this.deleteInsertDetail(form1.getDoc_ID(), conn, detail1,  detail2,  doc);
 			log.debug("blSuccess >> " + blSuccess );
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
 			try {
 				conn.rollback();
 			} catch (SQLException e1) {
