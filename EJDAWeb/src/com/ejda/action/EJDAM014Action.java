@@ -2,10 +2,12 @@ package com.ejda.action;
 
 import java.util.Vector;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.ejda.constant.EJDAConstant;
 import com.ejda.sessionBean.Form1Bean;
+import com.ejda.util.DisplayFormatUtil;
 import com.ejda.util.EJDAUtil;
 import com.tcd.ejda.dao.CacheDataDAO;
 import com.tcd.ejda.dao.CacheDataDAOImpl;
@@ -191,11 +193,22 @@ public class EJDAM014Action extends AbstractAction {
 		getRequest().getSession().setAttribute("Form1Bean", form1Bean);
 	}
 	
-private void setCriteriaPameter(){
+	private void setCriteriaPameter(){
 		
 		Form1Model form1 = new Form1Model();
-		form1.setForm_name(getRequest().getParameter("txtFormName"));
-		
+		try{
+			form1.setForm_name(getRequest().getParameter("txtFormName"));
+			form1.setDoc_ID(getRequest().getParameter("txtDocID"));
+			form1.setJDA_Type(getRequest().getParameter("jdaType"));
+			form1.setConsignor_code(getRequest().getParameter("txtConsignorCode"));
+			form1.setConsignor_name(getRequest().getParameter("txtConsignorName"));
+			form1.setConsignee_code(getRequest().getParameter("txtConsigneeCode"));
+			form1.setConsignee_name(getRequest().getParameter("txtConsigneeName"));
+			form1.setDate_Receipt_From(DisplayFormatUtil.stringToDateSql((String)getRequest().getParameter("txtDocDateFrom"), "dd/mm/yyyy"));
+			form1.setDate_Receipt_To(DisplayFormatUtil.stringToDateSql((String)getRequest().getParameter("txtDocDateTo"), "dd/mm/yyyy"));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 		getForm1Bean().setForm1ModelSP(form1);
 	}
 	
@@ -208,6 +221,28 @@ private void setCriteriaPameter(){
 			sql.append(EJDAConstant.SQL.FORM_T_DOC_1);
 			//sql.append(" WHERE JDA_TYPE = '1' AND DOC_STATUS = 'A' ");
 			sql.append(" WHERE DOC_STATUS = 'A' ");
+			if(StringUtils.isNotEmpty(form1Cri.getDoc_ID())){
+				sql.append(" AND DOC_ID = ? ");
+			}
+			if(StringUtils.isNotEmpty(form1Cri.getJDA_Type())){
+				sql.append(" AND JDA_TYPE = ? ");
+			}
+			if(StringUtils.isNotEmpty(form1Cri.getConsignor_code())){
+				sql.append(" AND CONSIGNOR_CODE = ? ");
+			}
+			if(StringUtils.isNotEmpty(form1Cri.getConsignor_name())){
+				sql.append(" AND CONSIGNOR_NAME = ? ");
+			}
+			if(StringUtils.isNotEmpty(form1Cri.getConsignee_code())){
+				sql.append(" AND CONSIGNEE_CODE = ? ");
+			}
+			if(StringUtils.isNotEmpty(form1Cri.getConsignee_name())){
+				sql.append(" AND CONSIGNEE_NAME = ? ");
+			}
+			if(form1Cri.getDate_Receipt_From() != null && form1Cri.getDate_Receipt_To() != null){
+				sql.append(" AND DATE_RECEIPT BETWEEN ? AND ? ");
+			}
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -219,9 +254,32 @@ private void setCriteriaPameter(){
 	private Vector getValueListParameters() {
 		Vector parameters = new Vector();
 		Form1Model form1 = getForm1Bean().getForm1ModelSP();
-		if (null!= form1.getForm_name() && !"".equals(form1.getForm_name())){
+		if (StringUtils.isNotEmpty(form1.getForm_name())){
 			log.debug("Form Name = "+form1.getForm_name());
 			parameters.add(form1.getForm_name());
+		}
+		if(StringUtils.isNotEmpty(form1.getDoc_ID())){
+			parameters.add(form1.getDoc_ID());
+		}
+		if(StringUtils.isNotEmpty(form1.getJDA_Type())){
+			parameters.add(form1.getJDA_Type());
+		}
+		if(StringUtils.isNotEmpty(form1.getConsignor_code())){
+			parameters.add(form1.getConsignor_code());
+		}
+		if(StringUtils.isNotEmpty(form1.getConsignor_name())){
+			parameters.add(form1.getConsignor_name());
+		}
+		if(StringUtils.isNotEmpty(form1.getConsignee_code())){
+			parameters.add(form1.getConsignee_code());
+		}
+		if(StringUtils.isNotEmpty(form1.getConsignee_name())){
+			parameters.add(form1.getConsignee_name());
+		}
+		
+		if(form1.getDate_Receipt_From() != null && form1.getDate_Receipt_To() != null){
+			parameters.add(form1.getDate_Receipt_From());
+			parameters.add(form1.getDate_Receipt_To());
 		}
 		log.info("parameters.size() = "+parameters.size());
 		return parameters;

@@ -163,6 +163,7 @@ public class EJDAM011Action extends AbstractAction {
 	private boolean doAdd() {
 		// TODO Auto-generated method stub
 		log.debug("*********** doChangePage ***********");
+		init();
 		form2Bean = getform2Bean();
 		form2Bean.setActionName("EJDAM011");
 		return true;
