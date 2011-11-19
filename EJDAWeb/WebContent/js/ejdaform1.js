@@ -4,7 +4,7 @@ function CancelButton(form,action){
 	//alert('CancelButton ' + form);
 	//alert('CancelButton ' + action);
 	$('input[name=ejdaAction]').val(action);
-	$('input[name=ejdaMethod]').val('doSearch');
+	$('input[name=ejdaMethod]').val('doBack');
 	$('input[name=screenName]').val(action+'.jsp');
 	form.submit();
 }

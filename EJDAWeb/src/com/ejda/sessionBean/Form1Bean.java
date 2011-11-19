@@ -10,6 +10,7 @@ import com.tcd.ejda.model.FormDocAttachModel;
 public class Form1Bean extends AbstractBean {
 	
 	public Form1Model form1ModelSP;
+	public Form1Model form1ModelCri;
 	public Vector form1Vt;
 	public String actionName;
 	public FormDetail1Model detail1ModelSP;
@@ -83,6 +84,12 @@ public class Form1Bean extends AbstractBean {
 	}
 	public void setUnitVt(Vector unitVt) {
 		this.unitVt = unitVt;
+	}
+	public Form1Model getForm1ModelCri() {
+		return form1ModelCri;
+	}
+	public void setForm1ModelCri(Form1Model form1ModelCri) {
+		this.form1ModelCri = form1ModelCri;
 	}
 	
 	
