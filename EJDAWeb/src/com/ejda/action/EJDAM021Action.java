@@ -7,6 +7,8 @@ import org.apache.log4j.Logger;
 import com.ejda.constant.EJDAConstant;
 import com.ejda.sessionBean.Form4Bean;
 import com.ejda.util.EJDAUtil;
+import com.tcd.ejda.dao.CacheDataDAO;
+import com.tcd.ejda.dao.CacheDataDAOImpl;
 import com.tcd.ejda.dao.Form1DAO;
 import com.tcd.ejda.dao.Form1DAOImpl;
 import com.tcd.ejda.dao.Form3DAO;
@@ -15,6 +17,7 @@ import com.tcd.ejda.dao.Form4DAO;
 import com.tcd.ejda.dao.Form4DAOImpl;
 import com.tcd.ejda.model.Form1Model;
 import com.tcd.ejda.model.Form4Model;
+import com.tcd.ejda.model.FormDetail1Model;
 import com.tcd.ejda.model.TransactionLogModel;
 import com.tcd.ejda.model.ValueListModel;
 
@@ -53,6 +56,7 @@ public class EJDAM021Action extends AbstractAction {
 		ValueListModel valueListM = new ValueListModel();
 		valueListM.setReturnModel("Form1Model");
 		form4Bean.setValueListM(valueListM);
+		form4Bean.setUnitVt(getUnitSelect());
 		setForm4Bean(form4Bean);
 	}
 
@@ -245,8 +249,23 @@ public class EJDAM021Action extends AbstractAction {
 	}
 	
 	private boolean doUpdate() {
-		String form_no = getRequest().getParameter("form_no");
-		getRequest().getSession().setAttribute("form_no", form_no);
+//		String form_no = getRequest().getParameter("form_no");
+//		getRequest().getSession().setAttribute("form_no", form_no);
+		form4Bean = getForm4Bean();
+		String docId = (String)getRequest().getParameter("doc_id");
+		log.debug("docId = "+docId);
+//		getRequest().getSession().setAttribute("form_no", form_no);
+		try{
+			Form1DAO dao = new Form1DAOImpl();
+			form4Bean.setForm4ModelSP(dao.searchFormModel(docId));
+			form4Bean.setDetail1MVt(dao.searchFormDetail1Model(docId));
+			form4Bean.setDetail2MVt(dao.searchFormDetail2Model(docId));
+			form4Bean.setDocAttachMVt(dao.searchFormDocAttachModel(docId));
+			form4Bean.setUnitVt(getUnitSelect());
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		setForm4Bean(form4Bean);
 		return true;
 	}
 }
