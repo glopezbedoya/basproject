@@ -262,8 +262,22 @@
             			form1M = (Form1Model)form1Vt.get(i);            	
             			bgColor = (i%2 == 0)?bgColor1:bgColor2;
             			String showType = "eJDA " + form1M.getJDA_Type();
+            			String action = "";
+            			if("1".equals(form1M.getJDA_Type())){
+            				action = "EJDAM018";
+            				page = "eJdaForm1.jsp";
+            			}else if("2".equals(form1M.getJDA_Type())){
+            				action = "EJDAM019";
+            				page = "eJdaForm2.jsp";
+            			}else if("3".equals(form1M.getJDA_Type())){
+            				action = "EJDAM020";
+            				page = "ejdaForm3.jsp";
+            			}else {
+            				action = "EJDAM021";
+            				page = "ejdaForm4.jsp";
+            			}
             %>
-			            <tr onclick="updateEJDATable2(this.form,'<%=form1M.getDoc_ID() %>','EJDAM018');" style="cursor:hand">
+            			<tr onclick="updateEJDATable2(this.form,'<%=form1M.getDoc_ID() %>','<%=action%>','<%=page%>');" style="cursor:hand">
 			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form1M.getDoc_ID() %>"/></th>
 			              <td <%=bgColor %> class="text"><%=form1M.getDoc_ID()%></td>
 			              <td <%=bgColor %> class="text"><%=form1M.getConsignor_name()%></td>
