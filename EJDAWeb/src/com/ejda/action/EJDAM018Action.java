@@ -2,10 +2,12 @@ package com.ejda.action;
 
 import java.util.Vector;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.ejda.constant.EJDAConstant;
 import com.ejda.sessionBean.Form1Bean;
+import com.ejda.util.DisplayFormatUtil;
 import com.ejda.util.EJDAUtil;
 import com.tcd.ejda.dao.CacheDataDAO;
 import com.tcd.ejda.dao.CacheDataDAOImpl;
@@ -43,6 +45,7 @@ public class EJDAM018Action extends AbstractAction {
 		form1Bean.setDetail2MVt(new Vector<FormDetail2Model>());
 		
 		form1Bean.setForm1ModelSP(new Form1Model());
+		form1Bean.setForm1ModelCri(new Form1Model());
 		form1Bean.setDetail1ModelSP(new FormDetail1Model());
 		form1Bean.setDetail2ModelSP(new FormDetail2Model());
 		form1Bean.setDocAttachModelSP(new FormDocAttachModel());
@@ -64,6 +67,7 @@ public class EJDAM018Action extends AbstractAction {
 	public boolean methodAction(String ejdaMethod)throws Exception  {
 		// TODO Auto-generated method stub
 		if(ejdaMethod.equalsIgnoreCase("doSearch")){
+			setCriteriaPameter();
 			return doSearch();
 		}else if(ejdaMethod.equalsIgnoreCase("doDelete")){
 			return doDelete();
@@ -79,7 +83,8 @@ public class EJDAM018Action extends AbstractAction {
 	private boolean doSubmitButton() throws Exception {
 		boolean result = false;
 		String iuser = (String) getRequest().getSession().getAttribute("iuser");
-		String formNo = (String) getRequest().getSession().getAttribute("form_no");
+//		String formNo = (String) getRequest().getSession().getAttribute("form_no");
+		String formNo = (String) getRequest().getParameter("form_no");
 		String ipAddress = getRequest().getRemoteAddr();
 		
 		if (null==iuser || "".equals(iuser)){
@@ -87,10 +92,16 @@ public class EJDAM018Action extends AbstractAction {
 		}
 		EJDAM010Action ejdam010Action = new EJDAM010Action();
 		ejdam010Action.setRequest(getRequest()); 
-		Form1Model form1 = ejdam010Action.setValueModel("1","P",iuser);
+		Form1Model form1 = ejdam010Action.setValueModel(formNo,"P",iuser);
 		Vector vcDetail1 = ejdam010Action.setValueDetail1Model();
-		Vector vcDetail2 = ejdam010Action.setValueDetail2Model();
-		Vector vcDocAttach = ejdam010Action.setValueDocumentAttach("1","");
+//		Vector vcDetail2 = ejdam010Action.setValueDetail2Model();
+		Vector vcDetail2 = null;
+		if("1".equals(formNo) || "2".equals(formNo) || "4".equals(formNo)){
+			vcDetail2 = ejdam010Action.setValueDetail2Model();
+		}else if("3".equals(formNo)){
+			vcDetail2 = ejdam010Action.setValueDetail2ModelForm3();
+		}
+		Vector vcDocAttach = ejdam010Action.setValueDocumentAttach(formNo,"");
 		
 		try{
 			Form1DAO dao = new Form1DAOImpl();
@@ -106,7 +117,7 @@ public class EJDAM018Action extends AbstractAction {
 			transactionLogModel.setTranBy(iuser);
 			ejda.insertTranLog(transactionLogModel);
 			
-			getRequest().getSession().setAttribute("responseMessage", "Submit Form 1 Successfully.");
+			getRequest().getSession().setAttribute("responseMessage", "Submit Form "+formNo+" Successfully.");
 			result = doSearch();
 			
 			log.debug("result = "+result);
@@ -149,7 +160,7 @@ public class EJDAM018Action extends AbstractAction {
 	public boolean doSearch(){
 		log.debug("*********** doSearch ***********");
 		boolean result = false;
-		setCriteriaPameter();
+//		setCriteriaPameter();
 		form1Bean = getForm1Bean();
 		ValueListModel valueListM = new ValueListModel();
 		ValueListAction valueListA = new ValueListAction();
@@ -157,7 +168,7 @@ public class EJDAM018Action extends AbstractAction {
 		try{
 			Vector tranLogVt = new Vector();
 			valueListM = form1Bean.getValueListM();
-			valueListM.setSQL(this.setSQL(form1Bean.form1ModelSP));
+			valueListM.setSQL(this.setSQL(form1Bean.form1ModelCri));
 			valueListM.setParameters(getValueListParameters());
 			valueListM.setPage(getRequest().getParameter("page"));
 			valueListM.setItemsPerPage(Integer.parseInt(getRequest().getParameter("volumePerPage")));
@@ -179,7 +190,7 @@ public class EJDAM018Action extends AbstractAction {
 	}
 	
 	public Form1Bean getForm1Bean() {
-		Form1Bean form1Bean = (Form1Bean)getRequest().getSession().getAttribute("Form1Bean");
+		Form1Bean form1Bean = (Form1Bean)getRequest().getSession().getAttribute("form1Bean");
 		if (null == form1Bean){
 			form1Bean = new Form1Bean();
 		}
@@ -187,15 +198,26 @@ public class EJDAM018Action extends AbstractAction {
 	}
 
 	public void setForm1Bean(Form1Bean form1Bean) {
-		getRequest().getSession().setAttribute("Form1Bean", form1Bean);
+		getRequest().getSession().setAttribute("form1Bean", form1Bean);
 	}
 	
-private void setCriteriaPameter(){
+	private void setCriteriaPameter(){
 		
 		Form1Model form1 = new Form1Model();
-		form1.setForm_name(getRequest().getParameter("txtFormName"));
-		
-		getForm1Bean().setForm1ModelSP(form1);
+		try{
+			form1.setForm_name(getRequest().getParameter("txtFormName"));
+			form1.setDoc_ID(getRequest().getParameter("txtDocID"));
+			form1.setJDA_Type(getRequest().getParameter("jdaType"));
+			form1.setConsignor_code(getRequest().getParameter("txtConsignorCode"));
+			form1.setConsignor_name(getRequest().getParameter("txtConsignorName"));
+			form1.setConsignee_code(getRequest().getParameter("txtConsigneeCode"));
+			form1.setConsignee_name(getRequest().getParameter("txtConsigneeName"));
+			form1.setDate_Receipt_From(DisplayFormatUtil.stringToDateSql((String)getRequest().getParameter("txtDocDateFrom"), "dd/mm/yyyy"));
+			form1.setDate_Receipt_To(DisplayFormatUtil.stringToDateSql((String)getRequest().getParameter("txtDocDateTo"), "dd/mm/yyyy"));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		getForm1Bean().setForm1ModelCri(form1);
 	}
 	
 	private String setSQL(Form1Model form1Cri){
@@ -203,15 +225,39 @@ private void setCriteriaPameter(){
 		StringBuffer sql1 = new StringBuffer();
 		String sqlCommand ="";
 		String sqlWhere="";
+		log.debug("form1Cri = "+form1Cri);
+		log.debug("form1Cri.getJDA_Type() = "+form1Cri.getJDA_Type());
 		try{
 			sql.append(EJDAConstant.SQL.FORM_T_DOC_1);
 //			sql.append(" WHERE JDA_TYPE = '1' AND DOC_STATUS = 'S' ");
 			sql.append(" WHERE DOC_STATUS = 'S' ");
+			if(StringUtils.isNotEmpty(form1Cri.getDoc_ID())){
+				sql.append(" AND DOC_ID = ? ");
+			}
+			if(StringUtils.isNotEmpty(form1Cri.getJDA_Type())){
+				sql.append(" AND JDA_TYPE = ? ");
+			}
+			if(StringUtils.isNotEmpty(form1Cri.getConsignor_code())){
+				sql.append(" AND CONSIGNOR_CODE = ? ");
+			}
+			if(StringUtils.isNotEmpty(form1Cri.getConsignor_name())){
+				sql.append(" AND CONSIGNOR_NAME = ? ");
+			}
+			if(StringUtils.isNotEmpty(form1Cri.getConsignee_code())){
+				sql.append(" AND CONSIGNEE_CODE = ? ");
+			}
+			if(StringUtils.isNotEmpty(form1Cri.getConsignee_name())){
+				sql.append(" AND CONSIGNEE_NAME = ? ");
+			}
+			if(form1Cri.getDate_Receipt_From() != null && form1Cri.getDate_Receipt_To() != null){
+				sql.append(" AND DATE_RECEIPT BETWEEN ? AND ? ");
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
 		sql = removeWasteSQL(sql);
+		log.debug("sql.toString() = "+sql.toString()); 
 		return sql.toString();
 	}
 	
@@ -221,6 +267,28 @@ private void setCriteriaPameter(){
 		if (null!= form1.getForm_name() && !"".equals(form1.getForm_name())){
 			log.debug("Form Name = "+form1.getForm_name());
 			parameters.add(form1.getForm_name());
+		}if(StringUtils.isNotEmpty(form1.getDoc_ID())){
+			parameters.add(form1.getDoc_ID());
+		}
+		if(StringUtils.isNotEmpty(form1.getJDA_Type())){
+			parameters.add(form1.getJDA_Type());
+		}
+		if(StringUtils.isNotEmpty(form1.getConsignor_code())){
+			parameters.add(form1.getConsignor_code());
+		}
+		if(StringUtils.isNotEmpty(form1.getConsignor_name())){
+			parameters.add(form1.getConsignor_name());
+		}
+		if(StringUtils.isNotEmpty(form1.getConsignee_code())){
+			parameters.add(form1.getConsignee_code());
+		}
+		if(StringUtils.isNotEmpty(form1.getConsignee_name())){
+			parameters.add(form1.getConsignee_name());
+		}
+		
+		if(form1.getDate_Receipt_From() != null && form1.getDate_Receipt_To() != null){
+			parameters.add(form1.getDate_Receipt_From());
+			parameters.add(form1.getDate_Receipt_To());
 		}
 		log.info("parameters.size() = "+parameters.size());
 		return parameters;
