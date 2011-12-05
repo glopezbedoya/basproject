@@ -12,7 +12,7 @@
 <form name="ejdaformNo1" method="post" action="/EJDAWeb/EJDAControler">
 <%
 	Logger log = Logger.getLogger("JspLog");
-	Form1Bean form1Bean = (Form1Bean)request.getSession().getAttribute("Form1Bean");
+	Form1Bean form1Bean = (Form1Bean)request.getSession().getAttribute("form1Bean");
 	log.debug("form1Bean :: " + form1Bean);
 	Form1Model form1ModelSP = form1Bean.getForm1ModelSP();
 	FormDetail1Model detail1ModelSP = form1Bean.getDetail1ModelSP();
@@ -47,7 +47,7 @@
 	<input type="hidden" name="screenName" value="">
 	<input type="hidden" name="screenName" value="">
 	<input type="hidden" name="actionName" value="">
-	<input type="hidden" name="form_no" value="<%=form_no %>">
+	<input type="hidden" name="form_no" value="1">
 	<input type="hidden" name="doc_id" value="<%=form1ModelSP.getDoc_ID() %>">
 	<input type="hidden" name="page" value="<%=valueListM.getAtPage() %>" />
 	<input type="hidden" name="volumePerPage" value="<%=valueListM.getItemsPerPage() %>" />

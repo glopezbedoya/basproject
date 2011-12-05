@@ -1,5 +1,5 @@
 <%@page import="com.tcd.ejda.model.Form1Model"%>
-<%@page import="com.ejda.sessionBean.Form3Bean"%>
+<%@page import="com.ejda.sessionBean.Form1Bean"%>
 <%@page import="com.ejda.util.DisplayFormatUtil"%>
 <%@page import="com.tcd.ejda.model.ValueListModel"%>
 <%@page import="org.apache.log4j.Logger"%>
@@ -8,28 +8,29 @@
 <%@page import="com.ejda.util.DisplayUtil"%>
 <%@page import="com.tcd.ejda.model.Form1Model"%>
 <%@page import="com.tcd.ejda.model.FormDetail1Model"%>
-<%@page import="com.tcd.ejda.model.FormDetail2Model"%><script language="javascript" src="js/ejdaform3.js"></script>
+<%@page import="com.tcd.ejda.model.FormDetail2Model"%>
+<%@page import="com.ejda.util.LoadCacheData"%><script language="javascript" src="js/ejdaform3.js"></script>
 <form name="ejdaformNo1" method="post" action="/EJDAWeb/EJDAControler">
 <%
 	Logger log = Logger.getLogger("JspLog");
-	Form3Bean form3Bean = (Form3Bean)request.getSession().getAttribute("form3Bean");
+	Form1Bean form3Bean = (Form1Bean)request.getSession().getAttribute("form1Bean");
 	log.debug("form3Bean :: " + form3Bean);
-	Form1Model form3ModelSP = form3Bean.getForm3ModelSP();
-	Vector form3Vt = form3Bean.getForm3Vt();
+	Form1Model form3ModelSP = form3Bean.getForm1ModelSP();
+	Vector form3Vt = form3Bean.getForm1Vt();
 	Form1Model form3M = new Form1Model();
 	String form_action = (String)form3Bean.getActionName();
 	String form_no = (String)request.getSession().getAttribute("form_no");
 	String showName = "";
 	
 	if (null!=form_action && "EJDAM010".equals(form_action)){
-		showName ="Table 1 : Form no. 1";
+		showName ="Table 1 : Form no. 3";
 	
 	}else if (null!=form_action && "EJDAM014".equals(form_action)){
-		showName ="Table 2 : Form no. 1";
+		showName ="Table 2 : Form no. 3";
 	}else if (null!=form_action && "EJDAM018".equals(form_action)){
-		showName ="Table 3 : Form no. 1";
+		showName ="Table 3 : Form no. 3";
 	}else if (null!=form_action && "EJDAM022".equals(form_action)){
-		showName ="Table 4 : Form no. 1";
+		showName ="Table 4 : Form no. 3";
 	}
 	
 	String bgColor1 = "bordercolor=\"#F4F4F4\"";
@@ -44,7 +45,7 @@
 	<input type="hidden" name="screenName" value="">
 	<input type="hidden" name="screenName" value="">
 	<input type="hidden" name="actionName" value="">
-	<input type="hidden" name="form_no" value="<%=form_no %>">
+	<input type="hidden" name="form_no" value="3">
 	<input type="hidden" name="doc_id" value="<%=form3ModelSP.getDoc_ID() %>">
 	<input type="hidden" name="page" value="<%=valueListM.getAtPage() %>" />
 	<input type="hidden" name="volumePerPage" value="<%=valueListM.getItemsPerPage() %>" />
@@ -319,12 +320,12 @@
             <td colspan="2"><font class="textDescBold">7. Port/Place of Import</font></td>
             </tr>
           <tr>
-            <td><font class="textDesc">Code </font></td>
-            <td><%//=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form3ModelSP.getPortLoad_Code(),"PortImport_Code","EDIT","") %></td>
+            <td><font class="textDesc"></font></td>
+            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form3ModelSP.getPortImport_Code(),"PortImport_Code","EDIT","") %></td>
             </tr>
           <tr>
-            <td><font class="textDesc">Descriptiont </font></td>
-            <td><%=DisplayUtil.displayInputTextBox("PortImport_Desc",form3ModelSP.getPortImport_Desc(),"") %></td>
+            <td><font class="textDesc"></font></td>
+            <td><%//=DisplayUtil.displayInputTextBox("PortImport_Desc",form3ModelSP.getPortImport_Desc(),"") %></td>
             </tr>
         </table></td>
         </tr>
@@ -334,12 +335,12 @@
             <td colspan="2"><font class="textDescBold">8.Port/Place of   Loading</font></td>
           </tr>
           <tr>
-            <td><font class="textDesc">Code </font></td>
-            <td><%//=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form3ModelSP.getPortLoad_Code(),"PortLoad_Code","EDIT","") %></td>
+            <td><font class="textDesc"></font></td>
+            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form3ModelSP.getPortLoad_Code(),"PortLoad_Code","EDIT","") %></td>
           </tr>
           <tr>
-            <td><font class="textDesc">Descriptiont </font></td>
-            <td><%=DisplayUtil.displayInputTextBox("PortLoad_Desc",form3ModelSP.getPortLoad_Desc(),"") %></td>
+            <td><font class="textDesc"></font></td>
+            <td><%//=DisplayUtil.displayInputTextBox("PortLoad_Desc",form3ModelSP.getPortLoad_Desc(),"") %></td>
           </tr>
         </table></td>
         <td><table border="0" cellspacing="1" cellpadding="1">
@@ -347,12 +348,12 @@
             <td colspan="2"><font class="textDescBold">9. Via (Transhipment Cargo Only)</font></td>
             </tr>
           <tr>
-            <td><font class="textDesc">Code </font></td>
-            <td><%//=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form3ModelSP.getPortLoad_Code(),"Via_Code","EDIT","") %></td>
+            <td><font class="textDesc"></font></td>
+            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form3ModelSP.getVia_Code(),"Via_Code","EDIT","") %></td>
             </tr>
           <tr>
-            <td><font class="textDesc">Descriptiont </font></td>
-            <td><%=DisplayUtil.displayInputTextBox("Via_Desc",form3ModelSP.getVia_Desc(),"") %></td>
+            <td><font class="textDesc"></font></td>
+            <td><%//=DisplayUtil.displayInputTextBox("Via_Desc",form3ModelSP.getVia_Desc(),"") %></td>
             </tr>
         </table></td>
         </tr>

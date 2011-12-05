@@ -10,9 +10,9 @@
 <script language="javascript" src="js/EJDAM010.js"></script>
 <%
 	Logger log = Logger.getLogger("JspLog");
-	Form1Bean form1Bean = (Form1Bean)request.getSession().getAttribute("Form1Bean");
+	Form1Bean form1Bean = (Form1Bean)request.getSession().getAttribute("form1Bean");
 	log.debug("form1Bean :: " + form1Bean);
-	Form1Model form1ModelSP = form1Bean.getForm1ModelSP();
+	Form1Model form1ModelSP = form1Bean.getForm1ModelCri();
 	Vector form1Vt = form1Bean.getForm1Vt();
 	Form1Model form1M = new Form1Model();
 	String form_action = (String)form1Bean.getActionName();
@@ -73,7 +73,7 @@
        			<span class="text">eJDA </span>
        		
        		</td>
-       		<td align="left"><select ><option value="">ALL</option>
+       		<td align="left"><select id="jdaType" name="jdaType"><option value="">ALL</option>
        		<option value="1">EJDA NO. 1</option>
        		<option value="2">EJDA NO. 2</option>
        		<option value="3">EJDA NO. 3</option>
@@ -118,8 +118,8 @@
        		<span class="text">Date DOC </span>
        		
        		</td>
-       		<td align="left" colspan="3"><%=DisplayFormatUtil.displayTextBoxCalendar("txtDocDateFrom",form1ModelSP.getDate_Receipt()+"") %> - 
-       		<%=DisplayFormatUtil.displayTextBoxCalendar("txtDocDateTo",form1ModelSP.getDate_Receipt()+"") %> </td>
+       		<td align="left" colspan="3"><%=DisplayFormatUtil.displayTextBoxCalendar("txtDocDateFrom",DisplayFormatUtil.SQLDateToString(form1ModelSP.getDate_Receipt_From())) %> - 
+       		<%=DisplayFormatUtil.displayTextBoxCalendar("txtDocDateTo",DisplayFormatUtil.SQLDateToString(form1ModelSP.getDate_Receipt_To())) %> </td>
          </tr>
          <tr>
        		<td colspan="4" align="center" height="20"></td>	
@@ -264,20 +264,20 @@
             			String showType = "eJDA " + form1M.getJDA_Type();
             			String action = "";
             			if("1".equals(form1M.getJDA_Type())){
-            				action = "EJDAM018";
+            				//action = "EJDAM018";
             				page = "eJdaForm1.jsp";
             			}else if("2".equals(form1M.getJDA_Type())){
-            				action = "EJDAM019";
+            				//action = "EJDAM019";
             				page = "eJdaForm2.jsp";
             			}else if("3".equals(form1M.getJDA_Type())){
-            				action = "EJDAM020";
+            				//action = "EJDAM020";
             				page = "ejdaForm3.jsp";
             			}else {
-            				action = "EJDAM021";
+            				//action = "EJDAM021";
             				page = "ejdaForm4.jsp";
             			}
             %>
-            			<tr onclick="updateEJDATable2(this.form,'<%=form1M.getDoc_ID() %>','<%=action%>','<%=page%>');" style="cursor:hand">
+            			<tr onclick="updateEJDATable2(this.form,'<%=form1M.getDoc_ID() %>','EJDAM018','<%=page%>');" style="cursor:hand">
 			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form1M.getDoc_ID() %>"/></th>
 			              <td <%=bgColor %> class="text"><%=form1M.getDoc_ID()%></td>
 			              <td <%=bgColor %> class="text"><%=form1M.getConsignor_name()%></td>
