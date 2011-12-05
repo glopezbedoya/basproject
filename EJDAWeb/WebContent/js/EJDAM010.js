@@ -20,16 +20,16 @@
 function buttonAction(form,action,method,page){
 	
 	if($('select[name=DdlAddForm').val() == '1'){
-		action = 'EJDAM010';
+//		action = 'EJDAM010';
 		page = 'eJdaForm1.jsp';
 	}else if($('select[name=DdlAddForm').val() == '2'){
-		action = 'EJDAM011';
+//		action = 'EJDAM011';
 		page = 'eJdaForm2.jsp';
 	}else if($('select[name=DdlAddForm').val() == '3'){
-		action = 'EJDAM012';
+//		action = 'EJDAM012';
 		page = 'ejdaForm3.jsp';
 	}else if($('select[name=DdlAddForm').val() == '4'){
-		action = 'EJDAM013';
+//		action = 'EJDAM013';
 		page = 'ejdaForm4.jsp';
 	}
 	

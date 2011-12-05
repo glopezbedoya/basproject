@@ -203,16 +203,25 @@ function addPackageTabJS(){
 		
 		var cell7 = row.insertCell(6);
 		cell7.align='center';
-		var eUNIT = document.createElement('input');
-		eUNIT.type = 'text';
-		eUNIT.name = 'UNIT';
-		eUNIT.id = 'UNIT';
-		eUNIT.size = 10;
-		eUNIT.maxLength = 10;
-		eUNIT.className ='text';
-		eUNIT.value = '';
-		cell7.appendChild(eUNIT);
+//		var eUNIT = document.createElement('input');
+//		eUNIT.type = 'text';
+//		eUNIT.name = 'UNIT';
+//		eUNIT.id = 'UNIT';
+//		eUNIT.size = 10;
+//		eUNIT.maxLength = 10;
+//		eUNIT.className ='text';
+//		eUNIT.value = '';
+//		cell7.appendChild(eUNIT);
 		
+		var eUNIT_show = document.createElement('div');
+		eUNIT_show.innerHtml = '';
+		eUNIT_show.name = 'UNIT_show_'+lastRow;
+		eUNIT_show.id = 'UNIT_show_'+lastRow;
+		cell7.appendChild(eUNIT_show);
+		
+		getUnit(lastRow);
+		
+		eMARK_NO.focus();
 		
 		//rowRefKeyPayee = (rowRefKeyPayee*1)+1;
 		//eMARK_NO.focus();
@@ -251,4 +260,20 @@ function removeRowFromTable(tablename){
 			tbl.deleteRow(3);
 		}
 	}	
+}
+
+function getUnit(rowIndex){
+	try{
+		$.get(
+		    "/EJDAWeb/AjaxLoadCacheData?mode=",
+		    {load_name : 'UNIT'},
+		    function(data) { 
+//		    	alert(data);
+		    	document.getElementById('UNIT_show_'+rowIndex).innerHTML = data;
+			    }
+			    ,  "text"
+				);
+		}catch(err){
+			alert("error"  + err.message);
+		}
 }

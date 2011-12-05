@@ -14,8 +14,8 @@ function validateSubmitButton(form,action){
 	$('input[name=mode_trans]').val(setModeTrans());
 	$('input[name=ejdaAction]').val(action);
 	$('input[name=ejdaMethod]').val('doSubmitButton');
-	//$('input[name=screenName]').val(action+'.jsp');
-	$('input[name=screenName]').val('EJDAM018.jsp');
+	$('input[name=screenName]').val(action+'.jsp');
+//	$('input[name=screenName]').val('EJDAM018.jsp');
 	
 	form.submit();
 	
@@ -358,7 +358,7 @@ function getUnit(rowIndex){
 		    "/EJDAWeb/AjaxLoadCacheData?mode=",
 		    {load_name : 'UNIT'},
 		    function(data) { 
-		    	alert(data);
+//		    	alert(data);
 		    	document.getElementById('UNIT_show_'+rowIndex).innerHTML = data;
 			    }
 			    ,  "text"
