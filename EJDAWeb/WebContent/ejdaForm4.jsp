@@ -1,4 +1,4 @@
-<%@page import="com.ejda.sessionBean.Form4Bean"%>
+<%@page import="com.ejda.sessionBean.Form1Bean"%>
 <%@page import="com.ejda.util.DisplayFormatUtil"%>
 <%@page import="com.tcd.ejda.model.ValueListModel"%>
 <%@page import="org.apache.log4j.Logger"%>
@@ -13,13 +13,25 @@
 <form name="ejdaformNo1" method="post" action="/EJDAWeb/EJDAControler">
 <%
 	Logger log = Logger.getLogger("JspLog");
-	Form4Bean form4Bean = (Form4Bean)request.getSession().getAttribute("form4Bean");
+	Form1Bean form4Bean = (Form1Bean)request.getSession().getAttribute("form1Bean");
 	log.debug("form4Bean :: " + form4Bean);
-	Form1Model form4ModelSP = form4Bean.getForm4ModelSP();
-	Vector form4Vt = form4Bean.getForm4Vt();
+	Form1Model form4ModelSP = form4Bean.getForm1ModelSP();
+	Vector form4Vt = form4Bean.getForm1Vt();
 	Form1Model form1M = new Form1Model();
 	String form_action = (String)form4Bean.getActionName();
 	String form_no = (String)request.getSession().getAttribute("form_no");
+	String showName = "";
+	
+	if (null!=form_action && "EJDAM010".equals(form_action)){
+		showName ="Table 1 : Form no. 4";
+	
+	}else if (null!=form_action && "EJDAM014".equals(form_action)){
+		showName ="Table 2 : Form no. 4";
+	}else if (null!=form_action && "EJDAM018".equals(form_action)){
+		showName ="Table 3 : Form no. 4";
+	}else if (null!=form_action && "EJDAM022".equals(form_action)){
+		showName ="Table 4 : Form no. 4";
+	}
 	
 	String bgColor1 = "bordercolor=\"#F4F4F4\"";
 	String bgColor2 = "bgcolor=\"#DFEFFF\"";
@@ -33,7 +45,7 @@
 	<input type="hidden" name="screenName" value="">
 	<input type="hidden" name="screenName" value="">
 	<input type="hidden" name="actionName" value="">
-	<input type="hidden" name="form_no" value="<%=form_no %>">
+	<input type="hidden" name="form_no" value="4">
 	<input type="hidden" name="doc_id" value="<%=form4ModelSP.getDoc_ID() %>">
 	<input type="hidden" name="page" value="<%=valueListM.getAtPage() %>" />
 	<input type="hidden" name="volumePerPage" value="<%=valueListM.getItemsPerPage() %>" />
@@ -44,6 +56,9 @@
     <td align="center"><table width="800" border="0" cellspacing="1" cellpadding="1" bgcolor="#F8F8F8">
       <tr>
         <td width="50%" colspan="2" align="center"><table border="0" cellspacing="1" cellpadding="1">
+        <tr>
+            <td colspan="2" align="left" class="textDesc" >>> <%=showName %></td>
+          </tr>
           <tr>
             <td colspan="2" align="left" class="textDesc" ><%=form_no %> : <%=form_action %></td>
           </tr>
@@ -380,7 +395,7 @@
             </tr>
           <tr>
             <td><font class="textDesc">Code </font></td>
-            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form4ModelSP.getPortLoad_Code(),"PortImport_Code","EDIT","") %></td>
+            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form4ModelSP.getPortImport_Code(),"PortImport_Code","EDIT","") %></td>
           </tr>
         </table></td>
         </tr>
@@ -400,7 +415,7 @@
             </tr>
           <tr>
             <td><font class="textDesc">Code </font></td>
-            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form4ModelSP.getPortLoad_Code(),"Via_Code","EDIT","") %></td>
+            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form4ModelSP.getVia_Code(),"Via_Code","EDIT","") %></td>
           </tr>
         </table></td>
         </tr>

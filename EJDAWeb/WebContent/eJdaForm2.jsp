@@ -1,7 +1,7 @@
 <%@page import="com.tcd.ejda.model.Form1Model"%>
 <%@page import="com.tcd.ejda.model.FormDetail1Model"%>
 <%@page import="com.tcd.ejda.model.FormDetail2Model"%>
-<%@page import="com.ejda.sessionBean.Form2Bean"%>
+<%@page import="com.ejda.sessionBean.Form1Bean"%>
 <%@page import="com.ejda.util.DisplayFormatUtil"%>
 <%@page import="com.ejda.util.DisplayUtil"%>
 <%@page import="com.ejda.util.LoadCacheData"%>
@@ -12,25 +12,25 @@
 <form name="ejdaformNo2" method="post" action="/EJDAWeb/EJDAControler">
 <%
 	Logger log = Logger.getLogger("JspLog");
-	Form2Bean form2Bean = (Form2Bean)request.getSession().getAttribute("form2Bean");
+	Form1Bean form2Bean = (Form1Bean)request.getSession().getAttribute("form1Bean");
 	log.debug("form2Bean :: " + form2Bean);
-	Form1Model form2ModelSP = form2Bean.getForm2ModelSP();
-	Vector form2Vt = form2Bean.getForm2Vt();
+	Form1Model form2ModelSP = form2Bean.getForm1ModelSP();
+	Vector form2Vt = form2Bean.getForm1Vt();
 	Form1Model form2M = new Form1Model();
 	FormDetail1Model detail1ModelSP = form2Bean.getDetail1ModelSP();
 	FormDetail2Model detail2ModelSP = form2Bean.getDetail2ModelSP();
 	String form_action = (String)form2Bean.getActionName();
 	String form_no = (String)request.getSession().getAttribute("form_no");
 	String showName = "";
-	
-	if (null!=form_action && "EJDAM011".equals(form_action)){
+	log.debug("form_action = "+form_action);
+	if (null!=form_action && "EJDAM010".equals(form_action)){
 		showName ="Table 1 : Form no. 2";
 	
-	}else if (null!=form_action && "EJDAM015".equals(form_action)){
+	}else if (null!=form_action && "EJDAM014".equals(form_action)){
 		showName ="Table 2 : Form no. 2";
-	}else if (null!=form_action && "EJDAM019".equals(form_action)){
+	}else if (null!=form_action && "EJDAM018".equals(form_action)){
 		showName ="Table 3 : Form no. 2";
-	}else if (null!=form_action && "EJDAM023".equals(form_action)){
+	}else if (null!=form_action && "EJDAM022".equals(form_action)){
 		showName ="Table 4 : Form no. 2";
 	}
 	String bgColor1 = "bordercolor=\"#F4F4F4\"";
@@ -45,7 +45,7 @@
 	<input type="hidden" name="screenName" value="">
 	<input type="hidden" name="screenName" value="">
 	<input type="hidden" name="actionName" value="">
-	<input type="hidden" name="form_no" value="<%=form_no %>">
+	<input type="hidden" name="form_no" value="2">
 	<input type="hidden" name="doc_id" value="<%=form2ModelSP.getDoc_ID() %>">
 	<input type="hidden" name="page" value="<%=valueListM.getAtPage() %>" />
 	<input type="hidden" name="volumePerPage" value="<%=valueListM.getItemsPerPage() %>" />
@@ -393,7 +393,7 @@
             </tr>
           <tr>
             <td><font class="textDesc"></font></td>
-            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form2ModelSP.getPortLoad_Code(),"PortImport_Code","EDIT","") %></td>
+            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form2ModelSP.getPortImport_Code(),"PortImport_Code","EDIT","") %></td>
             </tr>
           <tr>
             <td><font class="textDesc"></font></td>
@@ -421,7 +421,7 @@
             </tr>
           <tr>
             <td><font class="textDesc"> </font></td>
-            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form2ModelSP.getPortLoad_Code(),"Via_Code","EDIT","") %></td>
+            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form2ModelSP.getVia_Code(),"Via_Code","EDIT","") %></td>
             </tr>
           <tr>
             <td><font class="textDesc"> </font></td>

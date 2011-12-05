@@ -10,7 +10,7 @@
 <script language="javascript" src="js/EJDAM010.js"></script>
 <%
 	Logger log = Logger.getLogger("JspLog");
-	Form1Bean form1Bean = (Form1Bean)request.getSession().getAttribute("Form1Bean");
+	Form1Bean form1Bean = (Form1Bean)request.getSession().getAttribute("form1Bean");
 	log.debug("form1Bean :: " + form1Bean);
 	Form1Model form1ModelSP = form1Bean.getForm1ModelSP();
 	Vector form1Vt = form1Bean.getForm1Vt();
@@ -64,7 +64,7 @@
        		<option value="2">EJDA NO. 2</option>
        		<option value="3">EJDA NO. 3</option>
        		<option value="4">EJDA NO. 4</option>
-       		</select> <%=DisplayFormatUtil.displayButton("AddForm","onclick=\"buttonAction(this.form,'EJDAM010','doAdd','eJdaForm1.jsp')\"",false) %> </td>
+       		</select> <%=DisplayFormatUtil.displayButton("AddForm","onclick=\"buttonAction(this.form,'EJDAM010','doAdd')\"",false) %> </td>
        		
         </tr>
         <tr>
