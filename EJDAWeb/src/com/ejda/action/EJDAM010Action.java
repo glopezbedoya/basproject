@@ -28,6 +28,27 @@ public class EJDAM010Action extends AbstractAction {
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	public boolean methodAction(String ejdaMethod) throws Exception {
+		// TODO Auto-generated method stub
+		if(ejdaMethod.equalsIgnoreCase("doSearch")){
+			return doSearch();
+		}else if(ejdaMethod.equalsIgnoreCase("doDelete")){
+			return doDelete();
+		}else if (ejdaMethod.equalsIgnoreCase("doAdd")){
+			return doAdd();
+		}else if (ejdaMethod.equalsIgnoreCase("doSubmitButton")){
+			return doSubmitButton();
+		}else if (ejdaMethod.equalsIgnoreCase("doSaveButton")){
+			return doSaveButton();
+		}else if (ejdaMethod.equalsIgnoreCase("doUpdate")){
+			return doUpdate();
+		}
+		
+		
+		return false;
+	}
 
 	@Override
 	public void init() {
@@ -51,27 +72,6 @@ public class EJDAM010Action extends AbstractAction {
 		setForm1Bean(form1Bean);
 	}
 
-	@Override
-	public boolean methodAction(String ejdaMethod) throws Exception {
-		// TODO Auto-generated method stub
-		if(ejdaMethod.equalsIgnoreCase("doSearch")){
-			return doSearch();
-		}else if(ejdaMethod.equalsIgnoreCase("doDelete")){
-			return doDelete();
-		}else if (ejdaMethod.equalsIgnoreCase("doAdd")){
-			return doAdd();
-		}else if (ejdaMethod.equalsIgnoreCase("doSubmitButton")){
-			return doSubmitButton();
-		}else if (ejdaMethod.equalsIgnoreCase("doSaveButton")){
-			return doSaveButton();
-		}else if (ejdaMethod.equalsIgnoreCase("doUpdate")){
-			return doUpdate();
-		}
-		
-		
-		return false;
-	}
-	
 	private boolean doUpdate() {
 		form1Bean = getForm1Bean();
 		String docId = (String)getRequest().getParameter("doc_id");
@@ -121,7 +121,8 @@ public class EJDAM010Action extends AbstractAction {
 		log.debug("---Start : doSubmitButton---");
 		boolean result = false;
 		String iuser = (String) getRequest().getSession().getAttribute("iuser");
-		String formNo = (String) getRequest().getSession().getAttribute("form_no");
+//		String formNo = (String) getRequest().getSession().getAttribute("form_no");
+		String formNo = (String) getRequest().getParameter("form_no");
 		String ipAddress = getRequest().getRemoteAddr();
 		
 		log.debug("iuser = " + iuser);
@@ -134,11 +135,17 @@ public class EJDAM010Action extends AbstractAction {
 //		form1.setForm_status("A");
 //		form1.setUpdate_by(iuser);
 //		form1.setForm_no(formNo);
-		Form1Model form1 = setValueModel("1","A",iuser);
+		Form1Model form1 = setValueModel(formNo,"A",iuser);
 		log.debug("Form1Model >> " + form1);
 		Vector vcDetail1 = setValueDetail1Model();
-		Vector vcDetail2 = setValueDetail2Model();
-		Vector vcDocAttach = setValueDocumentAttach("1","");
+		Vector vcDetail2 = null;
+		if("1".equals(formNo) || "2".equals(formNo) || "4".equals(formNo)){
+			vcDetail2 = setValueDetail2Model();
+		}else if("3".equals(formNo)){
+			vcDetail2 = setValueDetail2ModelForm3();
+		}
+			
+		Vector vcDocAttach = setValueDocumentAttach(formNo,"");
 		try{ 
 			Form1DAO dao = new Form1DAOImpl();
 			//dao.UpdateFrom1Table(form1);
@@ -153,21 +160,20 @@ public class EJDAM010Action extends AbstractAction {
 //			transactionLogModel.setTranBy(iuser);
 //			ejda.insertTranLog(transactionLogModel);
 			
-			getRequest().getSession().setAttribute("responseMessage", "Submit Form 1 Successfully.");
+			getRequest().getSession().setAttribute("responseMessage", "Submit Form "+formNo+" Successfully.");
 			doSearch();
 			result = doSearch();
 			
 			log.debug("result = "+result);
 		}catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 		return result;
 	}
 
 	private boolean doAdd() {
-		// TODO Auto-generated method stub
 		log.debug("*********** doChangePage ***********");
+		init();
 		//form1Bean = getForm1Bean();
 		getForm1Bean().setActionName("EJDAM010");
 		return true;
@@ -188,6 +194,7 @@ public class EJDAM010Action extends AbstractAction {
 		ValueListModel valueListM = new ValueListModel();
 		ValueListAction valueListA = new ValueListAction();
 		log.debug("getRequest().getParameter(Page)"+getRequest().getParameter("Page"));
+		log.debug("form1Bean = "+form1Bean);
 		try{
 			Vector tranLogVt = new Vector();
 			valueListM = form1Bean.getValueListM();
@@ -214,7 +221,7 @@ public class EJDAM010Action extends AbstractAction {
 	}
 	
 	public Form1Bean getForm1Bean() {
-		Form1Bean form1Bean = (Form1Bean)getRequest().getSession().getAttribute("Form1Bean");
+		Form1Bean form1Bean = (Form1Bean)getRequest().getSession().getAttribute("form1Bean");
 		if (null == form1Bean){
 			form1Bean = new Form1Bean();
 		}
@@ -222,7 +229,7 @@ public class EJDAM010Action extends AbstractAction {
 	}
 
 	public void setForm1Bean(Form1Bean form1Bean) {
-		getRequest().getSession().setAttribute("Form1Bean", form1Bean);
+		getRequest().getSession().setAttribute("form1Bean", form1Bean);
 	}
 
 	
@@ -554,6 +561,37 @@ public class EJDAM010Action extends AbstractAction {
 		
 		
 	}
+	
+	public Vector setValueDetail2ModelForm3() throws Exception{
+		log.debug("[ Start : setValueModel ]");
+		
+		Vector vc = new Vector();
+		String iuser = (String) getRequest().getSession().getAttribute("iuser");
+		if (null==iuser || "".equals(iuser)){
+			iuser = "system";
+		}
+		String [] QA_ITEM_NO = getRequest().getParameterValues("QA_ITEM_NO");//QA_ITEM_NO
+		String [] ORIGIN_CODE = getRequest().getParameterValues("ORIGIN_CODE");//ORIGIN_CODE
+		String [] QB_UNIT = getRequest().getParameterValues("QB_UNIT");//QB_UNIT
+		String [] VALUE_PER_UNIT = getRequest().getParameterValues("VALUE_PER_UNIT");//VALUE_PER_UNIT
+		String [] VALUE_TOTAL = getRequest().getParameterValues("VALUE_TOTAL");//VALUE_TOTAL
+		if (null != QA_ITEM_NO && QA_ITEM_NO.length > 1){
+			for(int i =0; i < QA_ITEM_NO.length;i++){
+				FormDetail2Model detail = new FormDetail2Model();
+				detail.setItem_no(QA_ITEM_NO[i]);
+				detail.setOriginCode(ORIGIN_CODE[i]);
+				detail.setQty_cust_unit(DisplayFormatUtil.StringToDouble(QB_UNIT[i]));
+				detail.setValuePerUnit(DisplayFormatUtil.StringToDouble(VALUE_PER_UNIT[i]));
+				detail.setTotal_value(DisplayFormatUtil.StringToDouble(VALUE_TOTAL[i]));
+				detail.setCreate_By(iuser);
+				detail.setUpdate_by(iuser);
+			
+				vc.add(detail);
+			}
+		}
+		return vc;
+	}
+	
 	public Vector setValueDocumentAttach(String doc_jda_type, String docStatus){
 		Vector vc = new Vector();
 		

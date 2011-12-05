@@ -87,17 +87,24 @@ public class EJDAM014Action extends AbstractAction {
 		log.debug("[ Start : doSubmitButton M014]");
 		boolean result = false;
 		String iuser = (String) getRequest().getSession().getAttribute("iuser");
-		String formNo = (String) getRequest().getSession().getAttribute("form_no");
+//		String formNo = (String) getRequest().getSession().getAttribute("form_no");
+		String formNo = (String) getRequest().getParameter("form_no");
 		String ipAddress = getRequest().getRemoteAddr();
 		if (null==iuser || "".equals(iuser)){
 			iuser = "system";
 		}
 		EJDAM010Action ejdam010Action = new EJDAM010Action();
 		ejdam010Action.setRequest(getRequest()); 
-		Form1Model form1 = ejdam010Action.setValueModel("1","S",iuser);
+		Form1Model form1 = ejdam010Action.setValueModel(formNo,"S",iuser);
 		Vector vcDetail1 = ejdam010Action.setValueDetail1Model();
-		Vector vcDetail2 = ejdam010Action.setValueDetail2Model();
-		Vector vcDocAttach = ejdam010Action.setValueDocumentAttach("1","");
+//		Vector vcDetail2 = ejdam010Action.setValueDetail2Model();
+		Vector vcDetail2 = null;
+		if("1".equals(formNo) || "2".equals(formNo) || "4".equals(formNo)){
+			vcDetail2 = ejdam010Action.setValueDetail2Model();
+		}else if("3".equals(formNo)){
+			vcDetail2 = ejdam010Action.setValueDetail2ModelForm3();
+		}
+		Vector vcDocAttach = ejdam010Action.setValueDocumentAttach(formNo,"");
 		try{
 			Form1DAO dao = new Form1DAOImpl();
 			
@@ -113,7 +120,7 @@ public class EJDAM014Action extends AbstractAction {
 			transactionLogModel.setTranBy(iuser);
 			ejda.insertTranLog(transactionLogModel);
 			
-			getRequest().getSession().setAttribute("responseMessage", "Submit Table 2 Successfully.");
+			getRequest().getSession().setAttribute("responseMessage", "Submit Table 2 Form "+formNo+" Successfully.");
 			result = doSearch();
 			
 			log.debug("result = "+result);
@@ -186,7 +193,7 @@ public class EJDAM014Action extends AbstractAction {
 	}
 	
 	public Form1Bean getForm1Bean() {
-		Form1Bean form1Bean = (Form1Bean)getRequest().getSession().getAttribute("Form1Bean");
+		Form1Bean form1Bean = (Form1Bean)getRequest().getSession().getAttribute("form1Bean");
 		if (null == form1Bean){
 			form1Bean = new Form1Bean();
 		}
@@ -194,7 +201,7 @@ public class EJDAM014Action extends AbstractAction {
 	}
 
 	public void setForm1Bean(Form1Bean form1Bean) {
-		getRequest().getSession().setAttribute("Form1Bean", form1Bean);
+		getRequest().getSession().setAttribute("form1Bean", form1Bean);
 	}
 	
 	private void setCriteriaPameter(){
