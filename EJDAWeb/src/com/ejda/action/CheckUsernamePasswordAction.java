@@ -64,7 +64,7 @@ public class CheckUsernamePasswordAction extends AbstractAction {
 		UserDAO usr = new UserDAOImpl();
 		String resultCheckUser = usr.checkUsernamePassword("", username, pwd);
 		log.debug("result >>> " + resultCheckUser);
-		//resultCheckUser = "N";
+//		resultCheckUser = "N";
 		if (resultCheckUser.equals("N")){
 			
 			RoleMenuDAO dao = new RoleMenuDAOImpl();
