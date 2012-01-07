@@ -527,7 +527,7 @@ function changeSelectPage(form){
 	                   	    		}
 	                   	    		
 	                   	    		%>
-	                   	    		<td <%=bgColor %>><font class="text"> <%=DisplayFormatUtil.SQLDateToString(rm.getCreate_date(),"DD/MM/YYYY")%></font></td>
+	                   	    		<td <%=bgColor %>><font class="text"> <%=DisplayFormatUtil.SQLDateToString(rm.getCreate_date())%></font></td>
 	                   	    		<td <%=bgColor %>><font class="text"> <%=show_locked %></font></td>
 	                   	    		<td <%=bgColor %>><font class="text"> <img src="images/edit.JPG" name="edit" id="edit" <%=cursors %> onclick="EditUser('<%=i %>')" <%=updDisabled %>></font></td>
 	                   	    		<td <%=bgColor %>><font class="text"> <img src="images/delete.JPG" name="delete" id="delete" value="delete"<%=cursors %> onclick="DeleteUser('<%=rm.getJda_id() %>')"<%=delDisabled %>></font></td>
@@ -772,7 +772,7 @@ function changeSelectPage(form){
                    	       <tr>
 						    <td align="right"><span class="text">Effective Date : </span></td>
 						    <td align="left" width="200">
-						      <input type="text" name="eff_date" id="eff_date"onkeypress="addSlashFormat(event,this)" onblur="checkDateLengthYear(this,'','1800','2300')"value="<%= DisplayFormatUtil.SQLDateToString(um.getEFFECTIVE_DATE(),"DD/MM/YYYY")%>" />
+						      <input type="text" name="eff_date" id="eff_date"onkeypress="addSlashFormat(event,this)" onblur="checkDateLengthYear(this,'','1800','2300')"value="<%= DisplayFormatUtil.SQLDateToString(um.getEFFECTIVE_DATE())%>" />
 						       <img
 								id="eff_date_img" style="cursor:hand"
 								src="images/icon_calendar.gif"
@@ -784,7 +784,7 @@ function changeSelectPage(form){
 						   <tr>
 						    <td align="right"><span class="text">Expiry Date : </span></td>
 						    <td align="left" width="200">
-						      <input type="text" name="exp_date" id="exp_date"onkeypress="addSlashFormat(event,this)" onblur="checkDateLengthYear(this,'','1800','2300')"value="<%=DisplayFormatUtil.SQLDateToString(um.getEXPIRY_DATE(),"DD/MM/YYYY") %>" />
+						      <input type="text" name="exp_date" id="exp_date"onkeypress="addSlashFormat(event,this)" onblur="checkDateLengthYear(this,'','1800','2300')"value="<%=DisplayFormatUtil.SQLDateToString(um.getEXPIRY_DATE()) %>" />
 						       <img
 								id="exp_date_img" style="cursor:hand"
 								src="images/icon_calendar.gif"
