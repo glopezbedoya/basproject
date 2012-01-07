@@ -37,7 +37,7 @@ public class MenuServlet extends HttpServlet {
 		mn = menus.SearchMenu();
 		
 		String returnValue = getInnerTable(mn);
-		log.debug("--- mn : " + mn);
+//		log.debug("--- mn : " + mn);
 		request.setAttribute("MyMenu",returnValue);
 		
 		
@@ -79,6 +79,11 @@ public class MenuServlet extends HttpServlet {
 								count=1;
 								
 							}
+							if (null!=model.getMenu_status() && model.getMenu_status().equals("E")){
+								
+								div += "<li><a href=\"./EJDAControler?screenName=EJDA"+model.getMenu_id()+".jsp&ejdaAction=EJDA"+model.getMenu_id()+"\">" + model.getMenu_name() + "</a></li>";
+								
+							}
 //							if(model.getMenu_owner().equals("C")){
 //								div += "</li>";
 //							}
@@ -100,7 +105,7 @@ public class MenuServlet extends HttpServlet {
 				
 				innerTable +=div;
 
-			log.debug("[ getInnerTable ] : innerTable = "+innerTable);
+//			log.debug("[ getInnerTable ] : innerTable = "+innerTable);
 		}catch(Exception e){
 			log.debug("Error >>> "+ e);
 		}
