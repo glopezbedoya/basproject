@@ -39,6 +39,15 @@ function buttonAction(form,action,method,page){
 	$('input[name=screenName]').val(page);
 	form.submit();
 }
+
+function searchButtonEJDAM010(form,action,method,page){
+
+	$('input[name=ejdaAction]').val(action);
+	$('input[name=ejdaMethod]').val(method);
+	$('input[name=screenName]').val(page);
+	form.submit();
+}
+
 function updateEJDATable2(form,doc_id,action,page){
 	//alert('fn_no : ' +fn_no);
 	$('input[name=doc_id]').val(doc_id);

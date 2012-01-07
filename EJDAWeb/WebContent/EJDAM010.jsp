@@ -135,7 +135,7 @@
        		<td colspan="4" align="center" height="20"></td>	
          </tr>
           <tr>
-       		<td colspan="4" align="center"><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'EJDAM010','doSearch','EJDAM010.jsp')\"",false) %>
+       		<td colspan="4" align="center"><%=DisplayFormatUtil.displayButton("Search","onclick=\"searchButtonEJDAM010(this.form,'EJDAM010','doSearch','EJDAM010.jsp')\"",false) %>
        		</td>	
          </tr>
         <tr>
