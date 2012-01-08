@@ -49,7 +49,28 @@ public class AjaxLoadCacheData extends HttpServlet {
 				CacheDataDAO dao = new CacheDataDAOImpl();
 				vc = dao.LoadExchangeRAte();
 				returnValue = DisplayUtil.displaySelectTag(vc, "", "DUTY_RATE", "EDIT", "");
+			}else if (null!=loadName && "TANLI".equals(loadName)){
+				CacheDataDAO dao = new CacheDataDAOImpl();
+				vc = dao.LoadCustomTanli();
+				returnValue = DisplayUtil.displaySelectTag_Code(vc, "", "CODE_NO", "EDIT", "", "");
+			}else if (null!=loadName && "ORIGIN".equals(loadName)){
+				CacheDataDAO dao = new CacheDataDAOImpl();
+				vc = dao.LoadCountryOrigin();
+				returnValue = DisplayUtil.displaySelectTag_Code(vc, "", "ORIGIN_CODE", "EDIT", "", "");
+			}else if (null!=loadName && "IMPADDR".equals(loadName)){
+				String importCode = request.getParameter("importCode");
+				
+				CacheDataDAO dao = new CacheDataDAOImpl();
+				returnValue = dao.GetImporterAddress(importCode);
+				log.debug("[ IMPADDR ] " + returnValue);
+			}else if (null!=loadName && "AGENTADDR".equals(loadName)){
+				String agentCode = request.getParameter("agentCode");
+				
+				CacheDataDAO dao = new CacheDataDAOImpl();
+				returnValue = dao.GetAgentAddress(agentCode);
+				log.debug("[ AGENTADDR ] " + returnValue);
 			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
