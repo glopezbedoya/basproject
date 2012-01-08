@@ -63,7 +63,7 @@ function addQualityBaseTabJS(){
 		// 3 cell paym for(ACCT_NAME)
 		var cell3 = row.insertCell(2);
 		cell3.align='center';
-		var eQB_UNIT = document.createElement('input');
+		/*var eQB_UNIT = document.createElement('input');
 		eQB_UNIT.type = 'text';
 		eQB_UNIT.name = 'ORIGIN_CODE';
 		eQB_UNIT.id = 'ORIGIN_CODE';
@@ -71,7 +71,13 @@ function addQualityBaseTabJS(){
 		eQB_UNIT.maxLength = 10;
 		eQB_UNIT.className ='text';
 		eQB_UNIT.value = '';
-		cell3.appendChild(eQB_UNIT);
+		cell3.appendChild(eQB_UNIT);*/
+		
+		var eORIGIN_CODE_show = document.createElement('div');
+		eORIGIN_CODE_show.innerHtml = '';
+		eORIGIN_CODE_show.name = 'eORIGIN_CODE_show_'+lastRow;
+		eORIGIN_CODE_show.id = 'eORIGIN_CODE_show_'+lastRow;
+		cell3.appendChild(eORIGIN_CODE_show);
 		
 		var cell4 = row.insertCell(3);
 		cell4.align='center';
@@ -109,7 +115,7 @@ function addQualityBaseTabJS(){
 		eTOTAL_VALUE.value = '';
 		cell6.appendChild(eTOTAL_VALUE);
 		
-		
+		getCountryOrigin(lastRow);
 		//rowRefKeyPayee = (rowRefKeyPayee*1)+1;
 		eQA_ITEM_NO.focus();
   	}catch(e){
@@ -191,7 +197,7 @@ function addPackageTabJS(){
 		
 		var cell6 = row.insertCell(5);
 		cell6.align='center';
-		var eCODE_NO = document.createElement('input');
+		/*var eCODE_NO = document.createElement('input');
 		eCODE_NO.type = 'text';
 		eCODE_NO.name = 'CODE_NO';
 		eCODE_NO.id = 'CODE_NO';
@@ -199,7 +205,13 @@ function addPackageTabJS(){
 		eCODE_NO.maxLength = 10;
 		eCODE_NO.className ='text';
 		eCODE_NO.value = '';
-		cell6.appendChild(eCODE_NO);
+		cell6.appendChild(eCODE_NO);*/
+		
+		var eCODE_NO_show = document.createElement('div');
+		eCODE_NO_show.innerHtml = '';
+		eCODE_NO_show.name = 'eCODE_NO_show_'+lastRow;
+		eCODE_NO_show.id = 'eCODE_NO_show_'+lastRow;
+		cell6.appendChild(eCODE_NO_show);
 		
 		var cell7 = row.insertCell(6);
 		cell7.align='center';
@@ -219,6 +231,7 @@ function addPackageTabJS(){
 		eUNIT_show.id = 'UNIT_show_'+lastRow;
 		cell7.appendChild(eUNIT_show);
 		
+		getCustomTanli(lastRow);
 		getUnit(lastRow);
 		
 		eMARK_NO.focus();

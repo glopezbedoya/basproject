@@ -200,3 +200,108 @@ function ReplaceAll(Source,stringToFind,stringToReplace){
     }
     return temp;
 }
+
+function getUnit(rowIndex){
+
+try{
+	$.get(
+	    "/EJDAWeb/AjaxLoadCacheData?mode=",
+	    {load_name : 'UNIT'},
+	    function(data) { 
+	    	document.getElementById('UNIT_show_'+rowIndex).innerHTML = data;
+		    }
+		    ,  "text"
+			);
+	}catch(err){
+		alert("error"  + err.message);
+	}
+}
+
+function getCustomTanli(rowIndex){
+
+	try{
+		$.get(
+		    "/EJDAWeb/AjaxLoadCacheData?mode=",
+		    {load_name : 'TANLI'},
+		    function(data) { 
+		    	document.getElementById('eCODE_NO_show_'+rowIndex).innerHTML = data;
+			    }
+			    ,  "text"
+				);
+		}catch(err){
+			alert("error"  + err.message);
+		}
+	}
+
+function getCountryOrigin(rowIndex){
+
+	try{
+		$.get(
+		    "/EJDAWeb/AjaxLoadCacheData?mode=",
+		    {load_name : 'ORIGIN'},
+		    function(data) { 
+		    	document.getElementById('eORIGIN_CODE_show_'+rowIndex).innerHTML = data;
+			    }
+			    ,  "text"
+				);
+		}catch(err){
+			alert("error"  + err.message);
+		}
+	}
+
+function getExchgRate(rowIndex){
+	try{
+		$.get(
+		    "/EJDAWeb/AjaxLoadCacheData?mode=",
+		    {load_name : 'RATE'},
+		    function(data) { 
+		    	//alert(data);
+		    	document.getElementById('eDUTY_RATE_show_'+rowIndex).innerHTML = data;
+			    }
+			    ,  "text"
+				);
+		}catch(err){
+			alert("error"  + err.message);
+		}
+	}
+
+function getImportAddress(importCode){
+	try{
+		$.get(
+		    "/EJDAWeb/AjaxLoadCacheData?mode=",
+		    {load_name : 'IMPADDR',
+		     importCode : importCode},
+		    function(data) { 
+		    	var lvField = data.split('|');
+		    	$('input[name=Consignee_name]').val( lvField[0]);
+		    	$('textarea[name=Consignee_address]').val( lvField[1]);
+//		    	$('input[name=Consignee_name]').attr('disabled',true);
+//		    	$('textarea[name=Consignee_address]').attr('disabled',true);
+			    }
+			    ,  "text"
+				);
+		}catch(err){
+			alert("error"  + err.message);
+		}
+	}
+
+function getAgentAddress(agentCode){
+	try{
+		$.get(
+		    "/EJDAWeb/AjaxLoadCacheData?mode=",
+		    {load_name : 'AGENTADDR',
+		    	agentCode : agentCode},
+		    function(data) { 
+		    	
+		    	var lvField = data.split('|');
+		    	$('input[name=AuthorAgent_name]').val( lvField[0]);
+		    	$('textarea[name=AuthorAgent_address]').val( lvField[1]);
+//		    	$('input[name=AuthorAgent_name]').attr('disabled',true);
+//		    	$('textarea[name=AuthorAgent_address]').attr('disabled',true);
+			    }
+			    ,  "text"
+				);
+		}catch(err){
+			alert("error"  + err.message);
+		}
+	}

@@ -1,22 +1,13 @@
-/*function buttonAction(form,action){
-	
-	var check = true;
-	if(action == 'doDelete'){
-		check = haveCheckBox();
-	}else if(action == 'doSearch'){
-		$('input[name=ejdaAction]').val('EJDAM010');
-		$('input[name=ejdaMethod]').val(action);
-		$('input[name=screenName]').val('EJDAM010.jsp');
-		form.submit();
-	}else if(action == 'doAdd'){
-		$('input[name=ejdaAction]').val('EJDAM010');
-		$('input[name=ejdaMethod]').val('doSearch');
-		$('input[name=screenName]').val('eJdaForm1.jsp');
-		form.submit();
-	}else{
-		alert('No Data Select');
-	}
-}*/
+function ResetForm(){
+	$('input[name=txtDocID]').val('');
+	$('select[name=jdaType]').val('');
+	$('input[name=txtConsignorCode]').val('');
+	$('input[name=txtConsignorName]').val('');
+	$('input[name=txtConsigneeCode]').val('');
+	$('input[name=txtConsigneeName]').val('');
+	$('input[name=txtDocDateFrom]').val('');
+	$('input[name=txtDocDateTo]').val('');
+}
 function buttonAction(form,action,method,page){
 	
 	if($('select[name=DdlAddForm').val() == '1'){
@@ -33,7 +24,7 @@ function buttonAction(form,action,method,page){
 		page = 'ejdaForm4.jsp';
 	}
 	
-	
+	$('input[name=showSearch]').val('1');
 	$('input[name=ejdaAction]').val(action);
 	$('input[name=ejdaMethod]').val(method);
 	$('input[name=screenName]').val(page);

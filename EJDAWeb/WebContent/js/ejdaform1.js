@@ -4,7 +4,7 @@ function CancelButton(form,action){
 	//alert('CancelButton ' + form);
 	//alert('CancelButton ' + action);
 	$('input[name=ejdaAction]').val(action);
-	$('input[name=ejdaMethod]').val('doBack');
+	$('input[name=ejdaMethod]').val('doSearch');
 	$('input[name=screenName]').val(action+'.jsp');
 	form.submit();
 }
@@ -136,7 +136,7 @@ function addQualityBaseTabJS(){
 		
 		var cell7 = row.insertCell(6);
 		cell7.align='center';
-		var eDUTY_RATE = document.createElement('input');
+		/*var eDUTY_RATE = document.createElement('input');
 		eDUTY_RATE.type = 'text';
 		eDUTY_RATE.name = 'DUTY_RATE';
 		eDUTY_RATE.id = 'DUTY_RATE';
@@ -146,7 +146,13 @@ function addQualityBaseTabJS(){
 		eDUTY_RATE.value = '';
 		eDUTY_RATE.onblur = new Function("formatCurrency(this);");
 		eDUTY_RATE.onkeypress = function(){return keypressWithDegit(this,'15'); };
-		cell7.appendChild(eDUTY_RATE);
+		cell7.appendChild(eDUTY_RATE);*/
+		
+		var eDUTY_RATE_show = document.createElement('div');
+		eDUTY_RATE_show.innerHtml = '';
+		eDUTY_RATE_show.name = 'eDUTY_RATE_show_'+lastRow;
+		eDUTY_RATE_show.id = 'eDUTY_RATE_show_'+lastRow;
+		cell7.appendChild(eDUTY_RATE_show);
 		
 		var cell8 = row.insertCell(7);
 		cell8.align='center';
@@ -202,7 +208,7 @@ function addQualityBaseTabJS(){
 		eTAX_AMOUNT.onkeypress = function(){return keypressWithDegit(this,'15'); };
 		cell11.appendChild(eTAX_AMOUNT);
 		
-		
+		getExchgRate(lastRow);
 		//rowRefKeyPayee = (rowRefKeyPayee*1)+1;
 		eQA_ITEM_NO.focus();
   	}catch(e){
@@ -286,7 +292,7 @@ function addPackageTabJS(){
 		
 		var cell6 = row.insertCell(5);
 		cell6.align='center';
-		var eCODE_NO = document.createElement('input');
+		/*var eCODE_NO = document.createElement('input');
 		eCODE_NO.type = 'text';
 		eCODE_NO.name = 'CODE_NO';
 		eCODE_NO.id = 'CODE_NO';
@@ -294,7 +300,12 @@ function addPackageTabJS(){
 		eCODE_NO.maxLength = 10;
 		eCODE_NO.className ='text';
 		eCODE_NO.value = '';
-		cell6.appendChild(eCODE_NO);
+		cell6.appendChild(eCODE_NO);*/
+		var eCODE_NO_show = document.createElement('div');
+		eCODE_NO_show.innerHtml = '';
+		eCODE_NO_show.name = 'eCODE_NO_show_'+lastRow;
+		eCODE_NO_show.id = 'eCODE_NO_show_'+lastRow;
+		cell6.appendChild(eCODE_NO_show);
 		
 		var cell7 = row.insertCell(6);
 		cell7.align='center';
@@ -311,6 +322,7 @@ function addPackageTabJS(){
 		eUNIT_show.id = 'UNIT_show_'+lastRow;
 		cell7.appendChild(eUNIT_show);
 		
+		getCustomTanli(lastRow);
 		getUnit(lastRow);
 		//rowRefKeyPayee = (rowRefKeyPayee*1)+1;
 		//eMARK_NO.focus();
@@ -351,33 +363,5 @@ function removeRowFromTable(tablename){
 		}
 	}	
 }
-function getUnit(rowIndex){
-try{
-	$.get(
-	    "/EJDAWeb/AjaxLoadCacheData?mode=",
-	    {load_name : 'UNIT'},
-	    function(data) { 
-	    	document.getElementById('UNIT_show_'+rowIndex).innerHTML = data;
-		    }
-		    ,  "text"
-			);
-	}catch(err){
-		alert("error"  + err.message);
-	}
-}
 
-function getExchgRate(rowIndex){
-	try{
-		$.get(
-		    "/EJDAWeb/AjaxLoadCacheData?mode=",
-		    {load_name : 'RATE'},
-		    function(data) { 
-		    	alert(data);
-		    	document.getElementById('DUTY_RATE_show_'+rowIndex).innerHTML = data;
-			    }
-			    ,  "text"
-				);
-		}catch(err){
-			alert("error"  + err.message);
-		}
-	}
+
