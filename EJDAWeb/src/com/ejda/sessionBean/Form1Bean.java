@@ -21,7 +21,9 @@ public class Form1Bean extends AbstractBean {
 	public Vector detail2MVt;
 	public Vector docAttachMVt;
 	public Vector unitVt;
-	
+	public Vector tanliCodeVt;
+	public Vector dutyRateVt;
+	public Vector countryOriginVt;
 	
 	public Vector getDocAttachMVt() {
 		return docAttachMVt;
@@ -43,6 +45,24 @@ public class Form1Bean extends AbstractBean {
 	}
 	
 	
+	public Vector getCountryOriginVt() {
+		return countryOriginVt;
+	}
+	public void setCountryOriginVt(Vector countryOriginVt) {
+		this.countryOriginVt = countryOriginVt;
+	}
+	public Vector getDutyRateVt() {
+		return dutyRateVt;
+	}
+	public void setDutyRateVt(Vector dutyRateVt) {
+		this.dutyRateVt = dutyRateVt;
+	}
+	public Vector getTanliCodeVt() {
+		return tanliCodeVt;
+	}
+	public void setTanliCodeVt(Vector tanliCodeVt) {
+		this.tanliCodeVt = tanliCodeVt;
+	}
 	public FormDocAttachModel getDocAttachModelSP() {
 		return docAttachModelSP;
 	}
