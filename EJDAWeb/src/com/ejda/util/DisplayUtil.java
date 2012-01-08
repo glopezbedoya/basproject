@@ -28,6 +28,7 @@ public class DisplayUtil {
 				}
 			}
 			selectTag.append("</select>");
+			log.debug("selectTag.toString() >> " +selectTag.toString());
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -195,6 +196,51 @@ public class DisplayUtil {
 		
 	}
 }	
+	
+public static String displaySelectTag_Code(Vector v, String selectedValue, String listName, String mode, String style, String script) {
+		
+		CacheDataM obj = null;
+		String value = "";
+		String name = "";
+	
+	if (mode == null || !mode.equals("VIEW")) {
+		String str = "<select name=\"" + listName + "\" class=\""+style+"\""  + script + " ><option value=\"\">Please select</option>";
+		if(v != null ){
+			try{
+			for (int i=0; i<v.size(); i++) {
+				obj = (CacheDataM) v.get(i);
+				value = displayHTML(obj.getCode()).trim();
+				//name = displayHTML(obj.getShortDesc()).trim();
+//				log.debug("displaySelectTag value : " + value);
+//				log.debug("displaySelectTag name : " + name);
+				if (value != null && selectedValue != null &&  !selectedValue.equals("")  && value.trim().equals(selectedValue.trim()) ) {
+					str = str + "<option value = \"" + value + "\" selected>" +value + "</option>";
+				} else {
+					str = str + "<option value = \"" + value + "\">" +value + "</option>";
+				}
+			}
+			}catch(Exception e){
+//				log.debug(e.getMessage());
+				
+			}
+		}	
+		return str + "</select>";
+	} else {
+		if ( selectedValue == null || selectedValue.equals("null") ||  selectedValue.equals("")  ){
+			return "";
+		}else{
+			for (int i=0; i<v.size(); i++) {
+				obj = (CacheDataM) v.get(i);
+				if (obj.getCode() !=null && selectedValue!=null && obj.getCode().trim().equals(selectedValue.trim())){
+					name = obj.getCode();
+					break;
+				}
+			}
+			return name;
+		}	
+		
+	}
+}
 	public static String displayHTML(Object obj) {
 		if(obj==null || ((String)obj).trim().equals("null")){
 			return "";
