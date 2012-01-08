@@ -37,4 +37,43 @@ public class LoadCacheData {
 		return vc;
 		
 	}
+	
+	public static Vector GetCustomTanli() throws SQLException{
+		Vector vc = new Vector();
+		
+		CacheDataDAO dao = new CacheDataDAOImpl();
+		vc = dao.LoadCustomTanli();
+		
+		return vc;
+		
+	}
+	
+	public static Vector GetCountryOrigin() throws SQLException{
+		Vector vc = new Vector();
+		
+		CacheDataDAO dao = new CacheDataDAOImpl();
+		vc = dao.LoadCountryOrigin();
+		
+		return vc;
+		
+	}
+	
+	public static Vector GetImporterCache() throws SQLException{
+		Vector vc = new Vector();
+		
+		CacheDataDAO dao = new CacheDataDAOImpl();
+		vc = dao.LoadImporter();
+		return vc;
+		
+	}
+	
+	public static Vector GetAgentCache() throws SQLException{
+		Vector vc = new Vector();
+		
+		CacheDataDAO dao = new CacheDataDAOImpl();
+		vc = dao.LoadAgent();
+	
+		return vc;
+		
+	}
 }

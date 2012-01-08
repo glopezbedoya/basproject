@@ -113,6 +113,7 @@ public class DisplayFormatUtil {
 		textBoxStr.append("onclick=\"popUpCalendarModify(this,"+fieldName+",'dd/mm/yyyy','','','','bottom',false)\" >");
 		return textBoxStr.toString();
 	}
+	
 	public static String SQLDateToString1(java.sql.Date date,String format) {
 		String returnValue="";
 		try{
