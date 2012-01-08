@@ -125,8 +125,10 @@
        		<td colspan="4" align="center" height="20"></td>	
          </tr>
         <tr>
-       		<td align="center"colspan="4"><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'EJDAM022','doSearch','EJDAM022.jsp')\"",false) %></td>
-       		          		
+        	
+       		<td align="right"colspan="2"><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'EJDAM022','doSearch','EJDAM022.jsp')\"",false) %></td>
+       		 <td colspan="2" align="left"><%=DisplayFormatUtil.displayButton("Reset","onclick=\"ResetForm()\"",false) %>
+       		</td>        		
         </tr>
         <tr>
         	<td ></td>

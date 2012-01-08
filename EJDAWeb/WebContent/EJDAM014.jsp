@@ -23,6 +23,7 @@
 	
 	if(null == valueListM) valueListM = new ValueListModel();
 	
+	
 %>
 <%
  String responseMessage = (String) request.getSession().getAttribute("responseMessage");
@@ -48,6 +49,7 @@
 	
 	<input type="hidden" id="form_no" name="form_no"value="">
 	<input type="hidden" name="doc_id" value="">
+	<input type="hidden" name="showSearch" value="">
 	<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
 		
         <tr align="left">
@@ -123,12 +125,14 @@
        		<td colspan="4" align="center" height="20"></td>	
          </tr>
         <tr>
-       		<td colspan="4" align="center"><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'EJDAM014','doSearch','EJDAM014.jsp')\"",false) %>
+        	
+       		<td colspan="2" align="right"><%=DisplayFormatUtil.displayButton("Search","onclick=\"buttonAction(this.form,'EJDAM014','doSearch','EJDAM014.jsp')\"",false) %>
        		</td>	
+       		 <td colspan="2" align="left"><%=DisplayFormatUtil.displayButton("Reset","onclick=\"ResetForm()\"",false) %>
          </tr>
         
         <tr>
-       		<th colspan="4" align="center" class="style1" scope="row">
+       		<th height="20" colspan="4" align="center" class="style1" scope="row">
        		</th>
          </tr>
          </table>
@@ -197,7 +201,8 @@
 			String showPage = DisplayFormatUtil.displaySelectPaging("selectPaging",allPage,valueListM.getAtPage(),"onchange=\"changeSelectPage(this.form)\"");
 			%>
 			 <%
-            	if(form1Vt != null && form1Vt.size() > 0){%>
+            	if(form1Vt != null && form1Vt.size() > 0){
+            	%>
         <tr>
           <th colspan="4" scope="row"><div align="right"><span  class="textPage">&#3649;&#3626;&#3604;&#3591;&#3612;&#3621;&#3585;&#3634;&#3619;&#3588;&#3657;&#3609;&#3627;&#3634; <%=valueListM.getAtPage()+"/"+allPage %></span>
             <%=showPage %>
@@ -273,7 +278,7 @@
             <%		}
             	}
             %>
-
+            
             <tr>
               <th scope="row">&nbsp;</th>
               <th scope="row">&nbsp;</th>
