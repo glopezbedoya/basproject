@@ -170,7 +170,7 @@ public class CacheDataDAOImpl implements CacheDataDAO {
 		
 		try {
 						
-			sql.append(" SELECT EXCHGRATEID, EXCHANGERATTYPE, RATNAME, RATSTATUS FROM JDA_M_EXCHANGERATE ");
+			sql.append(" SELECT EXCHGRATEID, EXCHANGERATTYPE, RATNAME, RATE_AMT, RATSTATUS FROM JDA_M_EXCHANGERATE ");
 			log.debug("Search JDA_M_EXCHANGERATE >>> " + sql.toString());
 			ps = conn.prepareStatement(sql.toString());
 			int seq=1;
@@ -181,6 +181,7 @@ public class CacheDataDAOImpl implements CacheDataDAO {
 				CacheDataM cache = new CacheDataM();
 				cache.setCode(rs.getString("EXCHANGERATTYPE"));
 				cache.setShortDesc(rs.getString("RATNAME"));
+				//cache.setValueDesc(String.valueOf(rs.getDouble("RATE_AMT")));
 				cache.setStatus(rs.getString("RATSTATUS"));
 				vc.add(cache);
 			}
@@ -220,6 +221,410 @@ public class CacheDataDAOImpl implements CacheDataDAO {
 			}
 		}
 		return vc;
+	}
+	@Override
+	public Vector LoadCustomTanli() throws SQLException {
+		log.debug("[Start : LoadCustomTanli ]");
+		Vector vc = new Vector();
+		
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = db.getConnection();
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		StringBuffer sql = new StringBuffer();
+		
+		try {
+						
+			sql.append(" SELECT TANLI_ID, TANLI_CODE, DESCRIPTION FROM JDA_M_CUSTOM_TANLI ");
+			log.debug("Search JDA_M_CUSTOM_TANLI >>> " + sql.toString());
+			ps = conn.prepareStatement(sql.toString());
+			int seq=1;
+			
+			
+			rs = ps.executeQuery();
+			while(rs.next()){
+				CacheDataM cache = new CacheDataM();
+				cache.setCode(rs.getString("TANLI_CODE"));
+				cache.setShortDesc(rs.getString("DESCRIPTION"));
+				//cache.setStatus(rs.getString("RATSTATUS"));
+				vc.add(cache);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			log.equals(e.getMessage());
+		}finally{
+			try {
+				if (conn != null)
+					conn.commit();
+			} catch (Exception e) {
+			}
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		return vc;
+	}
+	@Override
+	public Vector LoadCountryOrigin() throws SQLException {
+		log.debug("[Start : LoadCountryOrigin ]");
+		Vector vc = new Vector();
+		
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = db.getConnection();
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		StringBuffer sql = new StringBuffer();
+		
+		try {
+						
+			sql.append(" SELECT ORIG_ID, ORIG_CODE, ORIG_DESC FROM JDA_M_COUNTRY_ORIG ");
+			log.debug("Search JDA_M_COUNTRY_ORIG >>> " + sql.toString());
+			ps = conn.prepareStatement(sql.toString());
+			int seq=1;
+			
+			
+			rs = ps.executeQuery();
+			while(rs.next()){
+				CacheDataM cache = new CacheDataM();
+				cache.setCode(rs.getString("ORIG_CODE"));
+				cache.setShortDesc(rs.getString("ORIG_DESC"));
+				//cache.setStatus(rs.getString("RATSTATUS"));
+				vc.add(cache);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			log.equals(e.getMessage());
+		}finally{
+			try {
+				if (conn != null)
+					conn.commit();
+			} catch (Exception e) {
+			}
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		return vc;
+	}
+	@Override
+	public Vector LoadImporter() throws SQLException {
+		log.debug("[Start : LoadImporter ]");
+		Vector vc = new Vector();
+		
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = db.getConnection();
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		StringBuffer sql = new StringBuffer();
+		
+		try {
+						
+			sql.append(" SELECT IMPORT_CODE, IMPORT_NAME, IMPORT_ADDR, IMPORT_DESC FROM JDA_M_IMPORTER ");
+			log.debug("Search JDA_M_IMPORTER >>> " + sql.toString());
+			ps = conn.prepareStatement(sql.toString());
+			int seq=1;
+			
+			
+			rs = ps.executeQuery();
+			while(rs.next()){
+				CacheDataM cache = new CacheDataM();
+				cache.setCode(rs.getString("IMPORT_CODE"));
+				cache.setShortDesc(rs.getString("IMPORT_NAME"));
+				cache.setLongDesc(rs.getString("IMPORT_ADDR"));
+				vc.add(cache);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			log.equals(e.getMessage());
+		}finally{
+			try {
+				if (conn != null)
+					conn.commit();
+			} catch (Exception e) {
+			}
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		return vc;
+	}
+	@Override
+	public Vector LoadAgent() throws SQLException {
+		log.debug("[Start : LoadAgent ]");
+		Vector vc = new Vector();
+		
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = db.getConnection();
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		StringBuffer sql = new StringBuffer();
+		
+		try {
+						
+			sql.append(" SELECT AGENT_CODE, AGENT_NAME, AGENT_ADDR, AGENT_DESC FROM JDA_M_AGENT ");
+			log.debug("Search JDA_M_AGENT >>> " + sql.toString());
+			ps = conn.prepareStatement(sql.toString());
+			int seq=1;
+			
+			
+			rs = ps.executeQuery();
+			while(rs.next()){
+				CacheDataM cache = new CacheDataM();
+				cache.setCode(rs.getString("AGENT_CODE"));
+				cache.setShortDesc(rs.getString("AGENT_NAME"));
+				cache.setLongDesc(rs.getString("AGENT_ADDR"));
+				vc.add(cache);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			log.equals(e.getMessage());
+		}finally{
+			try {
+				if (conn != null)
+					conn.commit();
+			} catch (Exception e) {
+			}
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		return vc;
+	}
+	@Override
+	public String GetImporterAddress(String ImportCode) throws SQLException {
+		log.debug("[Start : GetImporterAddress ]");
+		String returnValue="";
+		
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = db.getConnection();
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		StringBuffer sql = new StringBuffer();
+		
+		try {
+						
+			sql.append(" SELECT IMPORT_CODE, IMPORT_NAME, IMPORT_ADDR, IMPORT_DESC FROM JDA_M_IMPORTER ");
+			sql.append(" WHERE IMPORT_CODE = ? ");
+			log.debug("Search GetImporterAddress >>> " + sql.toString());
+			ps = conn.prepareStatement(sql.toString());
+			int seq=1;
+			
+			ps.setString(seq++, ImportCode);
+			
+			rs = ps.executeQuery();
+			if(rs.next()){
+				returnValue = rs.getString("IMPORT_NAME") + "|" + rs.getString("IMPORT_ADDR");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			log.equals(e.getMessage());
+		}finally{
+			try {
+				if (conn != null)
+					conn.commit();
+			} catch (Exception e) {
+			}
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		return returnValue;
+	}
+	@Override
+	public String GetAgentAddress(String AgentCode) throws SQLException {
+		log.debug("[Start : GetAgentAddress ]");
+		String returnValue="";
+		
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = db.getConnection();
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		StringBuffer sql = new StringBuffer();
+		
+		try {
+						
+			sql.append(" SELECT AGENT_CODE, AGENT_NAME, AGENT_ADDR, AGENT_DESC FROM JDA_M_AGENT ");
+			sql.append(" WHERE AGENT_CODE = ? ");
+			log.debug("Search GetImporterAddress >>> " + sql.toString());
+			ps = conn.prepareStatement(sql.toString());
+			int seq=1;
+			
+			ps.setString(seq++, AgentCode);
+			
+			rs = ps.executeQuery();
+			if(rs.next()){
+				returnValue = rs.getString("AGENT_NAME") + "|" + rs.getString("AGENT_ADDR");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			log.equals(e.getMessage());
+		}finally{
+			try {
+				if (conn != null)
+					conn.commit();
+			} catch (Exception e) {
+			}
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		return returnValue;
 	}
 
 }

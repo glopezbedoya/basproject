@@ -130,9 +130,9 @@ public class UserDAOImpl implements UserDAO {
 				log.debug("IV_USER >>> " + rs.getString("IV_USER") + ":"
 						+ rs.getString("IV_USER") + ":" + rs.getString("IV_USER"));
 				
-				if (updateStatusActivate(rs.getString("IV_USER"),rs.getString("USER_NAME"), conn)){
+//				if (updateStatusActivate(rs.getString("IV_USER"),rs.getString("USER_NAME"), conn)){
 					result = "N";
-				}
+//				}
 
 			}else if(rs.getString("USER_STATUS").equals("A")){ //Activate (can't use)
 				result = "A";//Activate
