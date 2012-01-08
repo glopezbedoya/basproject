@@ -128,15 +128,17 @@
        		<span class="text">Date DOC </span>
        		
        		</td>
-       		<td align="left" colspan="3"><%=DisplayFormatUtil.displayTextBoxCalendar("txtDocDateFrom",form1ModelSP.getDate_Receipt()+"") %> - 
-       		<%=DisplayFormatUtil.displayTextBoxCalendar("txtDocDateTo",form1ModelSP.getDate_Receipt()+"") %> </td>
+       		<td align="left" colspan="3"><%=DisplayFormatUtil.displayTextBoxCalendar("txtDocDateFrom",DisplayFormatUtil.SQLDateToString(form1ModelSP.getDate_Receipt_From())) %> - 
+       		<%=DisplayFormatUtil.displayTextBoxCalendar("txtDocDateTo",DisplayFormatUtil.SQLDateToString(form1ModelSP.getDate_Receipt_To())) %> </td>
          </tr>
          <tr>
        		<td colspan="4" align="center" height="20"></td>	
          </tr>
           <tr>
-       		<td colspan="4" align="center"><%=DisplayFormatUtil.displayButton("Search","onclick=\"searchButtonEJDAM010(this.form,'EJDAM010','doSearch','EJDAM010.jsp')\"",false) %>
+          	
+       		<td colspan="2" align="right"><%=DisplayFormatUtil.displayButton("Search","onclick=\"searchButtonEJDAM010(this.form,'EJDAM010','doSearch','EJDAM010.jsp')\"",false) %>
        		</td>	
+       		 <td colspan="2" align="left"><%=DisplayFormatUtil.displayButton("Reset","onclick=\"ResetForm()\"",false) %>
          </tr>
         <tr>
         	<td ></td>

@@ -191,15 +191,16 @@
             </tr>
           <tr>
             <td align="right"><font class="textDesc">Importer/Taxpayer Code </font></td>
-            <td align="left"><input type="text" name="ImporterTaxCode" id="ImporterTaxCode" /></td>
+            <td align="left">
+			<%=DisplayUtil.displaySelectTag_Code(LoadCacheData.GetImporterCache(),form4ModelSP.getConsignee_code(),"Consignee_code","EDIT","", "onchange=\"getImportAddress(this.value)\"" ) %></td>
             </tr>
           <tr>
             <td align="right"><font class="textDesc">Name </font></td>
-            <td align="left"><input type="text" name="ImporterTaxName" id="ImporterTaxName" size="40" /></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("Consignee_name",form4ModelSP.getConsignee_name(),"maxlength=20") %></td>
             </tr>
           <tr>
             <td align="right"><font class="textDesc">Address </font></td>
-            <td align="left"><textarea name="ImporterTaxAddress" id="ImporterTaxAddress" cols="45" rows="5"></textarea></td>
+            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("Consignee_address",form4ModelSP.getConsignee_address(),"maxlength=255") %></td>
             </tr>
           </table></td>
       </tr>
@@ -216,7 +217,8 @@
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Agent/Taxpayer Code</font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("AuthorAgent_code",form4ModelSP.getAuthorAgent_code(),"") %></td>
+            <td align="left">
+            <%=DisplayUtil.displaySelectTag_Code(LoadCacheData.GetAgentCache(),form4ModelSP.getAuthorAgent_code(),"AuthorAgent_code","EDIT","", "onchange=getAgentAddress(this.value)") %></td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Name </font></td>
@@ -458,7 +460,7 @@
             <td width="150"><%=DisplayUtil.displayInputTextBox("ITEM_NO",formDetail1M.getItem_no(),"","10") %></td>
             <td width="200"><%=DisplayUtil.displayInputTextBox("PACKAGE_NO",formDetail1M.getNo_type_package(),"","10") %></td>
             <td width="200"><%=DisplayUtil.displayInputTextBox("GOODS_DESC",formDetail1M.getGood_desc(),"","10") %></td>
-            <td width="100"><%=DisplayUtil.displayInputTextBox("CODE_NO",formDetail1M.getCust_code(),"","10") %></td>
+            <td width="100"><%=DisplayUtil.displaySelectTag_Code(form4Bean.getTanliCodeVt(), formDetail1M.getCust_code(), "CODE_NO", "EDIT", "","") %></td>
           	<td width="100"><%=DisplayUtil.displaySelectTag(form4Bean.getUnitVt(), formDetail1M.getCust_unit(), "UNIT", "EDIT", "") %></td>
            </tr>
            <%	}
@@ -507,7 +509,7 @@
             <td width="200"><%=DisplayUtil.displayInputTextBox("FOB_ACTUAL",formDetail2M.getUnit_val_actual(),"","10") %></td>
             <td width="200"><%=DisplayUtil.displayInputTextBox("FOB_CUSTOM",formDetail2M.getUnit_val_custom(),"","10") %></td>
             <td width="100"><%=DisplayUtil.displayInputTextBox("TOTAL_VALUE",String.valueOf(formDetail2M.getTotal_value()),"","10") %></td>
-          	<td width="100"><%=DisplayUtil.displayInputTextBox("DUTY_RATE",String.valueOf(formDetail2M.getExport_rate()),"","10") %></td>
+          	<td width="100"><%=DisplayUtil.displaySelectTag(form4Bean.getDutyRateVt(), String.valueOf(formDetail2M.getExport_rate()), "DUTY_RATE", "EDIT", "") %></td>
           	<td width="100"><%=DisplayUtil.displayInputTextBox("DUTY_AMOUNT",String.valueOf(formDetail2M.getExport_amount()),"","10") %></td>
           	<td width="100"><%=DisplayUtil.displayInputTextBox("TAX_TYPE",formDetail2M.getOther_tax_type(),"","10") %></td>
           	<td width="100"><%=DisplayUtil.displayInputTextBox("TAX_RATE",String.valueOf(formDetail2M.getOther_tax_rate()),"","10") %></td>

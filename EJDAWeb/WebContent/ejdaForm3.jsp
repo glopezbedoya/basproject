@@ -9,7 +9,9 @@
 <%@page import="com.tcd.ejda.model.Form1Model"%>
 <%@page import="com.tcd.ejda.model.FormDetail1Model"%>
 <%@page import="com.tcd.ejda.model.FormDetail2Model"%>
-<%@page import="com.ejda.util.LoadCacheData"%><script language="javascript" src="js/ejdaform3.js"></script>
+<%@page import="com.ejda.util.LoadCacheData"%>
+<script language="javascript" src="js/ejdaform3.js"></script>
+<script language="javascript" src="js/ejdaScript.js"></script>
 <form name="ejdaformNo1" method="post" action="/EJDAWeb/EJDAControler">
 <%
 	Logger log = Logger.getLogger("JspLog");
@@ -192,7 +194,8 @@
             </tr>
           <tr>
             <td align="right"><font class="textDesc">Importer/Taxpayer Code </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("Consignee_code",form3ModelSP.getConsignee_code(),"") %></td>
+            <td align="left">
+            <%=DisplayUtil.displaySelectTag_Code(LoadCacheData.GetImporterCache(),form3ModelSP.getConsignee_code(),"Consignee_code","EDIT","", "onchange=\"getImportAddress(this.value)\"" ) %></td>
             </tr>
           <tr>
             <td align="right"><font class="textDesc">Name </font></td>
@@ -217,7 +220,8 @@
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Agent/Taxpayer Code</font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("AuthorAgent_code",form3ModelSP.getAuthorAgent_code(),"") %></td>
+            <td align="left">
+            <%=DisplayUtil.displaySelectTag_Code(LoadCacheData.GetAgentCache(),form3ModelSP.getAuthorAgent_code(),"AuthorAgent_code","EDIT","", "onchange=getAgentAddress(this.value)") %></td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Name </font></td>
@@ -396,7 +400,7 @@
             <td width="150"><%=DisplayUtil.displayInputTextBox("ITEM_NO",formDetail1M.getItem_no(),"","10") %></td>
             <td width="200"><%=DisplayUtil.displayInputTextBox("PACKAGE_NO",formDetail1M.getNo_type_package(),"","10") %></td>
             <td width="200"><%=DisplayUtil.displayInputTextBox("GOODS_DESC",formDetail1M.getGood_desc(),"","10") %></td>
-            <td width="100"><%=DisplayUtil.displayInputTextBox("CODE_NO",formDetail1M.getCust_code(),"","10") %></td>
+            <td width="100"><%=DisplayUtil.displaySelectTag_Code(form3Bean.getTanliCodeVt(), formDetail1M.getCust_code(), "CODE_NO", "EDIT", "","") %></td>
           	<td width="100"><%=DisplayUtil.displaySelectTag(form3Bean.getUnitVt(), formDetail1M.getCust_unit(), "UNIT", "EDIT", "") %></td>
            </tr>
            <%	}
@@ -435,7 +439,7 @@
           <tr bgcolor="#FFFFFF">
           	<td width="50"><input type="checkbox" name="checkall1" id="checkall1" /></td>
             <td width="100"><%=DisplayUtil.displayInputTextBox("QA_ITEM_NO",formDetail2M.getItem_no(),"","10") %></td>
-            <td width="100"><%=DisplayUtil.displayInputTextBox("ORIGIN_CODE",formDetail2M.getOriginCode(),"","10") %></td>
+            <td width="100"><%=DisplayUtil.displaySelectTag_Code(form3Bean.getCountryOriginVt(), formDetail2M.getOriginCode(), "ORIGIN_CODE", "EDIT", "","") %></td>
             <td width="100"><%=DisplayUtil.displayInputTextBox("QB_UNIT",Double.toString(formDetail2M.getQty_cust_unit()),"","10") %></td>
             <td width="100"><%=DisplayUtil.displayInputTextBox("VALUE_PER_UNIT",Double.toString(formDetail2M.getValuePerUnit()),"","10") %></td>
             <td width="100"><%=DisplayUtil.displayInputTextBox("VALUE_TOTAL",Double.toString(formDetail2M.getTotal_value()),"","10") %></td>

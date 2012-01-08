@@ -9,6 +9,7 @@
 <%@page import="org.apache.log4j.Logger"%>
 <%@page import="java.util.Vector"%>
 <script language="javascript" src="js/ejdaform1.js"></script>
+<script language="javascript" src="js/ejdaScript.js"></script>
 <form name="ejdaformNo1" method="post" action="/EJDAWeb/EJDAControler">
 <%
 	Logger log = Logger.getLogger("JspLog");
@@ -20,6 +21,7 @@
 	Vector form1Vt = form1Bean.getForm1Vt();
 	Form1Model form1M = new Form1Model();
 	String form_action = (String)form1Bean.getActionName();
+	log.debug("form_action = " +form_action);
 	String form_no = (String)request.getSession().getAttribute("form_no");
 	String showName = "";
 	
@@ -193,7 +195,8 @@
             </tr>
           <tr>
             <td align="right"><font class="textDesc">Importer/Taxpayer Code </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("Consignee_code",form1ModelSP.getConsignee_code(),"maxlength=20 onkeypress=\"keyPressInteger()\"") %></td>
+            <td align="left">
+            <%=DisplayUtil.displaySelectTag_Code(LoadCacheData.GetImporterCache(),form1ModelSP.getConsignee_code(),"Consignee_code","EDIT","", "onchange=\"getImportAddress(this.value)\"" ) %></td>
             </tr>
           <tr>
             <td align="right"><font class="textDesc">Name </font></td>
@@ -218,7 +221,8 @@
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Agent/Taxpayer Code</font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("AuthorAgent_code",form1ModelSP.getAuthorAgent_code(),"maxlength=20") %></td>
+            <td align="left">
+            <%=DisplayUtil.displaySelectTag_Code(LoadCacheData.GetAgentCache(),form1ModelSP.getAuthorAgent_code(),"AuthorAgent_code","EDIT","", "onchange=getAgentAddress(this.value)") %></td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Name </font></td>
@@ -447,7 +451,7 @@
             <td width="150"><%=DisplayUtil.displayInputTextBox("ITEM_NO",formDetail1M.getItem_no(),"","10") %></td>
             <td width="200"><%=DisplayUtil.displayInputTextBox("PACKAGE_NO",formDetail1M.getNo_type_package(),"","10") %></td>
             <td width="200"><%=DisplayUtil.displayInputTextBox("GOODS_DESC",formDetail1M.getGood_desc(),"","10") %></td>
-            <td width="100"><%=DisplayUtil.displayInputTextBox("CODE_NO",formDetail1M.getCust_code(),"","10") %></td>
+            <td width="100"><%=DisplayUtil.displaySelectTag_Code(form1Bean.getTanliCodeVt(), formDetail1M.getCust_code(), "CODE_NO", "EDIT", "","") %></td>
           	<td width="100"><%=DisplayUtil.displaySelectTag(form1Bean.getUnitVt(), formDetail1M.getCust_unit(), "UNIT", "EDIT", "") %></td>
            </tr>
            <%	}
@@ -497,7 +501,7 @@
             <td width="100"><%=DisplayUtil.displayInputTextBox("FOB_ACTUAL",formDetail2M.getUnit_val_actual(),"","10") %></td>
             <td width="100"><%=DisplayUtil.displayInputTextBox("FOB_CUSTOM",formDetail2M.getUnit_val_custom(),"","20") %></td>
             <td width="100"><%=DisplayUtil.displayInputTextBox("TOTAL_VALUE",Double.toString(formDetail2M.getTotal_value()),"","10") %></td>
-            <td width="100"><%=DisplayUtil.displayInputTextBox("DUTY_RATE",Double.toString(formDetail2M.getExport_rate()),"","10") %></td>
+            <td width="100"><%=DisplayUtil.displaySelectTag(form1Bean.getDutyRateVt(), String.valueOf(formDetail2M.getExport_rate()), "DUTY_RATE", "EDIT", "") %></td>
             <td width="100"><%=DisplayUtil.displayInputTextBox("DUTY_AMOUNT",Double.toString(formDetail2M.getExport_amount()),"","10") %></td>
             <td width="100"><%=DisplayUtil.displayInputTextBox("TAX_TYPE",formDetail2M.getOther_tax_type(),"","10") %></td>
             <td width="100"><%=DisplayUtil.displayInputTextBox("TAX_RATE",Double.toString(formDetail2M.getOther_tax_rate()),"","10") %></td>
