@@ -2,11 +2,14 @@ package com.ejda.action;
 
 import java.util.Vector;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.ejda.constant.EJDAConstant;
 import com.ejda.sessionBean.Form1Bean;
 import com.ejda.util.DisplayFormatUtil;
+import com.tcd.ejda.dao.CacheDataDAO;
+import com.tcd.ejda.dao.CacheDataDAOImpl;
 import com.tcd.ejda.dao.Form1DAO;
 import com.tcd.ejda.dao.Form1DAOImpl;
 import com.tcd.ejda.dao.TransactionLogDAO;
@@ -54,7 +57,10 @@ public class EJDAM010Action extends AbstractAction {
 	public void init() {
 		/** EJDA Form no 1****/
 		log.debug("*********** EJDAM010Action ***********");
-		
+		Vector unitVt = new Vector();
+		Vector tanliCodeVt = new Vector();
+		Vector dutyRateVt = new Vector();
+		Vector countryOriginVt = new Vector();
 		
 		form1Bean = getForm1Bean();
 		form1Bean.setForm1Vt(new Vector<Form1Model>());
@@ -69,6 +75,19 @@ public class EJDAM010Action extends AbstractAction {
 		ValueListModel valueListM = new ValueListModel();
 		valueListM.setReturnModel("Form1Model");
 		form1Bean.setValueListM(valueListM);
+		try{
+			CacheDataDAO dao = new CacheDataDAOImpl();
+			unitVt = dao.LoadUnit();
+			tanliCodeVt = dao.LoadCustomTanli();
+			dutyRateVt = dao.LoadExchangeRAte();
+			countryOriginVt = dao.LoadCountryOrigin();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		form1Bean.setUnitVt(unitVt);
+		form1Bean.setTanliCodeVt(tanliCodeVt);
+		form1Bean.setDutyRateVt(dutyRateVt);
+		form1Bean.setCountryOriginVt(countryOriginVt);
 		setForm1Bean(form1Bean);
 	}
 
@@ -236,10 +255,20 @@ public class EJDAM010Action extends AbstractAction {
 	private void setCriteriaPameter(){
 		
 		Form1Model form1 = new Form1Model();
-		log.debug("getRequest().getParameter(txtFormName)>>> " + getRequest().getParameter("txtFormName"));
-		form1.setForm_name(getRequest().getParameter("txtFormName"));
-		
-		getForm1Bean().setForm1ModelSP(form1);
+		try{
+			form1.setForm_name(getRequest().getParameter("txtFormName"));
+			form1.setDoc_ID(getRequest().getParameter("txtDocID"));
+			form1.setJDA_Type(getRequest().getParameter("jdaType"));
+			form1.setConsignor_code(getRequest().getParameter("txtConsignorCode"));
+			form1.setConsignor_name(getRequest().getParameter("txtConsignorName"));
+			form1.setConsignee_code(getRequest().getParameter("txtConsigneeCode"));
+			form1.setConsignee_name(getRequest().getParameter("txtConsigneeName"));
+			form1.setDate_Receipt_From(DisplayFormatUtil.stringToDateSql((String)getRequest().getParameter("txtDocDateFrom"), "dd/mm/yyyy"));
+			form1.setDate_Receipt_To(DisplayFormatUtil.stringToDateSql((String)getRequest().getParameter("txtDocDateTo"), "dd/mm/yyyy"));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		getForm1Bean().setForm1ModelCri(form1);
 	}
 	
 	private String setSQL(Form1Model form1Cri){
@@ -249,10 +278,29 @@ public class EJDAM010Action extends AbstractAction {
 		String sqlWhere="";
 		try{
 			sql.append(EJDAConstant.SQL.FORM_T_DOC_1);
-			sql.append("  WHERE JDA_TYPE = '1' AND DOC_STATUS = 'D' ");
+			sql.append(" WHERE DOC_STATUS = 'D' ");
+			if(StringUtils.isNotEmpty(form1Cri.getDoc_ID())){
+				sql.append(" AND DOC_ID = ? ");
+			}
+			if(StringUtils.isNotEmpty(form1Cri.getJDA_Type())){
+				sql.append(" AND JDA_TYPE = ? ");
+			}
+			if(StringUtils.isNotEmpty(form1Cri.getConsignor_code())){
+				sql.append(" AND CONSIGNOR_CODE = ? ");
+			}
+			if(StringUtils.isNotEmpty(form1Cri.getConsignor_name())){
+				sql.append(" AND UPPER(CONSIGNOR_NAME) like ? ");
+			}
+			if(StringUtils.isNotEmpty(form1Cri.getConsignee_code())){
+				sql.append(" AND CONSIGNEE_CODE = ? ");
+			}
+			if(StringUtils.isNotEmpty(form1Cri.getConsignee_name())){
+				sql.append(" AND UPPER(CONSIGNEE_NAME) like ? ");
+			}
+			if(form1Cri.getDate_Receipt_From() != null && form1Cri.getDate_Receipt_To() != null){
+				sql.append(" AND DATE_RECEIPT BETWEEN ? AND ? ");
+			}
 			
-			
-			//sql.append(sql.toString());
 			log.debug("sql >> " + sql.toString());
 		}catch(Exception e){
 			e.printStackTrace();
@@ -264,11 +312,34 @@ public class EJDAM010Action extends AbstractAction {
 	
 	private Vector getValueListParameters() {
 		Vector parameters = new Vector();
-		Form1Model form1 = getForm1Bean().getForm1ModelSP();
-		log.debug("form1.getForm_name() >> " + form1.getForm_name());
-		if (null!= form1.getForm_name() && !"".equals(form1.getForm_name())){
+		Form1Model form1 = getForm1Bean().getForm1ModelCri();
+		if (StringUtils.isNotEmpty(form1.getForm_name())){
 			log.debug("Form Name = "+form1.getForm_name());
 			parameters.add(form1.getForm_name());
+		}
+		if(StringUtils.isNotEmpty(form1.getDoc_ID())){
+			parameters.add(form1.getDoc_ID());
+		}
+		if(StringUtils.isNotEmpty(form1.getJDA_Type())){
+			parameters.add(form1.getJDA_Type());
+		}
+		if(StringUtils.isNotEmpty(form1.getConsignor_code())){
+			parameters.add(form1.getConsignor_code());
+		}
+		if(StringUtils.isNotEmpty(form1.getConsignor_name())){
+			//"%"+ lastName.toUpperCase()+"%"
+			parameters.add("%"+ form1.getConsignor_name().toUpperCase() + "%");
+		}
+		if(StringUtils.isNotEmpty(form1.getConsignee_code())){
+			parameters.add(form1.getConsignee_code());
+		}
+		if(StringUtils.isNotEmpty(form1.getConsignee_name())){
+			parameters.add("%" + form1.getConsignee_name().toUpperCase() +"%");
+		}
+		
+		if(form1.getDate_Receipt_From() != null && form1.getDate_Receipt_To() != null){
+			parameters.add(form1.getDate_Receipt_From());
+			parameters.add(form1.getDate_Receipt_To());
 		}
 		log.info("parameters.size() = "+parameters.size());
 		return parameters;
@@ -575,10 +646,11 @@ public class EJDAM010Action extends AbstractAction {
 		String [] QB_UNIT = getRequest().getParameterValues("QB_UNIT");//QB_UNIT
 		String [] VALUE_PER_UNIT = getRequest().getParameterValues("VALUE_PER_UNIT");//VALUE_PER_UNIT
 		String [] VALUE_TOTAL = getRequest().getParameterValues("VALUE_TOTAL");//VALUE_TOTAL
-		if (null != QA_ITEM_NO && QA_ITEM_NO.length > 1){
+		if (null != QA_ITEM_NO && QA_ITEM_NO.length > 0){
 			for(int i =0; i < QA_ITEM_NO.length;i++){
 				FormDetail2Model detail = new FormDetail2Model();
 				detail.setItem_no(QA_ITEM_NO[i]);
+				log.debug("ORIGIN_CODE = " + ORIGIN_CODE[i]);
 				detail.setOriginCode(ORIGIN_CODE[i]);
 				detail.setQty_cust_unit(DisplayFormatUtil.StringToDouble(QB_UNIT[i]));
 				detail.setValuePerUnit(DisplayFormatUtil.StringToDouble(VALUE_PER_UNIT[i]));

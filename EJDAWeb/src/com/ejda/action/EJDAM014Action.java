@@ -37,6 +37,9 @@ public class EJDAM014Action extends AbstractAction {
 	public void init() {
 		/** EJDA Form no 1****/
 		Vector unitVt = new Vector();
+		Vector tanliCodeVt = new Vector();
+		Vector dutyRateVt = new Vector();
+		Vector countryOriginVt = new Vector();
 		log.debug("*********** EJDAM014Action ***********");
 		
 		form1Bean = getForm1Bean();
@@ -55,10 +58,16 @@ public class EJDAM014Action extends AbstractAction {
 		try{
 			CacheDataDAO dao = new CacheDataDAOImpl();
 			unitVt = dao.LoadUnit();
+			tanliCodeVt = dao.LoadCustomTanli();
+			dutyRateVt = dao.LoadExchangeRAte();
+			countryOriginVt = dao.LoadCountryOrigin();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		form1Bean.setUnitVt(unitVt);
+		form1Bean.setTanliCodeVt(tanliCodeVt);
+		form1Bean.setDutyRateVt(dutyRateVt);
+		form1Bean.setCountryOriginVt(countryOriginVt);
 		setForm1Bean(form1Bean);
 	}
 
@@ -242,13 +251,13 @@ public class EJDAM014Action extends AbstractAction {
 				sql.append(" AND CONSIGNOR_CODE = ? ");
 			}
 			if(StringUtils.isNotEmpty(form1Cri.getConsignor_name())){
-				sql.append(" AND CONSIGNOR_NAME = ? ");
+				sql.append(" AND UPPER(CONSIGNOR_NAME) like ? ");
 			}
 			if(StringUtils.isNotEmpty(form1Cri.getConsignee_code())){
 				sql.append(" AND CONSIGNEE_CODE = ? ");
 			}
 			if(StringUtils.isNotEmpty(form1Cri.getConsignee_name())){
-				sql.append(" AND CONSIGNEE_NAME = ? ");
+				sql.append(" AND UPPER(CONSIGNEE_NAME) like ? ");
 			}
 			if(form1Cri.getDate_Receipt_From() != null && form1Cri.getDate_Receipt_To() != null){
 				sql.append(" AND DATE_RECEIPT BETWEEN ? AND ? ");
@@ -279,13 +288,14 @@ public class EJDAM014Action extends AbstractAction {
 			parameters.add(form1.getConsignor_code());
 		}
 		if(StringUtils.isNotEmpty(form1.getConsignor_name())){
-			parameters.add(form1.getConsignor_name());
+			//"%"+ lastName.toUpperCase()+"%"
+			parameters.add("%"+ form1.getConsignor_name().toUpperCase() + "%");
 		}
 		if(StringUtils.isNotEmpty(form1.getConsignee_code())){
 			parameters.add(form1.getConsignee_code());
 		}
 		if(StringUtils.isNotEmpty(form1.getConsignee_name())){
-			parameters.add(form1.getConsignee_name());
+			parameters.add("%" + form1.getConsignee_name().toUpperCase() +"%");
 		}
 		
 		if(form1.getDate_Receipt_From() != null && form1.getDate_Receipt_To() != null){
