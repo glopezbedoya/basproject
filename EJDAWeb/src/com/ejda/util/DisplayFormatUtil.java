@@ -1,5 +1,7 @@
 package com.ejda.util;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -227,5 +229,28 @@ public class DisplayFormatUtil {
 			log.error(e.getMessage());
 		}
 		return returnValue;
+	}
+	public static String displayCommaNumber(double number) throws Exception {
+		String numberCommaFormat = "0.00";
+		if (String.valueOf(number).trim().length() > 0) {
+			String decFirst = "";
+			String decLast = "";
+			BigDecimal format1 = new BigDecimal(number);
+			NumberFormat format = NumberFormat.getInstance(Locale.ENGLISH);
+			String commaFormat =
+				format.format(format1.setScale(2, BigDecimal.ROUND_HALF_UP));
+			int indx = commaFormat.indexOf(".");
+			if (indx != -1) {
+				decFirst = commaFormat.substring(0, indx);
+				decLast = commaFormat.substring(indx + 1);
+				if (decLast.length() == 1) {
+					decLast = decLast + "0";
+				}
+				numberCommaFormat = decFirst + "." + decLast;
+			} else {
+				numberCommaFormat = commaFormat + ".00";
+			}
+		} //if
+		return numberCommaFormat;
 	}
 }
