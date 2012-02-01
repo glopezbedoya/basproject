@@ -334,7 +334,7 @@ public class ValueListDAOImpl implements ValueListDAO {
 			form.setCif_value(rs.getString("CIF_VALUE"));//CIF_VALUE
 			form.setGross_weight(rs.getString("GROSS_WEIGHT")) ;//GROSS_WEIGHT
 			form.setMeasurement(rs.getString("MEASUREMENT")) ;//MEASUREMENT
-			form.setOther_charg(rs.getString("OTHER_CHARG"));//OTHER_CHARG
+			form.setOther_charg(rs.getDouble("OTHER_CHARG"));//OTHER_CHARG
 			form.setDeclarant_name(rs.getString("DECLARANT_NAME"));//DECLARANT_NAME
 			form.setId_card_no(rs.getString("ID_CARD_NO"));//ID_CARD_NO
 			form.setStatus(rs.getString("STATUS"));//STATUS

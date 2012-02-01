@@ -207,13 +207,13 @@ public class Form1DAOImpl implements Form1DAO {
 		sql.append("OTHER_CHARG2, PAYABLE_AMOUNT, MANUALSCRIPT_RECERPT,VESSEL_VALUE, INSTRUCT_EXAM, RESULT_EXAM, FOR_OTHER_USE, ");
 		sql.append("CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY ");
 		sql.append(" ,MOVEMENT_PEMIT_NO, EXPIRE_DATE, SECURITY_REF_NO, SECURITY_AMT, RECEIVE_AMT ");
-		sql.append(" ,BILL_OF_LADING, PROPER_OFFICE, REQUEST_APPROVED, CERTIFIED )");
+		sql.append(" ,BILL_OF_LADING, PROPER_OFFICE, REQUEST_APPROVED, CERTIFIED, FLAG_PAYMENT, REMARK )");
 
 		sql.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ");
 		sql.append(", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ");
 		sql.append(", ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, ?, SYSDATE, ?");
 		sql.append(" , ?, ?, ?, ?, ? ");
-		sql.append(" , ?, ?, ?, ? )");
+		sql.append(" , ?, ?, ?, ?, null, null )");
 		log.debug("sql >> " + sql.toString());
 		try {
 			ps = conn.prepareStatement(sql.toString());
@@ -273,7 +273,7 @@ public class Form1DAOImpl implements Form1DAO {
 			ps.setString(parameterIndex++, form.getCif_value());//CIF_VALUE
 			ps.setString(parameterIndex++, form.getGross_weight());//GROSS_WEIGHT
 			ps.setString(parameterIndex++, form.getMeasurement());//MEASUREMENT
-			ps.setString(parameterIndex++, form.getOther_charg());//OTHER_CHARG
+			ps.setDouble(parameterIndex++, form.getOther_charg());//OTHER_CHARG
 			ps.setString(parameterIndex++, form.getDeclarant_name());//DECLARANT_NAME
 			ps.setString(parameterIndex++, form.getId_card_no());//ID_CARD_NO
 			ps.setString(parameterIndex++, form.getStatus());//STATUS
@@ -478,10 +478,6 @@ public class Form1DAOImpl implements Form1DAO {
 			log.debug("form1.getDoc_Status() >> "+form1.getDoc_Status());
 			log.debug("form1.getConsignor_code() >> "+form1.getConsignor_code());
 			
-//			ps.setString(seq++, form1.getDoc_Status());
-//			ps.setString(seq++, form1.getUpdate_by());
-//			ps.setString(seq++, form1.getDoc_ID());
-//			ps.setString(seq++, form1.getJDA_Type());
 			ps.setString(parameterIndex++, form1.getCountry_ID());//	COUNTRY_ID /1
 //			ps.setString(parameterIndex++, form1.getJDA_Type());//JDA_TYPE /2
 			ps.setString(parameterIndex++, form1.getDoc_Status());//DOC_STATUS /3
@@ -535,7 +531,7 @@ public class Form1DAOImpl implements Form1DAO {
 			ps.setString(parameterIndex++, form1.getCif_value());//CIF_VALUE 51
 			ps.setString(parameterIndex++, form1.getGross_weight());//GROSS_WEIGHT 52
 			ps.setString(parameterIndex++, form1.getMeasurement());//MEASUREMENT 53
-			ps.setString(parameterIndex++, form1.getOther_charg());//OTHER_CHARG 54
+			ps.setDouble(parameterIndex++, form1.getOther_charg());//OTHER_CHARG 54
 			ps.setString(parameterIndex++, form1.getDeclarant_name());//DECLARANT_NAME 55
 			ps.setString(parameterIndex++, form1.getId_card_no());//ID_CARD_NO 56
 			ps.setString(parameterIndex++, form1.getStatus());//STATUS 57
@@ -559,8 +555,10 @@ public class Form1DAOImpl implements Form1DAO {
 			ps.setString(parameterIndex++, form1.getProperOffice());//PROPER_OFFICE 75
 			ps.setString(parameterIndex++, form1.getRequestApproved());//REQUEST_APPROVED 76
 			ps.setString(parameterIndex++, form1.getCertified());//CERTIFIED 77
+//			ps.setString(parameterIndex++, form1.getRemark());//Remark
 			ps.setString(parameterIndex++, form1.getDoc_ID()); //78
 			ps.setString(parameterIndex++, form1.getJDA_Type());//79
+			
 			
 			int rsInt = ps.executeUpdate();
 			if (rsInt > 0) {
@@ -627,8 +625,6 @@ public class Form1DAOImpl implements Form1DAO {
 		
 		try {
 						
-//			sql.append("UPDATE JDA_FORM_T_DOC SET DOC_STATUS = ?, UPDATE_BY = ? ");
-//			sql.append("WHERE DOC_ID = ? AND JDA_TYPE = ? ");
 			sql.append("UPDATE JDA_FORM_T_DOC SET COUNTRY_ID = ?, DOC_STATUS = ?, INVOICE_NO = ?, CONSIGNOR_CODE = ?, CONSIGNOR_NAME = ?, ");
 			sql.append("CONSIGNOR_ADDRESS = ?, CONSIGNEE_CODE = ?, CONSIGNEE_NAME = ?, CONSIGNEE_ADDRESS = ?, AUTHORAGENT_CODE = ?, ");
 			sql.append("AUTHORAGENT_NAME = ?, AUTHORAGENT_ADDRESS = ?, MODE_TRANS = ?, TRANS_OTHER = ?, DATE_IMPORT = ?, TRANS_DETAIL = ?, ");
@@ -647,16 +643,7 @@ public class Form1DAOImpl implements Form1DAO {
 			log.debug("updateRole JDA_FORM_T_DOC >>> " + sql.toString());
 			ps = conn.prepareStatement(sql.toString());
 			int parameterIndex=1;
-			log.debug("form1.getDoc_ID() >> "+form1.getDoc_ID());
-			log.debug("form1.getJDA_Type() >> "+form1.getJDA_Type());
-			log.debug("form1.getCountry_ID() >> "+form1.getCountry_ID());
-			log.debug("form1.getDoc_Status() >> "+form1.getDoc_Status());
-			log.debug("form1.getConsignor_code() >> "+form1.getConsignor_code());
 			
-//			ps.setString(seq++, form1.getDoc_Status());
-//			ps.setString(seq++, form1.getUpdate_by());
-//			ps.setString(seq++, form1.getDoc_ID());
-//			ps.setString(seq++, form1.getJDA_Type());
 			ps.setString(parameterIndex++, form1.getCountry_ID());//	COUNTRY_ID /1
 //			ps.setString(parameterIndex++, form1.getJDA_Type());//JDA_TYPE /2
 			ps.setString(parameterIndex++, form1.getDoc_Status());//DOC_STATUS /3
@@ -710,7 +697,7 @@ public class Form1DAOImpl implements Form1DAO {
 			ps.setString(parameterIndex++, form1.getCif_value());//CIF_VALUE 51
 			ps.setString(parameterIndex++, form1.getGross_weight());//GROSS_WEIGHT 52
 			ps.setString(parameterIndex++, form1.getMeasurement());//MEASUREMENT 53
-			ps.setString(parameterIndex++, form1.getOther_charg());//OTHER_CHARG 54
+			ps.setDouble(parameterIndex++, form1.getOther_charg());//OTHER_CHARG 54
 			ps.setString(parameterIndex++, form1.getDeclarant_name());//DECLARANT_NAME 55
 			ps.setString(parameterIndex++, form1.getId_card_no());//ID_CARD_NO 56
 			ps.setString(parameterIndex++, form1.getStatus());//STATUS 57
@@ -734,6 +721,7 @@ public class Form1DAOImpl implements Form1DAO {
 			ps.setString(parameterIndex++, form1.getProperOffice());//PROPER_OFFICE 75
 			ps.setString(parameterIndex++, form1.getRequestApproved());//REQUEST_APPROVED 76
 			ps.setString(parameterIndex++, form1.getCertified());//CERTIFIED 77
+//			ps.setString(parameterIndex++, form1.getRemark());//REMARK
 			ps.setString(parameterIndex++, form1.getDoc_ID()); //78
 			ps.setString(parameterIndex++, form1.getJDA_Type());//79
 			
@@ -864,7 +852,7 @@ public class Form1DAOImpl implements Form1DAO {
 				form1M.setCif_value(rs.getString("CIF_VALUE"));
 				form1M.setGross_weight(rs.getString("GROSS_WEIGHT"));
 				form1M.setMeasurement(rs.getString("MEASUREMENT"));
-				form1M.setOther_charg(rs.getString("OTHER_CHARG"));
+				form1M.setOther_charg(rs.getDouble("OTHER_CHARG"));
 				form1M.setDeclarant_name(rs.getString("DECLARANT_NAME"));
 				form1M.setId_card_no(rs.getString("ID_CARD_NO"));
 				form1M.setStatus(rs.getString("STATUS"));
@@ -893,6 +881,7 @@ public class Form1DAOImpl implements Form1DAO {
 				form1M.setProperOffice(rs.getString("PROPER_OFFICE"));
 				form1M.setRequestApproved(rs.getString("REQUEST_APPROVED"));
 				form1M.setCertified(rs.getString("CERTIFIED"));
+				form1M.setRemark(rs.getString("REMARK"));
 
 			}
 		} catch (SQLException e) {
@@ -1400,6 +1389,152 @@ public class Form1DAOImpl implements Form1DAO {
 			}
 		}
 		return isSuccess;
+	}
+	@Override
+	public boolean UpdatePayment(String docId, String flagPayment,String user_name)
+			throws SQLException {
+		log.debug("[Start : UpdatePayment ]");
+		// TODO Auto-generated method stub
+		boolean blSuccess=false;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = db.getConnection();
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		StringBuffer sql = new StringBuffer();
+		conn.setAutoCommit(false); 
+		
+		try {
+						
+			sql.append("UPDATE JDA_FORM_T_DOC SET DOC_STATUS = 'P' , FLAG_PAYMENT = ?, UPDATE_BY = ?, UPDATE_DATE = SYSDATE ");
+			sql.append("WHERE DOC_ID = ? ");
+			log.debug("updateRole JDA_FORM_T_DOC >>> " + sql.toString());
+			ps = conn.prepareStatement(sql.toString());
+			int seq=1;
+			log.debug("docId >> "+docId);
+			
+			ps.setString(seq++, flagPayment);
+			ps.setString(seq++, user_name);
+			ps.setString(seq++, docId);
+			
+			int rsInt = ps.executeUpdate();
+			if (rsInt > 0) {
+				blSuccess = true;
+			}
+			
+			log.debug("blSuccess >> " + blSuccess );
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			log.equals(e.getMessage());
+		}finally{
+			try {
+				if (conn != null)
+					conn.commit();
+			} catch (Exception e) {
+			}
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		
+		return blSuccess;
+	}
+	@Override
+	public boolean UpdateRemark(String docId,String doc_status, String remark, String userName)throws SQLException {
+		log.debug("[Start : UpdateRemark ]");
+		boolean blSuccess=false;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = db.getConnection();
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		StringBuffer sql = new StringBuffer();
+		conn.setAutoCommit(false); 
+		
+		try {
+						
+			sql.append("UPDATE JDA_FORM_T_DOC SET DOC_STATUS = ? , REMARK = ?, UPDATE_BY = ?, UPDATE_DATE = SYSDATE ");
+			sql.append("WHERE DOC_ID = ? ");
+			log.debug("updateRole JDA_FORM_T_DOC >>> " + sql.toString());
+			ps = conn.prepareStatement(sql.toString());
+			int seq=1;
+			log.debug("docId >> "+docId);
+			ps.setString(seq++, doc_status);
+			ps.setString(seq++, remark);
+			ps.setString(seq++, userName);
+			ps.setString(seq++, docId);
+			
+			int rsInt = ps.executeUpdate();
+			if (rsInt > 0) {
+				blSuccess = true;
+			}
+			
+			log.debug("blSuccess >> " + blSuccess );
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			log.equals(e.getMessage());
+		}finally{
+			try {
+				if (conn != null)
+					conn.commit();
+			} catch (Exception e) {
+			}
+			try {
+				if (rs != null)
+					rs.close();
+				rs = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+				ps = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (Exception e) {
+				
+			}
+		}
+		
+		return blSuccess;
 	}
 
 
