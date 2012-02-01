@@ -66,7 +66,7 @@ public class Form1Model {
 	private String cif_value;
 	private String gross_weight;
 	private String Measurement;
-	private String Other_charg;
+	private double Other_charg;
 	private String declarant_name;
 	private String id_card_no;
 	private String status;
@@ -99,6 +99,21 @@ public class Form1Model {
 	private String requestApproved;
 	private String certified;
 	
+	private String flag_payment;
+	private String remark;
+	
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	public String getFlag_payment() {
+		return flag_payment;
+	}
+	public void setFlag_payment(String flagPayment) {
+		flag_payment = flagPayment;
+	}
 	public String getFor_other_use() {
 		return for_other_use;
 	}
@@ -482,10 +497,10 @@ public class Form1Model {
 	public void setMeasurement(String measurement) {
 		Measurement = measurement;
 	}
-	public String getOther_charg() {
+	public double getOther_charg() {
 		return Other_charg;
 	}
-	public void setOther_charg(String otherCharg) {
+	public void setOther_charg(double otherCharg) {
 		Other_charg = otherCharg;
 	}
 	public String getDeclarant_name() {
