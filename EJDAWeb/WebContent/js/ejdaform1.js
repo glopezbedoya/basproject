@@ -9,6 +9,7 @@ function CancelButton(form,action){
 	form.submit();
 }
 function validateSubmitButton(form,action){
+	
 	$('input[name=Status]').val(setStatus());
 	$('input[name=mode_trans]').val(setModeTrans());
 	$('input[name=ejdaAction]').val(action);
@@ -16,6 +17,36 @@ function validateSubmitButton(form,action){
 	$('input[name=screenName]').val(action+'.jsp');
 	form.submit();
 	
+}
+function validateSaveButton(form,action){
+	
+	$('input[name=Status]').val(setStatus());
+	$('input[name=mode_trans]').val(setModeTrans());
+	$('input[name=ejdaAction]').val(action);
+	$('input[name=ejdaMethod]').val('doSaveButton');
+	$('input[name=screenName]').val(action+'.jsp');
+	form.submit();
+	
+}
+function paymentSubmitButton(form,action){
+	
+	$('input[name=flag_payment]').val(setPayment());
+	$('input[name=ejdaAction]').val(action);
+	$('input[name=ejdaMethod]').val('doSubmitButton');
+	$('input[name=screenName]').val(action+'.jsp');
+	form.submit();
+	
+}
+function setPayment(){
+	var payment;
+	$('input[name=flag_payment]').each(function(){			
+		
+		if ($(this).attr('checked')){
+			payment = $(this).val();
+		}	
+	});
+	//alert('stat : ' +stat);
+	return payment;
 }
 function setStatus(){
 	var stat;
@@ -363,5 +394,6 @@ function removeRowFromTable(tablename){
 		}
 	}	
 }
+
 
 
