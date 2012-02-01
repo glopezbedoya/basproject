@@ -305,3 +305,162 @@ function getAgentAddress(agentCode){
 			alert("error"  + err.message);
 		}
 	}
+function readOnlyDeliver(form_action){
+	//alert('readOnlyDeliver : ' + form_action);
+	try{
+		if (form_action == 'EJDAM022'){
+			document.getElementById("InsertPackage").disabled=true;
+			document.getElementById("DeletePackage").disabled=true;
+			
+			document.getElementById("InsertQualityBase").disabled=true;
+			document.getElementById("DeleteQualityBase").disabled=true;
+			
+			
+			setReadOnly('consignorExportCode');
+			setReadOnly('consignorExportName');
+			$('textarea[name=consignorExportAddress]').attr('readonly',true);
+			
+			$('select[name=Consignee_code]').attr('disabled',true);
+			//setReadOnly('Consignee_code');
+			setReadOnly('Consignee_name');
+			//setReadOnly('Consignee_address');
+			$('textarea[name=Consignee_address]').attr('readonly',true);
+			
+			$('select[name=AuthorAgent_code]').attr('disabled',true);
+			//setReadOnly('AuthorAgent_code');
+			setReadOnly('AuthorAgent_name');
+			//setReadOnly('AuthorAgent_address');
+			$('textarea[name=AuthorAgent_address]').attr('readonly',true);
+			
+			setReadOnly('trans_other');
+			setReadOnly('Date_Import');
+			$('select[name=PortImport_Code]').attr('disabled',true);
+			//setReadOnly('PortImport_Code');
+			setReadOnly('PortImport_Desc');
+			$('select[name=PortLoad_Code]').attr('disabled',true);
+			//setReadOnly('PortLoad_Code');
+			setReadOnly('PortLoad_Desc');
+			$('select[name=Via_Code]').attr('disabled',true);
+			//setReadOnly('Via_Code');
+			setReadOnly('Via_Desc');
+			setReadOnly('Date_Receipt');
+			setReadOnly('Regis_no');
+			setReadOnly('cus_name_code');
+			setReadOnly('cus_name_desc');
+			setReadOnly('ManifestNo');
+			setReadOnly('duty_tax_receipt_date');
+			setReadOnly('duty_tax_receipt_desc');
+			setReadOnly('import_permit_no');
+			setReadOnly('exchg_ctrl_ref');
+			setReadOnly('special_treatment');
+			setReadOnly('country_origin_code');
+			setReadOnly('country_origin_desc');
+			setReadOnly('country_final_code');
+			setReadOnly('country_final_desc');
+			setReadOnly('bill_no');
+			setReadOnly('term_payment');
+			setReadOnly('cur_code');
+			setReadOnly('Received_amount');
+			setReadOnly('ExchgRate_ID');
+			setReadOnly('Equivalent');
+			setReadOnly('good_payment_code');
+			setReadOnly('good_payment_desc');
+			setReadOnly('country_of_good');
+			setReadOnly('fob_value');
+			setReadOnly('Insurance');
+			setReadOnly('Freight');
+			setReadOnly('cif_value');
+			setReadOnly('gross_weight');
+			setReadOnly('Measurement');
+			setReadOnly('Other_charg');
+			setReadOnly('declarant_name');
+			setReadOnly('id_card_no');
+			setReadOnly('cerify');
+			
+			setReadOnly('amtRecrived');
+			setReadOnly('exchange_rate');
+			setReadOnly('moveMentPemit');
+			setReadOnly('dateOfExpiry');
+			setReadOnly('securityRefNo');
+			setReadOnly('amtOfSecurity');
+			setReadOnly('billOfLading');
+			setReadOnly('DeclarantName');
+			
+			$('textarea[name=requestApproved]').attr('readonly',true);
+			$('textarea[name=certified]').attr('readonly',true);
+			$('textarea[name=properOffice]').attr('readonly',true);
+			
+			$('textarea[name=cus_removal]').attr('readonly',true);
+			//setReadOnly('cus_removal');
+			setReadOnly('tax_total');
+			setReadOnly('Other_charg2');
+			setReadOnly('payable_amount');
+			$('textarea[name=manualscript_recerpt]').attr('readonly',true);
+			//setReadOnly('manualscript_recerpt');
+			setReadOnly('vessel_value');
+			$('textarea[name=instruct_exam]').attr('readonly',true);
+			$('textarea[name=result_exam]').attr('readonly',true);
+			$('textarea[name=for_other_use]').attr('readonly',true);
+			//setReadOnly('instruct_exam');
+			//setReadOnly('result_exam');
+			//setReadOnly('for_other_use');
+			
+			$('input[name=mode_trans]').attr('disabled',true);
+			$('input[name=Status]').attr('disabled',true);
+			$('input[name=doc_attach]').attr('disabled',true);
+		}
+	}catch (err){
+		alert(err.message);
+	}
+}
+
+function setReadOnlyDetail1(form_action){
+	//alert('sized = ' + sized);
+	try{
+		if (form_action == 'EJDAM022'){
+			setReadOnly('MARK_NO');
+			setReadOnly('ITEM_NO');
+			setReadOnly('PACKAGE_NO');
+			setReadOnly('GOODS_DESC');
+			$('input[name=checkall1]').attr('disabled',true);
+			$('select[name=CODE_NO]').attr('disabled',true);
+			$('select[name=UNIT]').attr('disabled',true);
+		}
+	}catch (e){
+		alert(e.message);
+	}
+	
+}
+function setReadOnlyDetail2(form_action){
+	//alert('sized = ' + sized);
+	try{
+		if (form_action == 'EJDAM022'){
+			setReadOnly('QA_ITEM_NO');
+			setReadOnly('QB_UNIT');
+			setReadOnly('FOB_ACTUAL');
+			setReadOnly('FOB_CUSTOM');
+			setReadOnly('TOTAL_VALUE');
+			setReadOnly('DUTY_AMOUNT');
+			setReadOnly('TAX_TYPE');
+			setReadOnly('TAX_RATE');
+			setReadOnly('TAX_AMOUNT');
+			setReadOnly('VALUE_PER_UNIT');
+			setReadOnly('VALUE_TOTAL');
+			
+			$('input[name=checkall2]').attr('disabled',true);
+			$('input[name=checkall1]').attr('disabled',true);
+			$('select[name=DUTY_RATE]').attr('disabled',true);
+			$('select[name=ORIGIN_CODE]').attr('disabled',true);
+		}
+	}catch (e){
+		alert(e.message);
+	}
+	
+}
+function setReadOnly(field){
+	//alert(field);
+	$('input[name='+field+']').attr('readonly',true);
+	$('input[name='+field+']').removeClass('textbox');
+	$('input[name='+field+']').removeClass('textboxdisabl');
+	$('input[name='+field+']').addClass('textboxdisable');
+}
