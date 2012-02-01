@@ -50,7 +50,7 @@
 	<table align="center" width="800" border="0" cellspacing="0" cellpadding="0">
 		
         <tr align="left">
-          <td align="left" class="style1" scope="row"><font class="textTop">Release >></font></td>
+          <td align="left" class="style1" scope="row"><font class="textTop">Deliver >></font></td>
           <td>&nbsp;</td>
           
         </tr>

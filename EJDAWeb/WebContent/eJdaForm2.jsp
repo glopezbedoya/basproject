@@ -10,7 +10,7 @@
 <%@page import="java.util.Vector"%>
 <script language="javascript" src="js/ejdaform2.js"></script>
 <script language="javascript" src="js/ejdaScript.js"></script>
-<form name="ejdaformNo2" method="post" action="/EJDAWeb/EJDAControler">
+<form name="ejdaformNo1" method="post" action="/EJDAWeb/EJDAControler">
 <%
 	Logger log = Logger.getLogger("JspLog");
 	Form1Bean form2Bean = (Form1Bean)request.getSession().getAttribute("form1Bean");
@@ -307,7 +307,7 @@
             <td align="left" ><font class="textDesc">Code</font></td>
             <td align="left" ><%=DisplayUtil.displayInputTextBox("good_payment_code",form2ModelSP.getGood_payment_code(),"maxlength=20") %></td>
             <td align="left" >&nbsp;</td>
-            <td align="left" ><input type="text" name="ExchangeRate4" id="ExchangeRate4" /></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Freight",form2ModelSP.getFreight(),"maxlength=20") %></td>
             </tr>
           <tr>
             <td align="left" ><font class="textDesc">Descriptiont</font></td>
@@ -441,8 +441,8 @@
      <tr>
         <td colspan="3" align="center"><table id= "packageTab" border="0" cellspacing="1" cellpadding="1">
         	 <tr>
-          	<td><input type="button" name = "InsertPackage" value="Insert" onclick="addPackageTabJS();"></td>
-            <td><font class="textHeader"><input type="button" name = "DeletePackage" value="Delete" onclick="removeRowFromTable('packageTab');"></font></td>
+          	<td><input type="button" id = "InsertPackage" name = "InsertPackage" value="Insert" onclick="addPackageTabJS();"></td>
+            <td><font class="textHeader"><input type="button" id  = "DeletePackage" name = "DeletePackage" value="Delete" onclick="removeRowFromTable('packageTab');"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
@@ -482,8 +482,8 @@
       <tr>
         <td colspan="3"><table id ="qualityBaseTab" border="0" cellspacing="1" cellpadding="1">
           <tr >
-            <td><font class="textHeader"><input type="button" name = "InsertQualityBase" value="Insert" onclick="addQualityBaseTabJS();"></font></td>
-            <td><font class="textHeader"><input type="button" name = "DeleteQualityBase" value="Delete" onclick="removeRowFromTable('qualityBaseTab');"></font></td>
+            <td><font class="textHeader"><input type="button"id  = "InsertQualityBase" name = "InsertQualityBase" value="Insert" onclick="addQualityBaseTabJS();"></font></td>
+            <td><font class="textHeader"><input type="button" id= "DeleteQualityBase" name = "DeleteQualityBase" value="Delete" onclick="removeRowFromTable('qualityBaseTab');"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
@@ -653,6 +653,19 @@
           <tr>
             <td align="center">&nbsp;</td>
             </tr>
+            <%
+			if ("EJDAM022".equals(form_action)){
+          %>
+          <tr>
+            <td align="center"><font class="textDescBold">Remark : </font></td>
+          </tr>
+          <tr>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("remark",form2ModelSP.getRemark(),"maxlength=255") %></td>
+          </tr>
+          <tr>
+            <td align="center">&nbsp;</td>
+            </tr>
+            <%} %>
         </table></td>
         </tr>
       <tr>
@@ -660,7 +673,14 @@
         <td>&nbsp;</td>
       </tr>
       <tr>
-        <td colspan="3" align="center">
+      <%
+			String disable = "";
+      		if (null!=form_action && !"EJDAM010".equals(form_action)){
+      			disable = "disabled = \"disabled\"";
+      		}
+      		log.debug("-------------- " + form2ModelSP.getDoc_ID());
+      	%>
+        <td colspan="3" align="center"><input type="button" name="Save" id="Save" <%=disable %>value="  Save  " onclick="validateSaveButton(this.form,'<%=form_action%>')"/>
            <input type="button" name="Submit" id="Submit" value="  Submit  "  onclick="validateSubmitButton(this.form,'<%=form_action %>')"/>
           <input type="button" name="Cancel" id="Cancel" value="  Cancel  " onclick="CancelButton(this.form,'<%=form_action %>')"/></td>
         </tr>
@@ -671,6 +691,9 @@
     </table></td>
   </tr>
 </table>
-</body>
-</html>
-	
+<script type="text/javascript">
+	readOnlyDeliver('<%=form_action %>');
+	setReadOnlyDetail1('<%=form_action %>');
+	setReadOnlyDetail2('<%=form_action %>');
+</script>
+</form>
