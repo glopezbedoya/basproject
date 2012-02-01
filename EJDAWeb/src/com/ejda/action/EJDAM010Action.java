@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import com.ejda.constant.EJDAConstant;
 import com.ejda.sessionBean.Form1Bean;
 import com.ejda.util.DisplayFormatUtil;
+import com.ejda.util.EJDAUtil;
 import com.tcd.ejda.dao.CacheDataDAO;
 import com.tcd.ejda.dao.CacheDataDAOImpl;
 import com.tcd.ejda.dao.Form1DAO;
@@ -53,6 +54,8 @@ public class EJDAM010Action extends AbstractAction {
 		return false;
 	}
 
+	
+
 	@Override
 	public void init() {
 		/** EJDA Form no 1****/
@@ -68,6 +71,7 @@ public class EJDAM010Action extends AbstractAction {
 		form1Bean.setDetail2MVt(new Vector<FormDetail2Model>());
 		
 		form1Bean.setForm1ModelSP(new Form1Model());
+		form1Bean.setForm1ModelCri(new Form1Model());
 		form1Bean.setDetail1ModelSP(new FormDetail1Model());
 		form1Bean.setDetail2ModelSP(new FormDetail2Model());
 		form1Bean.setDocAttachModelSP(new FormDocAttachModel());
@@ -102,10 +106,6 @@ public class EJDAM010Action extends AbstractAction {
 			form1Bean.setDetail1MVt(dao.searchFormDetail1Model(docId));
 			form1Bean.setDetail2MVt(dao.searchFormDetail2Model(docId));
 			form1Bean.setDocAttachMVt(dao.searchFormDocAttachModel(docId));
-//			for(int i=0;i<form1Bean.getDetail2MVt().size();i++){
-//				FormDetail2Model tmp = (FormDetail2Model)form1Bean.getDetail2MVt().get(i);
-//				log.debug("*********tmp = "+tmp.getItem_no());
-//			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -113,34 +113,10 @@ public class EJDAM010Action extends AbstractAction {
 		return true;
 	}
 	
-	private boolean doSaveButton() {
+	private boolean doSaveButton() throws Exception {
+		log.debug("---Start : doSaveButton---");
 		boolean result = false;
 		String iuser = (String) getRequest().getSession().getAttribute("iuser");
-		if (null==iuser || "".equals(iuser)){
-			iuser = "system";
-		}
-		Form1Model form1 = new Form1Model();
-		form1.setForm_name("FN_" + iuser);
-		form1.setForm_status("D");
-		form1.setUpdate_by(iuser);
-		try{
-			Form1DAO dao = new Form1DAOImpl();
-			dao.saveFrom1Table1(form1);
-			result = doSearch();
-			
-			log.debug("result = "+result);
-		}catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		return result;
-	}
-
-	private boolean doSubmitButton() throws Exception {
-		log.debug("---Start : doSubmitButton---");
-		boolean result = false;
-		String iuser = (String) getRequest().getSession().getAttribute("iuser");
-//		String formNo = (String) getRequest().getSession().getAttribute("form_no");
 		String formNo = (String) getRequest().getParameter("form_no");
 		String ipAddress = getRequest().getRemoteAddr();
 		
@@ -149,11 +125,6 @@ public class EJDAM010Action extends AbstractAction {
 		if (null==iuser || "".equals(iuser)){
 			iuser = "system";
 		}
-//		Form1Model form1 = new Form1Model();
-//		form1.setForm_name("FN_" + iuser);
-//		form1.setForm_status("A");
-//		form1.setUpdate_by(iuser);
-//		form1.setForm_no(formNo);
 		Form1Model form1 = setValueModel(formNo,"A",iuser);
 		log.debug("Form1Model >> " + form1);
 		Vector vcDetail1 = setValueDetail1Model();
@@ -167,20 +138,54 @@ public class EJDAM010Action extends AbstractAction {
 		Vector vcDocAttach = setValueDocumentAttach(formNo,"");
 		try{ 
 			Form1DAO dao = new Form1DAOImpl();
-			//dao.UpdateFrom1Table(form1);
 			dao.saveFromEJDA(form1,vcDetail1,vcDetail2,vcDocAttach);
-//			
-//			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
-//			EJDAUtil ejda = new EJDAUtil();
-//			transactionLogModel.setMenuId("M010");
-//			transactionLogModel.setTranAction("ADD");
-//			transactionLogModel.setDescription("Save and submit EJDA Table 1 Form 1");
-//			transactionLogModel.setIpAddress(ipAddress);
-//			transactionLogModel.setTranBy(iuser);
-//			ejda.insertTranLog(transactionLogModel);
 			
 			getRequest().getSession().setAttribute("responseMessage", "Submit Form "+formNo+" Successfully.");
 			doSearch();
+			result = doSearch();
+			
+			log.debug("result = "+result);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	private boolean doSubmitButton() throws Exception {
+		log.debug("---Start : doSubmitButton---");
+		boolean result = false;
+		String iuser = (String) getRequest().getSession().getAttribute("iuser");
+		String formNo = (String) getRequest().getParameter("form_no");
+		String ipAddress = getRequest().getRemoteAddr();
+		
+		if (null==iuser || "".equals(iuser)){
+			iuser = "system";
+		}
+		Form1Model form1 = setValueModel(formNo,"R",iuser);
+		log.debug("Form1Model >> " + form1);
+		Vector vcDetail1 = setValueDetail1Model();
+		Vector vcDetail2 = null;
+		if("1".equals(formNo) || "2".equals(formNo) || "4".equals(formNo)){
+			vcDetail2 = setValueDetail2Model();
+		}else if("3".equals(formNo)){
+			vcDetail2 = setValueDetail2ModelForm3();
+		}
+			
+		Vector vcDocAttach = setValueDocumentAttach(formNo,"");
+		try{ 
+			Form1DAO dao = new Form1DAOImpl();
+			dao.UpdateFromTable(form1,vcDetail1,vcDetail2,vcDocAttach);
+//			
+			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
+			EJDAUtil ejda = new EJDAUtil();
+			transactionLogModel.setMenuId("M010");
+			transactionLogModel.setTranAction("ADD");
+			transactionLogModel.setDescription("submit EJDA Release Form "+formNo);
+			transactionLogModel.setIpAddress(ipAddress);
+			transactionLogModel.setTranBy(iuser);
+			ejda.insertTranLog(transactionLogModel);
+			
+			getRequest().getSession().setAttribute("responseMessage", "Submit Form "+formNo+" Successfully.");
 			result = doSearch();
 			
 			log.debug("result = "+result);
@@ -206,18 +211,16 @@ public class EJDAM010Action extends AbstractAction {
 	
 	public boolean doSearch(){
 		log.debug("*********** doSearch ***********");
-//		log.debug("ejdaMethod = "+getRequest().getParameter("ejdaMethod"));
 		boolean result = false;
-		setCriteriaPameter();
+//		setCriteriaPameter();
 		form1Bean = getForm1Bean();
 		ValueListModel valueListM = new ValueListModel();
 		ValueListAction valueListA = new ValueListAction();
 		log.debug("getRequest().getParameter(Page)"+getRequest().getParameter("Page"));
-		log.debug("form1Bean = "+form1Bean);
 		try{
 			Vector tranLogVt = new Vector();
 			valueListM = form1Bean.getValueListM();
-			valueListM.setSQL(this.setSQL(form1Bean.form1ModelSP));
+			valueListM.setSQL(this.setSQL(form1Bean.form1ModelCri));
 			valueListM.setParameters(getValueListParameters());
 			valueListM.setPage(getRequest().getParameter("page"));
 			valueListM.setItemsPerPage(Integer.parseInt(getRequest().getParameter("volumePerPage")));
@@ -227,7 +230,6 @@ public class EJDAM010Action extends AbstractAction {
 			form1Bean.setActionName("EJDAM010");
 			log.debug("form1Bean = " + form1Bean.getForm1Vt().size());
 			log.debug("tranLogBean.getValueListM().getCount() = "+form1Bean.getValueListM().getCount());
-			log.debug("form1Bean setActionName = " + form1Bean.getActionName());
 			getRequest().getSession().removeAttribute("VALUE_LIST");
 			setForm1Bean(form1Bean);
 			result = true;
@@ -278,7 +280,7 @@ public class EJDAM010Action extends AbstractAction {
 		String sqlWhere="";
 		try{
 			sql.append(EJDAConstant.SQL.FORM_T_DOC_1);
-			sql.append(" WHERE DOC_STATUS = 'D' ");
+			sql.append(" WHERE DOC_STATUS = 'P' ");
 			if(StringUtils.isNotEmpty(form1Cri.getDoc_ID())){
 				sql.append(" AND DOC_ID = ? ");
 			}
@@ -449,6 +451,7 @@ public class EJDAM010Action extends AbstractAction {
 		String instruct_exam = (String) getRequest().getParameter("instruct_exam");//INSTRUCT_EXAM
 		String result_exam = (String) getRequest().getParameter("result_exam");//RESULT_EXAM
 		String for_other_use = (String) getRequest().getParameter("for_other_use");//FOR_OTHER_USE
+		String remark = (String) getRequest().getParameter("remark");//REMARK
 		//CREATE_DATE
 		//ps.setString(parameterIndex++, form.getCreate_By());//CREATE_BY
 		//UPDATE_DATE
@@ -519,7 +522,7 @@ public class EJDAM010Action extends AbstractAction {
 		form.setCif_value(cif_value);//CIF_VALUE
 		form.setGross_weight(gross_weight) ;//GROSS_WEIGHT
 		form.setMeasurement(Measurement) ;//MEASUREMENT
-		form.setOther_charg(Other_charg);//OTHER_CHARG
+		form.setOther_charg(DisplayFormatUtil.StringToDouble(Other_charg));//OTHER_CHARG
 		form.setDeclarant_name(declarant_name);//DECLARANT_NAME
 		form.setId_card_no(id_card_no);//ID_CARD_NO
 		log.debug("status = " +status);
@@ -547,6 +550,7 @@ public class EJDAM010Action extends AbstractAction {
 		form.setProperOffice(properOffice);//PROPER_OFFICE
 		form.setRequestApproved(requestApproved);//REQUEST_APPROVED
 		form.setCertified(certified);//CERTIFIED
+		form.setRemark(remark);
 		
 		return form;
 	}
