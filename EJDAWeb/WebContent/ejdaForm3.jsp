@@ -11,6 +11,7 @@
 <%@page import="com.tcd.ejda.model.FormDetail2Model"%>
 <%@page import="com.ejda.util.LoadCacheData"%>
 <script language="javascript" src="js/ejdaform3.js"></script>
+
 <script language="javascript" src="js/ejdaScript.js"></script>
 <form name="ejdaformNo1" method="post" action="/EJDAWeb/EJDAControler">
 <%
@@ -40,7 +41,8 @@
 	ValueListModel valueListM = form3Bean.getValueListM();
 	
 	if(null == valueListM) valueListM = new ValueListModel();
-		
+	
+	
 	%>
 	<input type="hidden" name="ejdaAction" value=""> 
 	<input type="hidden" name="ejdaMethod" value=""> 
@@ -59,7 +61,7 @@
       <tr>
         <td width="50%" colspan="2" align="center"><table border="0" cellspacing="1" cellpadding="1">
         <tr>
-            <td colspan="2" align="left" class="textDesc" >>> <%=showName %></td>
+            <td colspan="2" align="left" class="textDesc" >Form 3 >> <%=showName %></td>
           </tr>
           <tr>
             <td colspan="2" align="left" class="textDesc" ><%=form_no %> : <%=form_action %></td>
@@ -111,14 +113,14 @@
             </font></td>
           </tr>
           <tr>
-            <td  align="left"><font class="textDescBold">12.Registration   Number</font></td>
+            <td  align="left"><font class="textDescBold">12.Registration Number</font></td>
             <td align="left"><font class="textDesc">
               <%=DisplayUtil.displayCheckBoxForDocAttach(form3Bean.docAttachMVt,"doc_attach","INSURANCE CERT","") %>
               Insurance Certificate
             </font></td>
           </tr>
           <tr>
-            <td  align="left"><input type="text" name="RegisterNo" id="RegisterNo" /></td>
+            <td  align="left"><%=DisplayUtil.displayInputTextBox("Regis_no",form3ModelSP.getRegis_no(),"maxlength=50") %></td>
             <td align="left"><font class="textDesc">
               <%=DisplayUtil.displayCheckBoxForDocAttach(form3Bean.docAttachMVt,"doc_attach","LETTER OF CREDIT","") %>
               Letter of Credit
@@ -369,8 +371,8 @@
       <tr>
         <td colspan="3" align="center"><table id= "packageTab" border="0" cellspacing="1" cellpadding="1">
         	 <tr>
-          	<td><input type="button" name = "InsertPackage" value="Insert" onclick="addPackageTabJS();"></td>
-            <td><font class="textHeader"><input type="button" name = "DeletePackage" value="Delete" onclick="removeRowFromTable('packageTab')"></font></td>
+          	<td><input type="button" id = "InsertPackage" name = "InsertPackage" value="Insert" onclick="addPackageTabJS();"></td>
+            <td><font class="textHeader"><input type="button" id = "DeletePackage" name = "DeletePackage" value="Delete" onclick="removeRowFromTable('packageTab')"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
@@ -412,8 +414,8 @@
       <tr>
         <td colspan="3"><table id ="qualityBaseTab" border="0" cellspacing="1" cellpadding="1" align="center">
           <tr >
-            <td><font class="textHeader"><input type="button" name = "InsertQualityBase" value="Insert" onclick="addQualityBaseTabJS();"></font></td>
-            <td><font class="textHeader"><input type="button" name = "DeleteQualityBase" value="Delete" onclick="removeRowFromTable('qualityBaseTab')"></font></td>
+            <td><font class="textHeader"><input type="button" id = "InsertQualityBase"  name = "InsertQualityBase" value="Insert" onclick="addQualityBaseTabJS();"></font></td>
+            <td><font class="textHeader"><input type="button"id = "DeleteQualityBase"  name = "DeleteQualityBase" value="Delete" onclick="removeRowFromTable('qualityBaseTab')"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
@@ -579,6 +581,19 @@
           <tr>
             <td align="center">&nbsp;</td>
             </tr>
+            <%
+			if ("EJDAM022".equals(form_action)){
+          %>
+          <tr>
+            <td align="center"><font class="textDescBold">Remark : </font></td>
+          </tr>
+          <tr>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("remark",form3ModelSP.getRemark(),"maxlength=255") %></td>
+          </tr>
+          <tr>
+            <td align="center">&nbsp;</td>
+            </tr>
+            <%} %>
         </table></td>
         </tr>
       <tr>
@@ -587,12 +602,12 @@
       </tr>
       <tr>
       	<%
-			String disable = "";
-      		if (null!=form_action && !"EJDAM012".equals(form_action)){
-      			disable = "disabled = \"disabled\"";
-      		}
+	      	String disable = "";
+	  		if (null!=form_action && !"EJDAM010".equals(form_action)){
+	  			disable = "disabled = \"disabled\"";
+	  		}
       	%>
-        <td colspan="3" align="center"><!--<input type="button" name="Save" id="Save" <%//=disable %>value="  Save  " onclick="validateSaveButton(this.form,'<%//=form_action %>')"/>-->
+        <td colspan="3" align="center"><input type="button" name="Save" id="Save" <%=disable %>value="  Save  " onclick="validateSaveButton(this.form,'<%=form_action%>')"/>
           <input type="button" name="Submit" id="Submit" value="  Submit  "  onclick="validateSubmitButton(this.form,'<%=form_action %>')"/>
           <input type="button" name="Cancel" id="Cancel" value="  Cancel  " onclick="CancelButton(this.form,'<%=form_action %>')"/></td>
         </tr>
@@ -605,3 +620,8 @@
 </table>
 
 </form>
+<script type="text/javascript">
+	readOnlyDeliver('<%=form_action %>');
+	setReadOnlyDetail1('<%=form_action %>');
+	setReadOnlyDetail2('<%=form_action %>');
+</script>

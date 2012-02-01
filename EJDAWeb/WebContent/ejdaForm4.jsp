@@ -116,7 +116,7 @@
             </font></td>
           </tr>
           <tr>
-            <td colspan="2" align="left"><input type="text" name="RegisterNo" id="RegisterNo" /></td>
+            <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("Regis_no",form4ModelSP.getRegis_no(),"maxlength=50") %></td>
             <td align="left"><font class="textDesc">
               <%=DisplayUtil.displayCheckBoxForDocAttach(form4Bean.docAttachMVt,"doc_attach","LETTER OF CREDIT","") %>
               Letter of Credit
@@ -429,8 +429,8 @@
       <tr>
         <td colspan="3" align="center"><table id= "packageTab" border="0" cellspacing="1" cellpadding="1">
         	 <tr>
-          	<td><input type="button" name = "InsertPackage" value="Insert" onclick="addPackageTabJS();"></td>
-            <td><font class="textHeader"><input type="button" name = "DeletePackage" value="Delete" onclick="deletePackageTabJS();"></font></td>
+          	<td><input type="button" id  = "InsertPackage" name = "InsertPackage" value="Insert" onclick="addPackageTabJS();"></td>
+            <td><font class="textHeader"><input type="button" id = "DeletePackage" name = "DeletePackage" value="Delete" onclick="deletePackageTabJS();"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
@@ -471,8 +471,8 @@
       <tr>
         <td colspan="3"><table id ="qualityBaseTab" border="0" cellspacing="1" cellpadding="1">
           <tr >
-            <td><font class="textHeader"><input type="button" name = "InsertQualityBase" value="Insert" onclick="addQualityBaseTabJS();"></font></td>
-            <td><font class="textHeader"><input type="button" name = "DeleteQualityBase" value="Delete" onclick="deleteQualityBaseTabJS();"></font></td>
+            <td><font class="textHeader"><input type="button"id = "InsertQualityBase"  name = "InsertQualityBase" value="Insert" onclick="addQualityBaseTabJS();"></font></td>
+            <td><font class="textHeader"><input type="button"id= "DeleteQualityBase"  name = "DeleteQualityBase" value="Delete" onclick="deleteQualityBaseTabJS();"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
@@ -671,6 +671,19 @@
           <tr>
             <td align="center">&nbsp;</td>
             </tr>
+            <%
+			if ("EJDAM022".equals(form_action)){
+          %>
+          <tr>
+            <td align="center"><font class="textDescBold">Remark : </font></td>
+          </tr>
+          <tr>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("remark",form4ModelSP.getRemark(),"maxlength=255") %></td>
+          </tr>
+          <tr>
+            <td align="center">&nbsp;</td>
+            </tr>
+            <%} %>
         </table></td>
         </tr>
       <tr>
@@ -679,12 +692,12 @@
       </tr>
       <tr>
       	<%
-			String disable = "";
-      		if (null!=form_action && !"EJDAM013".equals(form_action)){
-      			disable = "disabled = \"disabled\"";
-      		}
+	      	String disable = "";
+	  		if (null!=form_action && !"EJDAM010".equals(form_action)){
+	  			disable = "disabled = \"disabled\"";
+	  		}
       	%>
-        <td colspan="3" align="center"><!--  <input type="button" name="Save" id="Save" <%//=disable %>value="  Save  " onclick="validateSaveButton(this.form,'<%//=form_action %>')"/>-->
+        <td colspan="3" align="center"><input type="button" name="Save" id="Save" <%=disable %>value="  Save  " onclick="validateSaveButton(this.form,'<%=form_action%>')"/>
           <input type="button" name="Submit" id="Submit" value="  Submit  "  onclick="validateSubmitButton(this.form,'<%=form_action %>')"/>
           <input type="button" name="Cancel" id="Cancel" value="  Cancel  " onclick="CancelButton(this.form,'<%=form_action %>')"/></td>
         </tr>
@@ -695,5 +708,9 @@
     </table></td>
   </tr>
 </table>
-
+<script type="text/javascript">
+	readOnlyDeliver('<%=form_action %>');
+	setReadOnlyDetail1('<%=form_action %>');
+	setReadOnlyDetail2('<%=form_action %>');
+</script>
 </form>

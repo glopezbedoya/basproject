@@ -277,7 +277,7 @@
             				page = "ejdaForm4.jsp";
             			}
             %>
-            			<tr onclick="updateEJDATable2(this.form,'<%=form1M.getDoc_ID() %>','EJDAM018','<%=page%>');" style="cursor:hand">
+            			<tr onclick="updateEJDATable2(this.form,'<%=form1M.getDoc_ID() %>','EJDAM018','eJdaPayment.jsp');" style="cursor:hand">
 			              <th <%=bgColor %> scope="row"><input type="checkbox" name="checkBox" id="checkBox" value="<%=form1M.getDoc_ID() %>"/></th>
 			              <td <%=bgColor %> class="text"><%=form1M.getDoc_ID()%></td>
 			              <td <%=bgColor %> class="text"><%=form1M.getConsignor_name()%></td>

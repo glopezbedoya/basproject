@@ -1,3 +1,4 @@
+<%@page contentType="text/html;charset=UTF-8"%>
 <%@page import="com.tcd.ejda.model.Form1Model"%>
 <%@page import="com.tcd.ejda.model.FormDetail1Model"%>
 <%@page import="com.tcd.ejda.model.FormDetail2Model"%>
@@ -308,7 +309,7 @@
           <tr>
             <td align="left" ><%=DisplayUtil.displayInputTextBox("Gross_weight",form1ModelSP.getGross_weight(),"maxlength=20") %></td>
             <td align="left" ><%=DisplayUtil.displayInputTextBox("Measurement",form1ModelSP.getMeasurement(),"maxlength=20") %></td>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("Other_charg",form1ModelSP.getOther_charg(),"maxlength=20") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Other_charg",String.valueOf(form1ModelSP.getOther_charg()),"maxlength=20") %></td>
             </tr>
           <tr>
             <td>&nbsp;</td>
@@ -420,8 +421,8 @@
       <tr>
         <td colspan="3" align="center"><table id= "packageTab" border="0" cellspacing="1" cellpadding="1">
         	 <tr>
-          	<td><input type="button" name = "InsertPackage" value="Insert" onclick="addPackageTabJS();"></td>
-            <td><font class="textHeader"><input type="button" name = "DeletePackage" value="Delete" onclick="removeRowFromTable('packageTab')"></font></td>
+          	<td><input type="button" id =  "InsertPackage" name = "InsertPackage" value="Insert" onclick="addPackageTabJS();"></td>
+            <td><font class="textHeader"><input type="button" id = "DeletePackage" name = "DeletePackage" value="Delete" onclick="removeRowFromTable('packageTab')"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
@@ -440,7 +441,9 @@
             <td width="100"><font class="textHeader">Code No.</font></td>
             <td width="100"><font class="textHeader">Unit</font></td>
           </tr>
-          <% Vector vtDetail1 = form1Bean.getDetail1MVt();
+          <% 
+          
+          Vector vtDetail1 = form1Bean.getDetail1MVt();
 	        if(vtDetail1 != null && vtDetail1.size() > 0){
 	        	for(int i=0;i<vtDetail1.size();i++){
 	        		FormDetail1Model formDetail1M = (FormDetail1Model)vtDetail1.get(i); 
@@ -454,8 +457,10 @@
             <td width="100"><%=DisplayUtil.displaySelectTag_Code(form1Bean.getTanliCodeVt(), formDetail1M.getCust_code(), "CODE_NO", "EDIT", "","") %></td>
           	<td width="100"><%=DisplayUtil.displaySelectTag(form1Bean.getUnitVt(), formDetail1M.getCust_unit(), "UNIT", "EDIT", "") %></td>
            </tr>
-           <%	}
-       		 }%>
+           <%	}%>
+	        	
+	        	
+       		<% }%>
         </table>
        
         </td>
@@ -463,8 +468,8 @@
       <tr>
         <td colspan="3"><table id ="qualityBaseTab" border="0" cellspacing="1" cellpadding="1">
           <tr >
-            <td><font class="textHeader"><input type="button" name = "InsertQualityBase" value="Insert" onclick="addQualityBaseTabJS();"></font></td>
-            <td><font class="textHeader"><input type="button" name = "DeleteQualityBase" value="Delete"  onclick="removeRowFromTable('qualityBaseTab')"></font></td>
+            <td><font class="textHeader"><input type="button" id = "InsertQualityBase" name = "InsertQualityBase" value="Insert" onclick="addQualityBaseTabJS();"></font></td>
+            <td><font class="textHeader"><input type="button" id = "DeleteQualityBase" name = "DeleteQualityBase" value="Delete"  onclick="removeRowFromTable('qualityBaseTab')"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
             <td><font class="textHeader"></font></td>
@@ -664,6 +669,24 @@
           <tr>
             <td align="center">&nbsp;</td>
             </tr>
+        <tr>
+        <td colspan="3"><table width="100%" border="0" cellspacing="1" cellpadding="1">
+          <tr>
+            <td align="center">&nbsp;</td>
+          </tr>
+          <%
+			if ("EJDAM022".equals(form_action)){
+          %>
+          <tr>
+            <td align="center"><font class="textDescBold">Remark : </font></td>
+          </tr>
+          <tr>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("remark",form1ModelSP.getRemark(),"maxlength=255") %></td>
+          </tr>
+          <tr>
+            <td align="center">&nbsp;</td>
+            </tr>
+            <%} %>
         </table></td>
         </tr>
       <tr>
@@ -678,7 +701,7 @@
       		}
       		log.debug("-------------- " + form1ModelSP.getDoc_ID());
       	%>
-        <td colspan="3" align="center"><!-- <input type="button" name="Save" id="Save" <%//=disable %>value="  Save  " onclick="validateSaveButton(this.form,'<%=form_action%>')"/>-->
+        <td colspan="3" align="center"> <input type="button" name="Save" id="Save" <%=disable %>value="  Save  " onclick="validateSaveButton(this.form,'<%=form_action%>')"/>
           <input type="button" name="Submit" id="Submit" value="  Submit  "  onclick="validateSubmitButton(this.form,'<%=form_action %>')"/>
           <input type="button" name="Cancel" id="Cancel" value="  Cancel  " onclick="CancelButton(this.form,'<%=form_action %>')"/></td>
         </tr>
@@ -689,5 +712,9 @@
     </table></td>
   </tr>
 </table>
-
+<script type="text/javascript">
+	readOnlyDeliver('<%=form_action %>');
+	setReadOnlyDetail1('<%=form_action %>');
+	setReadOnlyDetail2('<%=form_action %>');
+</script>
 </form>
