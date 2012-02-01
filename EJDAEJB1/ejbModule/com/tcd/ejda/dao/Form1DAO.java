@@ -20,5 +20,6 @@ public interface Form1DAO {
 	public Vector<FormDocAttachModel> searchFormDocAttachModel(String docId) throws SQLException;
 	
 	public boolean UpdateFromTable(Form1Model form1, Vector detail1, Vector detail2, Vector doc) throws SQLException;
-	
+	public boolean UpdatePayment(String doc_id, String flag_payment, String user_name )throws SQLException;
+	public boolean UpdateRemark(String doc_id,String doc_status, String remark, String user_name)throws SQLException;
 }
