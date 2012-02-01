@@ -38,7 +38,7 @@ public class EJDAM022Action extends AbstractAction {
 	public void init() {
 		/** EJDA Form no 1****/
 		Vector unitVt = new Vector();
-		Vector tanliCodeVt = new Vector();
+		Vector tanliCodeVt = new Vector(); 
 		Vector dutyRateVt = new Vector();
 		Vector countryOriginVt = new Vector();
 		log.debug("*********** EJDAM022Action ***********");
@@ -93,42 +93,45 @@ public class EJDAM022Action extends AbstractAction {
 	private boolean doSubmitButton() throws Exception {
 		boolean result = false;
 		String iuser = (String) getRequest().getSession().getAttribute("iuser");
-//		String formNo = (String) getRequest().getSession().getAttribute("form_no");
 		String formNo = (String) getRequest().getParameter("form_no");
 		String ipAddress = getRequest().getRemoteAddr();
-		
+		String remark = (String) getRequest().getParameter("remark");//REMARK
+		log.debug("M022 Remark = " + remark);
+		String doc_id = "";
+		if (null!=(String) getRequest().getParameter("doc_id")){
+			doc_id = (String) getRequest().getParameter("doc_id");//	DOC_ID
+		}
 		if (null==iuser || "".equals(iuser)){
 			iuser = "system";
 		}
-		EJDAM010Action ejdam010Action = new EJDAM010Action();
-		ejdam010Action.setRequest(getRequest()); 
-		Form1Model form1 = ejdam010Action.setValueModel(formNo,"C",iuser);
-		Vector vcDetail1 = ejdam010Action.setValueDetail1Model();
-//		Vector vcDetail2 = ejdam010Action.setValueDetail2Model();
-		Vector vcDetail2 = null;
-		if("1".equals(formNo) || "2".equals(formNo) || "4".equals(formNo)){
-			vcDetail2 = ejdam010Action.setValueDetail2Model();
-		}else if("3".equals(formNo)){
-			vcDetail2 = ejdam010Action.setValueDetail2ModelForm3();
-		}
-		Vector vcDocAttach = ejdam010Action.setValueDocumentAttach(formNo,"");
+//		EJDAM010Action ejdam010Action = new EJDAM010Action();
+//		ejdam010Action.setRequest(getRequest()); 
+//		Form1Model form1 = ejdam010Action.setValueModel(formNo,"D",iuser);
+//		Vector vcDetail1 = ejdam010Action.setValueDetail1Model();
+//		Vector vcDetail2 = null;
+//		if("1".equals(formNo) || "2".equals(formNo) || "4".equals(formNo)){
+//			vcDetail2 = ejdam010Action.setValueDetail2Model();
+//		}else if("3".equals(formNo)){
+//			vcDetail2 = ejdam010Action.setValueDetail2ModelForm3();
+//		}
+//		Vector vcDocAttach = ejdam010Action.setValueDocumentAttach(formNo,"");
 		try{
 			Form1DAO dao = new Form1DAOImpl();
-			dao.UpdateFromTable(form1,vcDetail1,vcDetail2,vcDocAttach);
+//			dao.UpdateFromTable(form1,vcDetail1,vcDetail2,vcDocAttach);
 //			dao.UpdateFromTable(form1);
-			
-			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
-			EJDAUtil ejda = new EJDAUtil();
-			transactionLogModel.setMenuId("M022");
-			transactionLogModel.setTranAction("UPD");
-			transactionLogModel.setDescription("Update EJDA Table 4 Form 1");
-			transactionLogModel.setIpAddress(ipAddress);
-			transactionLogModel.setTranBy(iuser);
-			ejda.insertTranLog(transactionLogModel);
-			
-			getRequest().getSession().setAttribute("responseMessage", "Submit Form "+formNo+" Successfully.");
-			result = doSearch();
-			
+			if (dao.UpdateRemark(doc_id, "C", remark, iuser)){
+				TransactionLogModel transactionLogModel = new TransactionLogModel() ;
+				EJDAUtil ejda = new EJDAUtil();
+				transactionLogModel.setMenuId("M022");
+				transactionLogModel.setTranAction("UPD");
+				transactionLogModel.setDescription("Update EJDA Table 4 Form 1");
+				transactionLogModel.setIpAddress(ipAddress);
+				transactionLogModel.setTranBy(iuser);
+				ejda.insertTranLog(transactionLogModel);
+				
+				getRequest().getSession().setAttribute("responseMessage", "Submit Form "+formNo+" Successfully.");
+				result = doSearch();
+			}
 			log.debug("result = "+result);
 		}catch (Exception e) {
 			// TODO: handle exception
@@ -237,7 +240,7 @@ public class EJDAM022Action extends AbstractAction {
 		try{
 			sql.append(EJDAConstant.SQL.FORM_T_DOC_1);
 //			sql.append(" WHERE JDA_TYPE = '1' AND DOC_STATUS = 'P' ");
-			sql.append(" WHERE DOC_STATUS = 'P' ");
+			sql.append(" WHERE DOC_STATUS = 'R' ");
 			if(StringUtils.isNotEmpty(form1Cri.getDoc_ID())){
 				sql.append(" AND DOC_ID = ? ");
 			}

@@ -94,41 +94,43 @@ public class EJDAM018Action extends AbstractAction {
 	private boolean doSubmitButton() throws Exception {
 		boolean result = false;
 		String iuser = (String) getRequest().getSession().getAttribute("iuser");
-//		String formNo = (String) getRequest().getSession().getAttribute("form_no");
+		String doc_id = (String) getRequest().getParameter("doc_id");
+		String flag_payment = (String) getRequest().getParameter("flag_payment");//STATUS
 		String formNo = (String) getRequest().getParameter("form_no");
 		String ipAddress = getRequest().getRemoteAddr();
 		
 		if (null==iuser || "".equals(iuser)){
 			iuser = "system";
 		}
-		EJDAM010Action ejdam010Action = new EJDAM010Action();
-		ejdam010Action.setRequest(getRequest()); 
-		Form1Model form1 = ejdam010Action.setValueModel(formNo,"P",iuser);
-		Vector vcDetail1 = ejdam010Action.setValueDetail1Model();
-//		Vector vcDetail2 = ejdam010Action.setValueDetail2Model();
-		Vector vcDetail2 = null;
-		if("1".equals(formNo) || "2".equals(formNo) || "4".equals(formNo)){
-			vcDetail2 = ejdam010Action.setValueDetail2Model();
-		}else if("3".equals(formNo)){
-			vcDetail2 = ejdam010Action.setValueDetail2ModelForm3();
-		}
-		Vector vcDocAttach = ejdam010Action.setValueDocumentAttach(formNo,"");
-		
+//		EJDAM010Action ejdam010Action = new EJDAM010Action();
+//		ejdam010Action.setRequest(getRequest()); 
+//		Form1Model form1 = ejdam010Action.setValueModel(formNo,"P",iuser);
+//		Vector vcDetail1 = ejdam010Action.setValueDetail1Model();
+////		Vector vcDetail2 = ejdam010Action.setValueDetail2Model();
+//		Vector vcDetail2 = null;
+//		if("1".equals(formNo) || "2".equals(formNo) || "4".equals(formNo)){
+//			vcDetail2 = ejdam010Action.setValueDetail2Model();
+//		}else if("3".equals(formNo)){
+//			vcDetail2 = ejdam010Action.setValueDetail2ModelForm3();
+//		}
+//		Vector vcDocAttach = ejdam010Action.setValueDocumentAttach(formNo,"");
+//		
 		try{
 			Form1DAO dao = new Form1DAOImpl();
-			dao.UpdateFromTable(form1,vcDetail1,vcDetail2,vcDocAttach);
+			if (dao.UpdatePayment(doc_id, flag_payment, iuser)) {
+//			dao.UpdateFromTable(form1,vcDetail1,vcDetail2,vcDocAttach);
 //			dao.UpdateFromTable(form1);
 			
-			TransactionLogModel transactionLogModel = new TransactionLogModel() ;
-			EJDAUtil ejda = new EJDAUtil();
-			transactionLogModel.setMenuId("M018");
-			transactionLogModel.setTranAction("UPD");
-			transactionLogModel.setDescription("Update EJDA Table 3 Form 1");
-			transactionLogModel.setIpAddress(ipAddress);
-			transactionLogModel.setTranBy(iuser);
-			ejda.insertTranLog(transactionLogModel);
-			
-			getRequest().getSession().setAttribute("responseMessage", "Submit Form "+formNo+" Successfully.");
+				TransactionLogModel transactionLogModel = new TransactionLogModel() ;
+				EJDAUtil ejda = new EJDAUtil();
+				transactionLogModel.setMenuId("M018");
+				transactionLogModel.setTranAction("UPD");
+				transactionLogModel.setDescription("Update Payment");
+				transactionLogModel.setIpAddress(ipAddress);
+				transactionLogModel.setTranBy(iuser);
+				ejda.insertTranLog(transactionLogModel);
+			}
+			getRequest().getSession().setAttribute("responseMessage", "Submit Type of Payment Successfully.");
 			result = doSearch();
 			
 			log.debug("result = "+result);
@@ -242,7 +244,7 @@ public class EJDAM018Action extends AbstractAction {
 		try{
 			sql.append(EJDAConstant.SQL.FORM_T_DOC_1);
 //			sql.append(" WHERE JDA_TYPE = '1' AND DOC_STATUS = 'S' ");
-			sql.append(" WHERE DOC_STATUS = 'S' ");
+			sql.append(" WHERE DOC_STATUS = 'A' AND FLAG_PAYMENT IS NULL ");
 			if(StringUtils.isNotEmpty(form1Cri.getDoc_ID())){
 				sql.append(" AND DOC_ID = ? ");
 			}
