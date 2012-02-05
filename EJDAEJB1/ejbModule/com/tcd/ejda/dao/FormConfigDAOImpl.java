@@ -204,4 +204,73 @@ public class FormConfigDAOImpl implements FormConfigDAO {
 		}
 		return vc;
 	}
+	
+//	public FormConfigModel searchFormConfig(String jda_type) throws SQLException{
+//		log.debug("[Start : searchFormConfig ]");
+//		log.debug("jda_type = "+jda_type);
+//		FormConfigModel formConfigM = new FormConfigModel();
+//		Vector<FormConfigModel> vc = new  Vector<FormConfigModel>();
+//		Connection conn = null;
+//		PreparedStatement ps = null;
+//		ResultSet rs = null;
+//		try {
+//			conn = db.getConnection();
+//		} catch (Exception e2) {
+//			e2.printStackTrace();
+//		}
+//		StringBuffer sql = new StringBuffer();
+//		
+//		try {
+//						
+//			sql.append(" SELECT ROLE_DOC_ID, ROLE_ID, JDA_TYPE, FORM_FIELD, PERMISSIONS, ");
+//			sql.append("CREATE_DATE, CREATE_BY, UPDATE_DATE, UPDATE_BY, REMARK FROM JDA_ROLE_T_DOC ");
+//			sql.append("WHERE JDA_TYPE = ? ");
+//			log.debug("Search JDA_ROLE_T_DOC >>> " + sql.toString());
+//			ps = conn.prepareStatement(sql.toString());
+//			int seq=1;
+//			
+//			ps.setString(seq++, jda_type);
+//			
+//			rs = ps.executeQuery();
+//			while(rs.next()){
+//				formConfigM = new FormConfigModel();
+//				formConfigM.setInput_field(rs.getString("FORM_FIELD"));
+//				vc.add(formConfigM);
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			try {
+//				conn.rollback();
+//			} catch (SQLException e1) {
+//				e1.printStackTrace();
+//			}
+//			log.equals(e.getMessage());
+//		}finally{
+//			try {
+//				if (conn != null)
+//					conn.commit();
+//			} catch (Exception e) {
+//			}
+//			try {
+//				if (rs != null)
+//					rs.close();
+//				rs = null;
+//			} catch (Exception e) {
+//			}
+//			try {
+//				if (ps != null)
+//					ps.close();
+//				ps = null;
+//			} catch (Exception e) {
+//			}
+//			try {
+//				if (conn != null)
+//					conn.close();
+//				conn = null;
+//			} catch (Exception e) {
+//				
+//			}
+//		}
+//		return vc;
+//	}
 }

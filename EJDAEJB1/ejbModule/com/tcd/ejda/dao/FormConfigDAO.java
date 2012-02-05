@@ -9,4 +9,5 @@ public interface FormConfigDAO {
 
 	public boolean insertFormConfig(Vector vc, String jda_type)throws SQLException;
 	public Vector<FormConfigModel> searchFormConfigModel(String jda_type) throws SQLException;
+//	public FormConfigModel searchFormConfig(String jda_type) throws SQLException;
 }
