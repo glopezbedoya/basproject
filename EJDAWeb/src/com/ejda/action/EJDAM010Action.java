@@ -220,16 +220,16 @@ public class EJDAM010Action extends AbstractAction {
 		init();
 		form1Bean = getForm1Bean();
 		getForm1Bean().setActionName("EJDAM010");
-		String formNo = (String) getRequest().getParameter("DdlAddForm");
+		String formNo = (String) getRequest().getParameter("DdlAddForm"); 
 		log.debug("[ doAdd : form no. ] " + formNo);
-		try {
-			FormConfigDAO dao1 = new FormConfigDAOImpl();
-			form1Bean.setFormConfigVt(dao1.searchFormConfigModel(formNo));
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			FormConfigDAO dao1 = new FormConfigDAOImpl();
+//			form1Bean.setFormConfigVt(dao1.searchFormConfigModel(formNo));
+//			
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		setForm1Bean(form1Bean);
 		return true;
