@@ -9,6 +9,8 @@
 .textMenu { color: #006666; font-family: Arial, MS sans-serif, Helvetica,Verdana; font-size: 13px; font-weight: bold; }
 .textDisplay {font-family: Arial, MS sans-serif, Helvetica,Verdana;font-size: 10pt;color: #3333FF;}
 .textDesc {font-family: Arial, MS sans-serif, Helvetica,Verdana;font-size: 10pt;color: #3333FF;}
+.textDescBlack {font-family: Arial, MS sans-serif, Helvetica,Verdana;font-size: 10pt;color: #000000;}
+.textDescBlackBold {font-family: Arial, MS sans-serif, Helvetica,Verdana;font-size: 10pt;color: #000000; font-weight: bold;}
 .textDescBold {font-family: Arial, MS sans-serif, Helvetica,Verdana;font-size: 10pt;color: #3333FF;font-weight: bold;}
 .textError { font-family: Arial, MS sans-serif, Helvetica,Verdana;font-size: 10pt;color: #990000; font-weight: bold; }
 .textRed { font-family: Arial, MS sans-serif, Helvetica,Verdana;font-size: 13px;color: #990000;}
