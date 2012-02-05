@@ -28,9 +28,9 @@
 	                    	</select>
 	                    </td>
 	                    <td align="right"><%=DisplayUtil.displayLabel("textDescBlack",EjdaParameterCacheParam.getValue("from"))%></td>
-	                    <td><input type="text"  /></td>
+	                    <td><%=DisplayFormatUtil.displayTextBoxCalendar("txtDateFrom","") %></td>
 	                    <td align="right"><%=DisplayUtil.displayLabel("textDescBlack",EjdaParameterCacheParam.getValue("to"))%></td>
-	                    <td><input type="text"  /></td>
+	                    <td><%=DisplayFormatUtil.displayTextBoxCalendar("txtDateTo","") %></td>
 	                    <td name="jda1" style="display:none;">
 	                    	<input type="radio" name="group1" value="A"> <%=DisplayUtil.displayLabel("textDescBlack",EjdaParameterCacheParam.getValue("combobox_garuntee"))%>
 	                        <input type="radio" name="group1" value="B"> <%=DisplayUtil.displayLabel("textDescBlack",EjdaParameterCacheParam.getValue("combobox_pay_vat"))%>
