@@ -39,8 +39,9 @@ function searchButtonEJDAM010(form,action,method,page){
 	form.submit();
 }
 
-function updateEJDATable2(form,doc_id,action,page){
+function updateEJDATable2(form,doc_id,action,page,ejda_type){
 	//alert('doc_id : ' +doc_id + ':' + action + ':' +page);
+	$('input[name=form_no]').val(ejda_type);
 	$('input[name=doc_id]').val(doc_id);
 	$('input[name=ejdaAction]').val(action);
 	$('input[name=ejdaMethod]').val('doUpdate');
