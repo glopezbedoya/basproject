@@ -14,7 +14,13 @@ function validateSubmitButton(form,action){
 	form.submit();
 	
 }
-
+function CancelButton(form,action){
+	
+	$('input[name=ejdaAction]').val(action);
+	$('input[name=ejdaMethod]').val('doCancel');
+	$('input[name=screenName]').val(action+'.jsp');
+	form.submit();
+}
 function getIndexCheckbox(name){
 	alert('get index : ' + name);
 
