@@ -24,7 +24,14 @@ public class Form1Bean extends AbstractBean {
 	public Vector tanliCodeVt;
 	public Vector dutyRateVt;
 	public Vector countryOriginVt;
+	public Vector formConfigVt;
 	
+	public Vector getFormConfigVt() {
+		return formConfigVt;
+	}
+	public void setFormConfigVt(Vector formConfigVt) {
+		this.formConfigVt = formConfigVt;
+	}
 	public Vector getDocAttachMVt() {
 		return docAttachMVt;
 	}
