@@ -301,4 +301,9 @@ public static String displaySelectTag_Code(Vector v, String selectedValue, Strin
 			//return obj.toString();}
 		}
 	}
+	
+	public static String displayLabel(String style,String value){
+		String result = "<font class="+style+">"+value+"</font>";
+		return result;
+	}
 }
