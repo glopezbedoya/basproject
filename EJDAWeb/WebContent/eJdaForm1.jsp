@@ -75,16 +75,17 @@
            </tr>
           <tr>
             <td align="right"><font class="textDesc">Exporter/Taxpayer Code </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportCode",form1ModelSP.getConsignor_code(),"maxlength=20 onkeypress=\"keyPressInteger()\"") %>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportCode",form1ModelSP.getConsignor_code(),DisplayUtil.disabledField(form1Bean.getFormConfigVt(),"CONSIGNOR_CODE") + " maxlength=20 onkeypress=\"keyPressInteger()\"") %>
+            
             </td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Name </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportName",form1ModelSP.getConsignor_name(),"maxlength=20") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportName",form1ModelSP.getConsignor_name(),DisplayUtil.disabledField(form1Bean.getFormConfigVt(),"CONSIGNOR_NAME") + " maxlength=20") %></td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Address </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("consignorExportAddress",form1ModelSP.getConsignor_address(),"maxlength=255") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("consignorExportAddress",form1ModelSP.getConsignor_address(),DisplayUtil.disabledField(form1Bean.getFormConfigVt(),"CONSIGNOR_ADDRESS")+" maxlength=255") %></td>
           </tr>
         </table></td>
         <td rowspan="2" align="center"><table width="466" border="0" cellpadding="0" cellspacing="1">
