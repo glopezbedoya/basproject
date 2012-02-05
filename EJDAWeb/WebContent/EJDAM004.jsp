@@ -15,7 +15,7 @@
 	        <table align="center" width="95%" border="0">
 	          <tr>
 	           	<td>
-	            	<table width="80%" border="0">
+	            	<table width="90%" border="0">
 	                  <tr>
 	                     <td align="right"><%=DisplayUtil.displayLabel("textDescBlack",EjdaParameterCacheParam.getValue("reportType"))%></td>
 	                    <td><select name="reportType" onchange="checkType()">
