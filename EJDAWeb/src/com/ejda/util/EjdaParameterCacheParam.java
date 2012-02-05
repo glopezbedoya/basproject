@@ -96,7 +96,13 @@ public class EjdaParameterCacheParam {
 		logger.debug("========== getForm1Vector ============ ");
 		for(int i=0; i<totals; i++){
 			String lvField[];
-			String form1Index = "0"+i;
+			String form1Index = "";
+			if (i<=9){
+				form1Index = "0"+i;
+			}else{
+				form1Index = String.valueOf(i);
+			}
+			
 			String inputField = EjdaParameterCacheParam.getValue("FORM1_INPUT_FIELD_"+form1Index);
 			lvField = inputField.split(":");
 			logger.debug("-- lvField = " + lvField[0] + " - " + lvField[1]);
