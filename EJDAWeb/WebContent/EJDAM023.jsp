@@ -32,26 +32,26 @@
           <td>&nbsp;</td>
           <td>&nbsp;</td>
         </tr>
-      
+        <%if (formConfigBean.getAction().equalsIgnoreCase("0")){ %>
         <tr>
           <th scope="row">&nbsp;</th>
-          <td><td align="left"><select id="DdlAddForm" name="DdlAddForm">
+          <td width="150"><td align="left"><select id="DdlAddForm" name="DdlAddForm">
        		<option value="1">EJDA NO. 1</option>
        		<option value="2">EJDA NO. 2</option>
        		<option value="3">EJDA NO. 3</option>
        		<option value="4">EJDA NO. 4</option>
        		</select></td>
-          <td><%=DisplayFormatUtil.displayButton("AddForm","onclick=\"buttonAction(this.form,'EJDAM023','doAdd','EJDAM023.jsp')\"",false) %></td>
+          <td align="left"><%=DisplayFormatUtil.displayButton("Select Form","onclick=\"buttonAction(this.form,'EJDAM023','doAdd','EJDAM023.jsp')\"",false) %></td>
           <td>&nbsp;</td>
         </tr>
-        
+        <%}else{ %>
         <tr>
           <th scope="row">&nbsp;</th>
  			<td align="center"></td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
         </tr>
-        <%if (!formConfigBean.getAction().equalsIgnoreCase("0")){ %>
+      
 	         <%
 	        if(formConfigVt != null && formConfigVt.size() > 0){
 	        	

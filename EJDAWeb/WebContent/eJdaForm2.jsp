@@ -78,16 +78,16 @@
            </tr>
           <tr>
             <td align="right"><font class="textDesc">Exporter/Taxpayer Code </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportCode",form2ModelSP.getConsignor_code(),"maxlength=20 onkeypress=\"keyPressInteger()\"") %>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportCode",form2ModelSP.getConsignor_code(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"CONSIGNOR_CODE") +"maxlength=20 onkeypress=\"keyPressInteger()\"") %>
             </td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Name </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportName",form2ModelSP.getConsignor_name(),"maxlength=20") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportName",form2ModelSP.getConsignor_name(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"CONSIGNOR_NAME") + " maxlength=20") %></td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Address </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("consignorExportAddress",form2ModelSP.getConsignor_address(),"maxlength=255") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("consignorExportAddress",form2ModelSP.getConsignor_address(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"CONSIGNOR_ADDRESS")+" maxlength=255") %></td>
           </tr>
         </table></td>
         <td rowspan="2" align="center"><table width="466" border="0" cellpadding="0" cellspacing="1">
@@ -104,7 +104,7 @@
           </tr>
           <tr>
             <td colspan="2" align="left">
-             <%=DisplayUtil.displayInputTextBox("Date_Receipt",DisplayFormatUtil.SQLDateToString1(form2ModelSP.getDate_Receipt(),"DD/MM/YYYY"),"maxlength=10 onkeypress=\"addSlashFormat(event,this);keyPressInteger();\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"") %>
+             <%=DisplayUtil.displayInputTextBox("Date_Receipt",DisplayFormatUtil.SQLDateToString1(form2ModelSP.getDate_Receipt(),"DD/MM/YYYY"),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"DATE_RECEIPT")+"maxlength=10 onkeypress=\"addSlashFormat(event,this);keyPressInteger();\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"") %>
            </td>
             <td align="left"><font class="textDesc"><%=DisplayUtil.displayCheckBoxForDocAttach(form2Bean.docAttachMVt,"doc_attach","INVOICE","") %> 
               Invoice</font></td>
@@ -124,7 +124,7 @@
             </font></td>
           </tr>
           <tr>
-            <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("Regis_no",form2ModelSP.getRegis_no(),"maxlength=50") %></td>
+            <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("Regis_no",form2ModelSP.getRegis_no(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"REGIS_NO")+"maxlength=50") %></td>
             <td align="left"><font class="textDesc">
               <%=DisplayUtil.displayCheckBoxForDocAttach(form2Bean.docAttachMVt,"doc_attach","LETTER OF CREDIT","") %>
               Letter of Credit
@@ -145,7 +145,7 @@
             <td align="left"><font class="textDesc">Code
               </font></td>
             <td align="left"><font class="textDesc">
-              <%=DisplayUtil.displayInputTextBox("cus_name_code",form2ModelSP.getCus_name_code(),"maxlength=4 onkeypress=\"keyPressInteger()\"") %>
+              <%=DisplayUtil.displayInputTextBox("cus_name_code",form2ModelSP.getCus_name_code(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"CUS_NAME_CODE")+"maxlength=4 onkeypress=\"keyPressInteger()\"") %>
             </font></td>
             <td>&nbsp;</td>
           </tr>
@@ -153,7 +153,7 @@
             <td align="left"><font class="textDesc">Description 
               </font></td>
             <td align="left"><font class="textDesc">
-              <%=DisplayUtil.displayInputTextBox("cus_name_desc",form2ModelSP.getCus_name_desc(),"maxlength=50") %>
+              <%=DisplayUtil.displayInputTextBox("cus_name_desc",form2ModelSP.getCus_name_desc(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"CUS_NAME_DESC")+"maxlength=50") %>
             </font></td>
             <td>&nbsp;</td>
           </tr>
@@ -173,7 +173,7 @@
             <td colspan="3" align="left"><font class="textDescBold">15. Receipt of Duty/Tax as Levied Authorized by :</font></td>
             </tr>
           <tr>
-            <td align="center" colspan="2"><%=DisplayUtil.displayInputTextBox("duty_tax_receipt_date",DisplayFormatUtil.SQLDateToString1(form2ModelSP.getDuty_tax_receipt_date(),"DD/MM/YYYY"),"maxlength=10 onkeypress=\"addSlashFormat(event,this);keyPressInteger();\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"") %></td>
+            <td align="center" colspan="2"><%=DisplayUtil.displayInputTextBox("duty_tax_receipt_date",DisplayFormatUtil.SQLDateToString1(form2ModelSP.getDuty_tax_receipt_date(),"DD/MM/YYYY"),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"DUTY_TAX_RECEIPT_DATE")+"maxlength=10 onkeypress=\"addSlashFormat(event,this);keyPressInteger();\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"") %></td>
             <td align="center"><%=DisplayUtil.displayInputTextBox("duty_tax_receipt_desc",form2ModelSP.getDuty_tax_receipt_desc(),"maxlength=50") %></td>
           </tr>
           <tr>
@@ -196,15 +196,15 @@
           <tr>
             <td align="right"><font class="textDesc">Importer/Taxpayer Code </font></td>
             <td align="left">
-            <%=DisplayUtil.displaySelectTag_Code(LoadCacheData.GetImporterCache(),form2ModelSP.getConsignee_code(),"Consignee_code","EDIT","", "onchange=\"getImportAddress(this.value)\"" ) %></td>
+            <%=DisplayUtil.displaySelectTag_Code(LoadCacheData.GetImporterCache(),form2ModelSP.getConsignee_code(),"Consignee_code","EDIT","", DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"CONSIGNEE_CODE")+"onchange=\"getImportAddress(this.value)\"" ) %></td>
             </tr>
           <tr>
             <td align="right"><font class="textDesc">Name </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("Consignee_name",form2ModelSP.getConsignee_name(),"maxlength=20") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("Consignee_name",form2ModelSP.getConsignee_name(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"CONSIGNEE_NAME")+"maxlength=20") %></td>
             </tr>
           <tr>
             <td align="right"><font class="textDesc">Address </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("Consignee_address",form2ModelSP.getConsignee_address(),"maxlength=255") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("Consignee_address",form2ModelSP.getConsignee_address(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"CONSIGNEE_ADDRESS")+"maxlength=255") %></td>
             </tr>
           </table></td>
       </tr>
@@ -222,15 +222,15 @@
           <tr>
             <td align="right"><font class="textDesc">Agent/Taxpayer   Code</font></td>
             <td align="left">
-            <%=DisplayUtil.displaySelectTag_Code(LoadCacheData.GetAgentCache(),form2ModelSP.getAuthorAgent_code(),"AuthorAgent_code","EDIT","", "onchange=getAgentAddress(this.value)") %></td>
+            <%=DisplayUtil.displaySelectTag_Code(LoadCacheData.GetAgentCache(),form2ModelSP.getAuthorAgent_code(),"AuthorAgent_code","EDIT","", DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"AUTHORAGENT_CODE")+"onchange=getAgentAddress(this.value)") %></td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Name </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("AuthorAgent_name",form2ModelSP.getAuthorAgent_name(),"maxlength=20") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("AuthorAgent_name",form2ModelSP.getAuthorAgent_name(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"AUTHORAGENT_NAME")+"maxlength=20") %></td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Address </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("AuthorAgent_address",form2ModelSP.getAuthorAgent_address(),"maxlength=255") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("AuthorAgent_address",form2ModelSP.getAuthorAgent_address(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"AUTHORAGENT_ADDRESS")+"maxlength=25") %></td>
           </tr>
         </table></td>
         <td rowspan="4" align="center"><table width="472" border="0" cellpadding="1" cellspacing="1">
@@ -240,9 +240,9 @@
             <td align="left"><font class="textDescBold">17.Exchange Control Ref.</font></td>
             </tr>
           <tr>
-            <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("special_treatment",form2ModelSP.getSpecial_treatment(),"maxlength=20") %></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("import_permit_no",form2ModelSP.getImport_permit_no(),"maxlength=20") %></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("exchg_ctrl_ref",form2ModelSP.getExchg_ctrl_ref(),"maxlength=20") %></td>
+            <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("special_treatment",form2ModelSP.getSpecial_treatment(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"SPECIAL_TREATMENT")+"maxlength=20") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("import_permit_no",form2ModelSP.getImport_permit_no(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"IMPORT_PERMIT_NO")+"maxlength=20") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("exchg_ctrl_ref",form2ModelSP.getExchg_ctrl_ref(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"EXCHG_CTRL_REF")+"maxlength=20") %></td>
             </tr>
           <tr>
             <td colspan="2">&nbsp;</td>
@@ -274,7 +274,7 @@
             <td align="left" ><font class="textDescBold">22.Amount Received/to be Received</font></td>
             </tr>
           <tr>
-            <td colspan="2" align="left" ><%=DisplayUtil.displayInputTextBox("term_payment",form2ModelSP.getTerm_payment(),"maxlength=20") %></td>
+            <td colspan="2" align="left" ><%=DisplayUtil.displayInputTextBox("term_payment",form2ModelSP.getTerm_payment(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"TERM_PAYMENT")+"maxlength=20") %></td>
             <td align="left" ><%=DisplayUtil.displayInputTextBox("cur_code",form2ModelSP.getCur_code(),"maxlength=4") %></td>
             <td align="left" ><%=DisplayUtil.displayInputTextBox("Received_amount",String.valueOf(form2ModelSP.getReceived_amount()),"maxlength=\"15\" onkeypress = \"keypressWithDegit(this,'15')\"onblur=\"formatCurrency(this)\"")%></td>
             </tr>
@@ -291,9 +291,9 @@
             <td align="left" ><font class="textDescBold">25.Insurance </font></td>
             </tr>
           <tr>
-            <td colspan="2" align="left" ><%=DisplayUtil.displayInputTextBox("exchange_rate",form2ModelSP.getExchgRate_ID(),"maxlength=10") %></td>
+            <td colspan="2" align="left" ><%=DisplayUtil.displayInputTextBox("exchange_rate",form2ModelSP.getExchgRate_ID(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"EXCHGRATE_ID")+"maxlength=4") %></td>
             <td align="left" ><%=DisplayUtil.displayInputTextBox("Equivalent",form2ModelSP.getEquivalent(),"maxlength=20") %></td>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("Insurance",form2ModelSP.getInsurance(),"maxlength=20") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Insurance",form2ModelSP.getInsurance(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"INSURANCE")+"maxlength=20") %></td>
             </tr>
           <tr>
             <td colspan="2">&nbsp;</td>
@@ -307,7 +307,7 @@
             <td align="left" ><font class="textDesc">Code</font></td>
             <td align="left" ><%=DisplayUtil.displayInputTextBox("good_payment_code",form2ModelSP.getGood_payment_code(),"maxlength=20") %></td>
             <td align="left" >&nbsp;</td>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("Freight",form2ModelSP.getFreight(),"maxlength=20") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Freight",form2ModelSP.getFreight(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"FREIGHT")+"maxlength=20") %></td>
             </tr>
           <tr>
             <td align="left" ><font class="textDesc">Descriptiont</font></td>
@@ -326,9 +326,9 @@
             <td align="left" ><font class="textDescBold">30.FOB Value</font></td>
             </tr>
           <tr>
-            <td colspan="2" align="left" ><%=DisplayUtil.displayInputTextBox("Gross_weight",form2ModelSP.getGross_weight(),"maxlength=20") %></td>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("Measurement",form2ModelSP.getMeasurement(),"maxlength=20") %></td>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("fob_value",form2ModelSP.getFob_value(),"maxlength=20") %></td>
+            <td colspan="2" align="left" ><%=DisplayUtil.displayInputTextBox("Gross_weight",form2ModelSP.getGross_weight(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"GROSS_WEIGHT")+"maxlength=20") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Measurement",form2ModelSP.getMeasurement(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"MEASUREMENT")+"maxlength=20") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("fob_value",form2ModelSP.getFob_value(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"FOB_VALUE")+"maxlength=20") %></td>
             </tr>
           <tr>
             <td colspan="2">&nbsp;</td>
@@ -377,7 +377,7 @@
             </tr>
           <tr>
             
-            <td><%=DisplayUtil.displayInputTextBox("Date_Import",DisplayFormatUtil.SQLDateToString1(form2ModelSP.getDate_Import(),"DD/MM/YYYY"),"maxlength=10 onkeypress=\"addSlashFormat(event,this);keyPressInteger();\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"") %></td>
+            <td><%=DisplayUtil.displayInputTextBox("Date_Import",DisplayFormatUtil.SQLDateToString1(form2ModelSP.getDate_Import(),"DD/MM/YYYY"),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"DATE_IMPORT")+"maxlength=10 onkeypress=\"addSlashFormat(event,this);keyPressInteger();\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"") %></td>
             </tr>
           </table>
         </td>
@@ -388,7 +388,7 @@
             <td><font class="textDescBold">6. No/Name of vessel/Flight/conveyanee</font></td>
           </tr>
           <tr>
-            <td><%=DisplayUtil.displayInputTextBox("vessel_value",form2ModelSP.getVessel_value(),"maxlength=50") %></td>
+            <td><%=DisplayUtil.displayInputTextBox("vessel_value",form2ModelSP.getVessel_value(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"VESSEL_VALUE")+"maxlength=50") %></td>
           </tr>
         </table></td>
         <td><table border="0" cellspacing="1" cellpadding="1">
@@ -397,7 +397,7 @@
             </tr>
           <tr>
             <td><font class="textDesc"></font></td>
-            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form2ModelSP.getPortImport_Code(),"PortImport_Code","EDIT","") %></td>
+            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form2ModelSP.getPortImport_Code(),"PortImport_Code","EDIT",DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"PORTIMPORT_CODE")) %></td>
             </tr>
           <tr>
             <td><font class="textDesc"></font></td>
@@ -412,7 +412,7 @@
           </tr>
           <tr>
             <td><font class="textDesc"> </font></td>
-            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form2ModelSP.getPortLoad_Code(),"PortLoad_Code","EDIT","") %></td>
+            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form2ModelSP.getPortLoad_Code(),"PortLoad_Code","EDIT",DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"PORTLOAD_CODE")) %></td>
           </tr>
           <tr>
             <td><font class="textDesc"> </font></td>
@@ -425,7 +425,7 @@
             </tr>
           <tr>
             <td><font class="textDesc"> </font></td>
-            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form2ModelSP.getVia_Code(),"Via_Code","EDIT","") %></td>
+            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form2ModelSP.getVia_Code(),"Via_Code","EDIT",DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"VIA_CODE")) %></td>
             </tr>
           <tr>
             <td><font class="textDesc"> </font></td>
@@ -546,7 +546,7 @@
                 <td colspan="2"><font class="textDescBold">50. Identity Card/Passport No.</font></td>
               </tr>
               <tr>
-                <td colspan="2"><%=DisplayUtil.displayInputTextBox("id_card_no",form2ModelSP.getId_card_no(),"maxlength=20") %></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextBox("id_card_no",form2ModelSP.getId_card_no(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"ID_CARD_NO")+"maxlength=20") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -569,7 +569,7 @@
                 <td colspan="2"><font class="textDescBold">52. I cerify that this declaration is true and complete.</font></td>
               </tr>
               <tr>
-                <td colspan="2"><%=DisplayUtil.displayInputTextBox("cerify",form2ModelSP.getCerify(),"maxlength=20") %></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextBox("cerify",form2ModelSP.getCerify(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"CERIFY")+"maxlength=20") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -591,7 +591,7 @@
                 <td colspan="2"><font class="textDescBold">53. Removal from Customs Control authorized by</font></td>
                 </tr>
               <tr>
-                <td colspan="2"><%=DisplayUtil.displayInputTextAreaTag("cus_removal",form2ModelSP.getCus_removal(),"maxlength=255") %></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextAreaTag("cus_removal",form2ModelSP.getCus_removal(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"CUS_REMOVAL")+"maxlength=255") %></td>
                 </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -607,7 +607,7 @@
                 <td colspan="2"><font class="textDescBold">57. Manualscript Recerpt No.(If applicable)</font></td>
               </tr>
               <tr>
-                <td colspan="2"><%=DisplayUtil.displayInputTextAreaTag("manualscript_recerpt",form2ModelSP.getManualscript_recerpt(),"maxlength=255") %></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextAreaTag("manualscript_recerpt",form2ModelSP.getManualscript_recerpt(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"MANUALSCRIPT_RECERPT")+"maxlength=255") %></td>
                 </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -630,8 +630,8 @@
             <td align="center"><font class="textDescBold">RESULT OF   EXAMINATION</font></td>
           </tr>
           <tr>
-            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("instruct_exam",form2ModelSP.getInstruct_exam(),"maxlength=255") %></td>
-            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("result_exam",form2ModelSP.getResult_exam(),"maxlength=255") %></td>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("instruct_exam",form2ModelSP.getInstruct_exam(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"INSTRUCT_EXAM")+"maxlength=255") %></td>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("result_exam",form2ModelSP.getResult_exam(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"RESULT_EXAM")+"maxlength=255") %></td>
           </tr>
           <tr>
             <td align="center">&nbsp;</td>
@@ -648,7 +648,7 @@
             <td align="center"><font class="textDescBold">FOR OTHER USE</font></td>
           </tr>
           <tr>
-            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("for_other_use",form2ModelSP.getFor_other_use(),"maxlength=255") %></td>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("for_other_use",form2ModelSP.getFor_other_use(),DisplayUtil.disabledField(form2Bean.getFormConfigVt(),"FOR_OTHER_USE")+"maxlength=255") %></td>
           </tr>
           <tr>
             <td align="center">&nbsp;</td>

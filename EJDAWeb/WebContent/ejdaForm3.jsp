@@ -74,16 +74,16 @@
            </tr>
           <tr>
             <td align="right"><font class="textDesc">Exporter/Taxpayer Code </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportCode",form3ModelSP.getConsignor_code(),"") %>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportCode",form3ModelSP.getConsignor_code(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"CONSIGNOR_CODE") +"maxlength=20 onkeypress=\"keyPressInteger()\"") %>
             </td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Name </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportName",form3ModelSP.getConsignor_name(),"") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportName",form3ModelSP.getConsignor_name(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"CONSIGNOR_NAME") + " maxlength=20") %></td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Address </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("consignorExportAddress",form3ModelSP.getConsignor_address(),"") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("consignorExportAddress",form3ModelSP.getConsignor_address(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"CONSIGNOR_ADDRESS")+" maxlength=255") %></td>
           </tr>
         </table></td>
         <td rowspan="2" align="center"><table width="466" border="0" cellpadding="0" cellspacing="1">
@@ -100,7 +100,7 @@
           </tr>
           <tr>
             <td  align="left">
-              <%=DisplayUtil.displayInputTextBox("Date_Receipt",DisplayFormatUtil.SQLDateToString1(form3ModelSP.getDate_Receipt(),"DD/MM/YYYY"),"") %>
+              <%=DisplayUtil.displayInputTextBox("Date_Receipt",DisplayFormatUtil.SQLDateToString1(form3ModelSP.getDate_Receipt(),"DD/MM/YYYY"),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"DATE_RECEIPT")+"maxlength=10 onkeypress=\"addSlashFormat(event,this);keyPressInteger();\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"") %>
            </td>
             <td align="left"><font class="textDesc"><%=DisplayUtil.displayCheckBoxForDocAttach(form3Bean.docAttachMVt,"doc_attach","INVOICE","") %> 
               Invoice</font></td>
@@ -120,7 +120,7 @@
             </font></td>
           </tr>
           <tr>
-            <td  align="left"><%=DisplayUtil.displayInputTextBox("Regis_no",form3ModelSP.getRegis_no(),"maxlength=50") %></td>
+            <td  align="left"><%=DisplayUtil.displayInputTextBox("Regis_no",form3ModelSP.getRegis_no(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"REGIS_NO")+"maxlength=50") %></td>
             <td align="left"><font class="textDesc">
               <%=DisplayUtil.displayCheckBoxForDocAttach(form3Bean.docAttachMVt,"doc_attach","LETTER OF CREDIT","") %>
               Letter of Credit
@@ -141,7 +141,7 @@
             <td align="left"><font class="textDesc">Code
               </font></td>
             <td align="left"><font class="textDesc">
-              <%=DisplayUtil.displayInputTextBox("cus_name_code",form3ModelSP.getCus_name_code(),"") %>
+              <%=DisplayUtil.displayInputTextBox("cus_name_code",form3ModelSP.getCus_name_code(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"CUS_NAME_CODE")+"maxlength=4 onkeypress=\"keyPressInteger()\"") %>
             </font></td>
             <td>&nbsp;</td>
           </tr>
@@ -149,7 +149,7 @@
             <td align="left"><font class="textDesc">Description 
               </font></td>
             <td align="left"><font class="textDesc">
-              <%=DisplayUtil.displayInputTextBox("cus_name_desc",form3ModelSP.getCus_name_desc(),"") %>
+              <%=DisplayUtil.displayInputTextBox("cus_name_desc",form3ModelSP.getCus_name_desc(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"CUS_NAME_DESC")+"maxlength=50") %>
             </font></td>
             <td>&nbsp;</td>
           </tr>
@@ -197,15 +197,15 @@
           <tr>
             <td align="right"><font class="textDesc">Importer/Taxpayer Code </font></td>
             <td align="left">
-            <%=DisplayUtil.displaySelectTag_Code(LoadCacheData.GetImporterCache(),form3ModelSP.getConsignee_code(),"Consignee_code","EDIT","", "onchange=\"getImportAddress(this.value)\"" ) %></td>
+            <%=DisplayUtil.displaySelectTag_Code(LoadCacheData.GetImporterCache(),form3ModelSP.getConsignee_code(),"Consignee_code","EDIT","", DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"CONSIGNEE_CODE")+"onchange=\"getImportAddress(this.value)\"" ) %></td>
             </tr>
           <tr>
             <td align="right"><font class="textDesc">Name </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("Consignee_name",form3ModelSP.getConsignee_name(),"") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("Consignee_name",form3ModelSP.getConsignee_name(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"CONSIGNEE_NAME")+"maxlength=20") %></td>
             </tr>
           <tr>
             <td align="right"><font class="textDesc">Address </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("Consignee_address",form3ModelSP.getConsignee_address(),"") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("Consignee_address",form3ModelSP.getConsignee_address(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"CONSIGNEE_ADDRESS")+"maxlength=255") %></td>
             </tr>
           </table></td>
       </tr>
@@ -223,15 +223,15 @@
           <tr>
             <td align="right"><font class="textDesc">Agent/Taxpayer Code</font></td>
             <td align="left">
-            <%=DisplayUtil.displaySelectTag_Code(LoadCacheData.GetAgentCache(),form3ModelSP.getAuthorAgent_code(),"AuthorAgent_code","EDIT","", "onchange=getAgentAddress(this.value)") %></td>
+            <%=DisplayUtil.displaySelectTag_Code(LoadCacheData.GetAgentCache(),form3ModelSP.getAuthorAgent_code(),"AuthorAgent_code","EDIT","", DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"AUTHORAGENT_CODE")+"onchange=getAgentAddress(this.value)") %></td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Name </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("AuthorAgent_name",form3ModelSP.getAuthorAgent_name(),"") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("AuthorAgent_name",form3ModelSP.getAuthorAgent_name(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"AUTHORAGENT_NAME")+"maxlength=20") %></td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Address </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("AuthorAgent_address",form3ModelSP.getAuthorAgent_address(),"") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("AuthorAgent_address",form3ModelSP.getAuthorAgent_address(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"AUTHORAGENT_ADDRESS")+"maxlength=25") %></td>
           </tr>
         </table></td>
         <td rowspan="3" valign="top" align="center"><table width="472" border="0" cellpadding="1" cellspacing="1">
@@ -241,9 +241,9 @@
             <td width="133" align="left" ><font class="textDescBold">22.Freight</font></td>
             </tr>
           <tr>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("fob_value",form3ModelSP.getFob_value(),"") %></td>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("Insurance",form3ModelSP.getInsurance(),"") %></td>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("Freight",form3ModelSP.getFreight(),"") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("fob_value",form3ModelSP.getFob_value(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"FOB_VALUE")+"maxlength=20") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Insurance",form3ModelSP.getInsurance(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"INSURANCE")+"maxlength=20") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Freight",form3ModelSP.getFreight(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"FREIGHT")+"maxlength=20") %></td>
             </tr>
           <tr>
             <td>&nbsp;</td>
@@ -256,9 +256,9 @@
             <td align="left" ><font class="textDescBold">25.CIF Value</font></td>
             </tr>
           <tr>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("Gross_weight",form3ModelSP.getGross_weight(),"") %></td>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("Measurement",form3ModelSP.getMeasurement(),"") %></td>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("Cif_value",form3ModelSP.getCif_value(),"") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Gross_weight",form3ModelSP.getGross_weight(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"GROSS_WEIGHT")+"maxlength=20") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Measurement",form3ModelSP.getMeasurement(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"MEASUREMENT")+"maxlength=20") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Cif_value",form3ModelSP.getCif_value(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"CIF_VALUE")+"maxlength=20") %></td>
             </tr>
           
           <tr>
@@ -307,7 +307,7 @@
             </tr>
           <tr>
             
-            <td><%=DisplayUtil.displayInputTextBox("Date_Import",DisplayFormatUtil.SQLDateToString1(form3ModelSP.getDate_Import(),"DD/MM/YYYY"),"") %></td>
+            <td><%=DisplayUtil.displayInputTextBox("Date_Import",DisplayFormatUtil.SQLDateToString1(form3ModelSP.getDate_Import(),"DD/MM/YYYY"),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"DATE_IMPORT")+"maxlength=10 onkeypress=\"addSlashFormat(event,this);keyPressInteger();\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"") %></td>
             </tr>
           </table>
         </td>
@@ -318,7 +318,7 @@
             <td><font class="textDescBold">6. No/Name of vessel/Flight/conveyanee</font></td>
           </tr>
           <tr>
-            <td><%=DisplayUtil.displayInputTextBox("vessel_value",form3ModelSP.getVessel_value(),"") %></td>
+            <td><%=DisplayUtil.displayInputTextBox("vessel_value",form3ModelSP.getVessel_value(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"VESSEL_VALUE")+"maxlength=50") %></td>
           </tr>
         </table></td>
         <td><table border="0" cellspacing="1" cellpadding="1">
@@ -327,7 +327,7 @@
             </tr>
           <tr>
             <td><font class="textDesc"></font></td>
-            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form3ModelSP.getPortImport_Code(),"PortImport_Code","EDIT","") %></td>
+            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form3ModelSP.getPortImport_Code(),"PortImport_Code","EDIT",DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"PORTIMPORT_CODE")) %></td>
             </tr>
           <tr>
             <td><font class="textDesc"></font></td>
@@ -342,7 +342,7 @@
           </tr>
           <tr>
             <td><font class="textDesc"></font></td>
-            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form3ModelSP.getPortLoad_Code(),"PortLoad_Code","EDIT","") %></td>
+            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form3ModelSP.getPortLoad_Code(),"PortLoad_Code","EDIT",DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"PORTLOAD_CODE")) %></td>
           </tr>
           <tr>
             <td><font class="textDesc"></font></td>
@@ -355,7 +355,7 @@
             </tr>
           <tr>
             <td><font class="textDesc"></font></td>
-            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form3ModelSP.getVia_Code(),"Via_Code","EDIT","") %></td>
+            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form3ModelSP.getVia_Code(),"Via_Code","EDIT",DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"VIA_CODE")) %></td>
             </tr>
           <tr>
             <td><font class="textDesc"></font></td>
@@ -471,7 +471,7 @@
                 <td colspan="2"><font class="textDescBold">37. Identity Card/Passport No.</font></td>
               </tr>
               <tr>
-                <td colspan="2"><%=DisplayUtil.displayInputTextBox("id_card_no",form3ModelSP.getId_card_no(),"") %></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextBox("id_card_no",form3ModelSP.getId_card_no(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"ID_CARD_NO")+"maxlength=20") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -494,7 +494,7 @@
                 <td colspan="2"><font class="textDescBold">51. I cerify that this declaration is true and complete.</font></td>
               </tr>
               <tr>
-                <td colspan="2"><%=DisplayUtil.displayInputTextBox("cerify",form3ModelSP.getCerify(),"") %></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextBox("cerify",form3ModelSP.getCerify(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"CERIFY")+"maxlength=20") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -558,8 +558,8 @@
             <td align="center"><font class="textDescBold">RESULT OF   EXAMINATION</font></td>
           </tr>
           <tr>
-            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("instruct_exam",form3ModelSP.getInstruct_exam(),"") %></td>
-            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("result_exam",form3ModelSP.getResult_exam(),"") %></td>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("instruct_exam",form3ModelSP.getInstruct_exam(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"INSTRUCT_EXAM")+"maxlength=255") %></td>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("result_exam",form3ModelSP.getResult_exam(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"RESULT_EXAM")+"maxlength=255") %></td>
           </tr>
           <tr>
             <td align="center">&nbsp;</td>
@@ -576,7 +576,7 @@
             <td align="center"><font class="textDescBold">FOR OTHER USE</font></td>
           </tr>
           <tr>
-            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("for_other_use",form3ModelSP.getFor_other_use(),"") %></td>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("for_other_use",form3ModelSP.getFor_other_use(),DisplayUtil.disabledField(form3Bean.getFormConfigVt(),"FOR_OTHER_USE")+"maxlength=255") %></td>
           </tr>
           <tr>
             <td align="center">&nbsp;</td>

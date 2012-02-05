@@ -77,7 +77,7 @@ log.debug("valueListM.getItemsPerPage() >> " + valueListM.getItemsPerPage());
         <td>&nbsp;</td>
       </tr>
       <tr>
-        <td colspan="3" align="center"><table width="600" border="1" cellspacing="1" cellpadding="1" bordercolor="#CCCCCC" >
+        <td colspan="3" align="center"><table width="600" border="0" cellspacing="1" cellpadding="1" bordercolor="#CCCCCC" >
           <tr >
             <td bgcolor="#F8F8F8"><font class="textDescBold">รายการ</font></td>
             <td bgcolor="#F8F8F8"><font class="textDescBold">จำนวนเงิน (บาท)</font></td>

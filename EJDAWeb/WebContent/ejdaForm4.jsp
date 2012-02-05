@@ -70,16 +70,16 @@
            </tr>
           <tr>
             <td align="right"><font class="textDesc">Exporter/Taxpayer Code </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportCode",form4ModelSP.getConsignor_code(),"") %>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportCode",form4ModelSP.getConsignor_code(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"CONSIGNOR_CODE") +"maxlength=20 onkeypress=\"keyPressInteger()\"") %>
             </td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Name </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportName",form4ModelSP.getConsignor_name(),"") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("consignorExportName",form4ModelSP.getConsignor_name(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"CONSIGNOR_NAME") + " maxlength=20") %></td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Address </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("consignorExportAddress",form4ModelSP.getConsignor_address(),"") %></textarea></td>
+            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("consignorExportAddress",form4ModelSP.getConsignor_address(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"CONSIGNOR_ADDRESS")+" maxlength=255") %></textarea></td>
           </tr>
         </table></td>
         <td rowspan="2" align="center"><table width="466" border="0" cellpadding="0" cellspacing="1">
@@ -96,7 +96,7 @@
           </tr>
           <tr>
             <td colspan="2" align="left">
-              <%=DisplayUtil.displayInputTextBox("Date_Receipt",DisplayFormatUtil.SQLDateToString1(form4ModelSP.getDate_Receipt(),"DD/MM/YYYY"),"") %>
+              <%=DisplayUtil.displayInputTextBox("Date_Receipt",DisplayFormatUtil.SQLDateToString1(form4ModelSP.getDate_Receipt(),"DD/MM/YYYY"),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"DATE_RECEIPT")+"maxlength=10 onkeypress=\"addSlashFormat(event,this);keyPressInteger();\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"") %>
            </td>
             <td align="left"><font class="textDesc"><%=DisplayUtil.displayCheckBoxForDocAttach(form4Bean.docAttachMVt,"doc_attach","INVOICE","") %> 
               Invoice</font></td>
@@ -116,7 +116,7 @@
             </font></td>
           </tr>
           <tr>
-            <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("Regis_no",form4ModelSP.getRegis_no(),"maxlength=50") %></td>
+            <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("Regis_no",form4ModelSP.getRegis_no(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"REGIS_NO")+"maxlength=50") %></td>
             <td align="left"><font class="textDesc">
               <%=DisplayUtil.displayCheckBoxForDocAttach(form4Bean.docAttachMVt,"doc_attach","LETTER OF CREDIT","") %>
               Letter of Credit
@@ -137,7 +137,7 @@
             <td align="left"><font class="textDesc">Code
               </font></td>
             <td align="left"><font class="textDesc">
-              <%=DisplayUtil.displayInputTextBox("cus_name_code",form4ModelSP.getCus_name_code(),"") %> 
+              <%=DisplayUtil.displayInputTextBox("cus_name_code",form4ModelSP.getCus_name_code(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"CUS_NAME_CODE")+"maxlength=4 onkeypress=\"keyPressInteger()\"") %> 
             </font></td>
             <td>&nbsp;</td>
           </tr>
@@ -145,7 +145,7 @@
             <td align="left"><font class="textDesc">Description 
               </font></td>
             <td align="left"><font class="textDesc">
-              <%=DisplayUtil.displayInputTextBox("cus_name_desc",form4ModelSP.getCus_name_desc(),"") %>
+              <%=DisplayUtil.displayInputTextBox("cus_name_desc",form4ModelSP.getCus_name_desc(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"CUS_NAME_DESC")+"maxlength=50") %>
             </font></td>
             <td>&nbsp;</td>
           </tr>
@@ -158,7 +158,7 @@
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("ManifestNo",(form4ModelSP.getManifest_no() != null)?form4ModelSP.getManifest_no().toString():"","maxlength=4 onkeypress=\"keyPressInteger()\"") %></td>
+            <td colspan="2" align="left"><%=DisplayUtil.displayInputTextBox("ManifestNo",(form4ModelSP.getManifest_no() != null)?form4ModelSP.getManifest_no().toString():"",DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"MANIFEST_NO")+"maxlength=4 onkeypress=\"keyPressInteger()\"") %></td>
             <td>&nbsp;</td>
           </tr>
           <tr>
@@ -169,7 +169,7 @@
             <td colspan="3" align="left"><font class="textDescBold">15. Receip of Duty/Tax as Levied Authorized by :</font></td>
             </tr>
           <tr>
-            <td align="center" colspan="2"><%=DisplayUtil.displayInputTextBox("duty_tax_receipt_date",DisplayFormatUtil.SQLDateToString1(form4ModelSP.getDuty_tax_receipt_date(),"DD/MM/YYYY"),"maxlength=10 onkeypress=\"addSlashFormat(event,this)\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"") %></td>
+            <td align="center" colspan="2"><%=DisplayUtil.displayInputTextBox("duty_tax_receipt_date",DisplayFormatUtil.SQLDateToString1(form4ModelSP.getDuty_tax_receipt_date(),"DD/MM/YYYY"),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"DUTY_TAX_RECEIPT_DATE")+"maxlength=10 onkeypress=\"addSlashFormat(event,this);keyPressInteger();\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"") %></td>
             <td align="center"><%=DisplayUtil.displayInputTextBox("duty_tax_receipt_desc",form4ModelSP.getDuty_tax_receipt_desc(),"maxlength=50") %></td>
           </tr>
           <tr>
@@ -192,15 +192,15 @@
           <tr>
             <td align="right"><font class="textDesc">Importer/Taxpayer Code </font></td>
             <td align="left">
-			<%=DisplayUtil.displaySelectTag_Code(LoadCacheData.GetImporterCache(),form4ModelSP.getConsignee_code(),"Consignee_code","EDIT","", "onchange=\"getImportAddress(this.value)\"" ) %></td>
+			<%=DisplayUtil.displaySelectTag_Code(LoadCacheData.GetImporterCache(),form4ModelSP.getConsignee_code(),"Consignee_code","EDIT","", DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"CONSIGNEE_CODE")+"onchange=\"getImportAddress(this.value)\"" ) %></td>
             </tr>
           <tr>
             <td align="right"><font class="textDesc">Name </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("Consignee_name",form4ModelSP.getConsignee_name(),"maxlength=20") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("Consignee_name",form4ModelSP.getConsignee_name(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"CONSIGNEE_NAME")+"maxlength=20") %></td>
             </tr>
           <tr>
             <td align="right"><font class="textDesc">Address </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("Consignee_address",form4ModelSP.getConsignee_address(),"maxlength=255") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("Consignee_address",form4ModelSP.getConsignee_address(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"CONSIGNEE_ADDRESS")+"maxlength=255") %></td>
             </tr>
           </table></td>
       </tr>
@@ -218,15 +218,15 @@
           <tr>
             <td align="right"><font class="textDesc">Agent/Taxpayer Code</font></td>
             <td align="left">
-            <%=DisplayUtil.displaySelectTag_Code(LoadCacheData.GetAgentCache(),form4ModelSP.getAuthorAgent_code(),"AuthorAgent_code","EDIT","", "onchange=getAgentAddress(this.value)") %></td>
+            <%=DisplayUtil.displaySelectTag_Code(LoadCacheData.GetAgentCache(),form4ModelSP.getAuthorAgent_code(),"AuthorAgent_code","EDIT","", DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"AUTHORAGENT_CODE")+"onchange=getAgentAddress(this.value)") %></td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Name </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextBox("AuthorAgent_name",form4ModelSP.getAuthorAgent_name(),"") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextBox("AuthorAgent_name",form4ModelSP.getAuthorAgent_name(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"AUTHORAGENT_NAME")+"maxlength=20") %></td>
           </tr>
           <tr>
             <td align="right"><font class="textDesc">Address </font></td>
-            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("AuthorAgent_address",form4ModelSP.getAuthorAgent_address(),"") %></td>
+            <td align="left"><%=DisplayUtil.displayInputTextAreaTag("AuthorAgent_address",form4ModelSP.getAuthorAgent_address(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"AUTHORAGENT_ADDRESS")+"maxlength=25") %></td>
           </tr>
         </table></td>
         <td rowspan="3" align="center"><table width="472" border="0" cellpadding="1" cellspacing="1">
@@ -236,9 +236,9 @@
             <td width="133" align="left" ><font class="textDescBold">17.Exchange Control Ref.</font></td>
             </tr>
           <tr>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("special_treatment",form4ModelSP.getSpecial_treatment(),"maxlength=20") %></td>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("import_permit_no",form4ModelSP.getImport_permit_no(),"maxlength=20") %></td>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("exchg_ctrl_ref",form4ModelSP.getExchg_ctrl_ref(),"maxlength=20") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("special_treatment",form4ModelSP.getSpecial_treatment(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"SPECIAL_TREATMENT")+"maxlength=20") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("import_permit_no",form4ModelSP.getImport_permit_no(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"IMPORT_PERMIT_NO")+"maxlength=20") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("exchg_ctrl_ref",form4ModelSP.getExchg_ctrl_ref(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"EXCHG_CTRL_REF")+"maxlength=20") %></td>
             </tr>
           <tr>
             <td>&nbsp;</td>
@@ -275,7 +275,7 @@
 		            <td align="left" ><font class="textDescBold">22.Amount recrived/to be Received</font></td>
 	            </tr>
 	          	<tr>
-		            <td align="left" ><%=DisplayUtil.displayInputTextBox("term_payment",form4ModelSP.getTerm_payment(),"maxlength=20") %></td>
+		            <td align="left" ><%=DisplayUtil.displayInputTextBox("term_payment",form4ModelSP.getTerm_payment(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"TERM_PAYMENT")+"maxlength=20") %></td>
 		            <td align="left" ><%=DisplayUtil.displayInputTextBox("cur_code",form4ModelSP.getCur_code(),"size=4") %></td>
 		            <td align="left" ><%=DisplayUtil.displayInputTextBox("cur_code",form4ModelSP.getCur_code(),"size=4") %></td>
 		            <td align="left" ><%=DisplayUtil.displayInputTextBox("amtRecrived",String.valueOf(form4ModelSP.getReceiveAmt()),"") %></td>
@@ -293,9 +293,9 @@
             <td width="133" align="left" ><font class="textDescBold">25.Insurance</font></td>
             </tr>
           <tr>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("exchange_rate",form4ModelSP.getExchgRate_ID(),"maxlength=4") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("exchange_rate",form4ModelSP.getExchgRate_ID(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"EXCHGRATE_ID")+"maxlength=4") %></td>
             <td align="left" ><%=DisplayUtil.displayInputTextBox("Equivalent",form4ModelSP.getEquivalent(),"") %></td>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("Insurance",form4ModelSP.getInsurance(),"") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Insurance",form4ModelSP.getInsurance(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"INSURANCE")+"maxlength=20") %></td>
             </tr>
           <tr>
             <td>&nbsp;</td>
@@ -309,7 +309,7 @@
           <tr>
             <td align="left" colspan="2"><%=DisplayUtil.displayInputTextBox("good_payment_desc",form4ModelSP.getGood_payment_desc(),"") %>
             					<%=DisplayUtil.displayInputTextBox("good_payment_code",form4ModelSP.getGood_payment_code(),"size=3") %></td>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("Freight",form4ModelSP.getFreight(),"") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Freight",form4ModelSP.getFreight(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"FREIGHT")+"maxlength=20") %></td>
             </tr>
           <tr>
             <td>&nbsp;</td>
@@ -322,9 +322,9 @@
             <td width="133" align="left" ><font class="textDescBold">30.FOB Value</font></td>
             </tr>
           <tr>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("Gross_weight",form4ModelSP.getGross_weight(),"maxlength=20") %></td>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("Measurement",form4ModelSP.getMeasurement(),"maxlength=20") %></td>
-            <td align="left" ><%=DisplayUtil.displayInputTextBox("fob_value",form4ModelSP.getFob_value(),"") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Gross_weight",form4ModelSP.getGross_weight(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"GROSS_WEIGHT")+"maxlength=20") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("Measurement",form4ModelSP.getMeasurement(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"MEASUREMENT")+"maxlength=20") %></td>
+            <td align="left" ><%=DisplayUtil.displayInputTextBox("fob_value",form4ModelSP.getFob_value(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"FOB_VALUE")+"maxlength=20") %></td>
             </tr>
           <tr>
             <td>&nbsp;</td>
@@ -377,7 +377,7 @@
             </tr>
           <tr>
             
-            <td><%=DisplayUtil.displayInputTextBox("Date_Import",DisplayFormatUtil.SQLDateToString1(form4ModelSP.getDate_Import(),"DD/MM/YYYY"),"maxlength=10 onkeypress=\"addSlashFormat(event,this);keyPressInteger();\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"") %></td>
+            <td><%=DisplayUtil.displayInputTextBox("Date_Import",DisplayFormatUtil.SQLDateToString1(form4ModelSP.getDate_Import(),"DD/MM/YYYY"),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"DATE_IMPORT")+"maxlength=10 onkeypress=\"addSlashFormat(event,this);keyPressInteger();\" onblur=\"checkDateLengthYear(this,'','1800','2300')\"") %></td>
             </tr>
           </table>
           </td>
@@ -388,7 +388,7 @@
             <td><font class="textDescBold">6. No/Name of vessel/Flight/conveyanee</font></td>
           </tr>
           <tr>
-            <td><%=DisplayUtil.displayInputTextBox("vessel_value",form4ModelSP.getVessel_value(),"maxlength=50") %></td>
+            <td><%=DisplayUtil.displayInputTextBox("vessel_value",form4ModelSP.getVessel_value(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"VESSEL_VALUE")+"maxlength=50") %></td>
           </tr>
         </table></td>
         <td><table border="0" cellspacing="1" cellpadding="1">
@@ -397,7 +397,7 @@
             </tr>
           <tr>
             <td><font class="textDesc">Code </font></td>
-            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form4ModelSP.getPortImport_Code(),"PortImport_Code","EDIT","") %></td>
+            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form4ModelSP.getPortImport_Code(),"PortImport_Code","EDIT",DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"PORTIMPORT_CODE")) %></td>
           </tr>
         </table></td>
         </tr>
@@ -408,7 +408,7 @@
           </tr>
           <tr>
             <td><font class="textDesc">Code </font></td>
-            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form4ModelSP.getPortLoad_Code(),"PortLoad_Code","EDIT","") %></td>
+            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form4ModelSP.getPortLoad_Code(),"PortLoad_Code","EDIT",DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"PORTLOAD_CODE")) %></td>
           </tr>
         </table></td>
         <td><table border="0" cellspacing="1" cellpadding="1">
@@ -417,7 +417,7 @@
             </tr>
           <tr>
             <td><font class="textDesc">Code </font></td>
-            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form4ModelSP.getVia_Code(),"Via_Code","EDIT","") %></td>
+            <td><%=DisplayUtil.displaySelectTag(LoadCacheData.GetCountryCache(),form4ModelSP.getVia_Code(),"Via_Code","EDIT",DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"VIA_CODE")) %></td>
           </tr>
         </table></td>
         </tr>
@@ -530,7 +530,7 @@
                 <td colspan="2"><font class="textDescBold">48. Name of Declarant</font></td>
               </tr>
               <tr>
-                <td colspan="2"><%=DisplayUtil.displayInputTextBox("declarant_name",form4ModelSP.getDeclarant_name(),"maxlength=20") %></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextBox("declarant_name",form4ModelSP.getDeclarant_name(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"DECLARANT_NAME")+"maxlength=20") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -540,7 +540,7 @@
                 <td colspan="2"><font class="textDescBold">49. Identity Card/Passport No.</font></td>
               </tr>
               <tr>
-                <td colspan="2"><%=DisplayUtil.displayInputTextBox("id_card_no",form4ModelSP.getId_card_no(),"maxlength=20") %></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextBox("id_card_no",form4ModelSP.getId_card_no(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"ID_CARD_NO")+"maxlength=20") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -563,7 +563,7 @@
                 <td colspan="2"><font class="textDescBold">51. I cerify that this declaration is true and complete.</font></td>
               </tr>
               <tr>
-                <td colspan="2"><%=DisplayUtil.displayInputTextBox("cerify",form4ModelSP.getCerify(),"maxlength=20") %></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextBox("cerify",form4ModelSP.getCerify(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"CERIFY")+"maxlength=20") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -585,7 +585,7 @@
                 <td colspan="2"><font class="textDescBold">52. Removal from Customs Control authorized by</font></td>
                 </tr>
               <tr>
-                <td colspan="2"><%=DisplayUtil.displayInputTextAreaTag("cus_removal",form4ModelSP.getCus_removal(),"maxlength=255") %></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextAreaTag("cus_removal",form4ModelSP.getCus_removal(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"CUS_REMOVAL")+"maxlength=255") %></td>
                 </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -599,7 +599,7 @@
               </tr>
               <tr>
                 <td><font class="textDescBold">53. Total Duty/Tax Payable</font></td>
-                <td><%=DisplayUtil.displayInputTextBox("tax_total",String.valueOf(form4ModelSP.getTax_total()),"maxlength=\"15\" onkeypress = \"keypressWithDegit(this,'15')\" onblur=\"formatCurrency(this)\"") %></td>
+                <td><%=DisplayUtil.displayInputTextBox("tax_total",String.valueOf(form4ModelSP.getTax_total()),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"TAX_TOTAL")+"maxlength=\"15\" onkeypress = \"keypressWithDegit(this,'15')\" onblur=\"formatCurrency(this)\"") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -607,7 +607,7 @@
               </tr>
               <tr>
                 <td><font class="textDescBold">54. Other Charges</font></td>
-                <td><%=DisplayUtil.displayInputTextBox("Other_charg2",String.valueOf(form4ModelSP.getOther_charg2()),"maxlength=\"15\" onkeypress = \"keypressWithDegit(this,'15')\"onblur=\"formatCurrency(this)\"") %></td>
+                <td><%=DisplayUtil.displayInputTextBox("Other_charg2",String.valueOf(form4ModelSP.getOther_charg2()),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"OTHER_CHARG2")+"maxlength=\"15\" onkeypress = \"keypressWithDegit(this,'15')\"onblur=\"formatCurrency(this)\"") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -615,7 +615,7 @@
               </tr>
               <tr>
                 <td><font class="textDescBold">55. Total Amount Payable</font></td>
-                <td><%=DisplayUtil.displayInputTextBox("payable_amount",String.valueOf(form4ModelSP.getPayable_amount()),"maxlength=\"15\" onkeypress = \"keypressWithDegit(this,'15')\"onblur=\"formatCurrency(this)\"") %></td>
+                <td><%=DisplayUtil.displayInputTextBox("payable_amount",String.valueOf(form4ModelSP.getPayable_amount()),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"PAYABLE_AMOUNT")+"maxlength=\"15\" onkeypress = \"keypressWithDegit(this,'15')\"onblur=\"formatCurrency(this)\"") %></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -625,7 +625,7 @@
                 <td colspan="2"><font class="textDescBold">56. Manualscript Recerpt No.(If applicable)</font></td>
                 </tr>
               <tr>
-                <td colspan="2"><%=DisplayUtil.displayInputTextAreaTag("manualscript_recerpt",form4ModelSP.getManualscript_recerpt(),"maxlength=255") %></td>
+                <td colspan="2"><%=DisplayUtil.displayInputTextAreaTag("manualscript_recerpt",form4ModelSP.getManualscript_recerpt(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"MANUALSCRIPT_RECERPT")+"maxlength=255") %></td>
                 </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -648,8 +648,8 @@
             <td align="center"><font class="textDescBold">RESULT OF   EXAMINATION</font></td>
           </tr>
           <tr>
-            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("instruct_exam",form4ModelSP.getInstruct_exam(),"maxlength=255") %></td>
-            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("result_exam",form4ModelSP.getResult_exam(),"maxlength=255") %></td>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("instruct_exam",form4ModelSP.getInstruct_exam(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"INSTRUCT_EXAM")+"maxlength=255") %></td>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("result_exam",form4ModelSP.getResult_exam(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"RESULT_EXAM")+"maxlength=255") %></td>
           </tr>
           <tr>
             <td align="center">&nbsp;</td>
@@ -666,7 +666,7 @@
             <td align="center"><font class="textDescBold">FOR OTHER USE</font></td>
           </tr>
           <tr>
-            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("for_other_use",form4ModelSP.getFor_other_use(),"maxlength=255") %></td>
+            <td align="center"><%=DisplayUtil.displayInputTextAreaTag("for_other_use",form4ModelSP.getFor_other_use(),DisplayUtil.disabledField(form4Bean.getFormConfigVt(),"FOR_OTHER_USE")+"maxlength=255") %></td>
           </tr>
           <tr>
             <td align="center">&nbsp;</td>
