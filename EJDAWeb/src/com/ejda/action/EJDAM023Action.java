@@ -40,9 +40,22 @@ public class EJDAM023Action extends AbstractAction {
 			return doSubmitButton();
 		}else if(ejdaMethod.equalsIgnoreCase("doAdd")){
 			return doAdd();
+		}else if(ejdaMethod.equalsIgnoreCase("doCancel")){
+			return doCancel();
 		}
 		
 		return false;
+	}
+
+	private boolean doCancel() {
+		boolean blSuccess = false;
+		
+		formConfigBean = getFormConfigBean();
+		formConfigBean.setAction("0");
+		setFormConfigBean(formConfigBean);
+		
+		blSuccess = true;
+		return blSuccess;
 	}
 
 	private boolean doAdd() {
