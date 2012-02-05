@@ -5,6 +5,7 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import com.tcd.ejda.model.CacheDataM;
+import com.tcd.ejda.model.FormConfigModel;
 import com.tcd.ejda.model.FormDocAttachModel;
 
 public class DisplayUtil {
@@ -119,7 +120,32 @@ public class DisplayUtil {
 				+ jScript
 				+ ">";
 		}
-	
+	public static String displayCheckBoxForFormConfig(
+			Vector<FormConfigModel> valueVt,
+			String name,
+			String compare,
+			String jScript) {
+			String chk = "";
+			String value;
+			if(valueVt != null && valueVt.size() > 0){
+				for(int i=0;i<valueVt.size();i++){
+					value = valueVt.get(i).getInput_field();
+					if (compare.equals(value)) {
+						chk = "checked";
+						break;
+					}
+				}
+			}
+			return "<INPUT TYPE=\"checkbox\""
+				+ chk
+				+ "  NAME=\""
+				+ name
+				+ "\" value=\""
+				+ compare
+				+ "\""
+				+ jScript
+				+ ">";
+		}
 	public static String displayRadioTag(
 			String compareValue,
 			String inputFieldName,
