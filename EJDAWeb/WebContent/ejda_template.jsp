@@ -7,7 +7,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>eJDA Role Menu</title>
+	<title>EJDA</title>
 	<link href="css/styles.css" rel="stylesheet" type="text/css" />
 	<link href="css/jquery.modaldialog.css" rel="stylesheet" type="text/css" />
 	<script src="SpryAssets/SpryMenuBar.js" type="text/javascript"></script>
