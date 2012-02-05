@@ -1,5 +1,6 @@
 package com.ejda.action;
 
+import java.sql.SQLException;
 import java.util.Vector;
 
 import org.apache.commons.lang.StringUtils;
@@ -18,6 +19,7 @@ import com.tcd.ejda.dao.FormConfigDAO;
 import com.tcd.ejda.dao.FormConfigDAOImpl;
 import com.tcd.ejda.dao.TransactionLogDAO;
 import com.tcd.ejda.dao.TransactionLogDAOImpl;
+import com.tcd.ejda.model.CacheDataM;
 import com.tcd.ejda.model.Form1Model;
 import com.tcd.ejda.model.FormConfigModel;
 import com.tcd.ejda.model.FormDetail1Model;
@@ -97,6 +99,7 @@ public class EJDAM010Action extends AbstractAction {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		form1Bean.setUnitVt(unitVt);
 		form1Bean.setTanliCodeVt(tanliCodeVt);
 		form1Bean.setDutyRateVt(dutyRateVt);
@@ -108,6 +111,8 @@ public class EJDAM010Action extends AbstractAction {
 		form1Bean = getForm1Bean();
 		String docId = (String)getRequest().getParameter("doc_id");
 		log.debug("docId = "+docId);
+		String formNo = (String) getRequest().getParameter("form_no");
+		log.debug("[ form no. ] " + formNo);
 //		getRequest().getSession().setAttribute("form_no", form_no);
 		try{
 			Form1DAO dao = new Form1DAOImpl();
@@ -115,6 +120,12 @@ public class EJDAM010Action extends AbstractAction {
 			form1Bean.setDetail1MVt(dao.searchFormDetail1Model(docId));
 			form1Bean.setDetail2MVt(dao.searchFormDetail2Model(docId));
 			form1Bean.setDocAttachMVt(dao.searchFormDocAttachModel(docId));
+			
+			FormConfigDAO dao1 = new FormConfigDAOImpl();
+			
+			form1Bean.setFormConfigVt(dao1.searchFormConfigModel(formNo));
+			
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -207,8 +218,20 @@ public class EJDAM010Action extends AbstractAction {
 	private boolean doAdd() {
 		log.debug("*********** doChangePage ***********");
 		init();
-		//form1Bean = getForm1Bean();
+		form1Bean = getForm1Bean();
 		getForm1Bean().setActionName("EJDAM010");
+		String formNo = (String) getRequest().getParameter("DdlAddForm");
+		log.debug("[ doAdd : form no. ] " + formNo);
+		try {
+			FormConfigDAO dao1 = new FormConfigDAOImpl();
+			form1Bean.setFormConfigVt(dao1.searchFormConfigModel(formNo));
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		setForm1Bean(form1Bean);
 		return true;
 	}
 
@@ -704,9 +727,4 @@ public class EJDAM010Action extends AbstractAction {
 		return vc;
 	}
 	
-	public Vector setFormConfig(){
-		Vector vc = new Vector();
-		
-		return vc;
-	}
 }
