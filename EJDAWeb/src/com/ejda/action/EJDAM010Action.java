@@ -9,13 +9,17 @@ import com.ejda.constant.EJDAConstant;
 import com.ejda.sessionBean.Form1Bean;
 import com.ejda.util.DisplayFormatUtil;
 import com.ejda.util.EJDAUtil;
+import com.ejda.util.EjdaParameterCacheParam;
 import com.tcd.ejda.dao.CacheDataDAO;
 import com.tcd.ejda.dao.CacheDataDAOImpl;
 import com.tcd.ejda.dao.Form1DAO;
 import com.tcd.ejda.dao.Form1DAOImpl;
+import com.tcd.ejda.dao.FormConfigDAO;
+import com.tcd.ejda.dao.FormConfigDAOImpl;
 import com.tcd.ejda.dao.TransactionLogDAO;
 import com.tcd.ejda.dao.TransactionLogDAOImpl;
 import com.tcd.ejda.model.Form1Model;
+import com.tcd.ejda.model.FormConfigModel;
 import com.tcd.ejda.model.FormDetail1Model;
 import com.tcd.ejda.model.FormDetail2Model;
 import com.tcd.ejda.model.FormDocAttachModel;
@@ -69,6 +73,7 @@ public class EJDAM010Action extends AbstractAction {
 		form1Bean.setForm1Vt(new Vector<Form1Model>());
 		form1Bean.setDetail1MVt(new Vector<FormDetail1Model>());
 		form1Bean.setDetail2MVt(new Vector<FormDetail2Model>());
+		form1Bean.setFormConfigVt(new Vector<FormConfigModel>());
 		
 		form1Bean.setForm1ModelSP(new Form1Model());
 		form1Bean.setForm1ModelCri(new Form1Model());
@@ -85,6 +90,10 @@ public class EJDAM010Action extends AbstractAction {
 			tanliCodeVt = dao.LoadCustomTanli();
 			dutyRateVt = dao.LoadExchangeRAte();
 			countryOriginVt = dao.LoadCountryOrigin();
+			
+			FormConfigDAO dao1 = new FormConfigDAOImpl();
+			form1Bean.setFormConfigVt(dao1.searchFormConfigModel("1"));
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -212,6 +221,8 @@ public class EJDAM010Action extends AbstractAction {
 	public boolean doSearch(){
 		log.debug("*********** doSearch ***********");
 		boolean result = false;
+		
+		
 //		setCriteriaPameter();
 		form1Bean = getForm1Bean();
 		ValueListModel valueListM = new ValueListModel();
@@ -689,6 +700,12 @@ public class EJDAM010Action extends AbstractAction {
 			}
 			
 		}
+		
+		return vc;
+	}
+	
+	public Vector setFormConfig(){
+		Vector vc = new Vector();
 		
 		return vc;
 	}
