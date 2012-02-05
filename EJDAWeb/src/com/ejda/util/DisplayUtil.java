@@ -301,6 +301,22 @@ public static String displaySelectTag_Code(Vector v, String selectedValue, Strin
 			//return obj.toString();}
 		}
 	}
+	public static String disabledField(Vector<FormConfigModel> valueVt, String compare){
+		String returnValue = "";
+		String value = "";
+		if(valueVt != null && valueVt.size() > 0){
+			for(int i=0;i<valueVt.size();i++){
+				value = valueVt.get(i).getInput_field();
+				if (compare.equals(value)) {
+					returnValue = " disabled = disabled ";
+					break;
+				}
+			}
+		}
+		
+		
+		return returnValue;
+	}
 	
 	public static String displayLabel(String style,String value){
 		String result = "<font class="+style+">"+value+"</font>";
