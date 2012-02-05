@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="org.apache.log4j.Logger"%>
+<%@page import="com.ejda.util.EjdaParameterCacheParam"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     	               "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -11,6 +12,8 @@
         <link href="css/styles.css" rel="stylesheet" type="text/css" />
     	<%
     		Logger logger = Logger.getLogger("JspLog");
+    		EjdaParameterCacheParam.load(getServletContext().getRealPath("/WEB-INF/EJdaFormParameterConfig.properties"));
+    		
 	    	String getResult = "";
     		getResult = (String)request.getSession().getAttribute("messages");
     		
