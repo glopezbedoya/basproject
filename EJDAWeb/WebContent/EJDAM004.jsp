@@ -4,11 +4,19 @@
 
 
 <%@page import="com.ejda.util.DisplayFormatUtil"%>
-<%@page import="com.ejda.util.DisplayUtil"%><script language="javascript" src="js/EJDAM004.js"></script>
+<%@page import="com.ejda.util.DisplayUtil"%>
+<%@page import="com.ejda.sessionBean.ReportBean"%>
 <%
 	Logger log = Logger.getLogger("JspLog");
+	ReportBean reportBean = (ReportBean)request.getSession().getAttribute("reportBean");
+	String form_action = (String)reportBean.getActionName();
+	log.debug("form_action = "+form_action);
 %>
+<script language="javascript" src="js/EJDAM004.js"></script>
 <form name="reportForm" method="post" action="/EJDAWeb/EJDAControler">
+	<input type="hidden" name="ejdaAction" value=""> 
+	<input type="hidden" name="ejdaMethod" value=""> 
+	<input type="hidden" name="screenName" value="">
 	<table align="center" width="1200" border="0" bgcolor="#F8F8F8">
 	  <tr>
 	    <td >        
@@ -54,7 +62,7 @@
 		            	<table width="100%" border="0" bgcolor="#FFFFFF">
 		                  <tr>
 		                    <td align="center" colspan="11"><%=DisplayUtil.displayLabel("textDescBlack",EjdaParameterCacheParam.getValue("goverment"))%></td>
-		                    <td align="right" ><img src="images/print.png" height="30" width="30"/></td>
+		                    <td align="right" ><a  href="javascript:exportButton(this.form,'<%=form_action %>');"><img id="image" src="images/print.png" height="30" width="30" border="0"/></a></td>
 		                  </tr>
 		                  <tr>
 		                  	<td align="center" colspan="11"><%=DisplayUtil.displayLabel("textDescBlack",EjdaParameterCacheParam.getValue("reportStat"))%></td>
@@ -120,7 +128,7 @@
 		               	<table width="100%" border="0" bgcolor="#FFFFFF">
 		                  <tr>
 		                    <td align="center" colspan="5"><%=DisplayUtil.displayLabel("textDescBlack",EjdaParameterCacheParam.getValue("goverment"))%></td>
-		                    <td align="right" ><img src="images/print.png" height="30" width="30"/></td>
+		                    <td align="right" ><a href="javascript:exportButton(this.form,'<%=form_action %>');"><img id="image" src="images/print.png" height="30" width="30" border="0"/></a></td>
 		                  </tr>
 		                  <tr>
 		                  	<td align="center" colspan="5"><%=DisplayUtil.displayLabel("textDescBlack",EjdaParameterCacheParam.getValue("reportStatJDA1"))%></td>
@@ -174,7 +182,7 @@
 		               	<table width="100%" border="0" bgcolor="#FFFFFF">
 		                  <tr>
 		                    <td align="center" colspan="7"><%=DisplayUtil.displayLabel("textDescBlack",EjdaParameterCacheParam.getValue("goverment"))%></td>
-		                    <td align="right" ><img src="images/print.png" height="30" width="30"/></td>
+		                    <td align="right" ><a href="javascript:exportButton(this.form,'<%=form_action %>');"><img id="image" src="images/print.png" height="30" width="30" border="0"/></a></td>
 		                  </tr>
 		                  <tr>
 		                  	<td align="center" colspan="7"><%=DisplayUtil.displayLabel("textDescBlack",EjdaParameterCacheParam.getValue("reportStatJDA2"))%></td>
@@ -232,7 +240,7 @@
 		               	<table width="100%" border="0" bgcolor="#FFFFFF">
 		                  <tr>
 		                    <td align="center" colspan="5"><%=DisplayUtil.displayLabel("textDescBlack",EjdaParameterCacheParam.getValue("goverment"))%></td>
-		                    <td align="right" ><img src="images/print.png" height="30" width="30"/></td>
+		                    <td align="right" ><a href="javascript:exportButton(this.form,'<%=form_action %>');"><img id="image" src="images/print.png" height="30" width="30" border="0"/></a></td>
 		                  </tr>
 		                  <tr>
 		                  	<td align="center" colspan="5"><%=DisplayUtil.displayLabel("textDescBlack",EjdaParameterCacheParam.getValue("reportStatJDA3"))%></td>
@@ -286,7 +294,7 @@
 		               	<table width="100%" border="0" bgcolor="#FFFFFF">
 		                  <tr>
 		                    <td align="center" colspan="5"><%=DisplayUtil.displayLabel("textDescBlack",EjdaParameterCacheParam.getValue("goverment"))%></td>
-		                    <td align="right" ><img src="images/print.png" height="30" width="30"/></td>
+		                    <td align="right" ><a href="javascript:exportButton(this.form,'<%=form_action %>');"><img id="image" src="images/print.png" height="30" width="30" border="0"/></a></td>
 		                  </tr>
 		                  <tr>
 		                  	<td align="center" colspan="5"><%=DisplayUtil.displayLabel("textDescBlack",EjdaParameterCacheParam.getValue("reportStatJDA4"))%></td>
@@ -340,7 +348,9 @@
 	            </td>
 	          </tr>
 	          <tr>
-	            <td align="center"><input type="button" value="close" /></td>
+	            <td align="center">
+					<input type="button" name="close" id="close" value=" close" />
+	            </td>
 	          </tr>
 	        </table>
 	    </td>       
