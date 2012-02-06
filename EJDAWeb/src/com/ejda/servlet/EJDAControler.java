@@ -54,6 +54,7 @@ public class EJDAControler extends HttpServlet {
 			if(screenName != null && ejdaAction != null && ejdaMethod != null){
 				o = Class.forName("com.ejda.action." + ejdaAction + "Action").newInstance();
 				((AbstractAction) o).setRequest(request);
+				((AbstractAction) o).setResponse(response);
 				if(((AbstractAction) o).methodAction(ejdaMethod)){
 					//log.debug("### clear Session Unnecessary ###");
 //						((AbstractAction) o).clearSessionNotUsed();
@@ -66,6 +67,7 @@ public class EJDAControler extends HttpServlet {
 			}else{
 				o = Class.forName("com.ejda.action." + ejdaAction + "Action").newInstance();
 				((AbstractAction) o).setRequest(request);
+				((AbstractAction) o).setResponse(response);
 				((AbstractAction) o).init();
 				request.getSession().setAttribute(EJDAConstant.SESSION_NAME.PAGE, screenName);
 				log.debug("screenName = "+screenName);
