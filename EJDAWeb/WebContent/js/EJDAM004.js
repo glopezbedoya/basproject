@@ -23,3 +23,12 @@ function checkType(){
 		$('div[name=reportJDA4]').show();
 	}
 }
+
+function exportButton(form,action){
+	$('input[name=ejdaAction]').val(action);
+	$('input[name=ejdaMethod]').val('doExportExcel');
+	$('input[name=screenName]').val(action+'.jsp');
+	$('form[name=reportForm]').submit();
+//	form.submit();
+	
+}
