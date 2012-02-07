@@ -67,11 +67,12 @@ public class DisplayUtil {
 	
 	public static String displayInputTextAreaTag(String name,String value,String script) {
 		StringBuffer textAreaStr = new StringBuffer();
+		log.debug("displayInputTextAreaTag 1 = " + value );
 		if(null == value || "null".equalsIgnoreCase(value)){
 			value = "";
 		}
-		textAreaStr.append("<textarea name=\""+name+"\" value=\""+value+"\" cols=\"45\" rows=\"5\" "+script+" ></textarea>");
-		
+		textAreaStr.append("<textarea name=\""+name+"\" value=\""+value+"\" cols=\"45\" rows=\"5\" "+script+" >"+value+"</textarea>");
+		log.debug("displayInputTextAreaTag 2 = " + value );
 		return textAreaStr.toString();
 	}
 	public static String displayCheckBox(
